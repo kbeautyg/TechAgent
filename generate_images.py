@@ -289,7 +289,7 @@ def download_image(query: str, save_dir: Path, filename: str) -> bool:
 # ==================== MAIN ====================
 
 def main():
-    with open("products_list.json", "r") as f:
+    with open("products_list.json", "r", encoding="utf-8") as f:
         products = json.load(f)
 
     print(f"📦 Всего товаров: {len(products)}")
