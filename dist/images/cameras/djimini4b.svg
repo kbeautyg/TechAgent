@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#333333"/><stop offset="100%" stop-color="#888888"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)" rx="20"/>
+  <!-- Drone body -->
+  <ellipse cx="200" cy="190" rx="50" ry="25" fill="#2c2c2e" filter="url(#shadow)"/>
+  <!-- Arms -->
+  <line x1="160" y1="180" x2="100" y2="140" stroke="#2c2c2e" stroke-width="6" stroke-linecap="round"/>
+  <line x1="240" y1="180" x2="300" y2="140" stroke="#2c2c2e" stroke-width="6" stroke-linecap="round"/>
+  <line x1="160" y1="200" x2="100" y2="240" stroke="#2c2c2e" stroke-width="6" stroke-linecap="round"/>
+  <line x1="240" y1="200" x2="300" y2="240" stroke="#2c2c2e" stroke-width="6" stroke-linecap="round"/>
+  <!-- Propellers -->
+  <circle cx="100" cy="140" r="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <circle cx="300" cy="140" r="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <circle cx="100" cy="240" r="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <circle cx="300" cy="240" r="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <!-- Camera -->
+  <circle cx="200" cy="195" r="8" fill="#1c1c1e" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+  <!-- Brand -->
+  <text x="200" y="330" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="14" font-weight="600" font-family="system-ui">DJI</text>
+  <text x="200" y="353" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-family="system-ui">DJI Mini 4 Pro Fly More Combo</text>
+</svg>

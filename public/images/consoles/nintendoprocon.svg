@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e4000f"/><stop offset="100%" stop-color="#ff4444"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/></filter>
+  </defs>
+  <rect width="400" height="400" fill="url(#bg)" rx="20"/>
+  <!-- Controller body -->
+  <path d="M130,160 Q130,140 150,140 L250,140 Q270,140 270,160 L280,240 Q285,270 260,270 L230,260 Q210,255 200,255 Q190,255 170,260 L140,270 Q115,270 120,240 Z" fill="#2c2c2e" filter="url(#shadow)"/>
+  <!-- D-pad -->
+  <rect x="147" y="175" width="30" height="8" rx="2" fill="rgba(255,255,255,0.1)"/>
+  <rect x="158" y="164" width="8" height="30" rx="2" fill="rgba(255,255,255,0.1)"/>
+  <!-- Buttons -->
+  <circle cx="252" cy="172" r="5" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="265" cy="185" r="5" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="239" cy="185" r="5" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="252" cy="198" r="5" fill="rgba(255,255,255,0.1)"/>
+  <!-- Sticks -->
+  <circle cx="175" cy="215" r="12" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <circle cx="240" cy="215" r="12" fill="rgba(0,0,0,0.3)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  <!-- Brand -->
+  <text x="200" y="330" text-anchor="middle" fill="rgba(255,255,255,0.9)" font-size="14" font-weight="600" font-family="system-ui">Nintendo</text>
+  <text x="200" y="353" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="11" font-family="system-ui">Nintendo Pro Controller</text>
+</svg>
