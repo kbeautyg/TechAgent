@@ -1,0 +1,2060 @@
+[
+  {
+    "id": "iph15pm256b",
+    "name": "iPhone 15 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15pm256w",
+    "name": "iPhone 15 Pro Max 256GB White Titanium",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "White Titanium"
+  },
+  {
+    "id": "iph15pm256n",
+    "name": "iPhone 15 Pro Max 256GB Natural Titanium",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Natural Titanium"
+  },
+  {
+    "id": "iph15pm512b",
+    "name": "iPhone 15 Pro Max 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15pm512w",
+    "name": "iPhone 15 Pro Max 512GB White Titanium",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "White Titanium"
+  },
+  {
+    "id": "iph15pm1tb",
+    "name": "iPhone 15 Pro Max 1TB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15p256b",
+    "name": "iPhone 15 Pro 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15p512b",
+    "name": "iPhone 15 Pro 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15p1tb",
+    "name": "iPhone 15 Pro 1TB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph14pm256b",
+    "name": "iPhone 14 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph14pm512b",
+    "name": "iPhone 14 Pro Max 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph14p256b",
+    "name": "iPhone 14 Pro 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph14p512b",
+    "name": "iPhone 14 Pro 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph13pm256b",
+    "name": "iPhone 13 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph13pm512b",
+    "name": "iPhone 13 Pro Max 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph13p256b",
+    "name": "iPhone 13 Pro 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph12pm256b",
+    "name": "iPhone 12 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph12p256b",
+    "name": "iPhone 12 Pro 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25u256b",
+    "name": "Samsung Galaxy S25 Ultra 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25u512b",
+    "name": "Samsung Galaxy S25 Ultra 512GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25u256t",
+    "name": "Samsung Galaxy S25 Ultra 256GB Titanium",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Titanium"
+  },
+  {
+    "id": "sgts25p256b",
+    "name": "Samsung Galaxy S25+ 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25p512b",
+    "name": "Samsung Galaxy S25+ 512GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25256b",
+    "name": "Samsung Galaxy S25 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts25512b",
+    "name": "Samsung Galaxy S25 512GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts24u256b",
+    "name": "Samsung Galaxy S24 Ultra 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts24u512b",
+    "name": "Samsung Galaxy S24 Ultra 512GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts24p256b",
+    "name": "Samsung Galaxy S24+ 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts24256b",
+    "name": "Samsung Galaxy S24 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts23u256b",
+    "name": "Samsung Galaxy S23 Ultra 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts23p256b",
+    "name": "Samsung Galaxy S23+ 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgts23256b",
+    "name": "Samsung Galaxy S23 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgzfold6256",
+    "name": "Samsung Galaxy Z Fold 6 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgzfold5256",
+    "name": "Samsung Galaxy Z Fold 5 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgzflip6256",
+    "name": "Samsung Galaxy Z Flip 6 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "sgzflip5256",
+    "name": "Samsung Galaxy Z Flip 5 256GB Black",
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xm14ult512b",
+    "name": "Xiaomi 14 Ultra 512GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xm14512b",
+    "name": "Xiaomi 14 512GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xm13ult512b",
+    "name": "Xiaomi 13 Ultra 512GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xm13512b",
+    "name": "Xiaomi 13 512GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmrn14p256b",
+    "name": "Xiaomi Redmi Note 14 Pro 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmrn14p512b",
+    "name": "Xiaomi Redmi Note 14 Pro 512GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmrn13p256b",
+    "name": "Xiaomi Redmi Note 13 Pro 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmrn13256b",
+    "name": "Xiaomi Redmi Note 13 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmpf6256b",
+    "name": "Xiaomi Poco F6 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmpf5256b",
+    "name": "Xiaomi Poco F5 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "xmpadp12s256b",
+    "name": "Xiaomi Pad Pro 12 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Планшеты",
+    "color": "Black"
+  },
+  {
+    "id": "xmpad7256b",
+    "name": "Xiaomi Pad 7 256GB Black",
+    "brand": "Xiaomi",
+    "category": "Планшеты",
+    "color": "Black"
+  },
+  {
+    "id": "macbookairm3256",
+    "name": "MacBook Air 13\" M3 256GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookairm3512",
+    "name": "MacBook Air 13\" M3 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookairm315256",
+    "name": "MacBook Air 15\" M3 256GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookairm315512",
+    "name": "MacBook Air 15\" M3 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookairm2256",
+    "name": "MacBook Air 13\" M2 256GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookairm2512",
+    "name": "MacBook Air 13\" M2 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro14m3256",
+    "name": "MacBook Pro 14\" M3 256GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro14m3512",
+    "name": "MacBook Pro 14\" M3 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro14m3pro512",
+    "name": "MacBook Pro 14\" M3 Pro 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro14m3max512",
+    "name": "MacBook Pro 14\" M3 Max 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro16m3pro512",
+    "name": "MacBook Pro 16\" M3 Pro 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro16m3max512",
+    "name": "MacBook Pro 16\" M3 Max 512GB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "macbookpro16m3max1tb",
+    "name": "MacBook Pro 16\" M3 Max 1TB",
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "ipadpro11256",
+    "name": "iPad Pro 11\" 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadpro11512",
+    "name": "iPad Pro 11\" 512GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadpro111tb",
+    "name": "iPad Pro 11\" 1TB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadpro13256",
+    "name": "iPad Pro 13\" 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadpro13512",
+    "name": "iPad Pro 13\" 512GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadair11256",
+    "name": "iPad Air 11\" 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadair11512",
+    "name": "iPad Air 11\" 512GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadair13256",
+    "name": "iPad Air 13\" 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadmini128",
+    "name": "iPad Mini 128GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipadmini256",
+    "name": "iPad Mini 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipad64",
+    "name": "iPad 64GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "ipad256",
+    "name": "iPad 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "airpods2",
+    "name": "AirPods 2",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpods2c",
+    "name": "AirPods 2 with Charging Case",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpods3",
+    "name": "AirPods 3",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpods3c",
+    "name": "AirPods 3 with Charging Case",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpodspro",
+    "name": "AirPods Pro",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpodspro2",
+    "name": "AirPods Pro 2",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpodsmax",
+    "name": "AirPods Max",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "Silver"
+  },
+  {
+    "id": "airpodsmaxb",
+    "name": "AirPods Max Blue",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "Blue"
+  },
+  {
+    "id": "aw9s41m",
+    "name": "Apple Watch Series 9 41mm Midnight",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Midnight"
+  },
+  {
+    "id": "aw9s45m",
+    "name": "Apple Watch Series 9 45mm Midnight",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Midnight"
+  },
+  {
+    "id": "aw9s41g",
+    "name": "Apple Watch Series 9 41mm Gold",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Gold"
+  },
+  {
+    "id": "awu2gps",
+    "name": "Apple Watch Ultra 2 GPS Titanium",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Titanium"
+  },
+  {
+    "id": "awu2cel",
+    "name": "Apple Watch Ultra 2 Cellular Titanium",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Titanium"
+  },
+  {
+    "id": "awse2",
+    "name": "Apple Watch SE 2 40mm Midnight",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Midnight"
+  },
+  {
+    "id": "awse2s",
+    "name": "Apple Watch SE 2 44mm Midnight",
+    "brand": "Apple",
+    "category": "Часы",
+    "color": "Midnight"
+  },
+  {
+    "id": "sgw6cl",
+    "name": "Samsung Galaxy Watch 6 Classic Silver",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": "Silver"
+  },
+  {
+    "id": "sgw6clb",
+    "name": "Samsung Galaxy Watch 6 Classic Black",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": "Black"
+  },
+  {
+    "id": "sgw7",
+    "name": "Samsung Galaxy Watch 7 Gold",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": "Gold"
+  },
+  {
+    "id": "sgbuds3b",
+    "name": "Samsung Galaxy Buds3 Black",
+    "brand": "Samsung",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sgbuds3p",
+    "name": "Samsung Galaxy Buds3 Pro Silver",
+    "brand": "Samsung",
+    "category": "Наушники",
+    "color": "Silver"
+  },
+  {
+    "id": "sgbuds2pro",
+    "name": "Samsung Galaxy Buds2 Pro Phantom Silver",
+    "brand": "Samsung",
+    "category": "Наушники",
+    "color": "Silver"
+  },
+  {
+    "id": "sonywh1000xm5b",
+    "name": "Sony WH-1000XM5 Black",
+    "brand": "Sony",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sonywh1000xm5s",
+    "name": "Sony WH-1000XM5 Silver",
+    "brand": "Sony",
+    "category": "Наушники",
+    "color": "Silver"
+  },
+  {
+    "id": "sonywf1000xm5b",
+    "name": "Sony WF-1000XM5 Black",
+    "brand": "Sony",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sonywf1000xm5s",
+    "name": "Sony WF-1000XM5 Silver",
+    "brand": "Sony",
+    "category": "Наушники",
+    "color": "Silver"
+  },
+  {
+    "id": "sonya6700b",
+    "name": "Sony Alpha 6700 Black",
+    "brand": "Sony",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "sonya7rb",
+    "name": "Sony Alpha 7R V Black",
+    "brand": "Sony",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "sonya7mb",
+    "name": "Sony Alpha 7 IV Black",
+    "brand": "Sony",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "jblpartybox110",
+    "name": "JBL PartyBox 110 Black",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "jblcharge5b",
+    "name": "JBL Charge 5 Black",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "jblflip6",
+    "name": "JBL Flip 6 Black",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "beatsstudio3b",
+    "name": "Beats Studio3 Wireless Black",
+    "brand": "Beats",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "beatssolo4",
+    "name": "Beats Solo 4 Matte Black",
+    "brand": "Beats",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "beatspowerbeats",
+    "name": "Beats Powerbeats Pro Black",
+    "brand": "Beats",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "djimini4b",
+    "name": "DJI Mini 4 Pro Fly More Combo",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "djiair3",
+    "name": "DJI Air 3 Fly More Combo",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "djimavic3",
+    "name": "DJI Mavic 3 Classic Fly More Combo",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "djiavata",
+    "name": "DJI Avata 2 Fly More Combo",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "djiosmo6",
+    "name": "DJI Osmo 6 256GB",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "ps5be",
+    "name": "PlayStation 5 Console Bundle",
+    "brand": "Sony",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "ps5de",
+    "name": "PlayStation 5 Digital Edition",
+    "brand": "Sony",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "ps5pro",
+    "name": "PlayStation 5 Pro",
+    "brand": "Sony",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "xboxsx",
+    "name": "Xbox Series X",
+    "brand": "Microsoft",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "xboxss",
+    "name": "Xbox Series S",
+    "brand": "Microsoft",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "switcholed",
+    "name": "Nintendo Switch OLED White",
+    "brand": "Nintendo",
+    "category": "Игровые консоли",
+    "color": "White"
+  },
+  {
+    "id": "switcholedred",
+    "name": "Nintendo Switch OLED Red",
+    "brand": "Nintendo",
+    "category": "Игровые консоли",
+    "color": "Red"
+  },
+  {
+    "id": "switchlite",
+    "name": "Nintendo Switch Lite Turquoise",
+    "brand": "Nintendo",
+    "category": "Игровые консоли",
+    "color": "Turquoise"
+  },
+  {
+    "id": "dysonv15b",
+    "name": "Dyson V15 Detect Black",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "dysonv15g",
+    "name": "Dyson V15 Detect Gold",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "dysonv12b",
+    "name": "Dyson V12 Detect Slim Black",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "dysonairwrapb",
+    "name": "Dyson Airwrap Black",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": "Black"
+  },
+  {
+    "id": "dysonairwrapc",
+    "name": "Dyson Airwrap Complete",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "dysonsupersonicb",
+    "name": "Dyson Supersonic Black",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": "Black"
+  },
+  {
+    "id": "dysonpurifierb",
+    "name": "Dyson Purifier Cool TP10 Black",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "sgtvqn65b",
+    "name": "Samsung QN85 65\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sgtvqn75b",
+    "name": "Samsung QN85 75\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sgtvqn85b",
+    "name": "Samsung QN85 85\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "lgtvoledb",
+    "name": "LG OLED55 55\" 4K",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "lgtvoledc",
+    "name": "LG OLED65 65\" 4K",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "lgtvoled75",
+    "name": "LG OLED75 75\" 4K",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "xiamibanda8",
+    "name": "Xiaomi Mi Band 8",
+    "brand": "Xiaomi",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "xiamibanda7",
+    "name": "Xiaomi Mi Band 7",
+    "brand": "Xiaomi",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "sgtabs10256",
+    "name": "Samsung Galaxy Tab S10 256GB",
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "sgtabs9ultra",
+    "name": "Samsung Galaxy Tab S9 Ultra 256GB",
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "sgtabs8",
+    "name": "Samsung Galaxy Tab S8 128GB",
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "airpods2left",
+    "name": "AirPods 2 Single Left Bud",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "airpods3left",
+    "name": "AirPods 3 Single Left Bud",
+    "brand": "Apple",
+    "category": "Наушники",
+    "color": "White"
+  },
+  {
+    "id": "sgbudslive",
+    "name": "Samsung Galaxy Buds Live Black",
+    "brand": "Samsung",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sonywh900nb",
+    "name": "Sony WH-900N Black",
+    "brand": "Sony",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sennmom4w",
+    "name": "Sennheiser Momentum 4 Wireless Black",
+    "brand": "Sennheiser",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "bosequc45",
+    "name": "Bose QuietComfort 45 Black",
+    "brand": "Bose",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "sgw6sm",
+    "name": "Samsung Galaxy Watch 6 Silver",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": "Silver"
+  },
+  {
+    "id": "sgw5pro",
+    "name": "Samsung Galaxy Watch 5 Pro Titanium",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": "Titanium"
+  },
+  {
+    "id": "garminepix",
+    "name": "Garmin Epix Gen 2 Titanium",
+    "brand": "Garmin",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "garminfe965",
+    "name": "Garmin Fenix 7X Titanium",
+    "brand": "Garmin",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "oneplus12256",
+    "name": "OnePlus 12 256GB Black",
+    "brand": "OnePlus",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "oneplus12512",
+    "name": "OnePlus 12 512GB Black",
+    "brand": "OnePlus",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "oneplus11256",
+    "name": "OnePlus 11 256GB Black",
+    "brand": "OnePlus",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "pixel9pro256",
+    "name": "Google Pixel 9 Pro 256GB Black",
+    "brand": "Google",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "pixel9pro512",
+    "name": "Google Pixel 9 Pro 512GB Black",
+    "brand": "Google",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "pixel9promax256",
+    "name": "Google Pixel 9 Pro Max 256GB Black",
+    "brand": "Google",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "motorola_razr_2024",
+    "name": "Motorola Razr 50 Ultra 512GB",
+    "brand": "Motorola",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "huaweip70pro512",
+    "name": "Huawei P70 Pro 512GB Black",
+    "brand": "Huawei",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "nothing2a256",
+    "name": "Nothing Phone 2a 256GB Black",
+    "brand": "Nothing",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "asurog9pro512",
+    "name": "ASUS ROG Phone 9 Pro 512GB",
+    "brand": "ASUS",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "lenox1carbonm4",
+    "name": "Lenovo ThinkPad X1 Carbon 14 M4",
+    "brand": "Lenovo",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "lenovox1carbonm3",
+    "name": "Lenovo ThinkPad X1 Carbon 14 M3",
+    "brand": "Lenovo",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "dellxps13",
+    "name": "Dell XPS 13 9340",
+    "brand": "Dell",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "dellxps15",
+    "name": "Dell XPS 15 9540",
+    "brand": "Dell",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "asusvivobook15",
+    "name": "ASUS VivoBook 15 OLED",
+    "brand": "ASUS",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "hppaviliondm15",
+    "name": "HP Pavilion 15 dm0021dx",
+    "brand": "HP",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "msige76",
+    "name": "MSI GE76 Raider RTX 4070",
+    "brand": "MSI",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "roggm16",
+    "name": "ASUS ROG Zephyrus G16 RTX 4090",
+    "brand": "ASUS",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "razorblade16",
+    "name": "Razer Blade 16 RTX 4090",
+    "brand": "Razer",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "ipadprom211256",
+    "name": "iPad Pro 11\" M2 256GB",
+    "brand": "Apple",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "sgtaba13256",
+    "name": "Samsung Galaxy Tab A13 256GB",
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "surfacepro10",
+    "name": "Microsoft Surface Pro 10 256GB",
+    "brand": "Microsoft",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "surfacelaptopstudio",
+    "name": "Microsoft Surface Laptop Studio RTX 4090",
+    "brand": "Microsoft",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "ankerusb",
+    "name": "Anker 7-in-1 USB-C Hub Silver",
+    "brand": "Anker",
+    "category": "Аксессуары",
+    "color": "Silver"
+  },
+  {
+    "id": "belsinkusb",
+    "name": "Belkin USB-C 4 Hub Silver",
+    "brand": "Belkin",
+    "category": "Аксессуары",
+    "color": "Silver"
+  },
+  {
+    "id": "appleusbclight",
+    "name": "Apple USB-C to Lightning Cable 1m",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "appleusbcc",
+    "name": "Apple USB-C Charge Cable 2m",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "otterbox15pm",
+    "name": "OtterBox Defender iPhone 15 Pro Max Black",
+    "brand": "OtterBox",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "spigeniphone15pm",
+    "name": "Spigen Tough Armor iPhone 15 Pro Max Black",
+    "brand": "Spigen",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "temperiphone15pm",
+    "name": "Tempered Glass Screen Protector iPhone 15 Pro Max",
+    "brand": "Generic",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "raindesign",
+    "name": "Rain Design mStand Phone Stand Silver",
+    "brand": "Rain Design",
+    "category": "Аксессуары",
+    "color": "Silver"
+  },
+  {
+    "id": "popstand",
+    "name": "PopSocket PopGrip Phone Stand Multi",
+    "brand": "PopSocket",
+    "category": "Аксессуары",
+    "color": "Multi-color"
+  },
+  {
+    "id": "applewcharger",
+    "name": "Apple MagSafe Charging Pad White",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "ankerasync",
+    "name": "Anker PowerWave Pad 15W Black",
+    "brand": "Anker",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "ankerpower20000",
+    "name": "Anker PowerCore 20000 Black",
+    "brand": "Anker",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "applepower20",
+    "name": "Apple MagSafe Battery Pack White",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "rainmstand",
+    "name": "Rain Design mStand for MacBook Silver",
+    "brand": "Rain Design",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "avantheight",
+    "name": "Avantree Adjustable Laptop Stand Silver",
+    "brand": "Avantree",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "caldigiths3",
+    "name": "CalDigit TS3 Plus Thunderbolt Hub",
+    "brand": "CalDigit",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "4kweb",
+    "name": "Logitech StreamCam Plus 4K 60fps",
+    "brand": "Logitech",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "logibrio",
+    "name": "Logitech Brio 500 1080p 90fps",
+    "brand": "Logitech",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "seabarracuda4tb",
+    "name": "Seagate Barracuda 4TB USB 3.0",
+    "brand": "Seagate",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "wdback2tb",
+    "name": "WD Backup 2TB USB 3.0",
+    "brand": "Western Digital",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "samsungevob1tb",
+    "name": "Samsung 870 EVO 1TB 2.5\" SSD",
+    "brand": "Samsung",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "samsungpm91000",
+    "name": "Samsung 990 Pro 1TB NVMe SSD",
+    "brand": "Samsung",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "lgtvoledw",
+    "name": "LG OLED55 55\" B4 OLED",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sgtvq70d",
+    "name": "Samsung Q70D 55\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "hisenseqledu7g",
+    "name": "Hisense U7G 55\" QLED 4K",
+    "brand": "Hisense",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "tcl98c645",
+    "name": "TCL 98C645 98\" 4K Mini-LED",
+    "brand": "TCL",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sonykx80",
+    "name": "Sony K-85XR80 85\" 4K Mini-LED",
+    "brand": "Sony",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sonybravia",
+    "name": "Sony BRAVIA 7 65\" 4K Mini-LED",
+    "brand": "Sony",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "neewer18",
+    "name": "Neewer LED Ring Light 18\"",
+    "brand": "Neewer",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "elgato",
+    "name": "Elgato Ring Light 2700-6500K",
+    "brand": "Elgato",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "audiotech2020",
+    "name": "Audio-Technica AT2020 Cardioid Condenser",
+    "brand": "Audio-Technica",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "shuredsf7",
+    "name": "Shure SM7B Cardioid Dynamic Microphone",
+    "brand": "Shure",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "mantismax",
+    "name": "Manfrotto Befree Advanced MAX Tripod",
+    "brand": "Manfrotto",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "neewertripod",
+    "name": "Neewer 75\" Aluminum Alloy Tripod",
+    "brand": "Neewer",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "xiamiscooter4",
+    "name": "Xiaomi Electric Scooter 4 Pro",
+    "brand": "Xiaomi",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "xiamibike",
+    "name": "Xiaomi Himo C20 Electric Bike",
+    "brand": "Xiaomi",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "beatsfitpro",
+    "name": "Beats Fit Pro Black",
+    "brand": "Beats",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "beoplay",
+    "name": "Bang & Olufsen Beoplay EX Black",
+    "brand": "Bang & Olufsen",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "beyerdt880",
+    "name": "Beyerdynamic DT 880 Pro Studio Headphones",
+    "brand": "Beyerdynamic",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "steelseries7",
+    "name": "SteelSeries Arctis 7P+ Wireless Black",
+    "brand": "SteelSeries",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "logitusg733",
+    "name": "Logitech G733 Wireless Gaming Headset Black",
+    "brand": "Logitech",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "djimini3pro",
+    "name": "DJI Mini 3 Pro Fly More Combo",
+    "brand": "DJI",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "gopohero12",
+    "name": "GoPro Hero 12 Black Bundle",
+    "brand": "GoPro",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "goprohero11",
+    "name": "GoPro Hero 11 Black Bundle",
+    "brand": "GoPro",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "insta360x4",
+    "name": "Insta360 X4 8K 360 Camera",
+    "brand": "Insta360",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "samsungt7shield",
+    "name": "Samsung T7 Shield 2TB Portable SSD Black",
+    "brand": "Samsung",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "sandiskextreme1tb",
+    "name": "SanDisk Extreme Portable SSD 1TB",
+    "brand": "SanDisk",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "echoxmax",
+    "name": "Amazon Echo Max 15\" Display Black",
+    "brand": "Amazon",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "echoshow",
+    "name": "Amazon Echo Show 8 Black",
+    "brand": "Amazon",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "nesthubmax",
+    "name": "Google Nest Hub Max Chalk",
+    "brand": "Google",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "nestspeaker",
+    "name": "Google Nest Audio Charcoal",
+    "brand": "Google",
+    "category": "Бытовая техника",
+    "color": "Charcoal"
+  },
+  {
+    "id": "dysonsupersonics",
+    "name": "Dyson Supersonic Styling Iron Nickel",
+    "brand": "Dyson",
+    "category": "Бытовая техника",
+    "color": "Nickel"
+  },
+  {
+    "id": "sgtv85",
+    "name": "Samsung S95C 85\" OLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sgtvq90d",
+    "name": "Samsung QN90D 75\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "iph16pro",
+    "name": "iPhone 16 Pro 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph16promax",
+    "name": "iPhone 16 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph16256",
+    "name": "iPhone 16 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "oppofind6pro",
+    "name": "Oppo Find X6 Pro 512GB Black",
+    "brand": "Oppo",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "vivox100ultra",
+    "name": "Vivo X100 Ultra 512GB Black",
+    "brand": "Vivo",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "ztaxon70ultra",
+    "name": "ZTE Axon 70 Ultra 512GB Black",
+    "brand": "ZTE",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "realme12pro",
+    "name": "Realme 12 Pro 512GB Black",
+    "brand": "Realme",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "honormagic6pro",
+    "name": "Honor Magic 6 Pro 512GB Black",
+    "brand": "Honor",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "tcltab12pro",
+    "name": "TCL Tab Pro Gen 2 12.9\" 256GB",
+    "brand": "TCL",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "lenovotabp12",
+    "name": "Lenovo Tab P12 11.5\" 128GB",
+    "brand": "Lenovo",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "amazonkindlefire",
+    "name": "Amazon Fire Max 11 128GB",
+    "brand": "Amazon",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "huaweimatepadt11",
+    "name": "Huawei MatePad T11 128GB",
+    "brand": "Huawei",
+    "category": "Планшеты",
+    "color": ""
+  },
+  {
+    "id": "msistealth16ai",
+    "name": "MSI Stealth 16 AI Studio RTX 5090",
+    "brand": "MSI",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "gigaaeroq17",
+    "name": "Gigabyte AERO 17 RTX 4090",
+    "brand": "Gigabyte",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "asusprobook15",
+    "name": "ASUS ProBook 15 Core i7",
+    "brand": "ASUS",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "clevop775",
+    "name": "Clevo P775 17\" RTX 4070",
+    "brand": "Clevo",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "frameworklaptop",
+    "name": "Framework Laptop 16 Core Ultra",
+    "brand": "Framework",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "pixelbookgo",
+    "name": "Google Pixelbook Go 128GB Clearly White",
+    "brand": "Google",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "acer272x",
+    "name": "Acer Predator XB272 27\" 360Hz",
+    "brand": "Acer",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "asus27pro",
+    "name": "ASUS ProArt PA278QV 27\" 100% sRGB",
+    "brand": "ASUS",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "lgultrawide38",
+    "name": "LG UltraWide 38\" Curved Monitor",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "genericscreen",
+    "name": "Generic Tempered Glass 2.5D Screen Protector",
+    "brand": "Generic",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "genericphonestand",
+    "name": "Generic Metal Phone Stand",
+    "brand": "Generic",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "appleairtagsingle",
+    "name": "Apple AirTag Single",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "appleleather",
+    "name": "Apple AirTag Leather Keychain Brown",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "Brown"
+  },
+  {
+    "id": "tilemate",
+    "name": "Tile Mate Slim",
+    "brand": "Tile",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "philipshue",
+    "name": "Philips Hue Smart Bulb Starter Kit",
+    "brand": "Philips",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "wyzelight",
+    "name": "Wyze Bulb Color Smart Light Bulb",
+    "brand": "Wyze",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "augustlock3",
+    "name": "August Smart Lock Pro Silver",
+    "brand": "August",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "nuki",
+    "name": "Nuki Smart Lock 3.0 Pro Silver",
+    "brand": "Nuki",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "samsungq990b",
+    "name": "Samsung HW-Q990B Soundbar 11.1.4ch",
+    "brand": "Samsung",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "jblbar1000pro",
+    "name": "JBL Bar 1000 Pro 3.1.2ch Soundbar",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "jbltunebuds",
+    "name": "JBL Tune Buds True Wireless Earbuds",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "skullcandy",
+    "name": "Skullcandy Dime True Wireless Earbuds",
+    "brand": "Skullcandy",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "logicalmk850",
+    "name": "Logitech MK850 Performance Wireless Combo",
+    "brand": "Logitech",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "applemag",
+    "name": "Apple Magic Keyboard + Mouse Bundle Space Gray",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "Space Gray"
+  },
+  {
+    "id": "daskeyboard",
+    "name": "Das Keyboard 5Q RGB Mechanical Keyboard",
+    "brand": "Das Keyboard",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "corsairrk",
+    "name": "Corsair K95 RGB Platinum XT Mechanical",
+    "brand": "Corsair",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "logicommo",
+    "name": "Logitech G Pro X 2 Lightspeed Gaming Mouse",
+    "brand": "Logitech",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "corsairviper",
+    "name": "Corsair Sabre RGB Pro Gaming Mouse",
+    "brand": "Corsair",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "elgatofacecam",
+    "name": "Elgato Facecam Pro 1080p 60fps",
+    "brand": "Elgato",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "logicbrio4k",
+    "name": "Logitech Brio 4K Pro 30fps",
+    "brand": "Logitech",
+    "category": "Камеры",
+    "color": "Graphite"
+  },
+  {
+    "id": "benqlamp",
+    "name": "BenQ e-Reading Lamp 2000-6500K",
+    "brand": "BenQ",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "xiaomilamp",
+    "name": "Xiaomi Mi Desk Lamp Pro Smart",
+    "brand": "Xiaomi",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "coway",
+    "name": "Coway AP-1512HH Air Purifier",
+    "brand": "Coway",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "sharpi3000",
+    "name": "Sharp KC-G50EW Air Purifier",
+    "brand": "Sharp",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "levoit",
+    "name": "Levoit Humidifier 1.5L Warm and Cool Mist",
+    "brand": "Levoit",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "medbottle",
+    "name": "MedBottle Smart Humidifier 2.5L",
+    "brand": "MedBottle",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "arellapro",
+    "name": "Arella Pro 30L Dehumidifier",
+    "brand": "Arella",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "nespresso",
+    "name": "Nespresso Vertuo Plus Coffee Machine Piano Black",
+    "brand": "Nespresso",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "dysonmashup",
+    "name": "Nespresso DeLonghi Lattissima Black",
+    "brand": "DeLonghi",
+    "category": "Бытовая техника",
+    "color": "Black"
+  },
+  {
+    "id": "sharkuv",
+    "name": "Shark Navigator NV752 Upright Vacuum",
+    "brand": "Shark",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "lg_detergent",
+    "name": "LG Washer Detergent Capsule 200 Count",
+    "brand": "LG",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "ps5controller",
+    "name": "PlayStation 5 DualSense Controller White",
+    "brand": "Sony",
+    "category": "Игровые консоли",
+    "color": "White"
+  },
+  {
+    "id": "xboxcontroller",
+    "name": "Xbox Series X|S Wireless Controller Black",
+    "brand": "Microsoft",
+    "category": "Игровые консоли",
+    "color": "Black"
+  },
+  {
+    "id": "nintendoprocon",
+    "name": "Nintendo Pro Controller",
+    "brand": "Nintendo",
+    "category": "Игровые консоли",
+    "color": ""
+  },
+  {
+    "id": "secretlab",
+    "name": "Secretlab Titan Evo 2022 Black Fabric",
+    "brand": "Secretlab",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "noblechairs",
+    "name": "Noblechairs Epic Black",
+    "brand": "Noblechairs",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "wifiax200",
+    "name": "TP-Link AX3000 WiFi 6 Router",
+    "brand": "TP-Link",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "meshwifi",
+    "name": "ASUS AiMesh WiFi 6 System 3-Pack",
+    "brand": "ASUS",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "sandisk128",
+    "name": "SanDisk Extreme Pro 128GB USB-C Flash Drive",
+    "brand": "SanDisk",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "kingstondt100",
+    "name": "Kingston DataTraveler 100 64GB USB 3.0",
+    "brand": "Kingston",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "sandisksd256",
+    "name": "SanDisk Extreme SDXC 256GB Card",
+    "brand": "SanDisk",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "samsung256",
+    "name": "Samsung EVO Plus microSD 256GB Card",
+    "brand": "Samsung",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "fitbit_sense2",
+    "name": "Fitbit Sense 2 Smartwatch Black",
+    "brand": "Fitbit",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "garmininstinct",
+    "name": "Garmin Instinct 2 Rugged Smartwatch",
+    "brand": "Garmin",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "fossilgen6",
+    "name": "Fossil Gen 6 Smartwatch Black",
+    "brand": "Fossil",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "tizenphone",
+    "name": "Samsung Galaxy Watch 4 Classic 42mm",
+    "brand": "Samsung",
+    "category": "Часы",
+    "color": ""
+  },
+  {
+    "id": "fitbitpremium",
+    "name": "Fitbit Premium Membership Annual",
+    "brand": "Fitbit",
+    "category": "Аксcessуары",
+    "color": ""
+  }
+]

@@ -1,7 +1,8 @@
 /**
  * Product image and styling utilities
- * Uses local SVG images organized by category folders
- * Images located in /public/images/{category}/{productId}.svg
+ * Uses local PNG images organized by category folders
+ * Images located in /public/images/{category}/{productId}.png
+ * Generated via OpenAI DALL-E API (generate_images.py)
  */
 
 // Category mapping (Russian -> folder name)
@@ -21,15 +22,14 @@ const categoryFolders: Record<string, string> = {
 
 /**
  * Get local product image path based on product ID and category
- * Returns path to SVG in /images/{category}/{id}.svg
+ * Returns path to PNG in /images/{category}/{id}.png
  */
 export function getProductImage(productId: string, _productName: string = '', category: string = ''): string {
   const folder = categoryFolders[category] || '';
   if (folder) {
-    return `/images/${folder}/${productId}.svg`;
+    return `/images/${folder}/${productId}.png`;
   }
-  // Fallback: try all folders (shouldn't happen if category is passed)
-  return `/images/smartphones/${productId}.svg`;
+  return `/images/smartphones/${productId}.png`;
 }
 
 /**
