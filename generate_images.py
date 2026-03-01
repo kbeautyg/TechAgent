@@ -1,35 +1,44 @@
 #!/usr/bin/env python3
 """
-TechAgent — генерация картинок товаров через OpenAI DALL-E API.
+TechAgent — поиск и скачивание РЕАЛЬНЫХ фотографий товаров.
 
 Запуск:
-  pip install openai requests
+  pip install icrawler Pillow
   python generate_images.py
 
-Скрипт:
+Что делает:
 1. Читает products_list.json (294 товара)
-2. Для каждого товара генерирует промпт с точным описанием
-3. Вызывает OpenAI DALL-E API (low cost, square)
-4. Скачивает PNG в public/images/{category}/{id}.png
-5. Пропускает уже скачанные (можно перезапускать)
+2. Для каждого товара формирует СТРОГИЙ поисковый запрос
+3. Ищет реальные фото через Bing Images
+4. Скачивает первую подходящую картинку
+5. Обрезает до квадрата, ресайзит до 400x400
+6. Сохраняет PNG в public/images/{category}/{id}.png
+7. Пропускает уже скачанные — можно перезапускать
 """
 
-import json, os, sys, time, requests, base64
+import json, os, sys, time, re
 from pathlib import Path
 
+try:
+    from icrawler.builtin import BingImageCrawler, GoogleImageCrawler
+except ImportError:
+    print("❌ Установи icrawler: pip install icrawler")
+    sys.exit(1)
+
+try:
+    from PIL import Image
+except ImportError:
+    print("❌ Установи Pillow: pip install Pillow")
+    sys.exit(1)
+
 # ==================== НАСТРОЙКИ ====================
-API_KEY = "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"
-
-# dall-e-2: дешевле, 256x256 = $0.016/img, всего ~$4.70
-# dall-e-3: качественнее, 1024x1024 = $0.04/img, всего ~$11.76
-MODEL = "dall-e-2"
-SIZE = "256x256"        # dall-e-2: 256x256 / 512x512 / 1024x1024
-QUALITY = "standard"    # dall-e-3 поддерживает "hd"
-SLEEP_BETWEEN = 0.5     # секунд между запросами (rate limit)
-SKIP_EXISTING = True    # пропускать если файл уже есть
-
-# Папка куда сохранять
+SKIP_EXISTING = True       # пропускать если файл уже скачан
+IMAGE_SIZE = 400           # финальный размер квадрата (400x400)
+MAX_DOWNLOAD = 3           # скачать до 3 вариантов, выбрать лучший
+SEARCH_ENGINE = "bing"     # "bing" или "google"
+SLEEP_BETWEEN = 0.3        # пауза между запросами
 OUTPUT_DIR = Path("public/images")
+TEMP_DIR = Path("_temp_images")
 
 # Маппинг категорий
 CAT_MAP = {
@@ -46,223 +55,253 @@ CAT_MAP = {
     'Аксcessуары': 'accessories',
 }
 
-# ==================== ПРОМПТЫ ====================
-# Единый стиль: продукт на белом фоне, студийное фото, как в каталоге
 
-def make_prompt(name: str, brand: str, category: str, color: str) -> str:
-    """Строгий промпт: точное название + цвет + тип устройства + белый фон."""
+# ==================== ПОИСКОВЫЕ ЗАПРОСЫ ====================
 
-    # Определяем тип устройства для более точного промпта
-    device_hints = {
-        'Смартфоны': 'smartphone mobile phone',
-        'Ноутбуки': 'laptop notebook computer',
-        'Планшеты': 'tablet device',
-        'Наушники': get_headphone_type(name),
-        'Часы': get_watch_type(name),
-        'Камеры': get_camera_type(name),
-        'Игровые консоли': get_console_type(name),
-        'Бытовая техника': get_appliance_type(name),
-        'Телевизоры': get_tv_type(name),
-        'Аксессуары': get_accessory_type(name),
-    }
+def make_search_query(name: str, brand: str, category: str, color: str) -> str:
+    """
+    Строгий поисковый запрос для каждого товара.
+    Критерии:
+    - Точное название продукта
+    - Цвет если указан
+    - Тип устройства
+    - "product photo white background" для каталожных фото
+    """
 
-    device_type = device_hints.get(category, 'electronic device')
-    color_part = f", {color} color" if color else ""
+    # Убираем объём памяти из запроса (не влияет на внешний вид)
+    clean_name = re.sub(r'\d+GB|\d+TB', '', name).strip()
+    clean_name = re.sub(r'\s+', ' ', clean_name)
 
-    prompt = (
-        f"Professional product photography of {brand} {name}{color_part}, "
-        f"{device_type}, centered on pure white background, "
-        f"studio lighting, high-end e-commerce catalog style, "
-        f"clean minimal composition, no text, no watermarks, square format"
-    )
+    # Цвет
+    color_part = f" {color}" if color and color.lower() not in clean_name.lower() else ""
 
-    return prompt[:1000]  # DALL-E limit
+    # Тип устройства для уточнения
+    device_type = get_device_keyword(name, category)
+
+    query = f"{brand} {clean_name}{color_part} {device_type} product photo white background png"
+
+    return query.strip()
 
 
-def get_headphone_type(name: str) -> str:
+def get_device_keyword(name: str, category: str) -> str:
+    """Ключевое слово типа устройства для уточнения поиска."""
     n = name.lower()
-    if any(k in n for k in ['partybox', 'charge', 'flip', 'bar', 'soundbar', 'hw-q']):
-        return 'portable bluetooth speaker'
-    if any(k in n for k in ['airpods', 'buds', 'wf-', 'tune', 'dime', 'fit pro', 'powerbeats']):
-        return 'true wireless earbuds with charging case'
-    return 'over-ear wireless headphones'
+
+    if category == 'Наушники':
+        if any(k in n for k in ['partybox', 'charge 5', 'flip 6', 'flip 5']):
+            return 'bluetooth speaker'
+        if any(k in n for k in ['bar', 'soundbar', 'hw-q']):
+            return 'soundbar'
+        if any(k in n for k in ['airpods', 'buds', 'wf-', 'tune buds', 'dime', 'fit pro', 'powerbeats']):
+            return 'earbuds'
+        return 'headphones'
+
+    if category == 'Часы':
+        if 'band' in n:
+            return 'fitness band'
+        return 'smartwatch'
+
+    if category == 'Камеры':
+        if any(k in n for k in ['mini', 'mavic', 'avata', 'air 3']):
+            return 'drone'
+        if any(k in n for k in ['gopro', 'hero', 'insta360']):
+            return 'action camera'
+        if any(k in n for k in ['streamcam', 'brio', 'facecam']):
+            return 'webcam'
+        if any(k in n for k in ['ring light']):
+            return 'ring light'
+        if any(k in n for k in ['microphone', 'sm7b', 'at2020']):
+            return 'microphone'
+        if 'tripod' in n:
+            return 'tripod'
+        if 'osmo' in n:
+            return 'gimbal'
+        return 'camera'
+
+    if category == 'Игровые консоли':
+        if 'controller' in n or 'dualsense' in n:
+            return 'controller'
+        if 'switch' in n:
+            return 'console'
+        return 'console'
+
+    if category == 'Бытовая техника':
+        if any(k in n for k in ['v15', 'v12', 'vacuum', 'navigator']):
+            return 'vacuum'
+        if 'airwrap' in n:
+            return 'hair styler'
+        if 'supersonic' in n:
+            return 'hair dryer'
+        if 'purifier' in n:
+            return 'air purifier'
+        if any(k in n for k in ['echo', 'hub', 'nest']):
+            return 'smart speaker'
+        if 'coffee' in n or 'nespresso' in n or 'lattissima' in n:
+            return 'coffee machine'
+        if 'lamp' in n or 'light' in n:
+            return 'lamp'
+        if 'lock' in n:
+            return 'smart lock'
+        return ''
+
+    if category == 'Телевизоры':
+        if any(k in n for k in ['monitor', 'predator', 'proart', 'ultrawide']):
+            return 'monitor'
+        return 'TV'
+
+    if category == 'Аксессуары' or category == 'Аксcessуары':
+        if 'ssd' in n or 'nvme' in n:
+            return 'SSD'
+        if 'keyboard' in n:
+            return 'keyboard'
+        if 'mouse' in n:
+            return 'mouse'
+        if 'scooter' in n:
+            return 'electric scooter'
+        if 'chair' in n:
+            return 'gaming chair'
+        if 'hub' in n:
+            return 'USB hub'
+        if 'case' in n:
+            return 'phone case'
+        if 'airtag' in n:
+            return 'tracker'
+        if 'router' in n or 'wifi' in n:
+            return 'router'
+        return ''
+
+    return ''  # смартфоны, ноутбуки, планшеты — название и так достаточно
 
 
-def get_watch_type(name: str) -> str:
-    n = name.lower()
-    if 'band' in n:
-        return 'fitness tracker band'
-    return 'smartwatch with sport band'
+# ==================== СКАЧИВАНИЕ ====================
 
+def download_image(query: str, save_dir: Path, filename: str) -> bool:
+    """
+    Ищет изображение через Bing/Google Images и скачивает.
+    Возвращает True если успешно.
+    """
+    temp = TEMP_DIR / filename.replace('.png', '')
+    temp.mkdir(parents=True, exist_ok=True)
 
-def get_camera_type(name: str) -> str:
-    n = name.lower()
-    if any(k in n for k in ['dji', 'mini', 'mavic', 'avata', 'air 3']):
-        return 'drone quadcopter'
-    if any(k in n for k in ['gopro', 'hero', 'insta360']):
-        return 'action camera'
-    if any(k in n for k in ['streamcam', 'brio', 'facecam']):
-        return 'webcam'
-    if any(k in n for k in ['ring light', 'neewer']):
-        return 'ring light for photography'
-    if any(k in n for k in ['microphone', 'sm7b', 'at2020']):
-        return 'studio microphone'
-    if any(k in n for k in ['tripod', 'manfrotto']):
-        return 'camera tripod'
-    if 'osmo' in n:
-        return 'handheld gimbal stabilizer'
-    return 'mirrorless digital camera'
-
-
-def get_console_type(name: str) -> str:
-    n = name.lower()
-    if any(k in n for k in ['controller', 'dualsense']):
-        return 'gaming controller gamepad'
-    if 'switch' in n:
-        return 'Nintendo Switch portable gaming console'
-    return 'gaming console'
-
-
-def get_appliance_type(name: str) -> str:
-    n = name.lower()
-    if any(k in n for k in ['v15', 'v12', 'vacuum', 'navigator']):
-        return 'cordless stick vacuum cleaner'
-    if 'airwrap' in n:
-        return 'hair styling tool curling iron'
-    if 'supersonic' in n:
-        return 'hair dryer'
-    if 'purifier' in n:
-        return 'air purifier'
-    if any(k in n for k in ['echo', 'hub']):
-        return 'smart display speaker'
-    if 'nest audio' in n or 'nest speaker' in n:
-        return 'smart speaker'
-    if 'humidifier' in n:
-        return 'humidifier'
-    if 'dehumidifier' in n:
-        return 'dehumidifier'
-    if any(k in n for k in ['nespresso', 'coffee', 'lattissima']):
-        return 'coffee machine'
-    if any(k in n for k in ['lamp', 'light']):
-        return 'desk lamp'
-    if any(k in n for k in ['lock']):
-        return 'smart door lock'
-    if 'washer' in n or 'detergent' in n:
-        return 'washing machine accessory'
-    return 'home appliance'
-
-
-def get_tv_type(name: str) -> str:
-    n = name.lower()
-    if any(k in n for k in ['monitor', 'predator', 'proart', 'ultrawide']):
-        return 'computer monitor display'
-    return 'flat screen television TV'
-
-
-def get_accessory_type(name: str) -> str:
-    n = name.lower()
-    if 'hub' in n or 'usb' in n:
-        return 'USB hub adapter'
-    if 'cable' in n:
-        return 'charging cable'
-    if 'case' in n or 'otterbox' in n or 'spigen' in n:
-        return 'phone protective case'
-    if 'screen protector' in n or 'tempered' in n:
-        return 'screen protector glass'
-    if 'stand' in n:
-        return 'device stand holder'
-    if 'charger' in n or 'charging' in n or 'magsafe' in n:
-        return 'wireless charger'
-    if 'battery' in n or 'power' in n:
-        return 'portable power bank'
-    if 'ssd' in n or 'nvme' in n:
-        return 'solid state drive SSD'
-    if any(k in n for k in ['hdd', 'barracuda', 'backup']):
-        return 'external hard drive'
-    if 'airtag' in n:
-        return 'Bluetooth item tracker'
-    if 'keyboard' in n:
-        return 'wireless keyboard'
-    if 'mouse' in n:
-        return 'wireless mouse'
-    if 'scooter' in n:
-        return 'electric scooter'
-    if 'bike' in n:
-        return 'electric bicycle'
-    if 'router' in n or 'wifi' in n or 'mesh' in n:
-        return 'WiFi router'
-    if any(k in n for k in ['sd card', 'microsd', 'sdxc', 'flash drive', 'datatraveler']):
-        return 'memory card or flash drive'
-    if 'chair' in n or 'secretlab' in n or 'noblechairs' in n:
-        return 'gaming chair'
-    if 'tile' in n:
-        return 'Bluetooth tracker'
-    return 'electronic accessory'
-
-
-# ==================== ГЕНЕРАЦИЯ ====================
-
-def generate_image(prompt: str, api_key: str) -> bytes | None:
-    """Вызов OpenAI Images API, возвращает PNG bytes или None."""
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-
-    body = {
-        "model": MODEL,
-        "prompt": prompt,
-        "n": 1,
-        "size": SIZE,
-        "response_format": "b64_json"
-    }
-
-    # dall-e-3 поддерживает quality
-    if MODEL == "dall-e-3":
-        body["quality"] = QUALITY
+    # Очистим temp
+    for f in temp.glob('*'):
+        f.unlink()
 
     try:
-        resp = requests.post(
-            "https://api.openai.com/v1/images/generations",
-            headers=headers,
-            json=body,
-            timeout=120
-        )
+        if SEARCH_ENGINE == "google":
+            crawler = GoogleImageCrawler(
+                storage={'root_dir': str(temp)},
+                log_level='ERROR'  # тихий режим
+            )
+            crawler.crawl(
+                keyword=query,
+                max_num=MAX_DOWNLOAD,
+                min_size=(150, 150),
+                file_idx_offset=0
+            )
+        else:
+            crawler = BingImageCrawler(
+                storage={'root_dir': str(temp)},
+                log_level='ERROR'
+            )
+            crawler.crawl(
+                keyword=query,
+                max_num=MAX_DOWNLOAD,
+                min_size=(150, 150),
+                file_idx_offset=0
+            )
+    except Exception as e:
+        print(f"  ⚠️  Ошибка поиска: {e}")
+        return False
 
-        if resp.status_code == 429:
-            # Rate limited — подождать и повторить
-            retry_after = int(resp.headers.get("Retry-After", 10))
-            print(f"  ⏳ Rate limited, waiting {retry_after}s...")
-            time.sleep(retry_after)
-            return generate_image(prompt, api_key)  # retry
+    # Находим скачанные файлы
+    downloaded = sorted(temp.glob('*'))
+    if not downloaded:
+        print(f"  ❌ Ничего не найдено")
+        return False
 
-        if resp.status_code != 200:
-            print(f"  ❌ API Error {resp.status_code}: {resp.text[:200]}")
-            return None
+    # Берём первую картинку, обрабатываем
+    best = None
+    best_score = 0
 
-        data = resp.json()
-        b64 = data["data"][0]["b64_json"]
-        return base64.b64decode(b64)
+    for img_path in downloaded:
+        try:
+            img = Image.open(img_path)
+
+            # Пропускаем слишком маленькие
+            w, h = img.size
+            if w < 100 or h < 100:
+                continue
+
+            # Оценка: предпочитаем квадратные и достаточно большие
+            ratio = min(w, h) / max(w, h)  # 1.0 = идеальный квадрат
+            size_score = min(w, h) / 400    # чем ближе к 400, тем лучше
+            score = ratio * 0.7 + min(size_score, 1.0) * 0.3
+
+            if score > best_score:
+                best_score = score
+                best = img_path
+
+        except Exception:
+            continue
+
+    if not best:
+        print(f"  ❌ Нет подходящих картинок")
+        return False
+
+    # Обработка: обрезка до квадрата + ресайз
+    try:
+        img = Image.open(best).convert('RGB')
+        w, h = img.size
+
+        # Обрезка до квадрата (по центру)
+        if w != h:
+            size = min(w, h)
+            left = (w - size) // 2
+            top = (h - size) // 2
+            img = img.crop((left, top, left + size, top + size))
+
+        # Ресайз до 400x400
+        img = img.resize((IMAGE_SIZE, IMAGE_SIZE), Image.LANCZOS)
+
+        # Сохраняем
+        out_path = save_dir / filename
+        img.save(out_path, 'PNG', quality=95)
+        return True
 
     except Exception as e:
-        print(f"  ❌ Error: {e}")
-        return None
+        print(f"  ⚠️  Ошибка обработки: {e}")
+        return False
 
+    finally:
+        # Чистим temp
+        for f in temp.glob('*'):
+            try:
+                f.unlink()
+            except:
+                pass
+        try:
+            temp.rmdir()
+        except:
+            pass
+
+
+# ==================== MAIN ====================
 
 def main():
-    # Загружаем список товаров
     with open("products_list.json", "r") as f:
         products = json.load(f)
 
     print(f"📦 Всего товаров: {len(products)}")
-    print(f"🎨 Модель: {MODEL}, размер: {SIZE}")
-    print(f"💰 Примерная стоимость: ${len(products) * (0.016 if MODEL == 'dall-e-2' else 0.04):.2f}")
+    print(f"🔍 Поисковик: {SEARCH_ENGINE}")
+    print(f"📐 Размер: {IMAGE_SIZE}x{IMAGE_SIZE}")
     print(f"📂 Папка: {OUTPUT_DIR}")
     print()
 
     # Создаём папки
-    for folder in CAT_MAP.values():
+    for folder in set(CAT_MAP.values()):
         (OUTPUT_DIR / folder).mkdir(parents=True, exist_ok=True)
+    TEMP_DIR.mkdir(exist_ok=True)
 
     success = 0
     skipped = 0
@@ -279,38 +318,53 @@ def main():
         folder = CAT_MAP.get(category, "accessories")
         filepath = OUTPUT_DIR / folder / f"{pid}.png"
 
-        # Пропуск если уже есть
+        # Пропуск если уже скачан
         if SKIP_EXISTING and filepath.exists() and filepath.stat().st_size > 1000:
             skipped += 1
             continue
 
-        prompt = make_prompt(name, brand, category, color)
+        query = make_search_query(name, brand, category, color)
 
         print(f"[{i+1}/{len(products)}] {name}")
-        print(f"  📝 {prompt[:100]}...")
+        print(f"  🔍 \"{query}\"")
 
-        img_bytes = generate_image(prompt, API_KEY)
+        ok = download_image(query, OUTPUT_DIR / folder, f"{pid}.png")
 
-        if img_bytes and len(img_bytes) > 500:
-            filepath.write_bytes(img_bytes)
-            print(f"  ✅ Saved: {filepath} ({len(img_bytes)} bytes)")
+        if ok:
+            size = filepath.stat().st_size
+            print(f"  ✅ {filepath} ({size:,} bytes)")
             success += 1
         else:
-            print(f"  ❌ Failed!")
             failed += 1
-            failed_list.append(pid)
+            failed_list.append({'id': pid, 'name': name, 'query': query})
 
         time.sleep(SLEEP_BETWEEN)
 
+    # Чистим temp
+    try:
+        import shutil
+        shutil.rmtree(TEMP_DIR, ignore_errors=True)
+    except:
+        pass
+
     print()
-    print("=" * 50)
-    print(f"✅ Успешно: {success}")
+    print("=" * 60)
+    print(f"✅ Скачано:    {success}")
     print(f"⏭️  Пропущено: {skipped}")
-    print(f"❌ Ошибки: {failed}")
+    print(f"❌ Не найдено: {failed}")
+
     if failed_list:
-        print(f"   Не удалось: {', '.join(failed_list)}")
+        print(f"\nНе удалось найти фото для:")
+        for item in failed_list:
+            print(f"  - {item['name']} (запрос: {item['query']})")
+
+        # Сохраняем список неудач для повторной попытки
+        with open("failed_images.json", "w") as f:
+            json.dump(failed_list, f, ensure_ascii=False, indent=2)
+        print(f"\nСписок сохранён в failed_images.json — можно поправить запросы и перезапустить")
+
     print()
-    print("Готово! Теперь запусти: npm run build")
+    print("Готово! Запусти: npm run build")
 
 
 if __name__ == "__main__":
