@@ -3,15 +3,16 @@
 TechAgent — скачивание реальных фото товаров с DNS-shop.ru
 
 Запуск:
-  pip install requests beautifulsoup4 Pillow lxml
+  pip install undetected-chromedriver selenium Pillow requests
   python generate_images.py
 
 Как работает:
-1. Для каждого товара ищет на dns-shop.ru
-2. Берёт первый результат
-3. Скачивает главное фото товара (большое, на белом фоне)
-4. Обрезает до квадрата 400x400
-5. Сохраняет в public/images/{category}/{id}.png
+1. Открывает Chrome через undetected-chromedriver (обходит защиту DNS)
+2. Для каждого товара ищет на dns-shop.ru
+3. Заходит на карточку первого результата
+4. Берёт главное фото из product-images-slider__main-img
+5. Скачивает, обрезает до квадрата 400x400
+6. Сохраняет в public/images/{category}/{id}.png
 """
 
 import json, os, sys, time, re, io
@@ -19,18 +20,28 @@ from pathlib import Path
 from urllib.parse import quote_plus
 
 try:
+    import undetected_chromedriver as uc
+    from selenium.webdriver.common.by import By
+    from selenium.webdriver.support.ui import WebDriverWait
+    from selenium.webdriver.support import expected_conditions as EC
+except ImportError:
+    print("Установи зависимости:")
+    print("  pip install undetected-chromedriver selenium")
+    sys.exit(1)
+
+try:
     import requests
-    from bs4 import BeautifulSoup
     from PIL import Image
 except ImportError:
     print("Установи зависимости:")
-    print("  pip install requests beautifulsoup4 Pillow lxml")
+    print("  pip install requests Pillow")
     sys.exit(1)
 
 # ==================== НАСТРОЙКИ ====================
 SKIP_EXISTING = True
 IMAGE_SIZE = 400
-SLEEP_BETWEEN = 1.5  # пауза между запросами к DNS (не спамить)
+SLEEP_BETWEEN = 2        # пауза между товарами
+SLEEP_PAGE_LOAD = 3      # ждать загрузку страницы
 OUTPUT_DIR = Path("public/images")
 
 CAT_MAP = {
@@ -47,147 +58,131 @@ CAT_MAP = {
     'Аксcessуары': 'accessories',
 }
 
-HEADERS = {
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-    'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'DNT': '1',
-    'Connection': 'keep-alive',
-    'Upgrade-Insecure-Requests': '1',
-}
 
-
-# ==================== ПОИСКОВЫЕ ЗАПРОСЫ ====================
+# ==================== ПОИСКОВЫЙ ЗАПРОС ====================
 
 def make_search_query(name: str, brand: str, category: str, color: str) -> str:
-    """Формирует запрос для поиска на DNS."""
-    # Убираем объём — не влияет на внешний вид
+    """Убираем объём памяти — не влияет на внешний вид."""
     clean = re.sub(r'\s*\d+GB|\d+TB', '', name).strip()
     clean = re.sub(r'\s+', ' ', clean)
     return clean
 
 
-# ==================== СКАЧИВАНИЕ С DNS ====================
+# ==================== БРАУЗЕР ====================
 
-def create_session():
-    """Создаёт сессию с правильными headers."""
-    s = requests.Session()
-    s.headers.update(HEADERS)
-    # Сначала зайдём на главную чтобы получить куки
-    try:
-        s.get('https://www.dns-shop.ru/', timeout=15)
-        time.sleep(1)
-    except:
-        pass
-    return s
+def create_driver():
+    """Создаёт Chrome через undetected-chromedriver."""
+    options = uc.ChromeOptions()
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-gpu')
+    options.add_argument('--window-size=1920,1080')
+    # Убираем headless — DNS лучше работает с видимым окном
+    # Если хочешь без окна — раскомментируй:
+    # options.add_argument('--headless=new')
+
+    driver = uc.Chrome(options=options)
+    driver.set_page_load_timeout(30)
+    return driver
 
 
-def search_dns(session: requests.Session, query: str) -> str | None:
+def get_image_from_dns(driver, query: str) -> str | None:
     """
-    Ищет товар на DNS, возвращает URL главного фото первого результата.
-    Фото из поисковой выдачи маленькие — переходим на страницу товара.
+    1. Ищет товар на DNS
+    2. Кликает на первый результат
+    3. Берёт src из product-images-slider__main-img
+    4. Заменяет размер на 500x500
     """
     search_url = f"https://www.dns-shop.ru/search/?q={quote_plus(query)}"
 
     try:
-        resp = session.get(search_url, timeout=15)
-        if resp.status_code != 200:
-            print(f"  ⚠️  DNS ответил {resp.status_code}")
-            return None
+        driver.get(search_url)
+        time.sleep(SLEEP_PAGE_LOAD)
 
-        soup = BeautifulSoup(resp.text, 'lxml')
-
-        # Ищем ссылки на товары в результатах поиска
-        # DNS использует разные классы, пробуем несколько вариантов
+        # Ищем первую ссылку на товар в результатах
         product_link = None
 
-        # Вариант 1: catalog-product__name (основной каталог)
-        link = soup.select_one('a.catalog-product__name')
-        if link and link.get('href'):
-            product_link = link['href']
+        # Пробуем найти ссылку на карточку товара
+        selectors = [
+            'a.catalog-product__name',
+            'a[data-id]',
+            '.catalog-product a[href*="/product/"]',
+            'a[href*="/product/"]',
+        ]
 
-        # Вариант 2: product-card__name
-        if not product_link:
-            link = soup.select_one('a[data-id]')
-            if link and link.get('href'):
-                product_link = link['href']
+        for sel in selectors:
+            try:
+                links = driver.find_elements(By.CSS_SELECTOR, sel)
+                for link in links:
+                    href = link.get_attribute('href')
+                    if href and '/product/' in href:
+                        product_link = href
+                        break
+            except:
+                pass
+            if product_link:
+                break
 
-        # Вариант 3: любая ссылка на /product/
         if not product_link:
-            for a in soup.find_all('a', href=True):
-                if '/product/' in a['href']:
-                    product_link = a['href']
-                    break
-
-        if not product_link:
-            # Попробуем найти картинку прямо в результатах
-            img = soup.select_one('img.catalog-product__image')
-            if img:
-                src = img.get('data-src') or img.get('src') or ''
-                if src and 'dns-shop' in src:
-                    # Увеличиваем размер в URL
-                    src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
-                    src = re.sub(r'/wm/\d+/\d+/', '/fit/500/500/', src)
-                    return src if src.startswith('http') else f"https:{src}"
-            print(f"  ❌ Товар не найден в результатах DNS")
+            print("  ❌ Товар не найден в поиске")
             return None
 
-        # Переходим на страницу товара
-        if not product_link.startswith('http'):
-            product_link = f"https://www.dns-shop.ru{product_link}"
+        # Переходим на карточку товара
+        driver.get(product_link)
+        time.sleep(SLEEP_PAGE_LOAD)
 
-        time.sleep(0.5)
-        resp2 = session.get(product_link, timeout=15)
-        if resp2.status_code != 200:
+        # Берём главное фото: product-images-slider__main-img
+        img_url = None
+
+        try:
+            main_img = driver.find_element(By.CSS_SELECTOR, 'img.product-images-slider__main-img')
+            img_url = main_img.get_attribute('src')
+        except:
+            pass
+
+        # Fallback: первая картинка из слайдера
+        if not img_url:
+            try:
+                slider_img = driver.find_element(By.CSS_SELECTOR, 'img.product-images-slider__img')
+                img_url = slider_img.get_attribute('src') or slider_img.get_attribute('data-src')
+            except:
+                pass
+
+        # Fallback: og:image
+        if not img_url:
+            try:
+                og = driver.find_element(By.CSS_SELECTOR, 'meta[property="og:image"]')
+                img_url = og.get_attribute('content')
+            except:
+                pass
+
+        if not img_url:
+            print("  ❌ Фото не найдено на карточке")
             return None
 
-        soup2 = BeautifulSoup(resp2.text, 'lxml')
+        # Увеличиваем размер в URL: /fit/45/45/ -> /fit/500/500/
+        img_url = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', img_url)
 
-        # Ищем главное фото товара на странице
-        # Вариант 1: основной слайдер
-        img = soup2.select_one('img.product-images-slider__main-img')
-        if img:
-            src = img.get('src') or img.get('data-src') or ''
-            if src:
-                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
-                return src if src.startswith('http') else f"https:{src}"
+        # Убираем .webp если есть
+        img_url = img_url.replace('.jpg.webp', '.jpg').replace('.png.webp', '.png')
 
-        # Вариант 2: галерея
-        img = soup2.select_one('img.product-images-slider__img')
-        if img:
-            src = img.get('data-src') or img.get('src') or ''
-            if src:
-                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
-                return src if src.startswith('http') else f"https:{src}"
+        if not img_url.startswith('http'):
+            img_url = f"https:{img_url}"
 
-        # Вариант 3: OpenGraph image
-        og = soup2.select_one('meta[property="og:image"]')
-        if og and og.get('content'):
-            return og['content']
+        return img_url
 
-        # Вариант 4: любая картинка с dns-shop CDN
-        for img in soup2.find_all('img'):
-            src = img.get('data-src') or img.get('src') or ''
-            if 'c.dns-shop.ru' in src or 'c1.dns-shop.ru' in src:
-                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
-                return src if src.startswith('http') else f"https:{src}"
-
-        print(f"  ❌ Фото не найдено на странице товара")
-        return None
-
-    except requests.Timeout:
-        print(f"  ⚠️  Таймаут")
-        return None
     except Exception as e:
         print(f"  ⚠️  Ошибка: {e}")
         return None
 
 
-def download_and_crop(session: requests.Session, url: str, save_path: Path) -> bool:
-    """Скачивает картинку, обрезает до квадрата, ресайзит до 400x400."""
+def download_and_crop(url: str, save_path: Path) -> bool:
+    """Скачивает картинку, обрезает до квадрата 400x400."""
     try:
-        resp = session.get(url, timeout=30)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+            'Referer': 'https://www.dns-shop.ru/'
+        }
+        resp = requests.get(url, headers=headers, timeout=30)
         if resp.status_code != 200 or len(resp.content) < 1000:
             return False
 
@@ -204,7 +199,7 @@ def download_and_crop(session: requests.Session, url: str, save_path: Path) -> b
             top = (h - size) // 2
             img = img.crop((left, top, left + size, top + size))
 
-        # Ресайз
+        # Ресайз до 400x400
         img = img.resize((IMAGE_SIZE, IMAGE_SIZE), Image.LANCZOS)
 
         save_path.parent.mkdir(parents=True, exist_ok=True)
@@ -223,7 +218,7 @@ def main():
         products = json.load(f)
 
     print(f"📦 Всего товаров: {len(products)}")
-    print(f"🔍 Источник: dns-shop.ru")
+    print(f"🔍 Источник: dns-shop.ru (через Chrome)")
     print(f"📐 Размер: {IMAGE_SIZE}x{IMAGE_SIZE}")
     print(f"📂 Папка: {OUTPUT_DIR}")
     print()
@@ -232,55 +227,92 @@ def main():
     for folder in set(CAT_MAP.values()):
         (OUTPUT_DIR / folder).mkdir(parents=True, exist_ok=True)
 
-    # Создаём сессию
-    print("🌐 Подключаюсь к dns-shop.ru...")
-    session = create_session()
-    print("✅ Подключено")
+    # Считаем сколько нужно скачать
+    to_download = 0
+    for p in products:
+        folder = CAT_MAP.get(p["category"], "accessories")
+        filepath = OUTPUT_DIR / folder / f"{p['id']}.png"
+        if not (SKIP_EXISTING and filepath.exists() and filepath.stat().st_size > 1000):
+            to_download += 1
+
+    if to_download == 0:
+        print("✅ Все картинки уже скачаны!")
+        return
+
+    print(f"📥 Нужно скачать: {to_download} картинок")
+    print(f"⏱️  Примерное время: ~{to_download * (SLEEP_BETWEEN + SLEEP_PAGE_LOAD) // 60} мин")
     print()
+
+    # Запускаем Chrome
+    print("🌐 Запускаю Chrome...")
+    driver = create_driver()
+    print("✅ Chrome запущен")
+    print()
+
+    # Сначала зайдём на главную DNS чтобы получить куки
+    try:
+        driver.get('https://www.dns-shop.ru/')
+        time.sleep(5)
+        print("✅ DNS-shop.ru загружен")
+        print()
+    except Exception as e:
+        print(f"⚠️  Не удалось загрузить DNS: {e}")
 
     success = 0
     skipped = 0
     failed = 0
     failed_list = []
 
-    for i, p in enumerate(products):
-        pid = p["id"]
-        name = p["name"]
-        brand = p["brand"]
-        category = p["category"]
-        color = p.get("color", "")
+    try:
+        for i, p in enumerate(products):
+            pid = p["id"]
+            name = p["name"]
+            brand = p["brand"]
+            category = p["category"]
+            color = p.get("color", "")
 
-        folder = CAT_MAP.get(category, "accessories")
-        filepath = OUTPUT_DIR / folder / f"{pid}.png"
+            folder = CAT_MAP.get(category, "accessories")
+            filepath = OUTPUT_DIR / folder / f"{pid}.png"
 
-        # Пропуск если уже скачан
-        if SKIP_EXISTING and filepath.exists() and filepath.stat().st_size > 1000:
-            skipped += 1
-            continue
+            # Пропуск если уже скачан
+            if SKIP_EXISTING and filepath.exists() and filepath.stat().st_size > 1000:
+                skipped += 1
+                continue
 
-        query = make_search_query(name, brand, category, color)
+            query = make_search_query(name, brand, category, color)
 
-        print(f"[{i+1}/{len(products)}] {name}")
-        print(f"  🔍 DNS: \"{query}\"")
+            print(f"[{i+1}/{len(products)}] {name}")
+            print(f"  🔍 DNS: \"{query}\"")
 
-        img_url = search_dns(session, query)
+            img_url = get_image_from_dns(driver, query)
 
-        if img_url:
-            print(f"  📥 {img_url[:80]}...")
-            ok = download_and_crop(session, img_url, filepath)
-            if ok:
-                size = filepath.stat().st_size
-                print(f"  ✅ {filepath} ({size:,} bytes)")
-                success += 1
+            if img_url:
+                print(f"  📥 {img_url[:80]}...")
+                ok = download_and_crop(img_url, filepath)
+                if ok:
+                    size = filepath.stat().st_size
+                    print(f"  ✅ {filepath} ({size:,} bytes)")
+                    success += 1
+                else:
+                    print(f"  ❌ Не удалось скачать картинку")
+                    failed += 1
+                    failed_list.append({'id': pid, 'name': name, 'query': query})
             else:
-                print(f"  ❌ Не удалось скачать")
                 failed += 1
                 failed_list.append({'id': pid, 'name': name, 'query': query})
-        else:
-            failed += 1
-            failed_list.append({'id': pid, 'name': name, 'query': query})
 
-        time.sleep(SLEEP_BETWEEN)
+            time.sleep(SLEEP_BETWEEN)
+
+    except KeyboardInterrupt:
+        print("\n\n⏹️  Остановлено пользователем (Ctrl+C)")
+    except Exception as e:
+        print(f"\n⚠️  Ошибка: {e}")
+    finally:
+        # Закрываем браузер
+        try:
+            driver.quit()
+        except:
+            pass
 
     print()
     print("=" * 60)
