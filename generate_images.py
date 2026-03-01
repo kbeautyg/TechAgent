@@ -1,46 +1,38 @@
 #!/usr/bin/env python3
 """
-TechAgent — поиск и скачивание РЕАЛЬНЫХ фотографий товаров.
+TechAgent — скачивание реальных фото товаров с DNS-shop.ru
 
 Запуск:
-  pip install icrawler Pillow
+  pip install requests beautifulsoup4 Pillow lxml
   python generate_images.py
 
-Что делает:
-1. Читает products_list.json (294 товара)
-2. Для каждого товара формирует СТРОГИЙ поисковый запрос
-3. Ищет реальные фото через Bing Images
-4. Скачивает первую подходящую картинку
-5. Обрезает до квадрата, ресайзит до 400x400
-6. Сохраняет PNG в public/images/{category}/{id}.png
-7. Пропускает уже скачанные — можно перезапускать
+Как работает:
+1. Для каждого товара ищет на dns-shop.ru
+2. Берёт первый результат
+3. Скачивает главное фото товара (большое, на белом фоне)
+4. Обрезает до квадрата 400x400
+5. Сохраняет в public/images/{category}/{id}.png
 """
 
-import json, os, sys, time, re
+import json, os, sys, time, re, io
 from pathlib import Path
+from urllib.parse import quote_plus
 
 try:
-    from icrawler.builtin import BingImageCrawler, GoogleImageCrawler
-except ImportError:
-    print("❌ Установи icrawler: pip install icrawler")
-    sys.exit(1)
-
-try:
+    import requests
+    from bs4 import BeautifulSoup
     from PIL import Image
 except ImportError:
-    print("❌ Установи Pillow: pip install Pillow")
+    print("Установи зависимости:")
+    print("  pip install requests beautifulsoup4 Pillow lxml")
     sys.exit(1)
 
 # ==================== НАСТРОЙКИ ====================
-SKIP_EXISTING = True       # пропускать если файл уже скачан
-IMAGE_SIZE = 400           # финальный размер квадрата (400x400)
-MAX_DOWNLOAD = 3           # скачать до 3 вариантов, выбрать лучший
-SEARCH_ENGINE = "bing"     # "bing" или "google"
-SLEEP_BETWEEN = 0.3        # пауза между запросами
+SKIP_EXISTING = True
+IMAGE_SIZE = 400
+SLEEP_BETWEEN = 1.5  # пауза между запросами к DNS (не спамить)
 OUTPUT_DIR = Path("public/images")
-TEMP_DIR = Path("_temp_images")
 
-# Маппинг категорий
 CAT_MAP = {
     'Смартфоны': 'smartphones',
     'Ноутбуки': 'laptops',
@@ -55,235 +47,173 @@ CAT_MAP = {
     'Аксcessуары': 'accessories',
 }
 
+HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
+    'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+    'Accept-Encoding': 'gzip, deflate, br',
+    'DNT': '1',
+    'Connection': 'keep-alive',
+    'Upgrade-Insecure-Requests': '1',
+}
+
 
 # ==================== ПОИСКОВЫЕ ЗАПРОСЫ ====================
 
 def make_search_query(name: str, brand: str, category: str, color: str) -> str:
+    """Формирует запрос для поиска на DNS."""
+    # Убираем объём — не влияет на внешний вид
+    clean = re.sub(r'\s*\d+GB|\d+TB', '', name).strip()
+    clean = re.sub(r'\s+', ' ', clean)
+    return clean
+
+
+# ==================== СКАЧИВАНИЕ С DNS ====================
+
+def create_session():
+    """Создаёт сессию с правильными headers."""
+    s = requests.Session()
+    s.headers.update(HEADERS)
+    # Сначала зайдём на главную чтобы получить куки
+    try:
+        s.get('https://www.dns-shop.ru/', timeout=15)
+        time.sleep(1)
+    except:
+        pass
+    return s
+
+
+def search_dns(session: requests.Session, query: str) -> str | None:
     """
-    Строгий поисковый запрос для каждого товара.
-    Критерии:
-    - Точное название продукта
-    - Цвет если указан
-    - Тип устройства
-    - "product photo white background" для каталожных фото
+    Ищет товар на DNS, возвращает URL главного фото первого результата.
+    Фото из поисковой выдачи маленькие — переходим на страницу товара.
     """
-
-    # Убираем объём памяти из запроса (не влияет на внешний вид)
-    clean_name = re.sub(r'\d+GB|\d+TB', '', name).strip()
-    clean_name = re.sub(r'\s+', ' ', clean_name)
-
-    # Цвет
-    color_part = f" {color}" if color and color.lower() not in clean_name.lower() else ""
-
-    # Тип устройства для уточнения
-    device_type = get_device_keyword(name, category)
-
-    query = f"{brand} {clean_name}{color_part} {device_type} product photo white background png"
-
-    return query.strip()
-
-
-def get_device_keyword(name: str, category: str) -> str:
-    """Ключевое слово типа устройства для уточнения поиска."""
-    n = name.lower()
-
-    if category == 'Наушники':
-        if any(k in n for k in ['partybox', 'charge 5', 'flip 6', 'flip 5']):
-            return 'bluetooth speaker'
-        if any(k in n for k in ['bar', 'soundbar', 'hw-q']):
-            return 'soundbar'
-        if any(k in n for k in ['airpods', 'buds', 'wf-', 'tune buds', 'dime', 'fit pro', 'powerbeats']):
-            return 'earbuds'
-        return 'headphones'
-
-    if category == 'Часы':
-        if 'band' in n:
-            return 'fitness band'
-        return 'smartwatch'
-
-    if category == 'Камеры':
-        if any(k in n for k in ['mini', 'mavic', 'avata', 'air 3']):
-            return 'drone'
-        if any(k in n for k in ['gopro', 'hero', 'insta360']):
-            return 'action camera'
-        if any(k in n for k in ['streamcam', 'brio', 'facecam']):
-            return 'webcam'
-        if any(k in n for k in ['ring light']):
-            return 'ring light'
-        if any(k in n for k in ['microphone', 'sm7b', 'at2020']):
-            return 'microphone'
-        if 'tripod' in n:
-            return 'tripod'
-        if 'osmo' in n:
-            return 'gimbal'
-        return 'camera'
-
-    if category == 'Игровые консоли':
-        if 'controller' in n or 'dualsense' in n:
-            return 'controller'
-        if 'switch' in n:
-            return 'console'
-        return 'console'
-
-    if category == 'Бытовая техника':
-        if any(k in n for k in ['v15', 'v12', 'vacuum', 'navigator']):
-            return 'vacuum'
-        if 'airwrap' in n:
-            return 'hair styler'
-        if 'supersonic' in n:
-            return 'hair dryer'
-        if 'purifier' in n:
-            return 'air purifier'
-        if any(k in n for k in ['echo', 'hub', 'nest']):
-            return 'smart speaker'
-        if 'coffee' in n or 'nespresso' in n or 'lattissima' in n:
-            return 'coffee machine'
-        if 'lamp' in n or 'light' in n:
-            return 'lamp'
-        if 'lock' in n:
-            return 'smart lock'
-        return ''
-
-    if category == 'Телевизоры':
-        if any(k in n for k in ['monitor', 'predator', 'proart', 'ultrawide']):
-            return 'monitor'
-        return 'TV'
-
-    if category == 'Аксессуары' or category == 'Аксcessуары':
-        if 'ssd' in n or 'nvme' in n:
-            return 'SSD'
-        if 'keyboard' in n:
-            return 'keyboard'
-        if 'mouse' in n:
-            return 'mouse'
-        if 'scooter' in n:
-            return 'electric scooter'
-        if 'chair' in n:
-            return 'gaming chair'
-        if 'hub' in n:
-            return 'USB hub'
-        if 'case' in n:
-            return 'phone case'
-        if 'airtag' in n:
-            return 'tracker'
-        if 'router' in n or 'wifi' in n:
-            return 'router'
-        return ''
-
-    return ''  # смартфоны, ноутбуки, планшеты — название и так достаточно
-
-
-# ==================== СКАЧИВАНИЕ ====================
-
-def download_image(query: str, save_dir: Path, filename: str) -> bool:
-    """
-    Ищет изображение через Bing/Google Images и скачивает.
-    Возвращает True если успешно.
-    """
-    temp = TEMP_DIR / filename.replace('.png', '')
-    temp.mkdir(parents=True, exist_ok=True)
-
-    # Очистим temp
-    for f in temp.glob('*'):
-        f.unlink()
+    search_url = f"https://www.dns-shop.ru/search/?q={quote_plus(query)}"
 
     try:
-        if SEARCH_ENGINE == "google":
-            crawler = GoogleImageCrawler(
-                storage={'root_dir': str(temp)},
-                log_level='ERROR'  # тихий режим
-            )
-            crawler.crawl(
-                keyword=query,
-                max_num=MAX_DOWNLOAD,
-                min_size=(150, 150),
-                file_idx_offset=0
-            )
-        else:
-            crawler = BingImageCrawler(
-                storage={'root_dir': str(temp)},
-                log_level='ERROR'
-            )
-            crawler.crawl(
-                keyword=query,
-                max_num=MAX_DOWNLOAD,
-                min_size=(150, 150),
-                file_idx_offset=0
-            )
+        resp = session.get(search_url, timeout=15)
+        if resp.status_code != 200:
+            print(f"  ⚠️  DNS ответил {resp.status_code}")
+            return None
+
+        soup = BeautifulSoup(resp.text, 'lxml')
+
+        # Ищем ссылки на товары в результатах поиска
+        # DNS использует разные классы, пробуем несколько вариантов
+        product_link = None
+
+        # Вариант 1: catalog-product__name (основной каталог)
+        link = soup.select_one('a.catalog-product__name')
+        if link and link.get('href'):
+            product_link = link['href']
+
+        # Вариант 2: product-card__name
+        if not product_link:
+            link = soup.select_one('a[data-id]')
+            if link and link.get('href'):
+                product_link = link['href']
+
+        # Вариант 3: любая ссылка на /product/
+        if not product_link:
+            for a in soup.find_all('a', href=True):
+                if '/product/' in a['href']:
+                    product_link = a['href']
+                    break
+
+        if not product_link:
+            # Попробуем найти картинку прямо в результатах
+            img = soup.select_one('img.catalog-product__image')
+            if img:
+                src = img.get('data-src') or img.get('src') or ''
+                if src and 'dns-shop' in src:
+                    # Увеличиваем размер в URL
+                    src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
+                    src = re.sub(r'/wm/\d+/\d+/', '/fit/500/500/', src)
+                    return src if src.startswith('http') else f"https:{src}"
+            print(f"  ❌ Товар не найден в результатах DNS")
+            return None
+
+        # Переходим на страницу товара
+        if not product_link.startswith('http'):
+            product_link = f"https://www.dns-shop.ru{product_link}"
+
+        time.sleep(0.5)
+        resp2 = session.get(product_link, timeout=15)
+        if resp2.status_code != 200:
+            return None
+
+        soup2 = BeautifulSoup(resp2.text, 'lxml')
+
+        # Ищем главное фото товара на странице
+        # Вариант 1: основной слайдер
+        img = soup2.select_one('img.product-images-slider__main-img')
+        if img:
+            src = img.get('src') or img.get('data-src') or ''
+            if src:
+                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
+                return src if src.startswith('http') else f"https:{src}"
+
+        # Вариант 2: галерея
+        img = soup2.select_one('img.product-images-slider__img')
+        if img:
+            src = img.get('data-src') or img.get('src') or ''
+            if src:
+                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
+                return src if src.startswith('http') else f"https:{src}"
+
+        # Вариант 3: OpenGraph image
+        og = soup2.select_one('meta[property="og:image"]')
+        if og and og.get('content'):
+            return og['content']
+
+        # Вариант 4: любая картинка с dns-shop CDN
+        for img in soup2.find_all('img'):
+            src = img.get('data-src') or img.get('src') or ''
+            if 'c.dns-shop.ru' in src or 'c1.dns-shop.ru' in src:
+                src = re.sub(r'/fit/\d+/\d+/', '/fit/500/500/', src)
+                return src if src.startswith('http') else f"https:{src}"
+
+        print(f"  ❌ Фото не найдено на странице товара")
+        return None
+
+    except requests.Timeout:
+        print(f"  ⚠️  Таймаут")
+        return None
     except Exception as e:
-        print(f"  ⚠️  Ошибка поиска: {e}")
-        return False
+        print(f"  ⚠️  Ошибка: {e}")
+        return None
 
-    # Находим скачанные файлы
-    downloaded = sorted(temp.glob('*'))
-    if not downloaded:
-        print(f"  ❌ Ничего не найдено")
-        return False
 
-    # Берём первую картинку, обрабатываем
-    best = None
-    best_score = 0
-
-    for img_path in downloaded:
-        try:
-            img = Image.open(img_path)
-
-            # Пропускаем слишком маленькие
-            w, h = img.size
-            if w < 100 or h < 100:
-                continue
-
-            # Оценка: предпочитаем квадратные и достаточно большие
-            ratio = min(w, h) / max(w, h)  # 1.0 = идеальный квадрат
-            size_score = min(w, h) / 400    # чем ближе к 400, тем лучше
-            score = ratio * 0.7 + min(size_score, 1.0) * 0.3
-
-            if score > best_score:
-                best_score = score
-                best = img_path
-
-        except Exception:
-            continue
-
-    if not best:
-        print(f"  ❌ Нет подходящих картинок")
-        return False
-
-    # Обработка: обрезка до квадрата + ресайз
+def download_and_crop(session: requests.Session, url: str, save_path: Path) -> bool:
+    """Скачивает картинку, обрезает до квадрата, ресайзит до 400x400."""
     try:
-        img = Image.open(best).convert('RGB')
+        resp = session.get(url, timeout=30)
+        if resp.status_code != 200 or len(resp.content) < 1000:
+            return False
+
+        img = Image.open(io.BytesIO(resp.content)).convert('RGB')
         w, h = img.size
 
-        # Обрезка до квадрата (по центру)
+        if w < 50 or h < 50:
+            return False
+
+        # Обрезка до квадрата по центру
         if w != h:
             size = min(w, h)
             left = (w - size) // 2
             top = (h - size) // 2
             img = img.crop((left, top, left + size, top + size))
 
-        # Ресайз до 400x400
+        # Ресайз
         img = img.resize((IMAGE_SIZE, IMAGE_SIZE), Image.LANCZOS)
 
-        # Сохраняем
-        out_path = save_dir / filename
-        img.save(out_path, 'PNG', quality=95)
+        save_path.parent.mkdir(parents=True, exist_ok=True)
+        img.save(save_path, 'PNG', quality=95)
         return True
 
     except Exception as e:
-        print(f"  ⚠️  Ошибка обработки: {e}")
+        print(f"  ⚠️  Ошибка загрузки: {e}")
         return False
-
-    finally:
-        # Чистим temp
-        for f in temp.glob('*'):
-            try:
-                f.unlink()
-            except:
-                pass
-        try:
-            temp.rmdir()
-        except:
-            pass
 
 
 # ==================== MAIN ====================
@@ -293,7 +223,7 @@ def main():
         products = json.load(f)
 
     print(f"📦 Всего товаров: {len(products)}")
-    print(f"🔍 Поисковик: {SEARCH_ENGINE}")
+    print(f"🔍 Источник: dns-shop.ru")
     print(f"📐 Размер: {IMAGE_SIZE}x{IMAGE_SIZE}")
     print(f"📂 Папка: {OUTPUT_DIR}")
     print()
@@ -301,7 +231,12 @@ def main():
     # Создаём папки
     for folder in set(CAT_MAP.values()):
         (OUTPUT_DIR / folder).mkdir(parents=True, exist_ok=True)
-    TEMP_DIR.mkdir(exist_ok=True)
+
+    # Создаём сессию
+    print("🌐 Подключаюсь к dns-shop.ru...")
+    session = create_session()
+    print("✅ Подключено")
+    print()
 
     success = 0
     skipped = 0
@@ -326,26 +261,26 @@ def main():
         query = make_search_query(name, brand, category, color)
 
         print(f"[{i+1}/{len(products)}] {name}")
-        print(f"  🔍 \"{query}\"")
+        print(f"  🔍 DNS: \"{query}\"")
 
-        ok = download_image(query, OUTPUT_DIR / folder, f"{pid}.png")
+        img_url = search_dns(session, query)
 
-        if ok:
-            size = filepath.stat().st_size
-            print(f"  ✅ {filepath} ({size:,} bytes)")
-            success += 1
+        if img_url:
+            print(f"  📥 {img_url[:80]}...")
+            ok = download_and_crop(session, img_url, filepath)
+            if ok:
+                size = filepath.stat().st_size
+                print(f"  ✅ {filepath} ({size:,} bytes)")
+                success += 1
+            else:
+                print(f"  ❌ Не удалось скачать")
+                failed += 1
+                failed_list.append({'id': pid, 'name': name, 'query': query})
         else:
             failed += 1
             failed_list.append({'id': pid, 'name': name, 'query': query})
 
         time.sleep(SLEEP_BETWEEN)
-
-    # Чистим temp
-    try:
-        import shutil
-        shutil.rmtree(TEMP_DIR, ignore_errors=True)
-    except:
-        pass
 
     print()
     print("=" * 60)
@@ -355,13 +290,14 @@ def main():
 
     if failed_list:
         print(f"\nНе удалось найти фото для:")
-        for item in failed_list:
-            print(f"  - {item['name']} (запрос: {item['query']})")
+        for item in failed_list[:20]:
+            print(f"  - {item['name']}")
+        if len(failed_list) > 20:
+            print(f"  ... и ещё {len(failed_list) - 20}")
 
-        # Сохраняем список неудач для повторной попытки
-        with open("failed_images.json", "w") as f:
+        with open("failed_images.json", "w", encoding="utf-8") as f:
             json.dump(failed_list, f, ensure_ascii=False, indent=2)
-        print(f"\nСписок сохранён в failed_images.json — можно поправить запросы и перезапустить")
+        print(f"\nСписок сохранён в failed_images.json")
 
     print()
     print("Готово! Запусти: npm run build")
