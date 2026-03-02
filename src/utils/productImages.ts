@@ -20,19 +20,16 @@ const categoryFolders: Record<string, string> = {
   'Аксcessуары': 'accessories',
 };
 
-// Base URL from Vite config (handles GitHub Pages subpath)
-const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 /**
  * Get local product image path based on product ID and category
- * Returns path to PNG in {base}/images/{category}/{id}.png
+ * Returns path to PNG in /images/{category}/{id}.png
  */
 export function getProductImage(productId: string, _productName: string = '', category: string = ''): string {
   const folder = categoryFolders[category] || '';
   if (folder) {
-    return `${BASE}/images/${folder}/${productId}.png`;
+    return `/images/${folder}/${productId}.png`;
   }
-  return `${BASE}/images/smartphones/${productId}.png`;
+  return `/images/smartphones/${productId}.png`;
 }
 
 /**
