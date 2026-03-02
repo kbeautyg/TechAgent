@@ -432,7 +432,7 @@ export default function CatalogPage() {
                       {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
                       {imgUrl ? (
                         <img src={imgUrl} alt={p.name}
-                          className={`product-real-img${p.category === 'Ноутбуки' || p.category === 'Планшеты' ? ' img-laptop' : p.category === 'Наушники' ? ' img-headphones' : ''}`}
+                          className="product-real-img"
                           loading="lazy" />
                       ) : (
                         <div className="product-shape"><div className="product-shape-letter">{p.brand[0]}</div></div>
