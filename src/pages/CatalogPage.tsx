@@ -1,56 +1,7 @@
 import { Link, useSearchParams } from 'react-router-dom'
-import { useState, useMemo, useEffect, useCallback, useRef } from 'react'
+import { useState, useMemo, useEffect, useCallback } from 'react'
 import { products } from '../data/products'
 import { getProductImage } from '../utils/productImages'
-
-/* ── Product image groups for scaling ── */
-function getProductGroup(name: string, brand: string, category: string): string {
-  const n = name.toLowerCase()
-  if (brand === 'Apple') {
-    if (n.includes('iphone')) return 'iPhone'
-    if (n.includes('macbook')) return 'MacBook'
-    if (n.includes('ipad')) return 'iPad'
-    if (n.includes('airpods')) return 'AirPods'
-    if (n.includes('watch')) return 'Apple Watch'
-    return 'Apple Аксессуары'
-  }
-  if (brand === 'Samsung') {
-    if (n.includes('galaxy s')) return 'Galaxy S'
-    if (n.includes('galaxy z')) return 'Galaxy Z'
-    if (n.includes('galaxy tab')) return 'Galaxy Tab'
-    if (n.includes('galaxy watch')) return 'Galaxy Watch'
-    if (n.includes('galaxy buds') || n.includes('galaxy bud')) return 'Galaxy Buds'
-    if (n.includes('galaxy book')) return 'Galaxy Book'
-    if (category === 'Телевизоры') return 'Samsung TV'
-    return 'Samsung Другое'
-  }
-  if (brand === 'Xiaomi') {
-    if (category === 'Смартфоны') return 'Xiaomi Телефоны'
-    if (category === 'Планшеты') return 'Xiaomi Планшеты'
-    if (n.includes('mi band')) return 'Xiaomi Band'
-    return 'Xiaomi Другое'
-  }
-  if (brand === 'Sony') {
-    if (n.includes('wh-') || n.includes('wf-')) return 'Sony Наушники'
-    if (n.includes('alpha')) return 'Sony Камеры'
-    if (n.includes('playstation') || n.includes('dualsense')) return 'PlayStation'
-    if (category === 'Телевизоры') return 'Sony TV'
-    return 'Sony Другое'
-  }
-  if (brand === 'DJI') return 'DJI'
-  if (brand === 'Dyson') return 'Dyson'
-  if (brand === 'JBL') return 'JBL'
-  if (brand === 'Beats') return 'Beats'
-  if (brand === 'Nintendo') return 'Nintendo'
-  if (brand === 'Microsoft') {
-    if (n.includes('xbox')) return 'Xbox'
-    return 'Microsoft'
-  }
-  if (brand === 'LG') return 'LG TV'
-  if (category === 'Ноутбуки') return 'Ноутбуки ' + brand
-  if (category === 'Наушники') return 'Наушники ' + brand
-  return brand + ' ' + category
-}
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -228,60 +179,6 @@ export default function CatalogPage() {
   // Mobile popup states
   const [showCatPopup, setShowCatPopup] = useState(false)
   const [showFilterPopup, setShowFilterPopup] = useState(false)
-
-  // Image scaling states
-  const [groupScales, setGroupScales] = useState<Record<string, number>>({})
-  const [individualScales, setIndividualScales] = useState<Record<string, number>>({})
-  const [hoveredCard, setHoveredCard] = useState<string | null>(null)
-  const hoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  const adjustGroupScale = useCallback((group: string, delta: number) => {
-    setGroupScales(prev => ({ ...prev, [group]: Math.max(0.1, Math.round(((prev[group] || 1) + delta) * 10) / 10) }))
-  }, [])
-
-  const adjustIndividualScale = useCallback((id: string, delta: number) => {
-    setIndividualScales(prev => ({ ...prev, [id]: Math.max(0.1, Math.round(((prev[id] || 1) + delta) * 10) / 10) }))
-  }, [])
-
-  // Ctrl+L — download coefficients
-  useEffect(() => {
-    const handler = (e: KeyboardEvent) => {
-      if (e.ctrlKey && e.key === 'l') {
-        e.preventDefault()
-        let txt = '=== TechAgent Image Scale Coefficients ===\n\n'
-        txt += '--- GROUP SCALES ---\n'
-        const allGroups = new Set<string>()
-        products.forEach(p => allGroups.add(getProductGroup(p.name, p.brand, p.category)))
-        ;[...allGroups].sort().forEach(g => {
-          txt += `${g}: ${groupScales[g] || 1}x\n`
-        })
-        txt += '\n--- INDIVIDUAL SCALES ---\n'
-        const changed = Object.entries(individualScales).filter(([, v]) => v !== 1)
-        if (changed.length === 0) txt += '(нет индивидуальных настроек)\n'
-        else changed.forEach(([id, v]) => {
-          const p = products.find(x => x.id === id)
-          txt += `${id} (${p?.name || '?'}): ${v}x\n`
-        })
-        txt += '\n--- EFFECTIVE SCALES (group × individual) ---\n'
-        products.forEach(p => {
-          const g = getProductGroup(p.name, p.brand, p.category)
-          const gs = groupScales[g] || 1
-          const is = individualScales[p.id] || 1
-          const eff = Math.round(gs * is * 10) / 10
-          if (eff !== 1) txt += `${p.id}: ${eff}x (${p.name}) [group=${gs}x, ind=${is}x]\n`
-        })
-        const blob = new Blob([txt], { type: 'text/plain' })
-        const url = URL.createObjectURL(blob)
-        const a = document.createElement('a')
-        a.href = url
-        a.download = 'image-scales.txt'
-        a.click()
-        URL.revokeObjectURL(url)
-      }
-    }
-    window.addEventListener('keydown', handler)
-    return () => window.removeEventListener('keydown', handler)
-  }, [groupScales, individualScales])
 
   const filterOpts = useMemo(() => getFilterOptions(), [])
   const categories = useMemo(() => ['Все', ...Array.from(new Set(products.map(p => p.category)))], [])
@@ -526,22 +423,9 @@ export default function CatalogPage() {
           {shown.length > 0 ? (
             <div className="products-grid">
               {shown.map((p, i) => {
-                const group = getProductGroup(p.name, p.brand, p.category)
-                const gs = groupScales[group] || 1
-                const is = individualScales[p.id] || 1
-                const totalScale = gs * is
                 const imgUrl = getProductImage(p.id, p.name, p.category)
-                const isHovered = hoveredCard === p.id
                 return (
-                <div key={p.id} className="product-card-wrap" style={{ animationDelay: `${i * 0.03}s` }}
-                  onMouseEnter={() => {
-                    if (hoverTimeoutRef.current) clearTimeout(hoverTimeoutRef.current)
-                    setHoveredCard(p.id)
-                  }}
-                  onMouseLeave={() => {
-                    hoverTimeoutRef.current = setTimeout(() => setHoveredCard(null), 200)
-                  }}
-                >
+                <div key={p.id} className="product-card-wrap" style={{ animationDelay: `${i * 0.03}s` }}>
                   <Link to={`/catalog/${p.id}`} className="product-card">
                     <div className="product-img">
                       <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
@@ -549,7 +433,6 @@ export default function CatalogPage() {
                       {imgUrl ? (
                         <img src={imgUrl} alt={p.name}
                           className={`product-real-img${p.category === 'Ноутбуки' || p.category === 'Планшеты' ? ' img-laptop' : p.category === 'Наушники' ? ' img-headphones' : ''}`}
-                          style={totalScale !== 1 ? { transform: `translate(-50%, -50%) scale(${totalScale})` } : undefined}
                           loading="lazy" />
                       ) : (
                         <div className="product-shape"><div className="product-shape-letter">{p.brand[0]}</div></div>
@@ -567,29 +450,6 @@ export default function CatalogPage() {
                       </div>
                     </div>
                   </Link>
-
-                  {/* Scale control panel */}
-                  {isHovered && imgUrl && (
-                    <div className="scale-panel" onClick={e => e.preventDefault()}>
-                      <div className="scale-panel-row">
-                        <span className="scale-label" title={group}>🏷 {group}</span>
-                        <div className="scale-btns">
-                          <button className="scale-btn" onClick={e => { e.preventDefault(); e.stopPropagation(); adjustGroupScale(group, -0.1) }}>−</button>
-                          <span className="scale-val">{(gs).toFixed(1)}×</span>
-                          <button className="scale-btn" onClick={e => { e.preventDefault(); e.stopPropagation(); adjustGroupScale(group, 0.1) }}>+</button>
-                        </div>
-                      </div>
-                      <div className="scale-panel-row">
-                        <span className="scale-label">📷 Это фото</span>
-                        <div className="scale-btns">
-                          <button className="scale-btn" onClick={e => { e.preventDefault(); e.stopPropagation(); adjustIndividualScale(p.id, -0.1) }}>−</button>
-                          <span className="scale-val">{(is).toFixed(1)}×</span>
-                          <button className="scale-btn" onClick={e => { e.preventDefault(); e.stopPropagation(); adjustIndividualScale(p.id, 0.1) }}>+</button>
-                        </div>
-                      </div>
-                      <div className="scale-panel-hint">Ctrl+L — скачать коэффициенты</div>
-                    </div>
-                  )}
                 </div>
                 )
               })}
