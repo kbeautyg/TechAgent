@@ -651,13 +651,6 @@
     "color": "Silver"
   },
   {
-    "id": "sgbuds2pro",
-    "name": "Samsung Galaxy Buds2 Pro Phantom Silver",
-    "brand": "Samsung",
-    "category": "Наушники",
-    "color": "Silver"
-  },
-  {
     "id": "sonywh1000xm5b",
     "name": "Sony WH-1000XM5 Black",
     "brand": "Sony",
@@ -689,21 +682,21 @@
     "id": "sonya6700b",
     "name": "Sony Alpha 6700 Black",
     "brand": "Sony",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "sonya7rb",
     "name": "Sony Alpha 7R V Black",
     "brand": "Sony",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "sonya7mb",
     "name": "Sony Alpha 7 IV Black",
     "brand": "Sony",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
@@ -752,35 +745,35 @@
     "id": "djimini4b",
     "name": "DJI Mini 4 Pro Fly More Combo",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "djiair3",
     "name": "DJI Air 3 Fly More Combo",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "djimavic3",
     "name": "DJI Mavic 3 Classic Fly More Combo",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "djiavata",
     "name": "DJI Avata 2 Fly More Combo",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "djiosmo6",
     "name": "DJI Osmo 6 256GB",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
@@ -843,49 +836,49 @@
     "id": "dysonv15b",
     "name": "Dyson V15 Detect Black",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "dysonv15g",
     "name": "Dyson V15 Detect Gold",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "dysonv12b",
     "name": "Dyson V12 Detect Slim Black",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "dysonairwrapb",
     "name": "Dyson Airwrap Black",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": "Black"
   },
   {
     "id": "dysonairwrapc",
     "name": "Dyson Airwrap Complete",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "dysonsupersonicb",
     "name": "Dyson Supersonic Black",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": "Black"
   },
   {
     "id": "dysonpurifierb",
     "name": "Dyson Purifier Cool TP10 Black",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
@@ -1305,42 +1298,42 @@
     "id": "4kweb",
     "name": "Logitech StreamCam Plus 4K 60fps",
     "brand": "Logitech",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "logibrio",
     "name": "Logitech Brio 500 1080p 90fps",
     "brand": "Logitech",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": "Black"
   },
   {
     "id": "seabarracuda4tb",
     "name": "Seagate Barracuda 4TB USB 3.0",
     "brand": "Seagate",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": "Black"
   },
   {
     "id": "wdback2tb",
     "name": "WD Backup 2TB USB 3.0",
     "brand": "Western Digital",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": "Black"
   },
   {
     "id": "samsungevob1tb",
     "name": "Samsung 870 EVO 1TB 2.5\" SSD",
     "brand": "Samsung",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
     "id": "samsungpm91000",
     "name": "Samsung 990 Pro 1TB NVMe SSD",
     "brand": "Samsung",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
@@ -1389,56 +1382,56 @@
     "id": "neewer18",
     "name": "Neewer LED Ring Light 18\"",
     "brand": "Neewer",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "elgato",
     "name": "Elgato Ring Light 2700-6500K",
     "brand": "Elgato",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "audiotech2020",
     "name": "Audio-Technica AT2020 Cardioid Condenser",
     "brand": "Audio-Technica",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": "Black"
   },
   {
     "id": "shuredsf7",
     "name": "Shure SM7B Cardioid Dynamic Microphone",
     "brand": "Shure",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": "Black"
   },
   {
     "id": "mantismax",
     "name": "Manfrotto Befree Advanced MAX Tripod",
     "brand": "Manfrotto",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "neewertripod",
     "name": "Neewer 75\" Aluminum Alloy Tripod",
     "brand": "Neewer",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "xiamiscooter4",
     "name": "Xiaomi Electric Scooter 4 Pro",
     "brand": "Xiaomi",
-    "category": "Аксессуары",
+    "category": "Электротранспорт",
     "color": ""
   },
   {
     "id": "xiamibike",
     "name": "Xiaomi Himo C20 Electric Bike",
     "brand": "Xiaomi",
-    "category": "Аксессуары",
+    "category": "Электротранспорт",
     "color": ""
   },
   {
@@ -1463,94 +1456,80 @@
     "color": ""
   },
   {
-    "id": "steelseries7",
-    "name": "SteelSeries Arctis 7P+ Wireless Black",
-    "brand": "SteelSeries",
-    "category": "Наушники",
-    "color": ""
-  },
-  {
-    "id": "logitusg733",
-    "name": "Logitech G733 Wireless Gaming Headset Black",
-    "brand": "Logitech",
-    "category": "Наушники",
-    "color": "Black"
-  },
-  {
     "id": "djimini3pro",
     "name": "DJI Mini 3 Pro Fly More Combo",
     "brand": "DJI",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "gopohero12",
     "name": "GoPro Hero 12 Black Bundle",
     "brand": "GoPro",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "goprohero11",
     "name": "GoPro Hero 11 Black Bundle",
     "brand": "GoPro",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "insta360x4",
     "name": "Insta360 X4 8K 360 Camera",
     "brand": "Insta360",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "samsungt7shield",
     "name": "Samsung T7 Shield 2TB Portable SSD Black",
     "brand": "Samsung",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
     "id": "sandiskextreme1tb",
     "name": "SanDisk Extreme Portable SSD 1TB",
     "brand": "SanDisk",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
     "id": "echoxmax",
     "name": "Amazon Echo Max 15\" Display Black",
     "brand": "Amazon",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "echoshow",
     "name": "Amazon Echo Show 8 Black",
     "brand": "Amazon",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "nesthubmax",
     "name": "Google Nest Hub Max Chalk",
     "brand": "Google",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "nestspeaker",
     "name": "Google Nest Audio Charcoal",
     "brand": "Google",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": "Charcoal"
   },
   {
     "id": "dysonsupersonics",
     "name": "Dyson Supersonic Styling Iron Nickel",
     "brand": "Dyson",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": "Nickel"
   },
   {
@@ -1753,28 +1732,28 @@
     "id": "philipshue",
     "name": "Philips Hue Smart Bulb Starter Kit",
     "brand": "Philips",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "wyzelight",
     "name": "Wyze Bulb Color Smart Light Bulb",
     "brand": "Wyze",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "augustlock3",
     "name": "August Smart Lock Pro Silver",
     "brand": "August",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
     "id": "nuki",
     "name": "Nuki Smart Lock 3.0 Pro Silver",
     "brand": "Nuki",
-    "category": "Бытовая техника",
+    "category": "Умный дом",
     "color": ""
   },
   {
@@ -1809,21 +1788,21 @@
     "id": "logicalmk850",
     "name": "Logitech MK850 Performance Wireless Combo",
     "brand": "Logitech",
-    "category": "Аксессуары",
+    "category": "Периферия",
     "color": ""
   },
   {
     "id": "applemag",
     "name": "Apple Magic Keyboard + Mouse Bundle Space Gray",
     "brand": "Apple",
-    "category": "Аксессуары",
+    "category": "Периферия",
     "color": "Space Gray"
   },
   {
     "id": "daskeyboard",
     "name": "Das Keyboard 5Q RGB Mechanical Keyboard",
     "brand": "Das Keyboard",
-    "category": "Аксессуары",
+    "category": "Периферия",
     "color": ""
   },
   {
@@ -1837,91 +1816,91 @@
     "id": "elgatofacecam",
     "name": "Elgato Facecam Pro 1080p 60fps",
     "brand": "Elgato",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": ""
   },
   {
     "id": "logicbrio4k",
     "name": "Logitech Brio 4K Pro 30fps",
     "brand": "Logitech",
-    "category": "Камеры",
+    "category": "Камеры и дроны",
     "color": "Graphite"
   },
   {
     "id": "benqlamp",
     "name": "BenQ e-Reading Lamp 2000-6500K",
     "brand": "BenQ",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "xiaomilamp",
     "name": "Xiaomi Mi Desk Lamp Pro Smart",
     "brand": "Xiaomi",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "coway",
     "name": "Coway AP-1512HH Air Purifier",
     "brand": "Coway",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "sharpi3000",
     "name": "Sharp KC-G50EW Air Purifier",
     "brand": "Sharp",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "levoit",
     "name": "Levoit Humidifier 1.5L Warm and Cool Mist",
     "brand": "Levoit",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "medbottle",
     "name": "MedBottle Smart Humidifier 2.5L",
     "brand": "MedBottle",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "arellapro",
     "name": "Arella Pro 30L Dehumidifier",
     "brand": "Arella",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "nespresso",
     "name": "Nespresso Vertuo Plus Coffee Machine Piano Black",
     "brand": "Nespresso",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "dysonmashup",
     "name": "Nespresso DeLonghi Lattissima Black",
     "brand": "DeLonghi",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": "Black"
   },
   {
     "id": "sharkuv",
     "name": "Shark Navigator NV752 Upright Vacuum",
     "brand": "Shark",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
     "id": "lg_detergent",
     "name": "LG Washer Detergent Capsule 200 Count",
     "brand": "LG",
-    "category": "Бытовая техника",
+    "category": "Для дома",
     "color": ""
   },
   {
@@ -1949,21 +1928,21 @@
     "id": "wifiax200",
     "name": "TP-Link AX3000 WiFi 6 Router",
     "brand": "TP-Link",
-    "category": "Аксессуары",
+    "category": "Сетевое оборудование",
     "color": ""
   },
   {
     "id": "meshwifi",
     "name": "ASUS AiMesh WiFi 6 System 3-Pack",
     "brand": "ASUS",
-    "category": "Аксессуары",
+    "category": "Сетевое оборудование",
     "color": ""
   },
   {
     "id": "sandisk128",
     "name": "SanDisk Extreme Pro 128GB USB-C Flash Drive",
     "brand": "SanDisk",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
@@ -1977,14 +1956,14 @@
     "id": "sandisksd256",
     "name": "SanDisk Extreme SDXC 256GB Card",
     "brand": "SanDisk",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
     "id": "samsung256",
     "name": "Samsung EVO Plus microSD 256GB Card",
     "brand": "Samsung",
-    "category": "Аксессуары",
+    "category": "Накопители",
     "color": ""
   },
   {
