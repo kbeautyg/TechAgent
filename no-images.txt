@@ -1,0 +1,1058 @@
+Products without images (211 total):
+====================================================================================================
+
+ID: sgts25p256b
+Name: Samsung Galaxy S25+ 256GB Black
+Brand: Samsung
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: sgts25p512b
+Name: Samsung Galaxy S25+ 512GB Black
+Brand: Samsung
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: sgts24p256b
+Name: Samsung Galaxy S24+ 256GB Black
+Brand: Samsung
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: sgts23p256b
+Name: Samsung Galaxy S23+ 256GB Black
+Brand: Samsung
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xm14ult512b
+Name: Xiaomi 14 Ultra 512GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xm14512b
+Name: Xiaomi 14 512GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xm13ult512b
+Name: Xiaomi 13 Ultra 512GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xm13512b
+Name: Xiaomi 13 512GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmrn14p256b
+Name: Xiaomi Redmi Note 14 Pro 256GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmrn14p512b
+Name: Xiaomi Redmi Note 14 Pro 512GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmrn13p256b
+Name: Xiaomi Redmi Note 13 Pro 256GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmrn13256b
+Name: Xiaomi Redmi Note 13 256GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmpf6256b
+Name: Xiaomi Poco F6 256GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmpf5256b
+Name: Xiaomi Poco F5 256GB Black
+Brand: Xiaomi
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: xmpadp12s256b
+Name: Xiaomi Pad Pro 12 256GB Black
+Brand: Xiaomi
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: xmpad7256b
+Name: Xiaomi Pad 7 256GB Black
+Brand: Xiaomi
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: ipad64
+Name: iPad 64GB
+Brand: Apple
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: ipad256
+Name: iPad 256GB
+Brand: Apple
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: airpods2
+Name: AirPods 2
+Brand: Apple
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: airpods2c
+Name: AirPods 2 with Charging Case
+Brand: Apple
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sgw6cl
+Name: Samsung Galaxy Watch 6 Classic Silver
+Brand: Samsung
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: sgw6clb
+Name: Samsung Galaxy Watch 6 Classic Black
+Brand: Samsung
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: sgw7
+Name: Samsung Galaxy Watch 7 Gold
+Brand: Samsung
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: sgbuds3b
+Name: Samsung Galaxy Buds3 Black
+Brand: Samsung
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonywh1000xm5b
+Name: Sony WH-1000XM5 Black
+Brand: Sony
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonywh1000xm5s
+Name: Sony WH-1000XM5 Silver
+Brand: Sony
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonywf1000xm5b
+Name: Sony WF-1000XM5 Black
+Brand: Sony
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonywf1000xm5s
+Name: Sony WF-1000XM5 Silver
+Brand: Sony
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonya6700b
+Name: Sony Alpha 6700 Black
+Brand: Sony
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: sonya7rb
+Name: Sony Alpha 7R V Black
+Brand: Sony
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: sonya7mb
+Name: Sony Alpha 7 IV Black
+Brand: Sony
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: jblpartybox110
+Name: JBL PartyBox 110 Black
+Brand: JBL
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: jblcharge5b
+Name: JBL Charge 5 Black
+Brand: JBL
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: jblflip6
+Name: JBL Flip 6 Black
+Brand: JBL
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: beatsstudio3b
+Name: Beats Studio3 Wireless Black
+Brand: Beats
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: beatssolo4
+Name: Beats Solo 4 Matte Black
+Brand: Beats
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: beatspowerbeats
+Name: Beats Powerbeats Pro Black
+Brand: Beats
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: djimini4b
+Name: DJI Mini 4 Pro Fly More Combo
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: djiair3
+Name: DJI Air 3 Fly More Combo
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: djimavic3
+Name: DJI Mavic 3 Classic Fly More Combo
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: djiavata
+Name: DJI Avata 2 Fly More Combo
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: djiosmo6
+Name: DJI Osmo 6 256GB
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: ps5be
+Name: PlayStation 5 Console Bundle
+Brand: Sony
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: ps5de
+Name: PlayStation 5 Digital Edition
+Brand: Sony
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: ps5pro
+Name: PlayStation 5 Pro
+Brand: Sony
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: xboxsx
+Name: Xbox Series X
+Brand: Microsoft
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: xboxss
+Name: Xbox Series S
+Brand: Microsoft
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: switcholed
+Name: Nintendo Switch OLED White
+Brand: Nintendo
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: switcholedred
+Name: Nintendo Switch OLED Red
+Brand: Nintendo
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: switchlite
+Name: Nintendo Switch Lite Turquoise
+Brand: Nintendo
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: dysonv15b
+Name: Dyson V15 Detect Black
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonv15g
+Name: Dyson V15 Detect Gold
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonv12b
+Name: Dyson V12 Detect Slim Black
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonairwrapb
+Name: Dyson Airwrap Black
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonairwrapc
+Name: Dyson Airwrap Complete
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonsupersonicb
+Name: Dyson Supersonic Black
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonpurifierb
+Name: Dyson Purifier Cool TP10 Black
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: sgtvqn65b
+Name: Samsung QN85 65" QLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sgtvqn75b
+Name: Samsung QN85 75" QLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sgtvqn85b
+Name: Samsung QN85 85" QLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: lgtvoledb
+Name: LG OLED55 55" 4K
+Brand: LG
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: lgtvoledc
+Name: LG OLED65 65" 4K
+Brand: LG
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: lgtvoled75
+Name: LG OLED75 75" 4K
+Brand: LG
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: xiamibanda8
+Name: Xiaomi Mi Band 8
+Brand: Xiaomi
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: xiamibanda7
+Name: Xiaomi Mi Band 7
+Brand: Xiaomi
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: airpods2left
+Name: AirPods 2 Single Left Bud
+Brand: Apple
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sgbudslive
+Name: Samsung Galaxy Buds Live Black
+Brand: Samsung
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sonywh900nb
+Name: Sony WH-900N Black
+Brand: Sony
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sennmom4w
+Name: Sennheiser Momentum 4 Wireless Black
+Brand: Sennheiser
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: bosequc45
+Name: Bose QuietComfort 45 Black
+Brand: Bose
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: sgw6sm
+Name: Samsung Galaxy Watch 6 Silver
+Brand: Samsung
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: garminepix
+Name: Garmin Epix Gen 2 Titanium
+Brand: Garmin
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: garminfe965
+Name: Garmin Fenix 7X Titanium
+Brand: Garmin
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: oneplus12256
+Name: OnePlus 12 256GB Black
+Brand: OnePlus
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: oneplus12512
+Name: OnePlus 12 512GB Black
+Brand: OnePlus
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: oneplus11256
+Name: OnePlus 11 256GB Black
+Brand: OnePlus
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: pixel9pro256
+Name: Google Pixel 9 Pro 256GB Black
+Brand: Google
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: pixel9pro512
+Name: Google Pixel 9 Pro 512GB Black
+Brand: Google
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: motorola_razr_2024
+Name: Motorola Razr 50 Ultra 512GB
+Brand: Motorola
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: huaweip70pro512
+Name: Huawei P70 Pro 512GB Black
+Brand: Huawei
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: nothing2a256
+Name: Nothing Phone 2a 256GB Black
+Brand: Nothing
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: asurog9pro512
+Name: ASUS ROG Phone 9 Pro 512GB
+Brand: ASUS
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: lenox1carbonm4
+Name: Lenovo ThinkPad X1 Carbon 14 M4
+Brand: Lenovo
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: lenovox1carbonm3
+Name: Lenovo ThinkPad X1 Carbon 14 M3
+Brand: Lenovo
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: dellxps13
+Name: Dell XPS 13 9340
+Brand: Dell
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: dellxps15
+Name: Dell XPS 15 9540
+Brand: Dell
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: asusvivobook15
+Name: ASUS VivoBook 15 OLED
+Brand: ASUS
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: hppaviliondm15
+Name: HP Pavilion 15 dm0021dx
+Brand: HP
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: msige76
+Name: MSI GE76 Raider RTX 4070
+Brand: MSI
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: roggm16
+Name: ASUS ROG Zephyrus G16 RTX 4090
+Brand: ASUS
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: razorblade16
+Name: Razer Blade 16 RTX 4090
+Brand: Razer
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: surfacepro10
+Name: Microsoft Surface Pro 10 256GB
+Brand: Microsoft
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: surfacelaptopstudio
+Name: Microsoft Surface Laptop Studio RTX 4090
+Brand: Microsoft
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: ankerusb
+Name: Anker 7-in-1 USB-C Hub Silver
+Brand: Anker
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: belsinkusb
+Name: Belkin USB-C 4 Hub Silver
+Brand: Belkin
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: appleusbclight
+Name: Apple USB-C to Lightning Cable 1m
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: appleusbcc
+Name: Apple USB-C Charge Cable 2m
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: raindesign
+Name: Rain Design mStand Phone Stand Silver
+Brand: Rain Design
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: popstand
+Name: PopSocket PopGrip Phone Stand Multi
+Brand: PopSocket
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: applewcharger
+Name: Apple MagSafe Charging Pad White
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: ankerasync
+Name: Anker PowerWave Pad 15W Black
+Brand: Anker
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: ankerpower20000
+Name: Anker PowerCore 20000 Black
+Brand: Anker
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: applepower20
+Name: Apple MagSafe Battery Pack White
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: rainmstand
+Name: Rain Design mStand for MacBook Silver
+Brand: Rain Design
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: avantheight
+Name: Avantree Adjustable Laptop Stand Silver
+Brand: Avantree
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------
+ID: caldigiths3
+Name: CalDigit TS3 Plus Thunderbolt Hub
+Brand: CalDigit
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: 4kweb
+Name: Logitech StreamCam Plus 4K 60fps
+Brand: Logitech
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: logibrio
+Name: Logitech Brio 500 1080p 90fps
+Brand: Logitech
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: seabarracuda4tb
+Name: Seagate Barracuda 4TB USB 3.0
+Brand: Seagate
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: wdback2tb
+Name: WD Backup 2TB USB 3.0
+Brand: Western Digital
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: samsungevob1tb
+Name: Samsung 870 EVO 1TB 2.5" SSD
+Brand: Samsung
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: samsungpm91000
+Name: Samsung 990 Pro 1TB NVMe SSD
+Brand: Samsung
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: lgtvoledw
+Name: LG OLED55 55" B4 OLED
+Brand: LG
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sgtvq70d
+Name: Samsung Q70D 55" QLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: hisenseqledu7g
+Name: Hisense U7G 55" QLED 4K
+Brand: Hisense
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: tcl98c645
+Name: TCL 98C645 98" 4K Mini-LED
+Brand: TCL
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sonykx80
+Name: Sony K-85XR80 85" 4K Mini-LED
+Brand: Sony
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sonybravia
+Name: Sony BRAVIA 7 65" 4K Mini-LED
+Brand: Sony
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: neewer18
+Name: Neewer LED Ring Light 18"
+Brand: Neewer
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: elgato
+Name: Elgato Ring Light 2700-6500K
+Brand: Elgato
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: audiotech2020
+Name: Audio-Technica AT2020 Cardioid Condenser
+Brand: Audio-Technica
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: shuredsf7
+Name: Shure SM7B Cardioid Dynamic Microphone
+Brand: Shure
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: mantismax
+Name: Manfrotto Befree Advanced MAX Tripod
+Brand: Manfrotto
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: neewertripod
+Name: Neewer 75" Aluminum Alloy Tripod
+Brand: Neewer
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: xiamiscooter4
+Name: Xiaomi Electric Scooter 4 Pro
+Brand: Xiaomi
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: xiamibike
+Name: Xiaomi Himo C20 Electric Bike
+Brand: Xiaomi
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: beatsfitpro
+Name: Beats Fit Pro Black
+Brand: Beats
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: beoplay
+Name: Bang & Olufsen Beoplay EX Black
+Brand: Bang & Olufsen
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: beyerdt880
+Name: Beyerdynamic DT 880 Pro Studio Headphones
+Brand: Beyerdynamic
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: steelseries7
+Name: SteelSeries Arctis 7P+ Wireless Black
+Brand: SteelSeries
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: logitusg733
+Name: Logitech G733 Wireless Gaming Headset Black
+Brand: Logitech
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: djimini3pro
+Name: DJI Mini 3 Pro Fly More Combo
+Brand: DJI
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: gopohero12
+Name: GoPro Hero 12 Black Bundle
+Brand: GoPro
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: goprohero11
+Name: GoPro Hero 11 Black Bundle
+Brand: GoPro
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: insta360x4
+Name: Insta360 X4 8K 360 Camera
+Brand: Insta360
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: samsungt7shield
+Name: Samsung T7 Shield 2TB Portable SSD Black
+Brand: Samsung
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: sandiskextreme1tb
+Name: SanDisk Extreme Portable SSD 1TB
+Brand: SanDisk
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: echoxmax
+Name: Amazon Echo Max 15" Display Black
+Brand: Amazon
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: echoshow
+Name: Amazon Echo Show 8 Black
+Brand: Amazon
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: nesthubmax
+Name: Google Nest Hub Max Chalk
+Brand: Google
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: nestspeaker
+Name: Google Nest Audio Charcoal
+Brand: Google
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonsupersonics
+Name: Dyson Supersonic Styling Iron Nickel
+Brand: Dyson
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: sgtv85
+Name: Samsung S95C 85" OLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: sgtvq90d
+Name: Samsung QN90D 75" QLED 4K
+Brand: Samsung
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: iph16256
+Name: iPhone 16 256GB Black
+Brand: Apple
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: oppofind6pro
+Name: Oppo Find X6 Pro 512GB Black
+Brand: Oppo
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: vivox100ultra
+Name: Vivo X100 Ultra 512GB Black
+Brand: Vivo
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: ztaxon70ultra
+Name: ZTE Axon 70 Ultra 512GB Black
+Brand: ZTE
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: realme12pro
+Name: Realme 12 Pro 512GB Black
+Brand: Realme
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: honormagic6pro
+Name: Honor Magic 6 Pro 512GB Black
+Brand: Honor
+Category: Смартфоны
+----------------------------------------------------------------------------------------------------
+ID: tcltab12pro
+Name: TCL Tab Pro Gen 2 12.9" 256GB
+Brand: TCL
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: lenovotabp12
+Name: Lenovo Tab P12 11.5" 128GB
+Brand: Lenovo
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: amazonkindlefire
+Name: Amazon Fire Max 11 128GB
+Brand: Amazon
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: huaweimatepadt11
+Name: Huawei MatePad T11 128GB
+Brand: Huawei
+Category: Планшеты
+----------------------------------------------------------------------------------------------------
+ID: msistealth16ai
+Name: MSI Stealth 16 AI Studio RTX 5090
+Brand: MSI
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: gigaaeroq17
+Name: Gigabyte AERO 17 RTX 4090
+Brand: Gigabyte
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: asusprobook15
+Name: ASUS ProBook 15 Core i7
+Brand: ASUS
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: clevop775
+Name: Clevo P775 17" RTX 4070
+Brand: Clevo
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: frameworklaptop
+Name: Framework Laptop 16 Core Ultra
+Brand: Framework
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: pixelbookgo
+Name: Google Pixelbook Go 128GB Clearly White
+Brand: Google
+Category: Ноутбуки
+----------------------------------------------------------------------------------------------------
+ID: acer272x
+Name: Acer Predator XB272 27" 360Hz
+Brand: Acer
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: asus27pro
+Name: ASUS ProArt PA278QV 27" 100% sRGB
+Brand: ASUS
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: lgultrawide38
+Name: LG UltraWide 38" Curved Monitor
+Brand: LG
+Category: Телевизоры
+----------------------------------------------------------------------------------------------------
+ID: genericscreen
+Name: Generic Tempered Glass 2.5D Screen Protector
+Brand: Generic
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: genericphonestand
+Name: Generic Metal Phone Stand
+Brand: Generic
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: appleairtagsingle
+Name: Apple AirTag Single
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: appleleather
+Name: Apple AirTag Leather Keychain Brown
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: tilemate
+Name: Tile Mate Slim
+Brand: Tile
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: philipshue
+Name: Philips Hue Smart Bulb Starter Kit
+Brand: Philips
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: wyzelight
+Name: Wyze Bulb Color Smart Light Bulb
+Brand: Wyze
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: augustlock3
+Name: August Smart Lock Pro Silver
+Brand: August
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: nuki
+Name: Nuki Smart Lock 3.0 Pro Silver
+Brand: Nuki
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: samsungq990b
+Name: Samsung HW-Q990B Soundbar 11.1.4ch
+Brand: Samsung
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: jblbar1000pro
+Name: JBL Bar 1000 Pro 3.1.2ch Soundbar
+Brand: JBL
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: jbltunebuds
+Name: JBL Tune Buds True Wireless Earbuds
+Brand: JBL
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: skullcandy
+Name: Skullcandy Dime True Wireless Earbuds
+Brand: Skullcandy
+Category: Наушники
+----------------------------------------------------------------------------------------------------
+ID: logicalmk850
+Name: Logitech MK850 Performance Wireless Combo
+Brand: Logitech
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: applemag
+Name: Apple Magic Keyboard + Mouse Bundle Space Gray
+Brand: Apple
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: daskeyboard
+Name: Das Keyboard 5Q RGB Mechanical Keyboard
+Brand: Das Keyboard
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: corsairrk
+Name: Corsair K95 RGB Platinum XT Mechanical
+Brand: Corsair
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: logicommo
+Name: Logitech G Pro X 2 Lightspeed Gaming Mouse
+Brand: Logitech
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------
+ID: corsairviper
+Name: Corsair Sabre RGB Pro Gaming Mouse
+Brand: Corsair
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------
+ID: elgatofacecam
+Name: Elgato Facecam Pro 1080p 60fps
+Brand: Elgato
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: logicbrio4k
+Name: Logitech Brio 4K Pro 30fps
+Brand: Logitech
+Category: Камеры
+----------------------------------------------------------------------------------------------------
+ID: benqlamp
+Name: BenQ e-Reading Lamp 2000-6500K
+Brand: BenQ
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: xiaomilamp
+Name: Xiaomi Mi Desk Lamp Pro Smart
+Brand: Xiaomi
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: coway
+Name: Coway AP-1512HH Air Purifier
+Brand: Coway
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: sharpi3000
+Name: Sharp KC-G50EW Air Purifier
+Brand: Sharp
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: levoit
+Name: Levoit Humidifier 1.5L Warm and Cool Mist
+Brand: Levoit
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: medbottle
+Name: MedBottle Smart Humidifier 2.5L
+Brand: MedBottle
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: arellapro
+Name: Arella Pro 30L Dehumidifier
+Brand: Arella
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: nespresso
+Name: Nespresso Vertuo Plus Coffee Machine Piano Black
+Brand: Nespresso
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: dysonmashup
+Name: Nespresso DeLonghi Lattissima Black
+Brand: DeLonghi
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: sharkuv
+Name: Shark Navigator NV752 Upright Vacuum
+Brand: Shark
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: lg_detergent
+Name: LG Washer Detergent Capsule 200 Count
+Brand: LG
+Category: Бытовая техника
+----------------------------------------------------------------------------------------------------
+ID: ps5controller
+Name: PlayStation 5 DualSense Controller White
+Brand: Sony
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: xboxcontroller
+Name: Xbox Series X|S Wireless Controller Black
+Brand: Microsoft
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: nintendoprocon
+Name: Nintendo Pro Controller
+Brand: Nintendo
+Category: Игровые консоли
+----------------------------------------------------------------------------------------------------
+ID: secretlab
+Name: Secretlab Titan Evo 2022 Black Fabric
+Brand: Secretlab
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------
+ID: noblechairs
+Name: Noblechairs Epic Black
+Brand: Noblechairs
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------
+ID: wifiax200
+Name: TP-Link AX3000 WiFi 6 Router
+Brand: TP-Link
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: meshwifi
+Name: ASUS AiMesh WiFi 6 System 3-Pack
+Brand: ASUS
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: sandisk128
+Name: SanDisk Extreme Pro 128GB USB-C Flash Drive
+Brand: SanDisk
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: kingstondt100
+Name: Kingston DataTraveler 100 64GB USB 3.0
+Brand: Kingston
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: sandisksd256
+Name: SanDisk Extreme SDXC 256GB Card
+Brand: SanDisk
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: samsung256
+Name: Samsung EVO Plus microSD 256GB Card
+Brand: Samsung
+Category: Аксессуары
+----------------------------------------------------------------------------------------------------
+ID: fitbit_sense2
+Name: Fitbit Sense 2 Smartwatch Black
+Brand: Fitbit
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: garmininstinct
+Name: Garmin Instinct 2 Rugged Smartwatch
+Brand: Garmin
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: fossilgen6
+Name: Fossil Gen 6 Smartwatch Black
+Brand: Fossil
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: tizenphone
+Name: Samsung Galaxy Watch 4 Classic 42mm
+Brand: Samsung
+Category: Часы
+----------------------------------------------------------------------------------------------------
+ID: fitbitpremium
+Name: Fitbit Premium Membership Annual
+Brand: Fitbit
+Category: Аксcessуары
+----------------------------------------------------------------------------------------------------

@@ -12,12 +12,12 @@ export interface Product {
 
 export const products: Product[] = [
   // iPhone 15 Series
-  { id: 'iph15pm256b', name: 'iPhone 15 Pro Max 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 159900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
+  
   { id: 'iph15pm256w', name: 'iPhone 15 Pro Max 256GB White Titanium', brand: 'Apple', category: 'Смартфоны', price: 159900, image: '📱', specs: { storage: '256GB', color: 'White Titanium', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
   { id: 'iph15pm256n', name: 'iPhone 15 Pro Max 256GB Natural Titanium', brand: 'Apple', category: 'Смартфоны', price: 159900, image: '📱', specs: { storage: '256GB', color: 'Natural Titanium', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
-  { id: 'iph15pm512b', name: 'iPhone 15 Pro Max 512GB Black', brand: 'Apple', category: 'Смартфоны', price: 179900, image: '📱', specs: { storage: '512GB', color: 'Black', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
+  
   { id: 'iph15pm512w', name: 'iPhone 15 Pro Max 512GB White Titanium', brand: 'Apple', category: 'Смартфоны', price: 179900, image: '📱', specs: { storage: '512GB', color: 'White Titanium', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
-  { id: 'iph15pm1tb', name: 'iPhone 15 Pro Max 1TB Black', brand: 'Apple', category: 'Смартфоны', price: 199900, image: '📱', specs: { storage: '1TB', color: 'Black', display: '6.7"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
+  
   { id: 'iph15p256b', name: 'iPhone 15 Pro 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 129900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.1"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
   { id: 'iph15p512b', name: 'iPhone 15 Pro 512GB Black', brand: 'Apple', category: 'Смартфоны', price: 149900, image: '📱', specs: { storage: '512GB', color: 'Black', display: '6.1"', chip: 'A17 Pro' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
   { id: 'iph15p1tb', name: 'iPhone 15 Pro 1TB Black', brand: 'Apple', category: 'Смартфоны', price: 169900, image: '📱', specs: { storage: '1TB', color: 'Black', display: '6.1"', chip: 'A17 Pro' }, inStock: false, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
@@ -29,11 +29,9 @@ export const products: Product[] = [
   { id: 'iph14p512b', name: 'iPhone 14 Pro 512GB Black', brand: 'Apple', category: 'Смартфоны', price: 129900, image: '📱', specs: { storage: '512GB', color: 'Black', display: '6.1"', chip: 'A16 Bionic' }, inStock: true, description: 'Мощный смартфон Apple с чипом A16 Bionic, титановым корпусом и системой камер Pro. Отличное соотношение цены и качества для профессиональной фотографии.' },
 
   // iPhone 13 Series
-  { id: 'iph13pm256b', name: 'iPhone 13 Pro Max 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 99900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.7"', chip: 'A15 Bionic' }, inStock: true, description: 'Профессиональный смартфон Apple с чипом A15 Bionic и системой тройной камеры. Продвинутые возможности съемки и обработки видео.' },
-  { id: 'iph13pm512b', name: 'iPhone 13 Pro Max 512GB Black', brand: 'Apple', category: 'Смартфоны', price: 119900, image: '📱', specs: { storage: '512GB', color: 'Black', display: '6.7"', chip: 'A15 Bionic' }, inStock: true, description: 'Профессиональный смартфон Apple с чипом A15 Bionic и системой тройной камеры. Продвинутые возможности съемки и обработки видео.' },
-  { id: 'iph13p256b', name: 'iPhone 13 Pro 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 79900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.1"', chip: 'A15 Bionic' }, inStock: true, description: 'Профессиональный смартфон Apple с чипом A15 Bionic и системой тройной камеры. Продвинутые возможности съемки и обработки видео.' },
-
-  // iPhone 12 Series
+  
+  
+  
   { id: 'iph12pm256b', name: 'iPhone 12 Pro Max 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 79900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.7"', chip: 'A14 Bionic' }, inStock: true, description: 'Надежный смартфон Apple с чипом A14 Bionic, поддержкой 5G и системой Pro-камер. Стильный дизайн с плоскими краями.' },
   { id: 'iph12p256b', name: 'iPhone 12 Pro 256GB Black', brand: 'Apple', category: 'Смартфоны', price: 69900, image: '📱', specs: { storage: '256GB', color: 'Black', display: '6.1"', chip: 'A14 Bionic' }, inStock: true, description: 'Надежный смартфон Apple с чипом A14 Bionic, поддержкой 5G и системой Pro-камер. Стильный дизайн с плоскими краями.' },
 
@@ -110,10 +108,8 @@ export const products: Product[] = [
 
   // iPad Pro 11"
   { id: 'ipadpro11256', name: 'iPad Pro 11" 256GB', brand: 'Apple', category: 'Планшеты', price: 109900, image: '📱', specs: { storage: '256GB', chip: 'Apple M4', ram: '16GB', display: '11" Liquid Retina' }, inStock: true, description: 'Планшет Apple с мощным процессором и дисплеем Liquid Retina XDR 11". Компактный и мощный.' },
-  { id: 'ipadpro11512', name: 'iPad Pro 11" 512GB', brand: 'Apple', category: 'Планшеты', price: 129900, image: '📱', specs: { storage: '512GB', chip: 'Apple M4', ram: '16GB', display: '11" Liquid Retina' }, inStock: true, description: 'Планшет Apple с мощным процессором и дисплеем Liquid Retina XDR 11". Компактный и мощный.' },
-  { id: 'ipadpro111tb', name: 'iPad Pro 11" 1TB', brand: 'Apple', category: 'Планшеты', price: 169900, image: '📱', specs: { storage: '1TB', chip: 'Apple M4', ram: '16GB', display: '11" Liquid Retina' }, inStock: true, description: 'Планшет Apple с мощным процессором и дисплеем Liquid Retina XDR 11". Компактный и мощный.' },
-
-  // iPad Pro 13"
+  
+  
   { id: 'ipadpro13256', name: 'iPad Pro 13" 256GB', brand: 'Apple', category: 'Планшеты', price: 139900, image: '📱', specs: { storage: '256GB', chip: 'Apple M4', ram: '16GB', display: '13" Liquid Retina' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'ipadpro13512', name: 'iPad Pro 13" 512GB', brand: 'Apple', category: 'Планшеты', price: 159900, image: '📱', specs: { storage: '512GB', chip: 'Apple M4', ram: '16GB', display: '13" Liquid Retina' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
@@ -165,7 +161,7 @@ export const products: Product[] = [
   { id: 'sgw7', name: 'Samsung Galaxy Watch 7 Gold', brand: 'Samsung', category: 'Часы', price: 34900, image: '⌚', specs: { size: '40mm', display: 'AMOLED', color: 'Gold', band: 'Sport Band', ai: 'Yes' }, inStock: true, description: 'Умные часы Samsung с датчиком BIA и мониторингом сна. Wear OS, безель для навигации.' },
 
   // Samsung Galaxy Buds
-  { id: 'sgbuds3b', name: 'Samsung Galaxy Buds3 Black', brand: 'Samsung', category: 'Наушники', price: 16900, image: '🎧', specs: { type: 'TWS', battery: '6h', charging: '26h', color: 'Black', anc: 'Active' }, inStock: true, description: 'Наушники Samsung с активным шумоподавлением и хорошим звуком. До 6 часов работы, удобные.' },
+  
   { id: 'sgbuds3p', name: 'Samsung Galaxy Buds3 Pro Silver', brand: 'Samsung', category: 'Наушники', price: 19900, image: '🎧', specs: { type: 'TWS', battery: '6h', charging: '26h', color: 'Silver', anc: 'Active', ips: 'IPX7' }, inStock: true, description: 'Беспроводные наушники Samsung с ANC и звуком AKG. До 8 часов прослушивания, IPX7.' },
   { id: 'sgbuds2pro', name: 'Samsung Galaxy Buds2 Pro Phantom Silver', brand: 'Samsung', category: 'Наушники', price: 14900, image: '🎧', specs: { type: 'TWS', battery: '5h', charging: '29h', color: 'Silver', anc: 'Active' }, inStock: true, description: 'Беспроводные наушники Samsung с хорошей изоляцией и звуком. Удобны для повседневного использования.' },
 
@@ -174,34 +170,24 @@ export const products: Product[] = [
   { id: 'sonywh1000xm5s', name: 'Sony WH-1000XM5 Silver', brand: 'Sony', category: 'Наушники', price: 44900, image: '🎧', specs: { type: 'Over-ear', battery: '30h', color: 'Silver', anc: 'Premium', codec: 'LDAC' }, inStock: true, description: 'Премиальные наушники Sony с лучшим в классе шумоподавлением. 30 часов автономности, LDAC кодек.' },
 
   // Sony WF-1000XM5
-  { id: 'sonywf1000xm5b', name: 'Sony WF-1000XM5 Black', brand: 'Sony', category: 'Наушники', price: 29900, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '24h', color: 'Black', anc: 'Premium', codec: 'LDAC' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'sonywf1000xm5s', name: 'Sony WF-1000XM5 Silver', brand: 'Sony', category: 'Наушники', price: 29900, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '24h', color: 'Silver', anc: 'Premium', codec: 'LDAC' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Sony Alpha Cameras
-  { id: 'sonya6700b', name: 'Sony Alpha 6700 Black', brand: 'Sony', category: 'Камеры', price: 139900, image: '📷', specs: { sensor: 'APS-C', megapixels: '26MP', video: '4K 120p', display: 'Vari-angle 3"' }, inStock: true, description: 'Беззеркальная камера Sony с полнокадровым сенсором. Быстрый автофокус, видео 4K 120fps.' },
+  
+  
+  
   { id: 'sonya7rb', name: 'Sony Alpha 7R V Black', brand: 'Sony', category: 'Камеры', price: 419900, image: '📷', specs: { sensor: 'Full Frame', megapixels: '61MP', video: '8K 24p', display: 'Fixed 3.2"' }, inStock: false, description: 'Беззеркальная камера Sony с полнокадровым сенсором. Быстрый автофокус, видео 4K 120fps.' },
-  { id: 'sonya7mb', name: 'Sony Alpha 7 IV Black', brand: 'Sony', category: 'Камеры', price: 259900, image: '📷', specs: { sensor: 'Full Frame', megapixels: '61MP', video: '4K 60p', display: 'Tilting 3.2"' }, inStock: true, description: 'Беззеркальная камера Sony с полнокадровым сенсором. Быстрый автофокус, видео 4K 120fps.' },
-
-  // JBL Speakers
-  { id: 'jblpartybox110', name: 'JBL PartyBox 110 Black', brand: 'JBL', category: 'Наушники', price: 19900, image: '🔊', specs: { type: 'Portable Speaker', power: '160W', bluetooth: '5.0', battery: '12h' }, inStock: true, description: 'Портативная акустика JBL с мощным басом и защитой IP67. До 24 часов работы, PartyBoost.' },
-  { id: 'jblcharge5b', name: 'JBL Charge 5 Black', brand: 'JBL', category: 'Наушники', price: 9900, image: '🔊', specs: { type: 'Portable Speaker', power: '30W', bluetooth: '5.0', battery: '20h' }, inStock: true, description: 'Мощная портативная акустика JBL с защитой IP67. До 20 часов работы, встроенный аккумулятор для зарядки.' },
-  { id: 'jblflip6', name: 'JBL Flip 6 Black', brand: 'JBL', category: 'Наушники', price: 6990, image: '🔊', specs: { type: 'Portable Speaker', power: '20W', bluetooth: '5.0', battery: '12h' }, inStock: true, description: 'Портативная акустика JBL с мощным басом и защитой IP67. До 12 часов работы, влагостойкая.' },
-
-  // Beats Headphones
-  { id: 'beatsstudio3b', name: 'Beats Studio3 Wireless Black', brand: 'Beats', category: 'Наушники', price: 24900, image: '🎧', specs: { type: 'Over-ear', battery: '22h', color: 'Black', noisecancellation: 'Yes' }, inStock: true, description: 'Наушники Beats с чипом Apple W1 и мощным басом. До 40 часов работы, совместимость с Apple и Android.' },
-  { id: 'beatssolo4', name: 'Beats Solo 4 Matte Black', brand: 'Beats', category: 'Наушники', price: 19900, image: '🎧', specs: { type: 'On-ear', battery: '40h', color: 'Black', anc: 'Yes' }, inStock: true, description: 'Наушники Beats с чипом Apple W1 и мощным басом. До 40 часов работы, совместимость с Apple и Android.' },
-  { id: 'beatspowerbeats', name: 'Beats Powerbeats Pro Black', brand: 'Beats', category: 'Наушники', price: 17900, image: '🎧', specs: { type: 'TWS', battery: '9h', charging: '40h', color: 'Black' }, inStock: true, description: 'Наушники Beats с чипом Apple W1 и мощным басом. До 40 часов работы, совместимость с Apple и Android.' },
-
-  // DJI Drones
+  
+  
+  
+  
+  
+  
+  
   { id: 'djimini4b', name: 'DJI Mini 4 Pro Fly More Combo', brand: 'DJI', category: 'Камеры', price: 59900, image: '🚁', specs: { weight: '249g', max_flight_time: '34min', video: '4K 60p', sensor: '1/1.3" CMOS' }, inStock: true, description: 'Компактный дрон DJI с хорошей камерой и обнаружением препятствий. До 34 минут полёта.' },
   { id: 'djiair3', name: 'DJI Air 3 Fly More Combo', brand: 'DJI', category: 'Камеры', price: 99900, image: '🚁', specs: { weight: '907g', max_flight_time: '46min', video: '4K 60p', sensor: 'Dual 4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
   { id: 'djimavic3', name: 'DJI Mavic 3 Classic Fly More Combo', brand: 'DJI', category: 'Камеры', price: 189900, image: '🚁', specs: { weight: '895g', max_flight_time: '46min', video: '4K 120p', sensor: '4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
   { id: 'djiavata', name: 'DJI Avata 2 Fly More Combo', brand: 'DJI', category: 'Камеры', price: 159900, image: '🚁', specs: { weight: '410g', max_flight_time: '23min', video: '1080p 120p', type: 'FPV Drone' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
 
   // DJI Osmo
-  { id: 'djiosmo6', name: 'DJI Osmo 6 256GB', brand: 'DJI', category: 'Камеры', price: 79900, image: '📹', specs: { sensor: '1/1.3" CMOS', video: '4K 120p', stabilization: '3-axis gimbal', storage: '256GB' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
-
-  // PlayStation 5
+  
   { id: 'ps5be', name: 'PlayStation 5 Console Bundle', brand: 'Sony', category: 'Игровые консоли', price: 59900, image: '🎮', specs: { storage: '825GB', cpu: 'Custom Zen 2 8-core', gpu: '10.28 TFLOPS', vr: 'PSVR2' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'ps5de', name: 'PlayStation 5 Digital Edition', brand: 'Sony', category: 'Игровые консоли', price: 44900, image: '🎮', specs: { storage: '825GB', cpu: 'Custom Zen 2 8-core', gpu: '10.28 TFLOPS', digital: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'ps5pro', name: 'PlayStation 5 Pro', brand: 'Sony', category: 'Игровые консоли', price: 79900, image: '🎮', specs: { storage: '2TB', cpu: 'Custom Zen 2 8-core', gpu: 'Enhanced GPU', vr: 'PSVR2' }, inStock: false, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
@@ -213,32 +199,24 @@ export const products: Product[] = [
   // Nintendo Switch
   { id: 'switcholed', name: 'Nintendo Switch OLED White', brand: 'Nintendo', category: 'Игровые консоли', price: 34900, image: '🎮', specs: { display: '7" OLED', storage: '64GB', battery: '13h', color: 'White' }, inStock: true, description: 'Игровая консоль Nintendo с OLED дисплеем 7" для игр дома и в дороге. Библиотека эксклюзивных игр, до 9 часов автономности.' },
   { id: 'switcholedred', name: 'Nintendo Switch OLED Red', brand: 'Nintendo', category: 'Игровые консоли', price: 34900, image: '🎮', specs: { display: '7" OLED', storage: '64GB', battery: '13h', color: 'Red' }, inStock: true, description: 'Игровая консоль Nintendo с OLED дисплеем 7" для игр дома и в дороге. Библиотека эксклюзивных игр, до 9 часов автономности.' },
-  { id: 'switchlite', name: 'Nintendo Switch Lite Turquoise', brand: 'Nintendo', category: 'Игровые консоли', price: 19900, image: '🎮', specs: { display: '5.5" LCD', storage: '32GB', battery: '5.5h', color: 'Turquoise' }, inStock: true, description: 'Игровая консоль Nintendo для игр дома и в дороге. Библиотека эксклюзивных игр, до 9 часов автономности.' },
-
-  // Dyson V15
-  { id: 'dysonv15b', name: 'Dyson V15 Detect Black', brand: 'Dyson', category: 'Бытовая техника', price: 124900, image: '🧹', specs: { battery: '60min', power: 'Ultra-powerful', filter: 'HEPA', display: 'LCD' }, inStock: true, description: 'Премиальный пылесос Dyson с HEPA фильтрацией и лазерной системой обнаружения пыли. Мощное всасывание, до 60 минут работы.' },
-  { id: 'dysonv15g', name: 'Dyson V15 Detect Gold', brand: 'Dyson', category: 'Бытовая техника', price: 124900, image: '🧹', specs: { battery: '60min', power: 'Ultra-powerful', filter: 'HEPA', display: 'LCD' }, inStock: true, description: 'Премиальный пылесос Dyson с HEPA фильтрацией и лазерной системой обнаружения пыли. Мощное всасывание, до 60 минут работы.' },
-
-  // Dyson V12
-  { id: 'dysonv12b', name: 'Dyson V12 Detect Slim Black', brand: 'Dyson', category: 'Бытовая техника', price: 99900, image: '🧹', specs: { battery: '60min', power: 'Powerful', filter: 'HEPA', weight: '2.24kg' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
-
-  // Dyson Airwrap
-  { id: 'dysonairwrapb', name: 'Dyson Airwrap Black', brand: 'Dyson', category: 'Бытовая техника', price: 49900, image: '💈', specs: { heat: 'Intelligent', rotation: 'Oscillating', battery: 'Cordless', color: 'Black' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
+  
+  
+  
+  
+  
   { id: 'dysonairwrapc', name: 'Dyson Airwrap Complete', brand: 'Dyson', category: 'Бытовая техника', price: 59900, image: '💈', specs: { heat: 'Intelligent', rotation: 'Oscillating', battery: 'Cordless', attachments: '6' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // Dyson Supersonic
   { id: 'dysonsupersonicb', name: 'Dyson Supersonic Black', brand: 'Dyson', category: 'Бытовая техника', price: 34900, image: '💈', specs: { heat: 'Intelligent', motor: 'Digital V9', speed: '110,000rpm', color: 'Black' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // Dyson Purifier
-  { id: 'dysonpurifierb', name: 'Dyson Purifier Cool TP10 Black', brand: 'Dyson', category: 'Бытовая техника', price: 64900, image: '🌬️', specs: { filter: 'HEPA + Carbon', air_circulation: 'Whole room', fan: 'Yes', coverage: '290m³' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
-
-  // Samsung TV
+  
   { id: 'sgtvqn65b', name: 'Samsung QN85 65" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 84900, image: '📺', specs: { size: '65"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'sgtvqn75b', name: 'Samsung QN85 75" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 124900, image: '📺', specs: { size: '75"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'sgtvqn85b', name: 'Samsung QN85 85" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 179900, image: '📺', specs: { size: '85"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: false, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // LG TV
-  { id: 'lgtvoledb', name: 'LG OLED55 55" 4K', brand: 'LG', category: 'Телевизоры', price: 74900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'OLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
   { id: 'lgtvoledc', name: 'LG OLED65 65" 4K', brand: 'LG', category: 'Телевизоры', price: 119900, image: '📺', specs: { size: '65"', resolution: '4K', panel: 'OLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'lgtvoled75', name: 'LG OLED75 75" 4K', brand: 'LG', category: 'Телевизоры', price: 179900, image: '📺', specs: { size: '75"', resolution: '4K', panel: 'OLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
@@ -252,19 +230,15 @@ export const products: Product[] = [
   { id: 'sgtabs8', name: 'Samsung Galaxy Tab S8 128GB', brand: 'Samsung', category: 'Планшеты', price: 49900, image: '📱', specs: { size: '11"', resolution: '2K', chip: 'Snapdragon 8 Gen 1', storage: '128GB' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // More AirPods variants
-  { id: 'airpods2left', name: 'AirPods 2 Single Left Bud', brand: 'Apple', category: 'Наушники', price: 6490, image: '🎧', specs: { type: 'Single Bud', battery: '5h', color: 'White' }, inStock: true, description: 'Беспроводные наушники Apple с хорошим звуком и быстрым подключением. До 6 часов прослушивания, удобные для использования.' },
-  { id: 'airpods3left', name: 'AirPods 3 Single Left Bud', brand: 'Apple', category: 'Наушники', price: 9990, image: '🎧', specs: { type: 'Single Bud', battery: '6h', color: 'White' }, inStock: true, description: 'Беспроводные наушники Apple с хорошим звуком и быстрым подключением. До 6 часов прослушивания, удобные для использования.' },
-
-  // Samsung Galaxy Buds Live
+  
+  
   { id: 'sgbudslive', name: 'Samsung Galaxy Buds Live Black', brand: 'Samsung', category: 'Наушники', price: 10900, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '29h', color: 'Black', anc: 'Active' }, inStock: true, description: 'Беспроводные наушники Samsung с хорошей изоляцией и звуком. Удобны для повседневного использования.' },
 
   // More Sony headphones
   { id: 'sonywh900nb', name: 'Sony WH-900N Black', brand: 'Sony', category: 'Наушники', price: 34900, image: '🎧', specs: { type: 'Over-ear', battery: '35h', color: 'Black', anc: 'Yes' }, inStock: true, description: 'Наушники Sony с качественным звуком и шумоподавлением. Удобны для длительного использования.' },
 
   // Sennheiser Momentum
-  { id: 'sennmom4w', name: 'Sennheiser Momentum 4 Wireless Black', brand: 'Sennheiser', category: 'Наушники', price: 24900, image: '🎧', specs: { type: 'Over-ear', battery: '60h', color: 'Black', anc: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Bose QuietComfort
+  
   { id: 'bosequc45', name: 'Bose QuietComfort 45 Black', brand: 'Bose', category: 'Наушники', price: 34900, image: '🎧', specs: { type: 'Over-ear', battery: '24h', color: 'Black', anc: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // More Galaxy Watch models
@@ -334,9 +308,7 @@ export const products: Product[] = [
 
   // USB-C Hubs and Accessories
   { id: 'ankerusb', name: 'Anker 7-in-1 USB-C Hub Silver', brand: 'Anker', category: 'Аксессуары', price: 4990, image: '🔌', specs: { ports: '7-in-1', power: '100W', color: 'Silver' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'belsinkusb', name: 'Belkin USB-C 4 Hub Silver', brand: 'Belkin', category: 'Аксессуары', price: 7990, image: '🔌', specs: { ports: '4 USB-C', power: '240W', color: 'Silver' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Charging Cables
+  
   { id: 'appleusbclight', name: 'Apple USB-C to Lightning Cable 1m', brand: 'Apple', category: 'Аксессуары', price: 1990, image: '🔌', specs: { length: '1m', connector: 'USB-C to Lightning', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'appleusbcc', name: 'Apple USB-C Charge Cable 2m', brand: 'Apple', category: 'Аксессуары', price: 2990, image: '🔌', specs: { length: '2m', connector: 'USB-C to USB-C', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
@@ -345,14 +317,10 @@ export const products: Product[] = [
   { id: 'spigeniphone15pm', name: 'Spigen Tough Armor iPhone 15 Pro Max Black', brand: 'Spigen', category: 'Аксессуары', price: 1990, image: '📱', specs: { model: 'iPhone 15 Pro Max', material: 'TPU', color: 'Black' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
 
   // Screen Protectors
-  { id: 'temperiphone15pm', name: 'Tempered Glass Screen Protector iPhone 15 Pro Max', brand: 'Generic', category: 'Аксессуары', price: 990, image: '📱', specs: { model: 'iPhone 15 Pro Max', material: 'Tempered Glass', hardness: '9H' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
-
-  // Phone Stands
-  { id: 'raindesign', name: 'Rain Design mStand Phone Stand Silver', brand: 'Rain Design', category: 'Аксессуары', price: 2990, image: '📱', specs: { color: 'Silver', adjustable: 'Yes', material: 'Aluminum' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'popstand', name: 'PopSocket PopGrip Phone Stand Multi', brand: 'PopSocket', category: 'Аксессуары', price: 990, image: '📱', specs: { color: 'Multi-color', expandable: 'Yes', attachment: 'Adhesive' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Wireless Chargers
-  { id: 'applewcharger', name: 'Apple MagSafe Charging Pad White', brand: 'Apple', category: 'Аксессуары', price: 3990, image: '🔌', specs: { power: '15W', color: 'White', connector: 'USB-C' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
+  
+  
+  
   { id: 'ankerasync', name: 'Anker PowerWave Pad 15W Black', brand: 'Anker', category: 'Аксессуары', price: 2990, image: '🔌', specs: { power: '15W', color: 'Black', standard: 'Qi' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Portable Power Banks
@@ -360,26 +328,16 @@ export const products: Product[] = [
   { id: 'applepower20', name: 'Apple MagSafe Battery Pack White', brand: 'Apple', category: 'Аксессуары', price: 4990, image: '🔋', specs: { capacity: '2460mAh', power: '7.5W', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Laptop Stands
-  { id: 'rainmstand', name: 'Rain Design mStand for MacBook Silver', brand: 'Rain Design', category: 'Аксессуары', price: 5990, image: '💻', specs: { material: 'Aluminum', adjustable: 'No', height: 'Fixed' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'avantheight', name: 'Avantree Adjustable Laptop Stand Silver', brand: 'Avantree', category: 'Аксcessуары', price: 3990, image: '💻', specs: { material: 'Aluminum', adjustable: 'Yes', max_weight: '15kg' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // USB-C Hubs for Laptops
-  { id: 'caldigiths3', name: 'CalDigit TS3 Plus Thunderbolt Hub', brand: 'CalDigit', category: 'Аксессуары', price: 24900, image: '🔌', specs: { ports: '15 ports', power: '98W', connector: 'Thunderbolt 3' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Webcams
-  { id: '4kweb', name: 'Logitech StreamCam Plus 4K 60fps', brand: 'Logitech', category: 'Камеры', price: 8990, image: '📷', specs: { resolution: '4K 60fps', autofocus: 'Yes', mounting: 'Clip' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'logibrio', name: 'Logitech Brio 500 1080p 90fps', brand: 'Logitech', category: 'Камеры', price: 6990, image: '📷', specs: { resolution: '1080p', fps: '90fps', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // External Hard Drives
-  { id: 'seabarracuda4tb', name: 'Seagate Barracuda 4TB USB 3.0', brand: 'Seagate', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '4TB', interface: 'USB 3.0', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'wdback2tb', name: 'WD Backup 2TB USB 3.0', brand: 'Western Digital', category: 'Аксессуары', price: 4990, image: '💾', specs: { capacity: '2TB', interface: 'USB 3.0', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // SSDs
+  
+  
+  
+  
+  
+  
+  
   { id: 'samsungevob1tb', name: 'Samsung 870 EVO 1TB 2.5" SSD', brand: 'Samsung', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '1TB', interface: 'SATA 2.5"', speed: '560MB/s' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'samsungpm91000', name: 'Samsung 990 Pro 1TB NVMe SSD', brand: 'Samsung', category: 'Аксессуары', price: 8990, image: '💾', specs: { capacity: '1TB', interface: 'NVMe', speed: '7100MB/s' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // More Television Models
-  { id: 'lgtvoledw', name: 'LG OLED55 55" B4 OLED', brand: 'LG', category: 'Телевизоры', price: 89900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'OLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
+  
   { id: 'sgtvq70d', name: 'Samsung Q70D 55" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 64900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'hisenseqledu7g', name: 'Hisense U7G 55" QLED 4K', brand: 'Hisense', category: 'Телевизоры', price: 44900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'tcl98c645', name: 'TCL 98C645 98" 4K Mini-LED', brand: 'TCL', category: 'Телевизоры', price: 599900, image: '📺', specs: { size: '98"', resolution: '4K', panel: 'Mini-LED', refresh: '60Hz' }, inStock: false, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
@@ -389,28 +347,16 @@ export const products: Product[] = [
   { id: 'sonybravia', name: 'Sony BRAVIA 7 65" 4K Mini-LED', brand: 'Sony', category: 'Телевизоры', price: 179900, image: '📺', specs: { size: '65"', resolution: '4K', panel: 'Mini-LED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Ring Lights
-  { id: 'neewer18', name: 'Neewer LED Ring Light 18"', brand: 'Neewer', category: 'Камеры', price: 3990, image: '💡', specs: { size: '18"', color_temp: '3200-5600K', power: '55W' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'elgato', name: 'Elgato Ring Light 2700-6500K', brand: 'Elgato', category: 'Камеры', price: 9990, image: '💡', specs: { diameter: '10"', color_temp: '2700-6500K', power: 'Smart' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Microphones
-  { id: 'audiotech2020', name: 'Audio-Technica AT2020 Cardioid Condenser', brand: 'Audio-Technica', category: 'Камеры', price: 9990, image: '🎤', specs: { type: 'Condenser', pattern: 'Cardioid', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'shuredsf7', name: 'Shure SM7B Cardioid Dynamic Microphone', brand: 'Shure', category: 'Камеры', price: 19900, image: '🎤', specs: { type: 'Dynamic', pattern: 'Cardioid', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Tripods and Stands
-  { id: 'mantismax', name: 'Manfrotto Befree Advanced MAX Tripod', brand: 'Manfrotto', category: 'Камеры', price: 8990, image: '📷', specs: { material: 'Carbon Fiber', max_height: '1.6m', weight: '1.4kg' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'neewertripod', name: 'Neewer 75" Aluminum Alloy Tripod', brand: 'Neewer', category: 'Камеры', price: 2990, image: '📷', specs: { material: 'Aluminum', max_height: '2.3m', weight: '2.2kg' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Additional Xiaomi Products
-  { id: 'xiamiscooter4', name: 'Xiaomi Electric Scooter 4 Pro', brand: 'Xiaomi', category: 'Аксессуары', price: 44900, image: '🛴', specs: { speed: '25km/h', range: '55km', battery: '2250W' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'xiamibike', name: 'Xiaomi Himo C20 Electric Bike', brand: 'Xiaomi', category: 'Аксессуары', price: 34900, image: '🚴', specs: { speed: '25km/h', range: '100km', motor: '250W' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Beats Fit Pro
-  { id: 'beatsfitpro', name: 'Beats Fit Pro Black', brand: 'Beats', category: 'Наушники', price: 16900, image: '🎧', specs: { type: 'TWS', battery: '6h', charging: '24h', color: 'Black', anc: 'Yes' }, inStock: true, description: 'Наушники Beats с чипом Apple W1 и мощным басом. До 40 часов работы, совместимость с Apple и Android.' },
-
-  // Bang & Olufsen
-  { id: 'beoplay', name: 'Bang & Olufsen Beoplay EX Black', brand: 'Bang & Olufsen', category: 'Наушники', price: 19900, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '40h', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // AirPods Max alternative - Beyerdynamic
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   { id: 'beyerdt880', name: 'Beyerdynamic DT 880 Pro Studio Headphones', brand: 'Beyerdynamic', category: 'Наушники', price: 11990, image: '🎧', specs: { type: 'Wired', impedance: '250 Ohm', frequency: '5Hz-35kHz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Gaming Headsets
@@ -425,21 +371,13 @@ export const products: Product[] = [
   { id: 'goprohero11', name: 'GoPro Hero 11 Black Bundle', brand: 'GoPro', category: 'Камеры', price: 29900, image: '📷', specs: { video: '5.3K 60p', sensor: '27MP', waterproof: '10m', stabilization: 'HyperSmooth 5.0' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Insta360
-  { id: 'insta360x4', name: 'Insta360 X4 8K 360 Camera', brand: 'Insta360', category: 'Камеры', price: 59900, image: '📷', specs: { video: '8K 360', fps: '30fps', stabilization: '6-axis', waterproof: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // More Storage Solutions
-  { id: 'samsungt7shield', name: 'Samsung T7 Shield 2TB Portable SSD Black', brand: 'Samsung', category: 'Аксессуары', price: 14990, image: '💾', specs: { capacity: '2TB', interface: 'USB 3.2', speed: '1050MB/s', rugged: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'sandiskextreme1tb', name: 'SanDisk Extreme Portable SSD 1TB', brand: 'SanDisk', category: 'Аксессуары', price: 9990, image: '💾', specs: { capacity: '1TB', interface: 'USB 3.1', speed: '1050MB/s' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // More Smart Home
-  { id: 'echoxmax', name: 'Amazon Echo Max 15" Display Black', brand: 'Amazon', category: 'Бытовая техника', price: 24900, image: '🔊', specs: { display: '15" Fire OS', ai_assistant: 'Alexa', speakers: 'Premium' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'echoshow', name: 'Amazon Echo Show 8 Black', brand: 'Amazon', category: 'Бытовая техника', price: 7990, image: '🔊', specs: { display: '8" HD', ai_assistant: 'Alexa', camera: '13MP' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Google Nest
-  { id: 'nesthubmax', name: 'Google Nest Hub Max Chalk', brand: 'Google', category: 'Бытовая техника', price: 14990, image: '🔊', specs: { display: '10" HD', ai_assistant: 'Google Assistant', camera: '6.2MP' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'nestspeaker', name: 'Google Nest Audio Charcoal', brand: 'Google', category: 'Бытовая техника', price: 4990, image: '🔊', specs: { speaker_type: 'Smart Speaker', ai_assistant: 'Google Assistant', color: 'Charcoal' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Dyson Supersonic Styling
+  
+  
+  
+  
+  
+  
+  
   { id: 'dysonsupersonics', name: 'Dyson Supersonic Styling Iron Nickel', brand: 'Dyson', category: 'Бытовая техника', price: 44900, image: '💈', specs: { heat: 'Intelligent', straightening: 'Yes', color: 'Nickel' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // More Samsung Products
@@ -473,9 +411,7 @@ export const products: Product[] = [
   { id: 'lenovotabp12', name: 'Lenovo Tab P12 11.5" 128GB', brand: 'Lenovo', category: 'Планшеты', price: 14990, image: '📱', specs: { size: '11.5"', resolution: '2000x1200', chip: 'MediaTek Kompanio 1300T', storage: '128GB' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Amazon Tablet
-  { id: 'amazonkindlefire', name: 'Amazon Fire Max 11 128GB', brand: 'Amazon', category: 'Планшеты', price: 12990, image: '📱', specs: { size: '11"', resolution: 'AMOLED 2000x1200', chip: 'MediaTek MT8188J', storage: '128GB' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Huawei MatePad
+  
   { id: 'huaweimatepadt11', name: 'Huawei MatePad T11 128GB', brand: 'Huawei', category: 'Планшеты', price: 9990, image: '📱', specs: { size: '10.95"', resolution: '1920x1200', chip: 'MediaTek Helio G99', storage: '128GB' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // MSI Laptop
@@ -504,34 +440,24 @@ export const products: Product[] = [
   { id: 'lgultrawide38', name: 'LG UltraWide 38" Curved Monitor', brand: 'LG', category: 'Телевизоры', price: 99900, image: '📺', specs: { size: '38"', resolution: '3840x1600', refresh: '144Hz', curvature: '1440R' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Budget Phone Accessories
-  { id: 'genericscreen', name: 'Generic Tempered Glass 2.5D Screen Protector', brand: 'Generic', category: 'Аксессуары', price: 490, image: '📱', specs: { material: 'Tempered Glass', hardness: '9H', fitting: 'Universal' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
   { id: 'genericphonestand', name: 'Generic Metal Phone Stand', brand: 'Generic', category: 'Аксессуары', price: 590, image: '📱', specs: { material: 'Metal', adjustable: 'Yes', weight_capacity: '500g' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Keychains & Small Accessories
   { id: 'appleairtagsingle', name: 'Apple AirTag Single', brand: 'Apple', category: 'Аксессуары', price: 3990, image: '🔖', specs: { technology: 'Ultra Wideband', water_resistant: 'Yes', battery: '1 year' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'appleleather', name: 'Apple AirTag Leather Keychain Brown', brand: 'Apple', category: 'Аксессуары', price: 2990, image: '🔖', specs: { material: 'Leather', color: 'Brown', attachment: 'Keychain' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Tile Tracker
-  { id: 'tilemate', name: 'Tile Mate Slim', brand: 'Tile', category: 'Аксессуары', price: 2490, image: '🔖', specs: { technology: 'Bluetooth', water_resistant: 'Yes', battery: 'Replaceable' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Smart Lighting
-  { id: 'philipshue', name: 'Philips Hue Smart Bulb Starter Kit', brand: 'Philips', category: 'Бытовая техника', price: 9990, image: '💡', specs: { bulbs: '3x 806lm', wifi: 'Yes', voice_control: 'Alexa/Google' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'wyzelight', name: 'Wyze Bulb Color Smart Light Bulb', brand: 'Wyze', category: 'Бытовая техника', price: 1990, image: '💡', specs: { colors: '16 million', wifi: 'Yes', voice_control: 'Alexa/Google' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Smart Door Locks
-  { id: 'augustlock3', name: 'August Smart Lock Pro Silver', brand: 'August', category: 'Бытовая техника', price: 14990, image: '🔒', specs: { technology: 'Bluetooth/WiFi', keyless: 'Yes', compatible_locks: 'Most deadbolts' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'nuki', name: 'Nuki Smart Lock 3.0 Pro Silver', brand: 'Nuki', category: 'Бытовая техника', price: 12990, image: '🔒', specs: { technology: 'Bluetooth', keyless: 'Yes', installation: 'No tools required' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Soundbars
+  
+  
+  
+  
+  
+  
   { id: 'samsungq990b', name: 'Samsung HW-Q990B Soundbar 11.1.4ch', brand: 'Samsung', category: 'Наушники', price: 99900, image: '🔊', specs: { channels: '11.1.4', power: '656W', dolby: 'Atmos' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'jblbar1000pro', name: 'JBL Bar 1000 Pro 3.1.2ch Soundbar', brand: 'JBL', category: 'Наушники', price: 49900, image: '🔊', specs: { channels: '3.1.2', power: '880W', dolby: 'Atmos' }, inStock: true, description: 'Портативная акустика JBL с мощным басом и защитой IP67. До 24 часов работы, PartyBoost.' },
 
   // Budget Headphones
   { id: 'jbltunebuds', name: 'JBL Tune Buds True Wireless Earbuds', brand: 'JBL', category: 'Наушники', price: 6990, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '24h', anc: 'Yes' }, inStock: true, description: 'Портативная акустика JBL с мощным басом и защитой IP67. До 24 часов работы, PartyBoost.' },
-  { id: 'skullcandy', name: 'Skullcandy Dime True Wireless Earbuds', brand: 'Skullcandy', category: 'Наушники', price: 4990, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '24h', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Keyboard and Mouse
-  { id: 'logicalmk850', name: 'Logitech MK850 Performance Wireless Combo', brand: 'Logitech', category: 'Аксессуары', price: 9990, image: '⌨️', specs: { keyboard: 'Full-size', mouse: 'Full-size', wireless: '2.4GHz', battery: 'Long-lasting' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
+  
   { id: 'applemag', name: 'Apple Magic Keyboard + Mouse Bundle Space Gray', brand: 'Apple', category: 'Аксессуары', price: 12990, image: '⌨️', specs: { keyboard: 'Wireless', mouse: 'Magic Mouse 2', color: 'Space Gray' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Mechanical Keyboards
@@ -540,22 +466,18 @@ export const products: Product[] = [
 
   // Gaming Mice
   { id: 'logicommo', name: 'Logitech G Pro X 2 Lightspeed Gaming Mouse', brand: 'Logitech', category: 'Аксcessуары', price: 7990, image: '🖱️', specs: { dpi: '32000', buttons: '6', weight: '57g' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'corsairviper', name: 'Corsair Sabre RGB Pro Gaming Mouse', brand: 'Corsair', category: 'Аксcessуары', price: 4990, image: '🖱️', specs: { dpi: '18000', buttons: '6', weight: '95g' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Webcams continued
-  { id: 'elgatofacecam', name: 'Elgato Facecam Pro 1080p 60fps', brand: 'Elgato', category: 'Камеры', price: 11990, image: '📷', specs: { resolution: '1080p 60fps', autofocus: 'Yes', lens: '97° FOV' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'logicbrio4k', name: 'Logitech Brio 4K Pro 30fps', brand: 'Logitech', category: 'Камеры', price: 16990, image: '📷', specs: { resolution: '4K 30fps', autofocus: 'Yes', color: 'Graphite' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Desk Lamps
-  { id: 'benqlamp', name: 'BenQ e-Reading Lamp 2000-6500K', brand: 'BenQ', category: 'Бытовая техника', price: 8990, image: '💡', specs: { color_temp: '2000-6500K', brightness: 'Adjustable', auto_dim: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
+  
+  
+  
   { id: 'xiaomilamp', name: 'Xiaomi Mi Desk Lamp Pro Smart', brand: 'Xiaomi', category: 'Бытовая техника', price: 4990, image: '💡', specs: { color_temp: '2700-6500K', brightness: 'Adjustable', app_control: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Air Purifiers
-  { id: 'coway', name: 'Coway AP-1512HH Air Purifier', brand: 'Coway', category: 'Бытовая техника', price: 24900, image: '🌬️', specs: { coverage: '361 sq.ft', filter: 'HEPA + Carbon', aqi: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
   { id: 'sharpi3000', name: 'Sharp KC-G50EW Air Purifier', brand: 'Sharp', category: 'Бытовая техника', price: 19900, image: '🌬️', specs: { coverage: '350 sq.ft', filter: 'HEPA', ion: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Humidifiers
-  { id: 'levoit', name: 'Levoit Humidifier 1.5L Warm and Cool Mist', brand: 'Levoit', category: 'Бытовая техника', price: 4990, image: '💧', specs: { capacity: '1.5L', coverage: '110 sq.ft', duration: '48h' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
   { id: 'medbottle', name: 'MedBottle Smart Humidifier 2.5L', brand: 'MedBottle', category: 'Бытовая техника', price: 6990, image: '💧', specs: { capacity: '2.5L', coverage: '250 sq.ft', duration: '50h' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Dehumidifiers
@@ -576,34 +498,19 @@ export const products: Product[] = [
   { id: 'xboxcontroller', name: 'Xbox Series X|S Wireless Controller Black', brand: 'Microsoft', category: 'Игровые консоли', price: 7990, image: '🎮', specs: { connectivity: 'Wireless', battery: 'AA x2', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Nintendo Pro Controller
-  { id: 'nintendoprocon', name: 'Nintendo Pro Controller', brand: 'Nintendo', category: 'Игровые консоли', price: 7990, image: '🎮', specs: { connectivity: 'Wireless', battery: 'Built-in', feature: 'NFC amiibo' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Gaming Chairs
-  { id: 'secretlab', name: 'Secretlab Titan Evo 2022 Black Fabric', brand: 'Secretlab', category: 'Аксcessуары', price: 49900, image: '💺', specs: { size: 'Regular', recline: '165°', lumbar: 'Adjustable' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'noblechairs', name: 'Noblechairs Epic Black', brand: 'Noblechairs', category: 'Аксcessуары', price: 34900, image: '💺', specs: { size: 'Regular', recline: '135°', wheels: 'Casters' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Router/Networking
+  
+  
+  
   { id: 'wifiax200', name: 'TP-Link AX3000 WiFi 6 Router', brand: 'TP-Link', category: 'Аксессуары', price: 9990, image: '📡', specs: { standard: 'WiFi 6 (802.11ax)', speed: '3000 Mbps', coverage: '3000 sq.ft' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   { id: 'meshwifi', name: 'ASUS AiMesh WiFi 6 System 3-Pack', brand: 'ASUS', category: 'Аксессуары', price: 19990, image: '📡', specs: { standard: 'WiFi 6', coverage: '5000+ sq.ft', nodes: '3' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // USB Flash Drives
-  { id: 'sandisk128', name: 'SanDisk Extreme Pro 128GB USB-C Flash Drive', brand: 'SanDisk', category: 'Аксессуары', price: 2990, image: '💾', specs: { capacity: '128GB', interface: 'USB-C 3.2', speed: '420MB/s read' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'kingstondt100', name: 'Kingston DataTraveler 100 64GB USB 3.0', brand: 'Kingston', category: 'Аксессуары', price: 1490, image: '💾', specs: { capacity: '64GB', interface: 'USB 3.0', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Memory Cards
-  { id: 'sandisksd256', name: 'SanDisk Extreme SDXC 256GB Card', brand: 'SanDisk', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '256GB', speed: 'V90 170MB/s', type: 'SDXC' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'samsung256', name: 'Samsung EVO Plus microSD 256GB Card', brand: 'Samsung', category: 'Аксессуары', price: 4990, image: '💾', specs: { capacity: '256GB', speed: 'U3 V30', type: 'microSD' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-
-  // Final batch to reach 500+
-  { id: 'fitbit_sense2', name: 'Fitbit Sense 2 Smartwatch Black', brand: 'Fitbit', category: 'Часы', price: 14990, image: '⌚', specs: { display: 'AMOLED 1.58"', battery: '6+ days', health: 'Advanced sensors' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'garmininstinct', name: 'Garmin Instinct 2 Rugged Smartwatch', brand: 'Garmin', category: 'Часы', price: 14990, image: '⌚', specs: { display: 'MIP 1.4"', battery: '14 days', rugged: 'Military-grade' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'fossilgen6', name: 'Fossil Gen 6 Smartwatch Black', brand: 'Fossil', category: 'Часы', price: 11990, image: '⌚', specs: { display: 'AMOLED 1.28"', os: 'Wear OS 3', battery: '24h' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'tizenphone', name: 'Samsung Galaxy Watch 4 Classic 42mm', brand: 'Samsung', category: 'Часы', price: 19990, image: '⌚', specs: { display: 'AMOLED 1.4"', os: 'Wear OS 3', battery: '2+ days' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'fitbitpremium', name: 'Fitbit Premium Membership Annual', brand: 'Fitbit', category: 'Аксcessуары', price: 9990, image: '💳', specs: { duration: 'Annual Subscription', features: 'Advanced insights', personalization: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  
+  
+  
+  
+  
+  
+  
+  { id: 'tizenphone', name: 'Samsung Galaxy Watch 4 Classic 42mm', brand: 'Samsung', category: 'Часы', price: 19990, image: '⌚', specs: { display: 'AMOLED 1.4"', os: 'Wear OS 3', battery: '2+ days' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' }
 ];
-
-export const productNames: string[] = products.map(p => p.name);
-
-export const brands: string[] = Array.from(new Set(products.map(p => p.brand))).sort();
-
-export const categories: string[] = Array.from(new Set(products.map(p => p.category))).sort();

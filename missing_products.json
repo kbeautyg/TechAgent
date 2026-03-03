@@ -1,0 +1,268 @@
+[
+  {
+    "id": "iph15pm256b",
+    "name": "iPhone 15 Pro Max 256GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15pm512b",
+    "name": "iPhone 15 Pro Max 512GB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "iph15pm1tb",
+    "name": "iPhone 15 Pro Max 1TB Black",
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "color": "Black"
+  },
+  {
+    "id": "jblflip6",
+    "name": "JBL Flip 6 Black",
+    "brand": "JBL",
+    "category": "Наушники",
+    "color": ""
+  },
+  {
+    "id": "lgtvoledb",
+    "name": "LG OLED55 55\" 4K",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "belsinkusb",
+    "name": "Belkin USB-C 4 Hub Silver",
+    "brand": "Belkin",
+    "category": "Аксессуары",
+    "color": "Silver"
+  },
+  {
+    "id": "appleusbcc",
+    "name": "Apple USB-C Charge Cable 2m",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "otterbox15pm",
+    "name": "OtterBox Defender iPhone 15 Pro Max Black",
+    "brand": "OtterBox",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "spigeniphone15pm",
+    "name": "Spigen Tough Armor iPhone 15 Pro Max Black",
+    "brand": "Spigen",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "temperiphone15pm",
+    "name": "Tempered Glass Screen Protector iPhone 15 Pro Max",
+    "brand": "Generic",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "applewcharger",
+    "name": "Apple MagSafe Charging Pad White",
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "color": "White"
+  },
+  {
+    "id": "rainmstand",
+    "name": "Rain Design mStand for MacBook Silver",
+    "brand": "Rain Design",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "avantheight",
+    "name": "Avantree Adjustable Laptop Stand Silver",
+    "brand": "Avantree",
+    "category": "Аксcessуары",
+    "color": ""
+  },
+  {
+    "id": "caldigiths3",
+    "name": "CalDigit TS3 Plus Thunderbolt Hub",
+    "brand": "CalDigit",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "4kweb",
+    "name": "Logitech StreamCam Plus 4K 60fps",
+    "brand": "Logitech",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "logibrio",
+    "name": "Logitech Brio 500 1080p 90fps",
+    "brand": "Logitech",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "seabarracuda4tb",
+    "name": "Seagate Barracuda 4TB USB 3.0",
+    "brand": "Seagate",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "wdback2tb",
+    "name": "WD Backup 2TB USB 3.0",
+    "brand": "Western Digital",
+    "category": "Аксессуары",
+    "color": "Black"
+  },
+  {
+    "id": "samsungpm91000",
+    "name": "Samsung 990 Pro 1TB NVMe SSD",
+    "brand": "Samsung",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "lgtvoledw",
+    "name": "LG OLED55 55\" B4 OLED",
+    "brand": "LG",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sgtvq70d",
+    "name": "Samsung Q70D 55\" QLED 4K",
+    "brand": "Samsung",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "hisenseqledu7g",
+    "name": "Hisense U7G 55\" QLED 4K",
+    "brand": "Hisense",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "tcl98c645",
+    "name": "TCL 98C645 98\" 4K Mini-LED",
+    "brand": "TCL",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sonykx80",
+    "name": "Sony K-85XR80 85\" 4K Mini-LED",
+    "brand": "Sony",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "sonybravia",
+    "name": "Sony BRAVIA 7 65\" 4K Mini-LED",
+    "brand": "Sony",
+    "category": "Телевизоры",
+    "color": ""
+  },
+  {
+    "id": "neewer18",
+    "name": "Neewer LED Ring Light 18\"",
+    "brand": "Neewer",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "elgato",
+    "name": "Elgato Ring Light 2700-6500K",
+    "brand": "Elgato",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "audiotech2020",
+    "name": "Audio-Technica AT2020 Cardioid Condenser",
+    "brand": "Audio-Technica",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "shuredsf7",
+    "name": "Shure SM7B Cardioid Dynamic Microphone",
+    "brand": "Shure",
+    "category": "Камеры",
+    "color": "Black"
+  },
+  {
+    "id": "mantismax",
+    "name": "Manfrotto Befree Advanced MAX Tripod",
+    "brand": "Manfrotto",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "neewertripod",
+    "name": "Neewer 75\" Aluminum Alloy Tripod",
+    "brand": "Neewer",
+    "category": "Камеры",
+    "color": ""
+  },
+  {
+    "id": "xiamiscooter4",
+    "name": "Xiaomi Electric Scooter 4 Pro",
+    "brand": "Xiaomi",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "xiamibike",
+    "name": "Xiaomi Himo C20 Electric Bike",
+    "brand": "Xiaomi",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "beatsfitpro",
+    "name": "Beats Fit Pro Black",
+    "brand": "Beats",
+    "category": "Наушники",
+    "color": "Black"
+  },
+  {
+    "id": "nesthubmax",
+    "name": "Google Nest Hub Max Chalk",
+    "brand": "Google",
+    "category": "Бытовая техника",
+    "color": ""
+  },
+  {
+    "id": "clevop775",
+    "name": "Clevo P775 17\" RTX 4070",
+    "brand": "Clevo",
+    "category": "Ноутбуки",
+    "color": ""
+  },
+  {
+    "id": "genericscreen",
+    "name": "Generic Tempered Glass 2.5D Screen Protector",
+    "brand": "Generic",
+    "category": "Аксессуары",
+    "color": ""
+  },
+  {
+    "id": "nintendoprocon",
+    "name": "Nintendo Pro Controller",
+    "brand": "Nintendo",
+    "category": "Игровые консоли",
+    "color": ""
+  }
+]
