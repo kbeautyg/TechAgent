@@ -173,7 +173,7 @@ export const products: Product[] = [
   
   
   
-  { id: 'sonya7rb', name: 'Sony Alpha 7R V Black', brand: 'Sony', category: 'Камеры и дроны', price: 419900, image: '📷', specs: { sensor: 'Full Frame', megapixels: '61MP', video: '8K 24p', display: 'Fixed 3.2"' }, inStock: false, description: 'Беззеркальная камера Sony с полнокадровым сенсором. Быстрый автофокус, видео 4K 120fps.' },
+  { id: 'sonya7rb', name: 'Sony Alpha 7R V Black', brand: 'Sony', category: 'Камеры', price: 419900, image: '📷', specs: { sensor: 'Full Frame', megapixels: '61MP', video: '8K 24p', display: 'Fixed 3.2"' }, inStock: false, description: 'Беззеркальная камера Sony с полнокадровым сенсором. Быстрый автофокус, видео 4K 120fps.' },
   
   
   
@@ -181,10 +181,10 @@ export const products: Product[] = [
   
   
   
-  { id: 'djimini4b', name: 'DJI Mini 4 Pro Fly More Combo', brand: 'DJI', category: 'Камеры и дроны', price: 59900, image: '🚁', specs: { weight: '249g', max_flight_time: '34min', video: '4K 60p', sensor: '1/1.3" CMOS' }, inStock: true, description: 'Компактный дрон DJI с хорошей камерой и обнаружением препятствий. До 34 минут полёта.' },
-  { id: 'djiair3', name: 'DJI Air 3 Fly More Combo', brand: 'DJI', category: 'Камеры и дроны', price: 99900, image: '🚁', specs: { weight: '907g', max_flight_time: '46min', video: '4K 60p', sensor: 'Dual 4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
-  { id: 'djimavic3', name: 'DJI Mavic 3 Classic Fly More Combo', brand: 'DJI', category: 'Камеры и дроны', price: 189900, image: '🚁', specs: { weight: '895g', max_flight_time: '46min', video: '4K 120p', sensor: '4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
-  { id: 'djiavata', name: 'DJI Avata 2 Fly More Combo', brand: 'DJI', category: 'Камеры и дроны', price: 159900, image: '🚁', specs: { weight: '410g', max_flight_time: '23min', video: '1080p 120p', type: 'FPV Drone' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
+  { id: 'djimini4b', name: 'DJI Mini 4 Pro Fly More Combo', brand: 'DJI', category: 'Камеры', price: 59900, image: '🚁', specs: { weight: '249g', max_flight_time: '34min', video: '4K 60p', sensor: '1/1.3" CMOS' }, inStock: true, description: 'Компактный дрон DJI с хорошей камерой и обнаружением препятствий. До 34 минут полёта.' },
+  { id: 'djiair3', name: 'DJI Air 3 Fly More Combo', brand: 'DJI', category: 'Камеры', price: 99900, image: '🚁', specs: { weight: '907g', max_flight_time: '46min', video: '4K 60p', sensor: 'Dual 4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
+  { id: 'djimavic3', name: 'DJI Mavic 3 Classic Fly More Combo', brand: 'DJI', category: 'Камеры', price: 189900, image: '🚁', specs: { weight: '895g', max_flight_time: '46min', video: '4K 120p', sensor: '4/3 CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
+  { id: 'djiavata', name: 'DJI Avata 2 Fly More Combo', brand: 'DJI', category: 'Камеры', price: 159900, image: '🚁', specs: { weight: '410g', max_flight_time: '23min', video: '1080p 120p', type: 'FPV Drone' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
 
   // DJI Osmo
   
@@ -204,10 +204,10 @@ export const products: Product[] = [
   
   
   
-  { id: 'dysonairwrapc', name: 'Dyson Airwrap Complete', brand: 'Dyson', category: 'Для дома', price: 59900, image: '💈', specs: { heat: 'Intelligent', rotation: 'Oscillating', battery: 'Cordless', attachments: '6' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
+  { id: 'dysonairwrapc', name: 'Dyson Airwrap Complete', brand: 'Dyson', category: 'Бытовая техника', price: 59900, image: '💈', specs: { heat: 'Intelligent', rotation: 'Oscillating', battery: 'Cordless', attachments: '6' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // Dyson Supersonic
-  { id: 'dysonsupersonicb', name: 'Dyson Supersonic Black', brand: 'Dyson', category: 'Для дома', price: 34900, image: '💈', specs: { heat: 'Intelligent', motor: 'Digital V9', speed: '110,000rpm', color: 'Black' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
+  { id: 'dysonsupersonicb', name: 'Dyson Supersonic Black', brand: 'Dyson', category: 'Бытовая техника', price: 34900, image: '💈', specs: { heat: 'Intelligent', motor: 'Digital V9', speed: '110,000rpm', color: 'Black' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // Dyson Purifier
   
@@ -307,17 +307,25 @@ export const products: Product[] = [
   { id: 'surfacelaptopstudio', name: 'Microsoft Surface Laptop Studio RTX 4090', brand: 'Microsoft', category: 'Ноутбуки', price: 269900, image: '💻', specs: { storage: '1TB', chip: 'Intel Core i9-12', ram: '32GB', gpu: 'RTX 4090', display: '15" 120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // USB-C Hubs and Accessories
+  { id: 'ankerusb', name: 'Anker 7-in-1 USB-C Hub Silver', brand: 'Anker', category: 'Аксессуары', price: 4990, image: '🔌', specs: { ports: '7-in-1', power: '100W', color: 'Silver' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   
+  { id: 'appleusbclight', name: 'Apple USB-C to Lightning Cable 1m', brand: 'Apple', category: 'Аксессуары', price: 1990, image: '🔌', specs: { length: '1m', connector: 'USB-C to Lightning', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'appleusbcc', name: 'Apple USB-C Charge Cable 2m', brand: 'Apple', category: 'Аксессуары', price: 2990, image: '🔌', specs: { length: '2m', connector: 'USB-C to USB-C', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Phone Cases
+  { id: 'otterbox15pm', name: 'OtterBox Defender iPhone 15 Pro Max Black', brand: 'OtterBox', category: 'Аксессуары', price: 4990, image: '📱', specs: { model: 'iPhone 15 Pro Max', material: 'Polycarbonate', color: 'Black', protection: 'Heavy-duty' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
+  { id: 'spigeniphone15pm', name: 'Spigen Tough Armor iPhone 15 Pro Max Black', brand: 'Spigen', category: 'Аксессуары', price: 1990, image: '📱', specs: { model: 'iPhone 15 Pro Max', material: 'TPU', color: 'Black' }, inStock: true, description: 'Флагманский смартфон Apple с чипом A17 Pro, титановым корпусом и продвинутой камерой 48 Мп. Идеальный выбор для тех, кто ценит максимальную производительность.' },
 
   // Screen Protectors
   
   
   
   
+  { id: 'ankerasync', name: 'Anker PowerWave Pad 15W Black', brand: 'Anker', category: 'Аксессуары', price: 2990, image: '🔌', specs: { power: '15W', color: 'Black', standard: 'Qi' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Portable Power Banks
+  { id: 'ankerpower20000', name: 'Anker PowerCore 20000 Black', brand: 'Anker', category: 'Аксессуары', price: 3990, image: '🔋', specs: { capacity: '20000mAh', ports: '2 USB-A', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'applepower20', name: 'Apple MagSafe Battery Pack White', brand: 'Apple', category: 'Аксессуары', price: 4990, image: '🔋', specs: { capacity: '2460mAh', power: '7.5W', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Laptop Stands
   
@@ -327,6 +335,7 @@ export const products: Product[] = [
   
   
   
+  { id: 'samsungevob1tb', name: 'Samsung 870 EVO 1TB 2.5" SSD', brand: 'Samsung', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '1TB', interface: 'SATA 2.5"', speed: '560MB/s' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   
   
   { id: 'sgtvq70d', name: 'Samsung Q70D 55" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 64900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
@@ -355,11 +364,11 @@ export const products: Product[] = [
   { id: 'logitusg733', name: 'Logitech G733 Wireless Gaming Headset Black', brand: 'Logitech', category: 'Наушники', price: 9990, image: '🎧', specs: { type: 'Wireless', battery: '29h', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // DJI Mini 3 Pro
-  { id: 'djimini3pro', name: 'DJI Mini 3 Pro Fly More Combo', brand: 'DJI', category: 'Камеры и дроны', price: 44900, image: '🚁', specs: { weight: '249g', max_flight_time: '38min', video: '4K 30p', sensor: '1/1.3" CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
+  { id: 'djimini3pro', name: 'DJI Mini 3 Pro Fly More Combo', brand: 'DJI', category: 'Камеры', price: 44900, image: '🚁', specs: { weight: '249g', max_flight_time: '38min', video: '4K 30p', sensor: '1/1.3" CMOS' }, inStock: true, description: 'Дрон DJI с камерой Hasselblad и системой обнаружения препятствий. До 46 минут полёта, видео 5.1K.' },
 
   // GoPro
-  { id: 'gopohero12', name: 'GoPro Hero 12 Black Bundle', brand: 'GoPro', category: 'Камеры и дроны', price: 39900, image: '📷', specs: { video: '5.3K 60p', sensor: '27MP', waterproof: '10m', stabilization: 'HyperSmooth 6.0' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'goprohero11', name: 'GoPro Hero 11 Black Bundle', brand: 'GoPro', category: 'Камеры и дроны', price: 29900, image: '📷', specs: { video: '5.3K 60p', sensor: '27MP', waterproof: '10m', stabilization: 'HyperSmooth 5.0' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'gopohero12', name: 'GoPro Hero 12 Black Bundle', brand: 'GoPro', category: 'Камеры', price: 39900, image: '📷', specs: { video: '5.3K 60p', sensor: '27MP', waterproof: '10m', stabilization: 'HyperSmooth 6.0' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'goprohero11', name: 'GoPro Hero 11 Black Bundle', brand: 'GoPro', category: 'Камеры', price: 29900, image: '📷', specs: { video: '5.3K 60p', sensor: '27MP', waterproof: '10m', stabilization: 'HyperSmooth 5.0' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Insta360
   
@@ -369,7 +378,7 @@ export const products: Product[] = [
   
   
   
-  { id: 'dysonsupersonics', name: 'Dyson Supersonic Styling Iron Nickel', brand: 'Dyson', category: 'Для дома', price: 44900, image: '💈', specs: { heat: 'Intelligent', straightening: 'Yes', color: 'Nickel' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
+  { id: 'dysonsupersonics', name: 'Dyson Supersonic Styling Iron Nickel', brand: 'Dyson', category: 'Бытовая техника', price: 44900, image: '💈', specs: { heat: 'Intelligent', straightening: 'Yes', color: 'Nickel' }, inStock: true, description: 'Премиальная бытовая техника Dyson с инновационной технологией. Мощное всасывание, HEPA фильтрация.' },
 
   // More Samsung Products
   { id: 'sgtv85', name: 'Samsung S95C 85" OLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 599900, image: '📺', specs: { size: '85"', resolution: '4K', panel: 'OLED', refresh: '144Hz' }, inStock: false, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
@@ -432,8 +441,10 @@ export const products: Product[] = [
 
   // Budget Phone Accessories
   
+  { id: 'genericphonestand', name: 'Generic Metal Phone Stand', brand: 'Generic', category: 'Аксессуары', price: 590, image: '📱', specs: { material: 'Metal', adjustable: 'Yes', weight_capacity: '500g' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Keychains & Small Accessories
+  { id: 'appleairtagsingle', name: 'Apple AirTag Single', brand: 'Apple', category: 'Аксессуары', price: 3990, image: '🔖', specs: { technology: 'Ultra Wideband', water_resistant: 'Yes', battery: '1 year' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
   
   
   
@@ -447,31 +458,39 @@ export const products: Product[] = [
   { id: 'jbltunebuds', name: 'JBL Tune Buds True Wireless Earbuds', brand: 'JBL', category: 'Наушники', price: 6990, image: '🎧', specs: { type: 'TWS', battery: '8h', charging: '24h', anc: 'Yes' }, inStock: true, description: 'Портативная акустика JBL с мощным басом и защитой IP67. До 24 часов работы, PartyBoost.' },
   
   
+  { id: 'applemag', name: 'Apple Magic Keyboard + Mouse Bundle Space Gray', brand: 'Apple', category: 'Аксессуары', price: 12990, image: '⌨️', specs: { keyboard: 'Wireless', mouse: 'Magic Mouse 2', color: 'Space Gray' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Mechanical Keyboards
+  { id: 'daskeyboard', name: 'Das Keyboard 5Q RGB Mechanical Keyboard', brand: 'Das Keyboard', category: 'Аксессуары', price: 19900, image: '⌨️', specs: { switches: 'Cherry MX', backlight: 'RGB', programmable: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'corsairrk', name: 'Corsair K95 RGB Platinum XT Mechanical', brand: 'Corsair', category: 'Аксессуары', price: 24900, image: '⌨️', specs: { switches: 'Cherry MX Speed', backlight: 'RGB', macro_keys: '6' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Gaming Mice
   
   
   
   
+  { id: 'xiaomilamp', name: 'Xiaomi Mi Desk Lamp Pro Smart', brand: 'Xiaomi', category: 'Бытовая техника', price: 4990, image: '💡', specs: { color_temp: '2700-6500K', brightness: 'Adjustable', app_control: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Air Purifiers
   
+  { id: 'sharpi3000', name: 'Sharp KC-G50EW Air Purifier', brand: 'Sharp', category: 'Бытовая техника', price: 19900, image: '🌬️', specs: { coverage: '350 sq.ft', filter: 'HEPA', ion: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Humidifiers
   
+  { id: 'medbottle', name: 'MedBottle Smart Humidifier 2.5L', brand: 'MedBottle', category: 'Бытовая техника', price: 6990, image: '💧', specs: { capacity: '2.5L', coverage: '250 sq.ft', duration: '50h' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Dehumidifiers
+  { id: 'arellapro', name: 'Arella Pro 30L Dehumidifier', brand: 'Arella', category: 'Бытовая техника', price: 24900, image: '💧', specs: { capacity: '30L/day', coverage: '100 sq.ft', energy_efficient: 'Yes' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Coffee Makers
-  { id: 'nespresso', name: 'Nespresso Vertuo Plus Coffee Machine Piano Black', brand: 'Nespresso', category: 'Для дома', price: 12990, image: '☕', specs: { capacity: '1.2L', brewing_system: 'Vertuo', colors: '5' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
-  { id: 'dysonmashup', name: 'Nespresso DeLonghi Lattissima Black', brand: 'DeLonghi', category: 'Для дома', price: 9990, image: '☕', specs: { capacity: '1L', steaming: 'Automatic', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'nespresso', name: 'Nespresso Vertuo Plus Coffee Machine Piano Black', brand: 'Nespresso', category: 'Бытовая техника', price: 12990, image: '☕', specs: { capacity: '1.2L', brewing_system: 'Vertuo', colors: '5' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'dysonmashup', name: 'Nespresso DeLonghi Lattissima Black', brand: 'DeLonghi', category: 'Бытовая техника', price: 9990, image: '☕', specs: { capacity: '1L', steaming: 'Automatic', color: 'Black' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Vacuum Cleaners (Dyson alternatives)
-  { id: 'sharkuv', name: 'Shark Navigator NV752 Upright Vacuum', brand: 'Shark', category: 'Для дома', price: 14990, image: '🧹', specs: { power: 'Advanced swivel steering', bagless: 'Yes', capacity: '0.98L' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'sharkuv', name: 'Shark Navigator NV752 Upright Vacuum', brand: 'Shark', category: 'Бытовая техника', price: 14990, image: '🧹', specs: { power: 'Advanced swivel steering', bagless: 'Yes', capacity: '0.98L' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // Washing Machine Accessories
+  { id: 'lg_detergent', name: 'LG Washer Detergent Capsule 200 Count', brand: 'LG', category: 'Бытовая техника', price: 4990, image: '🧴', specs: { count: '200 capsules', formula: 'All-in-1', type: 'Front-loader compatible' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // More Gaming related
   { id: 'ps5controller', name: 'PlayStation 5 DualSense Controller White', brand: 'Sony', category: 'Игровые консоли', price: 8990, image: '🎮', specs: { connectivity: 'Wireless', vibration: 'Haptic Feedback', color: 'White' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
@@ -481,6 +500,8 @@ export const products: Product[] = [
   
   
   
+  { id: 'wifiax200', name: 'TP-Link AX3000 WiFi 6 Router', brand: 'TP-Link', category: 'Аксессуары', price: 9990, image: '📡', specs: { standard: 'WiFi 6 (802.11ax)', speed: '3000 Mbps', coverage: '3000 sq.ft' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
+  { id: 'meshwifi', name: 'ASUS AiMesh WiFi 6 System 3-Pack', brand: 'ASUS', category: 'Аксессуары', price: 19990, image: '📡', specs: { standard: 'WiFi 6', coverage: '5000+ sq.ft', nodes: '3' }, inStock: true, description: 'Качественное устройство с хорошей производительностью и надежностью. Отличный выбор для вашего использования.' },
 
   // USB Flash Drives
   

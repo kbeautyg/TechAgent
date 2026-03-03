@@ -12,10 +12,11 @@ const categoryFolders: Record<string, string> = {
   'Планшеты': 'tablets',
   'Наушники': 'headphones',
   'Часы': 'watches',
-  'Камеры и дроны': 'cameras',
+  'Камеры': 'cameras',
   'Игровые консоли': 'consoles',
-  'Для дома': 'appliances',
+  'Бытовая техника': 'appliances',
   'Телевизоры': 'tvs',
+  'Аксессуары': 'accessories',
 };
 
 /**
