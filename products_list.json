@@ -1197,46 +1197,11 @@
     "color": ""
   },
   {
-    "id": "ankerusb",
-    "name": "Anker 7-in-1 USB-C Hub Silver",
-    "brand": "Anker",
-    "category": "Аксессуары",
-    "color": "Silver"
-  },
-  {
     "id": "belsinkusb",
     "name": "Belkin USB-C 4 Hub Silver",
     "brand": "Belkin",
     "category": "Аксессуары",
     "color": "Silver"
-  },
-  {
-    "id": "appleusbclight",
-    "name": "Apple USB-C to Lightning Cable 1m",
-    "brand": "Apple",
-    "category": "Аксессуары",
-    "color": "White"
-  },
-  {
-    "id": "appleusbcc",
-    "name": "Apple USB-C Charge Cable 2m",
-    "brand": "Apple",
-    "category": "Аксессуары",
-    "color": "White"
-  },
-  {
-    "id": "otterbox15pm",
-    "name": "OtterBox Defender iPhone 15 Pro Max Black",
-    "brand": "OtterBox",
-    "category": "Аксессуары",
-    "color": "Black"
-  },
-  {
-    "id": "spigeniphone15pm",
-    "name": "Spigen Tough Armor iPhone 15 Pro Max Black",
-    "brand": "Spigen",
-    "category": "Аксессуары",
-    "color": "Black"
   },
   {
     "id": "temperiphone15pm",
@@ -1262,27 +1227,6 @@
   {
     "id": "applewcharger",
     "name": "Apple MagSafe Charging Pad White",
-    "brand": "Apple",
-    "category": "Аксессуары",
-    "color": "White"
-  },
-  {
-    "id": "ankerasync",
-    "name": "Anker PowerWave Pad 15W Black",
-    "brand": "Anker",
-    "category": "Аксессуары",
-    "color": "Black"
-  },
-  {
-    "id": "ankerpower20000",
-    "name": "Anker PowerCore 20000 Black",
-    "brand": "Anker",
-    "category": "Аксессуары",
-    "color": "Black"
-  },
-  {
-    "id": "applepower20",
-    "name": "Apple MagSafe Battery Pack White",
     "brand": "Apple",
     "category": "Аксессуары",
     "color": "White"
@@ -1335,13 +1279,6 @@
     "brand": "Western Digital",
     "category": "Аксессуары",
     "color": "Black"
-  },
-  {
-    "id": "samsungevob1tb",
-    "name": "Samsung 870 EVO 1TB 2.5\" SSD",
-    "brand": "Samsung",
-    "category": "Аксессуары",
-    "color": ""
   },
   {
     "id": "samsungpm91000",
@@ -1729,20 +1666,6 @@
     "color": ""
   },
   {
-    "id": "genericphonestand",
-    "name": "Generic Metal Phone Stand",
-    "brand": "Generic",
-    "category": "Аксессуары",
-    "color": ""
-  },
-  {
-    "id": "appleairtagsingle",
-    "name": "Apple AirTag Single",
-    "brand": "Apple",
-    "category": "Аксессуары",
-    "color": ""
-  },
-  {
     "id": "appleleather",
     "name": "Apple AirTag Leather Keychain Brown",
     "brand": "Apple",
@@ -1820,34 +1743,6 @@
     "color": ""
   },
   {
-    "id": "applemag",
-    "name": "Apple Magic Keyboard + Mouse Bundle Space Gray",
-    "brand": "Apple",
-    "category": "Аксессуары",
-    "color": "Space Gray"
-  },
-  {
-    "id": "daskeyboard",
-    "name": "Das Keyboard 5Q RGB Mechanical Keyboard",
-    "brand": "Das Keyboard",
-    "category": "Аксессуары",
-    "color": ""
-  },
-  {
-    "id": "corsairrk",
-    "name": "Corsair K95 RGB Platinum XT Mechanical",
-    "brand": "Corsair",
-    "category": "Аксессуары",
-    "color": ""
-  },
-  {
-    "id": "logicommo",
-    "name": "Logitech G Pro X 2 Lightspeed Gaming Mouse",
-    "brand": "Logitech",
-    "category": "Аксcessуары",
-    "color": ""
-  },
-  {
     "id": "corsairviper",
     "name": "Corsair Sabre RGB Pro Gaming Mouse",
     "brand": "Corsair",
@@ -1876,13 +1771,6 @@
     "color": ""
   },
   {
-    "id": "xiaomilamp",
-    "name": "Xiaomi Mi Desk Lamp Pro Smart",
-    "brand": "Xiaomi",
-    "category": "Бытовая техника",
-    "color": ""
-  },
-  {
     "id": "coway",
     "name": "Coway AP-1512HH Air Purifier",
     "brand": "Coway",
@@ -1890,30 +1778,9 @@
     "color": ""
   },
   {
-    "id": "sharpi3000",
-    "name": "Sharp KC-G50EW Air Purifier",
-    "brand": "Sharp",
-    "category": "Бытовая техника",
-    "color": ""
-  },
-  {
     "id": "levoit",
     "name": "Levoit Humidifier 1.5L Warm and Cool Mist",
     "brand": "Levoit",
-    "category": "Бытовая техника",
-    "color": ""
-  },
-  {
-    "id": "medbottle",
-    "name": "MedBottle Smart Humidifier 2.5L",
-    "brand": "MedBottle",
-    "category": "Бытовая техника",
-    "color": ""
-  },
-  {
-    "id": "arellapro",
-    "name": "Arella Pro 30L Dehumidifier",
-    "brand": "Arella",
     "category": "Бытовая техника",
     "color": ""
   },
@@ -1935,13 +1802,6 @@
     "id": "sharkuv",
     "name": "Shark Navigator NV752 Upright Vacuum",
     "brand": "Shark",
-    "category": "Бытовая техника",
-    "color": ""
-  },
-  {
-    "id": "lg_detergent",
-    "name": "LG Washer Detergent Capsule 200 Count",
-    "brand": "LG",
     "category": "Бытовая техника",
     "color": ""
   },
@@ -1978,20 +1838,6 @@
     "name": "Noblechairs Epic Black",
     "brand": "Noblechairs",
     "category": "Аксcessуары",
-    "color": ""
-  },
-  {
-    "id": "wifiax200",
-    "name": "TP-Link AX3000 WiFi 6 Router",
-    "brand": "TP-Link",
-    "category": "Аксессуары",
-    "color": ""
-  },
-  {
-    "id": "meshwifi",
-    "name": "ASUS AiMesh WiFi 6 System 3-Pack",
-    "brand": "ASUS",
-    "category": "Аксессуары",
     "color": ""
   },
   {
