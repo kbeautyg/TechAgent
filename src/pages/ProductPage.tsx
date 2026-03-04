@@ -1,5 +1,4 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
-import { useState } from 'react'
 import { products } from '../data/products'
 import { getProductImage } from '../utils/productImages'
 import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from './CatalogPage'
@@ -15,7 +14,6 @@ const brandBgClass: Record<string, string> = {
 export default function ProductPage() {
   const { id } = useParams<{ id: string }>()
   const product = products.find(p => p.id === id)
-  const [activeThumb, setActiveThumb] = useState(0)
   const navigate = useNavigate()
 
   if (!product) {
@@ -84,15 +82,6 @@ export default function ProductPage() {
                 <span className="pp-gallery-letter">{product.brand[0]}</span>
               </div>
             )}
-          </div>
-          <div className="pp-thumbs">
-            {[0, 1, 2, 3].map(i => (
-              <div key={i} className={`pp-thumb${activeThumb === i ? ' active' : ''}`} onClick={() => setActiveThumb(i)}>
-                <div className={`pp-thumb-bg pp-thumb-bg-${i + 1} ${bgClass}`}>
-                  <span className="pp-thumb-letter">{product.brand[0]}</span>
-                </div>
-              </div>
-            ))}
           </div>
         </div>
 
