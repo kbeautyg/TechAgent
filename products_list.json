@@ -1312,28 +1312,28 @@
     "id": "seabarracuda4tb",
     "name": "Seagate Barracuda 4TB USB 3.0",
     "brand": "Seagate",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": "Black"
   },
   {
     "id": "wdback2tb",
     "name": "WD Backup 2TB USB 3.0",
     "brand": "Western Digital",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": "Black"
   },
   {
     "id": "samsungevob1tb",
     "name": "Samsung 870 EVO 1TB 2.5\" SSD",
     "brand": "Samsung",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "samsungpm91000",
     "name": "Samsung 990 Pro 1TB NVMe SSD",
     "brand": "Samsung",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
@@ -1487,14 +1487,14 @@
     "id": "samsungt7shield",
     "name": "Samsung T7 Shield 2TB Portable SSD Black",
     "brand": "Samsung",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "sandiskextreme1tb",
     "name": "SanDisk Extreme Portable SSD 1TB",
     "brand": "SanDisk",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
@@ -1788,21 +1788,21 @@
     "id": "logicalmk850",
     "name": "Logitech MK850 Performance Wireless Combo",
     "brand": "Logitech",
-    "category": "Периферия",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "applemag",
     "name": "Apple Magic Keyboard + Mouse Bundle Space Gray",
     "brand": "Apple",
-    "category": "Периферия",
+    "category": "Аксессуары",
     "color": "Space Gray"
   },
   {
     "id": "daskeyboard",
     "name": "Das Keyboard 5Q RGB Mechanical Keyboard",
     "brand": "Das Keyboard",
-    "category": "Периферия",
+    "category": "Аксессуары",
     "color": ""
   },
   {
@@ -1928,21 +1928,21 @@
     "id": "wifiax200",
     "name": "TP-Link AX3000 WiFi 6 Router",
     "brand": "TP-Link",
-    "category": "Сетевое оборудование",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "meshwifi",
     "name": "ASUS AiMesh WiFi 6 System 3-Pack",
     "brand": "ASUS",
-    "category": "Сетевое оборудование",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "sandisk128",
     "name": "SanDisk Extreme Pro 128GB USB-C Flash Drive",
     "brand": "SanDisk",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
@@ -1956,14 +1956,14 @@
     "id": "sandisksd256",
     "name": "SanDisk Extreme SDXC 256GB Card",
     "brand": "SanDisk",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
     "id": "samsung256",
     "name": "Samsung EVO Plus microSD 256GB Card",
     "brand": "Samsung",
-    "category": "Накопители",
+    "category": "Аксессуары",
     "color": ""
   },
   {
