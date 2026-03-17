@@ -94,14 +94,15 @@ export default function LegalPage() {
       {/* Document viewer modal */}
       {activeDoc && activeDoc.content && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-start justify-center pt-4 sm:pt-12 px-2 sm:px-4"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
           onClick={() => setOpenDoc(null)}
         >
           <div
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[85vh] sm:max-h-[80vh] overflow-hidden shadow-2xl mx-2"
+            className="bg-white rounded-2xl max-w-2xl w-full shadow-2xl mx-2 flex flex-col"
+            style={{ maxHeight: 'calc(100vh - 2rem)' }}
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-5 border-b border-gray-100 sticky top-0 bg-white z-10">
+            <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-shrink-0">
               <div>
                 <h3 className="font-bold text-lg text-text-primary">{activeDoc.title}</h3>
                 <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[activeDoc.type] || ''}`}>
@@ -115,7 +116,7 @@ export default function LegalPage() {
                 <X size={16} />
               </button>
             </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(85vh-80px)]">
+            <div className="p-6 overflow-y-auto flex-1 min-h-0">
               <pre className="whitespace-pre-wrap font-sans text-sm text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
                 {activeDoc.content}
               </pre>
