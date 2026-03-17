@@ -81,7 +81,7 @@ export default function LoginPage() {
           </form>
 
           <p className="text-center mt-3">
-            <button type="button" onClick={() => alert('Для восстановления пароля обратитесь в поддержку: info@techagent.ru')} className="text-text-muted text-sm bg-transparent border-none cursor-pointer hover:text-primary transition-colors">
+            <button type="button" onClick={() => alert('Для восстановления пароля обратитесь в поддержку: info@techagent.pro')} className="text-text-muted text-sm bg-transparent border-none cursor-pointer hover:text-primary transition-colors">
               Забыли пароль?
             </button>
           </p>
@@ -98,23 +98,23 @@ export default function LoginPage() {
             <div className="space-y-2">
               <button
                 type="button"
-                onClick={() => { setEmail('demo@techagent.ru'); setPassword('demo') }}
+                onClick={() => { setEmail('demo@techagent.pro'); setPassword('demo') }}
                 className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
               >
                 <div>
                   <p className="text-sm font-medium text-text-primary">Личный кабинет партнёра</p>
-                  <p className="text-xs text-text-muted">demo@techagent.ru</p>
+                  <p className="text-xs text-text-muted">demo@techagent.pro</p>
                 </div>
                 <span className="text-xs text-primary font-medium">Партнёр</span>
               </button>
               <button
                 type="button"
-                onClick={() => { setEmail('admin@techagent.ru'); setPassword('admin') }}
+                onClick={() => { setEmail('admin@techagent.pro'); setPassword('admin') }}
                 className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
               >
                 <div>
                   <p className="text-sm font-medium text-text-primary">Панель администратора</p>
-                  <p className="text-xs text-text-muted">admin@techagent.ru</p>
+                  <p className="text-xs text-text-muted">admin@techagent.pro</p>
                 </div>
                 <span className="text-xs text-primary font-medium">Админ</span>
               </button>
