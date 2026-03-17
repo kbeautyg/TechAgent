@@ -56,7 +56,6 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4">Контакты</h4>
             <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
               <a href="mailto:compliance@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">compliance@techagent.pro</a>
-              <a href="tel:+996220544454" className="text-text-dark-secondary hover:text-white transition-colors no-underline">+996 (220) 544-454</a>
               <span>г. Бишкек, Кыргызская Республика</span>
             </div>
           </div>
@@ -70,7 +69,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs">
-            Агентский договор &middot; Глава 52 ГК РФ
+            Агентский договор &middot; ОсОО «ТехЭйджент»
           </p>
         </div>
       </div>
