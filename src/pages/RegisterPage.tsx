@@ -26,7 +26,7 @@ export default function RegisterPage() {
     const errs: Record<string, string> = {}
     if (!form.companyName.trim()) errs.companyName = 'Введите название компании'
     if (!/^\d{12}$/.test(form.inn)) errs.inn = 'ИНН должен содержать 12 цифр'
-    if (!/^\d{15}$/.test(form.ogrnip)) errs.ogrnip = 'ОГРНИП должен содержать 15 цифр'
+    if (!form.ogrnip.trim()) errs.ogrnip = 'Введите регистрационный номер'
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Введите корректный email'
     if (!form.phone.trim()) errs.phone = 'Введите телефон'
     if (form.password.length < 8) errs.password = 'Минимум 8 символов'
@@ -112,14 +112,13 @@ export default function RegisterPage() {
                 {errors.inn && <p className="text-red-400 text-xs mt-1">{errors.inn}</p>}
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-secondary mb-1.5">ОГРНИП</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1.5">Рег. номер</label>
                 <input
                   type="text"
                   value={form.ogrnip}
-                  onChange={(e) => update('ogrnip', e.target.value.replace(/\D/g, '').slice(0, 15))}
+                  onChange={(e) => update('ogrnip', e.target.value)}
                   className={inputCls('ogrnip')}
-                  placeholder="123456789012345"
-                  maxLength={15}
+                  placeholder="326302-3301-ООО"
                 />
                 {errors.ogrnip && <p className="text-red-400 text-xs mt-1">{errors.ogrnip}</p>}
               </div>
@@ -145,7 +144,7 @@ export default function RegisterPage() {
                 value={form.phone}
                 onChange={(e) => update('phone', e.target.value)}
                 className={inputCls('phone')}
-                placeholder="+7 999 123-45-67"
+                placeholder="+996 XXX XXX-XXX"
                 autoComplete="tel"
               />
               {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
