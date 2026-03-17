@@ -55,7 +55,8 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Контакты</h4>
             <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
-              <a href="mailto:compliance@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">compliance@techagent.pro</a>
+              <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro</a>
+              <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro</a>
               <span>г. Бишкек, Кыргызская Республика</span>
             </div>
           </div>
