@@ -70,7 +70,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs">
-            Агентский договор &middot; ОсОО «ТехЭйджент»
+            ОсОО «ТехЭйджент»
           </p>
         </div>
       </div>
