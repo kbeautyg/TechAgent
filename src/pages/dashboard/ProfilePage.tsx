@@ -65,7 +65,7 @@ export default function ProfilePage() {
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-              placeholder="+996 XXX XXX-XXX"
+              placeholder="+7 999 123-45-67"
             />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function ProfilePage() {
               value={cargoContact}
               onChange={(e) => setCargoContact(e.target.value)}
               className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-              placeholder="+996 XXX XXX-XXX"
+              placeholder="+7 999 123-45-67"
             />
           </div>
         </div>
