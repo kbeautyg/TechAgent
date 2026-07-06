@@ -1,17 +1,40 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="ru">
   <head>
-    <meta charset="utf-8">
-    <title>TechAgent</title>
-    <script>
-      // GitHub Pages SPA redirect
-      var path = window.location.pathname;
-      var repo = '/TechAgent';
-      if (path.startsWith(repo)) {
-        var route = path.slice(repo.length);
-        window.location.replace(repo + '/?route=' + encodeURIComponent(route));
-      }
-    </script>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#FFFFFF" />
+    <title>404 - TechAgent</title>
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <style>
+      *,*::before,*::after{box-sizing:border-box}
+      html,body{margin:0;padding:0;min-height:100%}
+      body{font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:#fff;color:#0f172a;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:24px;line-height:1.5}
+      .card{max-width:520px;text-align:center}
+      .code{font-size:120px;font-weight:800;line-height:1;color:rgba(15,23,42,0.08);margin-bottom:8px}
+      h1{font-size:28px;font-weight:700;margin:0 0 12px}
+      p{color:#475569;margin:0 0 28px}
+      .actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+      .btn{display:inline-flex;align-items:center;justify-content:center;padding:12px 24px;border-radius:12px;font-weight:600;font-size:14px;text-decoration:none;transition:opacity .15s}
+      .btn:hover{opacity:.88}
+      .btn-primary{background:#0f172a;color:#fff}
+      .btn-outline{background:#fff;color:#0f172a;border:1px solid #e2e8f0}
+      @media (max-width:480px){.code{font-size:80px}h1{font-size:22px}}
+    </style>
   </head>
-  <body></body>
+  <body>
+    <main class="card">
+      <div class="code">404</div>
+      <h1>Страница не найдена</h1>
+      <p>Возможно, она была перемещена или удалена. Попробуйте начать с главной.</p>
+      <div class="actions">
+        <a class="btn btn-primary" href="/">На главную</a>
+        <a class="btn btn-outline" href="/catalog">Каталог</a>
+      </div>
+    </main>
+  </body>
 </html>

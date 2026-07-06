@@ -4,10 +4,21 @@ import { Shield, Check, Phone } from 'lucide-react'
 import { mockOrders, mockUsers, saveOrders } from '../data/mock'
 import { formatPrice, formatDateTime } from '../utils/calculate'
 
+// Условия приёма оплаты (Уведомление для клиента, Doc2)
+const paymentNoticePoints = [
+  'Продавцом товара, который вы приобретаете, является партнёр платформы TechAgent (далее — «Партнёр»), у которого вы делаете покупку. Именно Партнёр является стороной сделки купли-продажи товара с вами.',
+  'TechAgent выступает техническим агентом Партнёра: принимает оплату по поручению Партнёра и организует закупку товара за рубежом в интересах Партнёра.',
+  'TechAgent не является продавцом товара, не устанавливает его цену и не несёт ответственности за качество, комплектность, соответствие заявленным характеристикам, сроки и условия доставки товара.',
+  'По всем вопросам, связанным с товаром — гарантией, обменом, возвратом, качеством, комплектацией, кассовым чеком, — вы обращаетесь непосредственно к Партнёру, у которого приобрели товар.',
+  'Оплата, произведённая вами через данную страницу, засчитывается в счёт расчётов по вашей сделке с Партнёром.',
+  'Обработка ваших персональных данных, указанных при оплате, осуществляется в соответствии с Политикой обработки персональных данных, размещённой на сайте techagent.pro.',
+]
+
 export default function PaymentPage() {
   const { paymentId } = useParams()
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
+  const [agreed, setAgreed] = useState(false)
 
   const order = mockOrders.find((o) => o.paymentId === paymentId)
 
@@ -125,10 +136,39 @@ export default function PaymentPage() {
           </label>
         </div>
 
+        {/* Уведомление об условиях приёма оплаты (Doc2) */}
+        <div className="border border-border rounded-lg p-4 mb-4 bg-bg-light">
+          <p className="font-bold text-sm text-text-primary mb-1">Уведомление об условиях приёма оплаты</p>
+          <p className="text-xs text-text-muted mb-3">
+            Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:
+          </p>
+          <ol className="list-decimal pl-4 space-y-1.5 text-xs text-text-muted max-h-44 overflow-y-auto pr-2">
+            {paymentNoticePoints.map((point, i) => (
+              <li key={i}>{point}</li>
+            ))}
+          </ol>
+          <p className="text-xs text-text-muted mt-3">
+            Продолжая оплату, вы подтверждаете согласие с условиями настоящего уведомления.
+          </p>
+        </div>
+
+        <label htmlFor="payment-agree" className="flex items-start gap-2 mb-6 cursor-pointer">
+          <input
+            id="payment-agree"
+            type="checkbox"
+            checked={agreed}
+            onChange={(e) => setAgreed(e.target.checked)}
+            className="mt-0.5 accent-primary flex-shrink-0"
+          />
+          <span className="text-sm text-text-secondary">
+            Я ознакомлен(а) и согласен(на) с условиями приёма платежа
+          </span>
+        </label>
+
         <button
           onClick={handlePay}
-          disabled={paying}
-          className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50"
+          disabled={paying || !agreed}
+          className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {paying ? 'Обработка...' : `Оплатить ${formatPrice(amountToPay)}`}
         </button>
