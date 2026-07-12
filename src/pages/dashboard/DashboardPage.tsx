@@ -51,8 +51,8 @@ export default function DashboardPage() {
                 <s.icon size={20} />
               </div>
               <div>
-                <p className="text-text-muted text-xs">{s.label}</p>
-                <p className="text-xl font-bold mt-0.5 text-text-primary">{s.value}</p>
+                <p className="text-text-muted text-xs font-mono uppercase tracking-wide">{s.label}</p>
+                <p className="font-display text-xl font-bold mt-0.5 text-text-primary">{s.value}</p>
               </div>
             </div>
           </div>

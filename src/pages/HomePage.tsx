@@ -290,6 +290,7 @@ export default function HomePage() {
 
         {/* ===== FEATURES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="features">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ПРЕИМУЩЕСТВА</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Всё для вашего бизнеса
           </h2>
@@ -312,6 +313,7 @@ export default function HomePage() {
 
         {/* ===== HOW IT WORKS ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="how">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ПРОЦЕСС</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Как это работает
           </h2>
@@ -342,6 +344,7 @@ export default function HomePage() {
             <div className="absolute -top-24 -right-24 w-80 h-80 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
 
             <div className="flex-1 relative z-10">
+              <div className="font-mono text-xs font-semibold tracking-widest mb-3" style={{ color: '#8FA9FF' }}>/ КАЛЬКУЛЯТОР</div>
               <h2 className="text-[28px] sm:text-[36px] font-extrabold text-white tracking-tight leading-tight mb-3">
                 Рассчитайте стоимость за&nbsp;секунду
               </h2>
@@ -388,7 +391,7 @@ export default function HomePage() {
                 </div>
                 <div className="flex justify-between pt-3">
                   <span className="text-[13px] text-white/50">Итого к оплате</span>
-                  <span className="text-2xl font-extrabold text-primary-light">{formatPrice(total)}</span>
+                  <span className="font-display text-2xl font-extrabold text-primary-light">{formatPrice(total)}</span>
                 </div>
               </div>
             </div>
@@ -397,6 +400,7 @@ export default function HomePage() {
 
         {/* ===== PROMO CARDS ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="plans">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ТАРИФЫ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Выберите формат работы
           </h2>
@@ -463,6 +467,7 @@ export default function HomePage() {
 
         {/* ===== CATEGORIES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="categories">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ КАТАЛОГ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Популярные категории товаров
           </h2>
@@ -510,6 +515,7 @@ export default function HomePage() {
 
         {/* ===== REVIEWS ===== */}
         <div className="pt-14 sm:pt-24 pb-4">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ОТЗЫВЫ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Отзывы партнёров
           </h2>
@@ -542,6 +548,7 @@ export default function HomePage() {
 
         {/* ===== FAQ ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="faq">
+          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ВОПРОСЫ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
             Отвечаем на&nbsp;вопросы
           </h2>

@@ -38,8 +38,8 @@ export default function AdminDashboardPage() {
                 <s.icon size={20} />
               </div>
               <div>
-                <p className="text-text-muted text-xs">{s.label}</p>
-                <p className="text-xl font-bold text-text-primary mt-0.5">{s.value}</p>
+                <p className="text-text-muted text-xs font-mono uppercase tracking-wide">{s.label}</p>
+                <p className="font-display text-xl font-bold text-text-primary mt-0.5">{s.value}</p>
               </div>
             </div>
           </div>
@@ -55,8 +55,8 @@ export default function AdminDashboardPage() {
               <s.icon size={20} />
             </div>
             <div>
-              <p className="text-text-muted text-xs">{s.label}</p>
-              <p className="text-2xl font-bold text-text-primary">{s.value}</p>
+              <p className="text-text-muted text-xs font-mono uppercase tracking-wide">{s.label}</p>
+              <p className="font-display text-2xl font-bold text-text-primary">{s.value}</p>
             </div>
           </div>
         ))}

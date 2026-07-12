@@ -20,13 +20,17 @@ export default function Footer() {
               <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
                 <LogoIcon size={14} />
               </div>
-              <span className="text-base font-bold">
+              <span className="font-display text-base font-bold">
                 <span className="text-red-400">Tech</span><span className="text-primary-light">Agent</span>
               </span>
             </Link>
-            <p className="text-text-dark-secondary text-sm leading-relaxed">
+            <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
               Агентская закупка электроники для бизнеса. Комиссия от 2 до 3%.
             </p>
+            <div className="inline-flex items-center gap-2 rounded-lg px-3 py-2 font-mono text-xs font-semibold" style={{ background: '#151B33', border: '1px solid #232B47', color: '#5EE3B4' }}>
+              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#12B981' }} />
+              ОПЛАТА ПО СБП
+            </div>
           </div>
 
           {/* Navigation */}
@@ -69,7 +73,7 @@ export default function Footer() {
           <p className="text-text-dark-secondary text-xs">
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
-          <p className="text-text-dark-secondary text-xs">
+          <p className="text-text-dark-secondary text-xs font-mono">
             ОсОО «ТехЭйджент»
           </p>
         </div>

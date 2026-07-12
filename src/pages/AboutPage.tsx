@@ -60,9 +60,9 @@ export default function AboutPage() {
       <section className="relative overflow-hidden pt-28 pb-16">
         <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6 font-mono tracking-wide">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-            О платформе
+            О ПЛАТФОРМЕ
           </div>
           <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
             TechAgent — агентская закупка электроники
@@ -123,7 +123,7 @@ export default function AboutPage() {
                   {i + 1}
                 </div>
                 <h3 className="text-xl font-extrabold text-text-primary tracking-tight mb-1">{r.title}</h3>
-                <div className="text-[13px] text-primary font-semibold mb-3">{r.role}</div>
+                <div className="text-[13px] text-primary font-semibold mb-3 font-mono">{r.role}</div>
                 <p className="text-[13px] text-text-muted leading-relaxed mb-5">{r.desc}</p>
                 <div className="flex flex-col gap-2">
                   {r.items.map((item, j) => (
@@ -172,7 +172,7 @@ export default function AboutPage() {
                   { label: 'Юридическая основа', value: 'Схема соответствует главе 52 ГК РФ' },
                 ].map((item, i) => (
                   <div key={i} className="py-3.5">
-                    <div className="text-[11px] text-white/40 uppercase tracking-wider font-medium mb-1">{item.label}</div>
+                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono" style={{ color: '#7C86A3' }}>{item.label}</div>
                     <div className="text-[14px] font-medium text-white/80">{item.value}</div>
                   </div>
                 ))}
@@ -184,7 +184,7 @@ export default function AboutPage() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
                 {legalData.map((item, i) => (
                   <div key={i} className="py-3.5">
-                    <div className="text-[11px] text-white/40 uppercase tracking-wider font-medium mb-1">{item.label}</div>
+                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono" style={{ color: '#7C86A3' }}>{item.label}</div>
                     <div className="text-[14px] font-medium text-white/80">{item.value}</div>
                   </div>
                 ))}

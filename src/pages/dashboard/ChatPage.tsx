@@ -29,7 +29,7 @@ interface Message {
 
 /* ── Mock Data ── */
 const contacts: ChatContact[] = [
-  { id: '1', name: 'Алексей Петров', initials: 'АП', role: 'Менеджер', gradient: 'linear-gradient(135deg,#0061FF,#3D8BFF)', online: true, lastMsg: 'Наличие подтверждаю — 42 шт. на складе', time: '14:32', unread: 2, productId: 'iph15pm256b' },
+  { id: '1', name: 'Алексей Петров', initials: 'АП', role: 'Менеджер', gradient: 'linear-gradient(135deg,#1B44F5,#4E74FF)', online: true, lastMsg: 'Наличие подтверждаю — 42 шт. на складе', time: '14:32', unread: 2, productId: 'iph15pm256b' },
   { id: '2', name: 'Мария Соколова', initials: 'МС', role: 'Менеджер', gradient: 'linear-gradient(135deg,#059669,#34D399)', online: true, lastMsg: 'Прайс на Galaxy S25 Ultra обновлён', time: '13:15', unread: 1, productId: 'sgts25u256b' },
   { id: '3', name: 'Игорь Волков', initials: 'ИВ', role: 'Логист', gradient: 'linear-gradient(135deg,#7C3AED,#A78BFA)', online: false, lastMsg: 'Доставка MacBook Pro оформлена', time: '12:40', unread: 0, productId: 'mbp14-m3p-18-512' },
   { id: '4', name: 'Елена Новикова', initials: 'ЕН', role: 'Менеджер', gradient: 'linear-gradient(135deg,#EA580C,#FB923C)', online: true, lastMsg: 'Sony WH-1000XM5 — партия 50 шт., скидка 12%', time: 'Вчера', unread: 0 },
@@ -352,7 +352,7 @@ export default function ChatPage() {
           <div className="ch-info-section">
             <div className="ch-info-section-title">О вас</div>
             <div className="ch-info-row">
-              <span className="ch-info-row-icon" style={{ background: 'linear-gradient(135deg,#0061FF,#3D8BFF)', color: 'white', borderRadius: 8, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>
+              <span className="ch-info-row-icon" style={{ background: 'linear-gradient(135deg,#1B44F5,#4E74FF)', color: 'white', borderRadius: 8, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 12, fontWeight: 700 }}>
                 {userInitials}
               </span>
               <div>

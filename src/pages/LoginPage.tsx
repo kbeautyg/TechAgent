@@ -94,7 +94,7 @@ export default function LoginPage() {
           </p>
 
           <div className="mt-6 border-t border-border pt-5">
-            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Демо-доступ</p>
+            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 font-mono">Демо-доступ</p>
             <div className="space-y-2">
               <button
                 type="button"

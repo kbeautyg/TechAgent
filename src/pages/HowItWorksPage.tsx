@@ -91,9 +91,9 @@ export default function HowItWorksPage() {
       <section className="relative overflow-hidden pt-28 pb-12">
         <div className="absolute top-[-80px] right-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6 font-mono tracking-wide">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-            8 шагов
+            8 ШАГОВ
           </div>
           <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-4 text-text-primary tracking-tight leading-[1.08]">
             Как это работает
@@ -157,7 +157,7 @@ export default function HowItWorksPage() {
                     {step.icon}
                   </div>
                   <div>
-                    <div className="text-[12px] text-text-muted font-semibold uppercase tracking-wider mb-0.5">
+                    <div className="text-[12px] text-primary font-semibold uppercase tracking-wider mb-0.5 font-mono">
                       Шаг {active + 1} из {phases.length}
                     </div>
                     <h2 className="text-xl sm:text-2xl font-extrabold text-text-primary tracking-tight">
@@ -213,7 +213,7 @@ export default function HowItWorksPage() {
             <div className="lg:col-span-2 flex flex-col gap-4">
               {/* Mini overview */}
               <div className="bg-bg-dark rounded-3xl p-6 text-white flex-1">
-                <div className="text-[11px] text-white/40 uppercase tracking-wider font-semibold mb-4">Обзор процесса</div>
+                <div className="text-[11px] uppercase tracking-wider font-semibold mb-4 font-mono" style={{ color: '#8FA9FF' }}>Обзор процесса</div>
                 <div className="flex flex-col gap-2">
                   {phases.map((p, i) => (
                     <button

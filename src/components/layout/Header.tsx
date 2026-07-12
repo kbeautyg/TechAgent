@@ -45,6 +45,7 @@ export default function Header() {
           : 'bg-transparent border-b border-transparent'
       }`}
     >
+      <div style={{ height: 3, background: 'linear-gradient(90deg,#FB2C36 0%,#FB2C36 28%,#1B44F5 62%,#1B44F5 100%)' }} />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-[60px] sm:h-[72px]">
           {/* Logo */}
@@ -52,7 +53,7 @@ export default function Header() {
             <div className="w-9 h-9 rounded-xl bg-primary flex items-center justify-center shadow-lg shadow-primary/25 group-hover:shadow-primary/40 transition-shadow">
               <LogoIcon size={16} />
             </div>
-            <span className="text-lg font-bold">
+            <span className="font-display text-lg font-bold">
               <span className="text-red-600">Tech</span><span className="text-primary">Agent</span>
             </span>
           </Link>
