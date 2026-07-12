@@ -1,36 +1,89 @@
-import { useTechAgent } from './lib/techagent'
-import Header from './screens/Header'
-import Footer from './screens/Footer'
-import Landing from './screens/Landing'
-import Catalog from './screens/Catalog'
-import Product from './screens/Product'
-import How from './screens/How'
-import Cabinet from './screens/Cabinet'
-import Pay from './screens/Pay'
+import { useEffect } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
+import ErrorBoundary from './components/ErrorBoundary'
+import Header from './components/layout/Header'
+import Footer from './components/layout/Footer'
+import MobileBottomNav from './components/layout/MobileBottomNav'
+import DashboardLayout from './components/layout/DashboardLayout'
+import AdminLayout from './components/layout/AdminLayout'
 
-export default function App() {
-  const app = useTechAgent()
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import HowItWorksPage from './pages/HowItWorksPage'
+import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
+import CatalogPage from './pages/CatalogPage'
+import ProductPage from './pages/ProductPage'
+import NotFoundPage from './pages/NotFoundPage'
+import LegalPage from './pages/LegalPage'
+
+import DashboardPage from './pages/dashboard/DashboardPage'
+import OrdersPage from './pages/dashboard/OrdersPage'
+import NewOrderPage from './pages/dashboard/NewOrderPage'
+import OrderDetailPage from './pages/dashboard/OrderDetailPage'
+import ProfilePage from './pages/dashboard/ProfilePage'
+import DocumentsPage from './pages/dashboard/DocumentsPage'
+import ChatPage from './pages/dashboard/ChatPage'
+
+import AdminDashboardPage from './pages/admin/AdminDashboardPage'
+import AdminUsersPage from './pages/admin/AdminUsersPage'
+import AdminOrdersPage from './pages/admin/AdminOrdersPage'
+
+import PaymentPage from './pages/PaymentPage'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo(0, 0) }, [pathname])
+  return null
+}
+
+function App() {
   return (
-    <>
-      <Header app={app} />
+    <AuthProvider>
+      <ScrollToTop />
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1">
+          <ErrorBoundary>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/how-it-works" element={<HowItWorksPage />} />
+              <Route path="/catalog" element={<CatalogPage />} />
+              <Route path="/catalog/:id" element={<ProductPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/legal" element={<LegalPage />} />
+              <Route path="/legal/:docType" element={<LegalPage />} />
 
-      {app.toast && (
-        <div style={{ position: 'fixed', bottom: 26, left: '50%', transform: 'translateX(-50%)', zIndex: 120, display: 'flex', alignItems: 'center', gap: 10, background: '#0B1020', color: '#fff', padding: '14px 20px', borderRadius: 14, boxShadow: '0 18px 50px rgba(11,16,32,.35)', fontWeight: 500, fontSize: 14.5, animation: 'ta-fade .3s ease' }}>
-          <span style={{ width: 22, height: 22, borderRadius: '50%', background: '#12B981', display: 'grid', placeItems: 'center', flex: 'none' }}><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12.5l5 5 11-11" /></svg></span>
-          {app.toast}
-        </div>
-      )}
+              <Route path="/pay/:paymentId" element={<PaymentPage />} />
 
-      <main style={{ minHeight: '60vh' }}>
-        {app.isLanding && <Landing app={app} />}
-        {app.isCatalog && <Catalog app={app} />}
-        {app.isProduct && <Product app={app} />}
-        {app.isHow && <How app={app} />}
-        {app.isCabinet && <Cabinet app={app} />}
-        {app.isPay && <Pay app={app} />}
-      </main>
+              <Route path="/dashboard" element={<DashboardLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="orders" element={<OrdersPage />} />
+                <Route path="orders/new" element={<NewOrderPage />} />
+                <Route path="orders/:id" element={<OrderDetailPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="documents" element={<DocumentsPage />} />
+                <Route path="chat" element={<ChatPage />} />
+              </Route>
 
-      {app.showFooter && <Footer app={app} />}
-    </>
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<AdminDashboardPage />} />
+                <Route path="users" element={<AdminUsersPage />} />
+                <Route path="orders" element={<AdminOrdersPage />} />
+              </Route>
+
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </ErrorBoundary>
+        </main>
+        <Footer />
+        <MobileBottomNav />
+      </div>
+    </AuthProvider>
   )
 }
+
+export default App
