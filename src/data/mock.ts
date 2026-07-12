@@ -37,21 +37,27 @@ export const mockUsers: User[] = [
   },
 ]
 
-let orderCounter = parseInt(localStorage.getItem(COUNTER_KEY) || '1245', 10)
+/* localStorage недоступен при пререндере (Node) — используем безопасный шим */
+const storage: Pick<Storage, 'getItem' | 'setItem'> =
+  typeof localStorage !== 'undefined'
+    ? localStorage
+    : { getItem: () => null, setItem: () => undefined }
+
+let orderCounter = parseInt(storage.getItem(COUNTER_KEY) || '1245', 10)
 
 export function getNextOrderNumber(): string {
   orderCounter++
-  localStorage.setItem(COUNTER_KEY, String(orderCounter))
+  storage.setItem(COUNTER_KEY, String(orderCounter))
   return `#${orderCounter}`
 }
 
 export function saveOrders(): void {
-  localStorage.setItem(ORDERS_KEY, JSON.stringify(mockOrders))
+  storage.setItem(ORDERS_KEY, JSON.stringify(mockOrders))
 }
 
 function loadSavedOrders(): Order[] | null {
   try {
-    const raw = localStorage.getItem(ORDERS_KEY)
+    const raw = storage.getItem(ORDERS_KEY)
     if (raw) return JSON.parse(raw) as Order[]
   } catch { /* ignore */ }
   return null
@@ -286,7 +292,7 @@ const defaultOrders: Order[] = [
 export const mockOrders: Order[] = loadSavedOrders() || [...defaultOrders]
 
 // Persist default orders on first load
-if (!localStorage.getItem(ORDERS_KEY)) {
+if (!storage.getItem(ORDERS_KEY)) {
   saveOrders()
 }
 
@@ -398,9 +404,9 @@ export const mockDocuments: Document[] = [
 
 4. АГЕНТСКОЕ ВОЗНАГРАЖДЕНИЕ
 
-4.1. Размер агентского вознаграждения составляет от 3% до 7% от стоимости товара.
+4.1. Размер агентского вознаграждения составляет 3% от стоимости товара.
 
-4.2. Точный размер вознаграждения указывается при оформлении каждого заказа.
+4.2. Итоговая сумма с учётом вознаграждения фиксируется при оформлении каждого заказа.
 
 4.3. Вознаграждение включается в итоговую стоимость заказа.
 

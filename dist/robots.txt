@@ -1,11 +1,9 @@
 User-agent: *
-Disallow: /dashboard/
-Disallow: /admin/
+Allow: /
+Disallow: /dashboard
+Disallow: /admin
 Disallow: /pay/
 Disallow: /login
 Disallow: /register
-
-User-agent: *
-Allow: /
 
 Sitemap: https://techagent.pro/sitemap.xml

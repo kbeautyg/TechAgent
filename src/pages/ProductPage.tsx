@@ -1,7 +1,8 @@
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { products } from '../data/products'
-import { getProductImage } from '../utils/productImages'
-import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from './CatalogPage'
+import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
+import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from '../utils/translate'
+import { getCategoryByName } from '../seo/categories'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -32,6 +33,8 @@ export default function ProductPage() {
   const specs = Object.entries(product.specs)
   const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
   const bgClass = brandBgClass[product.brand] || 'cbg-default'
+  const categoryLanding = getCategoryByName(product.category)
+  const categoryHref = categoryLanding ? `/catalog/${categoryLanding.slug}` : `/catalog?cat=${encodeURIComponent(product.category)}`
 
   // Find sibling products (same model line, different storage/color)
   const getModelBase = (name: string) => {
@@ -57,12 +60,12 @@ export default function ProductPage() {
   return (
     <div className="pp-root">
       {/* Breadcrumb */}
-      <nav className="pp-breadcrumb">
+      <nav className="pp-breadcrumb" aria-label="Хлебные крошки">
         <Link to="/catalog">Каталог</Link>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        <Link to="/catalog">{product.category}</Link>
+        <Link to={categoryHref}>{product.category}</Link>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
-        <Link to="/catalog">{product.brand}</Link>
+        <Link to={`/catalog?brand=${encodeURIComponent(product.brand)}`}>{product.brand}</Link>
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
         <span className="pp-bc-current">{translateProductName(product.name)}</span>
       </nav>
@@ -76,7 +79,9 @@ export default function ProductPage() {
             {product.inStock && <span className="pp-gbadge pp-gbadge-stock">В наличии</span>}
             {!product.inStock && <span className="pp-gbadge pp-gbadge-out">Нет в наличии</span>}
             {getProductImage(product.id, product.name, product.category) ? (
-              <img src={getProductImage(product.id, product.name, product.category)} alt={product.name} className="pp-gallery-img" />
+              <img src={getProductImage(product.id, product.name, product.category)} alt={translateProductName(product.name)}
+                width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
+                loading="eager" fetchPriority="high" className="pp-gallery-img" />
             ) : (
               <div className="pp-gallery-shape">
                 <span className="pp-gallery-letter">{product.brand[0]}</span>
@@ -108,7 +113,7 @@ export default function ProductPage() {
               <span className="pp-price-current">{fmt(product.price)}</span>
               <span className="pp-price-currency">₽</span>
             </div>
-            <div className="pp-price-note">Комиссия 2–3% · Доставка 5–7 дней</div>
+            <div className="pp-price-note">Комиссия 3% · Доставка 5–7 дней</div>
           </div>
 
           {/* Variants */}
@@ -182,7 +187,7 @@ export default function ProductPage() {
               <div className="pp-guarantee-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
               </div>
-              <div className="pp-guarantee-text">Комиссия от 2%</div>
+              <div className="pp-guarantee-text">Комиссия 3%</div>
             </div>
             <div className="pp-guarantee">
               <div className="pp-guarantee-icon">
@@ -213,7 +218,7 @@ export default function ProductPage() {
           <h3>Почему {translateProductName(product.name)}</h3>
           <p>
             Оригинальный {product.brand} {translateProductName(product.name)} с полной гарантией и сертификацией. Закажите через TechAgent —
-            комиссия всего 2–3%, доставка 5–7 рабочих дней. Все документы предоставляем.
+            комиссия всего 3%, доставка 5–7 рабочих дней. Все документы предоставляем.
           </p>
           <div className="pp-desc-features">
             {specs.slice(0, 3).map(([label, value]) => (
@@ -245,7 +250,7 @@ export default function ProductPage() {
                   <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
                   {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
                   {relImg ? (
-                    <img src={relImg} alt={p.name} className="product-real-img" loading="lazy" />
+                    <img src={relImg} alt={translateProductName(p.name)} width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE} className="product-real-img" loading="lazy" />
                   ) : (
                     <div className="product-shape"><div className="product-shape-letter">{p.brand[0]}</div></div>
                   )}

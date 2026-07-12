@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { LogIn } from 'lucide-react'
+import { reachGoal } from '../lib/metrika'
 
 export default function LoginPage() {
   const { login, user } = useAuth()
@@ -22,6 +23,7 @@ export default function LoginPage() {
 
     const success = await login(email, password)
     if (success) {
+      reachGoal('login_submit')
       navigate('/dashboard')
     } else {
       setError('Неверный email или пароль')

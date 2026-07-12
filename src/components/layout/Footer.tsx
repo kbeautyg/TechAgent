@@ -13,7 +13,7 @@ export default function Footer() {
   return (
     <footer className="bg-bg-dark text-text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-10">
+        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 sm:gap-10">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 no-underline mb-4">
@@ -25,7 +25,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
-              Агентская закупка электроники для бизнеса. Комиссия от 2 до 3%.
+              Агентская закупка электроники для бизнеса. Комиссия 3%.
             </p>
             <div className="inline-flex items-center gap-2 rounded-lg px-3 py-2 font-mono text-xs font-semibold" style={{ background: '#151B33', border: '1px solid #232B47', color: '#5EE3B4' }}>
               <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#12B981' }} />
@@ -40,6 +40,21 @@ export default function Footer() {
               <Link to="/" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Главная</Link>
               <Link to="/about" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">О платформе</Link>
               <Link to="/how-it-works" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Как работает</Link>
+              <Link to="/calculator" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Калькулятор</Link>
+              <Link to="/blog" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Блог</Link>
+            </div>
+          </div>
+
+          {/* Catalog categories */}
+          <div>
+            <h4 className="text-sm font-semibold text-white mb-4">Каталог</h4>
+            <div className="flex flex-col gap-2.5">
+              <Link to="/catalog/smartfony" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Смартфоны</Link>
+              <Link to="/catalog/noutbuki" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Ноутбуки</Link>
+              <Link to="/catalog/planshety" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Планшеты</Link>
+              <Link to="/catalog/naushniki" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Наушники</Link>
+              <Link to="/catalog/chasy" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Умные часы</Link>
+              <Link to="/catalog" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Все товары →</Link>
             </div>
           </div>
 

@@ -5,6 +5,7 @@ import { products } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
 import { calculateOrder, formatPrice } from '../../utils/calculate'
+import { reachGoal } from '../../lib/metrika'
 import { QRCodeSVG } from 'qrcode.react'
 
 type Step = 1 | 2 | 3 | 4 | 5
@@ -128,6 +129,7 @@ export default function NewOrderPage() {
     }
     mockOrders.unshift(newOrder)
     saveOrders()
+    reachGoal('order_created', { totalCost: calc.totalCost })
     setCreatedOrder(newOrder)
     setStep(5)
   }

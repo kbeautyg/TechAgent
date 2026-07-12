@@ -24,21 +24,25 @@ const typeColors: Record<string, string> = {
   CONTRACT: 'bg-blue-500/10 text-blue-600',
 }
 
+const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS', contract: 'CONTRACT' }
+
+function docIdFromParam(docType: string | undefined): string | null {
+  if (!docType) return null
+  const targetType = docTypeMap[docType.toLowerCase()]
+  if (!targetType) return null
+  const doc = mockDocuments.find(d => d.userId === 'public' && d.type === targetType)
+  return doc ? doc.id : null
+}
+
 export default function LegalPage() {
   const { docType } = useParams<{ docType?: string }>()
   const publicDocs = mockDocuments.filter(d => d.userId === 'public')
-  const [openDoc, setOpenDoc] = useState<string | null>(null)
+  /* Инициализация из URL сразу при рендере: текст документа попадает в пререндеренный HTML */
+  const [openDoc, setOpenDoc] = useState<string | null>(() => docIdFromParam(docType))
 
-  // Auto-open document if docType is in URL
+  // Sync when navigating between /legal/:docType links
   useEffect(() => {
-    if (docType) {
-      const typeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS', contract: 'CONTRACT' }
-      const targetType = typeMap[docType.toLowerCase()]
-      if (targetType) {
-        const doc = publicDocs.find(d => d.type === targetType)
-        if (doc) setOpenDoc(doc.id)
-      }
-    }
+    setOpenDoc(docIdFromParam(docType))
   }, [docType])
 
   const activeDoc = mockDocuments.find(d => d.id === openDoc)

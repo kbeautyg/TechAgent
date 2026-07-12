@@ -36,9 +36,9 @@
   --color-border: rgba(11, 16, 32, 0.08);
   --color-border-dark: rgba(255, 255, 255, 0.06);
 
-  --font-sans: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Unbounded', 'Onest', sans-serif;
-  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+  --font-sans: 'Onest Variable', 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Unbounded Variable', 'Unbounded', 'Onest Variable', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', 'Consolas', monospace;
 }
 
 h1, h2, h3, .font-display {

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { UserPlus } from 'lucide-react'
+import { reachGoal } from '../lib/metrika'
 
 export default function RegisterPage() {
   const { register, user } = useAuth()
@@ -49,6 +50,7 @@ export default function RegisterPage() {
       password: form.password,
     })
     if (success) {
+      reachGoal('register_submit')
       navigate('/dashboard')
     }
     setLoading(false)

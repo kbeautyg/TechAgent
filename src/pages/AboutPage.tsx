@@ -7,13 +7,13 @@ import {
 
 const stats = [
   { value: '200+', label: 'Активных партнёров' },
-  { value: '2–3%', label: 'Комиссия' },
+  { value: '3%', label: 'Комиссия' },
   { value: '5–7', label: 'Дней доставка' },
   { value: '24/7', label: 'Поддержка' },
 ]
 
 const advantages = [
-  { icon: <IconCoins size={24} />, title: 'Прозрачная комиссия', desc: 'От 2 до 3% от стоимости товара. Никаких скрытых сборов, минимальных сумм или доплат.' },
+  { icon: <IconCoins size={24} />, title: 'Прозрачная комиссия', desc: '3% от стоимости товара. Никаких скрытых сборов, минимальных сумм или доплат.' },
   { icon: <IconTruck size={24} />, title: 'Быстрая логистика', desc: 'Доставка 5–7 рабочих дней через проверенных карго-партнёров. Отслеживание на каждом этапе.' },
   { icon: <IconFileCheck size={24} />, title: 'Полный документооборот', desc: 'Автоматическое формирование всех документов. Инвойсы, акты, чеки — всё в личном кабинете.' },
   { icon: <IconSmartphone size={24} />, title: 'Удобный личный кабинет', desc: 'Создание заказов, генерация платёжных ссылок, отслеживание статусов — всё в одном месте.' },
@@ -47,7 +47,7 @@ const roles = [
 
 const legalData = [
   { label: 'Тип договора', value: 'Агентский договор (глава 52 ГК РФ)' },
-  { label: 'Комиссия агента', value: 'От 2 до 3% от стоимости товара' },
+  { label: 'Комиссия агента', value: '3% от стоимости товара' },
   { label: 'Роль партнёра', value: 'Принципал и импортёр товара' },
   { label: 'Таможня', value: 'Оформляется карго от имени партнёра' },
 ]
@@ -186,6 +186,69 @@ export default function AboutPage() {
                   <div key={i} className="py-3.5">
                     <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono" style={{ color: '#7C86A3' }}>{item.label}</div>
                     <div className="text-[14px] font-medium text-white/80">{item.value}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== COMPANY / REQUISITES ===== */}
+        <div className="mb-20" id="company">
+          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
+            Кто мы юридически
+          </h2>
+          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
+            Открыто отвечаем на вопрос, который задаёт каждый новый партнёр
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className="bg-bg-section rounded-3xl p-8">
+              <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">
+                Почему компания зарегистрирована в Бишкеке
+              </h3>
+              <div className="flex flex-col gap-3 text-[14px] text-text-secondary leading-relaxed">
+                <p>
+                  TechAgent — агент по закупке: мы рассчитываемся с зарубежными поставщиками и работаем
+                  на внешних рынках, поэтому оператор сервиса — компания в Кыргызстане, стране-участнице ЕАЭС.
+                  Это упрощает закупку и логистику в Россию.
+                </p>
+                <p>
+                  Для российского партнёра схема при этом полностью прозрачна: вы работаете по агентскому
+                  договору (глава 52 ГК РФ), выступаете импортёром товара и получаете полный комплект
+                  документов по каждой поставке — договор, отчёт агента и акт.
+                </p>
+                <p>
+                  Условия зафиксированы в{' '}
+                  <Link to="/legal/offer" className="text-primary font-semibold">публичной оферте</Link> —
+                  комиссия 3%, порядок расчётов и ответственность агента прописаны в ней.
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-bg-section rounded-3xl p-8">
+              <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">
+                Реквизиты и контакты
+              </h3>
+              <div className="flex flex-col gap-0">
+                {[
+                  { label: 'Оператор сервиса', value: 'ОсОО «ТехЭйджент»' },
+                  { label: 'Адрес', value: 'г. Бишкек, Кыргызская Республика' },
+                  { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
+                  { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
+                  { label: 'Документы', value: 'Оферта, политика, соглашение', href: '/legal' },
+                ].map((item, i) => (
+                  <div key={i} className="py-3 border-b border-black/[0.05] last:border-0">
+                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono text-text-muted">{item.label}</div>
+                    {item.href ? (
+                      item.href.startsWith('/') ? (
+                        <Link to={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</Link>
+                      ) : (
+                        <a href={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</a>
+                      )
+                    ) : (
+                      <div className="text-[14px] font-medium text-text-primary">{item.value}</div>
+                    )}
                   </div>
                 ))}
               </div>

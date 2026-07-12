@@ -6,12 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "chmod -R +x node_modules/.bin node_modules/@esbuild/*/bin node_modules/esbuild/bin 2>/dev/null; node node_modules/vite/bin/vite.js build",
+    "build": "chmod -R +x node_modules/.bin node_modules/@esbuild/*/bin node_modules/esbuild/bin 2>/dev/null; node node_modules/vite/bin/vite.js build && node node_modules/vite/bin/vite.js build --ssr src/entry-server.tsx --outDir dist-ssr && node scripts/prerender.mjs && node scripts/generate-sitemap.mjs",
     "start": "node node_modules/serve/build/main.js dist -l tcp://0.0.0.0:${PORT:-3000}",
     "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@fontsource-variable/onest": "^5.2.11",
+    "@fontsource-variable/unbounded": "^5.2.8",
     "@tailwindcss/vite": "^4.1.18",
     "@vitejs/plugin-react": "^5.1.1",
     "lucide-react": "^0.564.0",
@@ -32,6 +34,7 @@
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.24",
     "globals": "^16.5.0",
+    "sharp": "^0.35.3",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0"
   }

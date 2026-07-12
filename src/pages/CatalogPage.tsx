@@ -1,91 +1,12 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { products } from '../data/products'
-import { getProductImage } from '../utils/productImages'
+import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
+import { translateColor, translateStorage, translateSpecValue, translateProductName } from '../utils/translate'
+import { categoryLandings } from '../seo/categories'
+import { pluralRu } from '../seo/site'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
-
-/* ── Translation maps ── */
-const colorRu: Record<string, string> = {
-  'Black': 'Чёрный', 'White': 'Белый', 'Blue': 'Синий', 'Red': 'Красный',
-  'Green': 'Зелёный', 'Purple': 'Фиолетовый', 'Gold': 'Золотой', 'Silver': 'Серебристый',
-  'Gray': 'Серый', 'Grey': 'Серый', 'Pink': 'Розовый', 'Orange': 'Оранжевый',
-  'Yellow': 'Жёлтый', 'Coral': 'Коралловый', 'Cream': 'Кремовый', 'Lavender': 'Лавандовый',
-  'Mint': 'Мятный', 'Midnight': 'Тёмная ночь', 'Starlight': 'Сияющая звезда',
-  'Natural Titanium': 'Натуральный титан', 'White Titanium': 'Белый титан',
-  'Blue Titanium': 'Синий титан', 'Black Titanium': 'Чёрный титан',
-  'Titanium': 'Титан', 'Graphite': 'Графит', 'Space Gray': 'Серый космос',
-  'Space Black': 'Чёрный космос', 'Phantom Black': 'Фантомный чёрный',
-  'Ice Blue': 'Ледяной синий', 'Sand': 'Песочный', 'Burgundy': 'Бордовый',
-  'Deep Purple': 'Глубокий фиолетовый', 'Alpine Green': 'Альпийский зелёный',
-  'Sierra Blue': 'Небесно-голубой',
-}
-const specKeyRu: Record<string, string> = {
-  storage: 'Память', color: 'Цвет', display: 'Дисплей', chip: 'Процессор',
-  ram: 'ОЗУ', battery: 'Батарея', camera: 'Камера', weight: 'Вес',
-  connectivity: 'Связь', os: 'ОС', type: 'Тип', driver: 'Драйвер',
-  anc: 'Шумоподавление', bluetooth: 'Bluetooth', waterproof: 'Водозащита',
-  gps: 'GPS', health: 'Здоровье', size: 'Размер', resolution: 'Разрешение',
-  brightness: 'Яркость', speakers: 'Динамики', ports: 'Порты',
-  sensor: 'Сенсор', video: 'Видео', stabilization: 'Стабилизация',
-  lens: 'Объектив', megapixels: 'Мегапиксели', max_flight_time: 'Полёт',
-  range: 'Дальность', power: 'Мощность', features: 'Функции',
-  noisecancellation: 'Шумоподавление', spatial: 'Пространственный звук',
-  charging: 'Зарядка', connector: 'Разъём', material: 'Материал',
-  capacity: 'Ёмкость', speed: 'Скорость', interface: 'Интерфейс',
-  refresh: 'Обновление', panel: 'Матрица', gpu: 'Видеокарта',
-  keyboard: 'Клавиатура', cellular: 'Сотовая связь',
-}
-
-export function translateColor(color: string): string {
-  if (colorRu[color]) return colorRu[color]
-  // Try to find partial match
-  for (const [en, ru] of Object.entries(colorRu)) {
-    if (color.includes(en)) return ru
-  }
-  return color
-}
-
-export function translateSpecKey(key: string): string {
-  return specKeyRu[key] || key.charAt(0).toUpperCase() + key.slice(1)
-}
-
-/* ── Storage translation map ── */
-const storageRu: Record<string, string> = {
-  '128GB': '128 ГБ', '256GB': '256 ГБ', '512GB': '512 ГБ', '1TB': '1 ТБ', '2TB': '2 ТБ',
-  '64GB': '64 ГБ', '32GB': '32 ГБ', '16GB': '16 ГБ', '8GB': '8 ГБ', '4GB': '4 ГБ',
-}
-
-export function translateStorage(value: string): string {
-  if (storageRu[value]) return storageRu[value]
-  return value.replace(/(\d+)\s*TB/gi, '$1 ТБ').replace(/(\d+)\s*GB/gi, '$1 ГБ').replace(/(\d+)\s*MB/gi, '$1 МБ')
-}
-
-export function translateSpecValue(key: string, value: string): string {
-  if (key === 'color') return translateColor(value)
-  if (key === 'storage' || key === 'ram') return translateStorage(value)
-  return value
-}
-
-export function translateProductName(name: string): string {
-  let result = name
-  // Translate storage
-  for (const [en, ru] of Object.entries(storageRu)) {
-    result = result.replace(new RegExp(`\\b${en}\\b`, 'g'), ru)
-  }
-  // Translate color at end of name
-  for (const [en, ru] of Object.entries(colorRu)) {
-    if (result.endsWith(en)) {
-      result = result.slice(0, -en.length) + ru
-      break
-    }
-    // Check with space before color
-    if (result.includes(` ${en}`)) {
-      result = result.replace(` ${en}`, ` ${ru}`)
-    }
-  }
-  return result
-}
 
 /* ── SVG Icons (inline, as designer used) ── */
 const ico = {
@@ -165,23 +86,66 @@ const priceRanges = [
   { label: 'От 150 000 ₽', min: 150000, max: Infinity },
 ]
 
+/* ── Состояние каталога живёт в URL: фильтры и страницы шарятся ссылкой и видны краулеру ── */
+interface CatalogState {
+  q: string
+  cat: string
+  brands: string[]
+  sort: string
+  stockOnly: boolean
+  storages: string[]
+  colors: string[]
+  priceRange: number | null
+  page: number
+}
+
+function readState(params: URLSearchParams): CatalogState {
+  const priceRaw = params.get('price')
+  const priceIdx = priceRaw === null ? NaN : parseInt(priceRaw, 10)
+  return {
+    q: params.get('q') ?? '',
+    cat: params.get('cat') ?? 'Все',
+    brands: params.getAll('brand'),
+    sort: params.get('sort') ?? 'default',
+    stockOnly: params.get('stock') !== 'all',
+    storages: params.getAll('storage'),
+    colors: params.getAll('color'),
+    priceRange: Number.isInteger(priceIdx) && priceIdx >= 0 && priceIdx < priceRanges.length ? priceIdx : null,
+    page: Math.max(1, parseInt(params.get('page') ?? '1', 10) || 1),
+  }
+}
+
+function writeState(state: CatalogState): URLSearchParams {
+  const params = new URLSearchParams()
+  if (state.q) params.set('q', state.q)
+  if (state.cat !== 'Все') params.set('cat', state.cat)
+  state.brands.forEach(b => params.append('brand', b))
+  if (state.sort !== 'default') params.set('sort', state.sort)
+  if (!state.stockOnly) params.set('stock', 'all')
+  state.storages.forEach(s => params.append('storage', s))
+  state.colors.forEach(c => params.append('color', c))
+  if (state.priceRange !== null) params.set('price', String(state.priceRange))
+  if (state.page > 1) params.set('page', String(state.page))
+  return params
+}
+
 export default function CatalogPage() {
-  const [searchParams] = useSearchParams()
-  const [search, setSearch] = useState('')
-  const [cat, setCat] = useState(searchParams.get('cat') || 'Все')
-  const [brand, setBrand] = useState<string[]>(searchParams.get('brand') ? [searchParams.get('brand')!] : [])
-  const [sort, setSort] = useState('default')
-  const [stockOnly, setStockOnly] = useState(true)
-  const [page, setPage] = useState(1)
+  const [searchParams, setSearchParams] = useSearchParams()
+  const state = useMemo(() => readState(searchParams), [searchParams])
+  const { q: search, cat, brands: brand, sort, stockOnly, storages: selStorage, colors: selColor, priceRange: selPriceRange, page } = state
 
-  // Filter states
-  const [selStorage, setSelStorage] = useState<string[]>([])
-  const [selColor, setSelColor] = useState<string[]>([])
-  const [selPriceRange, setSelPriceRange] = useState<number | null>(null)
+  /* Патч состояния → URL. Любое изменение фильтра сбрасывает страницу */
+  const patchState = useCallback((patch: Partial<CatalogState>, opts?: { replace?: boolean }) => {
+    setSearchParams(prev => {
+      const next = { ...readState(prev), ...('page' in patch ? {} : { page: 1 }), ...patch }
+      return writeState(next)
+    }, { replace: opts?.replace ?? false, preventScrollReset: true })
+  }, [setSearchParams])
 
-  // Mobile popup states
-  const [showCatPopup, setShowCatPopup] = useState(false)
-  const [showFilterPopup, setShowFilterPopup] = useState(false)
+  /* Локальные UI-состояния мобильных шторок (не влияют на выдачу) */
+  const [popup, setPopup] = useState<'cats' | 'filters' | null>(null)
+  const showCatPopup = popup === 'cats'
+  const showFilterPopup = popup === 'filters'
 
   const filterOpts = useMemo(() => getFilterOptions(), [])
   const categories = useMemo(() => ['Все', ...Array.from(new Set(products.map(p => p.category)))], [])
@@ -221,33 +185,24 @@ export default function CatalogPage() {
   const totalPages = Math.ceil(filtered.length / PER_PAGE)
   const shown = filtered.slice((page - 1) * PER_PAGE, page * PER_PAGE)
 
-  const toggleBrand = (b: string) => {
-    setBrand(prev => prev.includes(b) ? prev.filter(x => x !== b) : [...prev, b])
-    setPage(1)
-  }
-  const toggleStorage = (s: string) => {
-    setSelStorage(prev => prev.includes(s) ? prev.filter(x => x !== s) : [...prev, s])
-    setPage(1)
-  }
-  const toggleColor = (c: string) => {
-    setSelColor(prev => prev.includes(c) ? prev.filter(x => x !== c) : [...prev, c])
-    setPage(1)
-  }
+  /* Ссылка на страницу пагинации с сохранением всех фильтров */
+  const pageHref = useCallback((n: number) => {
+    const params = writeState({ ...state, page: n })
+    const qs = params.toString()
+    return qs ? `/catalog?${qs}` : '/catalog'
+  }, [state])
+
+  const toggleBrand = (b: string) => patchState({ brands: brand.includes(b) ? brand.filter(x => x !== b) : [...brand, b] })
+  const toggleStorage = (s: string) => patchState({ storages: selStorage.includes(s) ? selStorage.filter(x => x !== s) : [...selStorage, s] })
+  const toggleColor = (c: string) => patchState({ colors: selColor.includes(c) ? selColor.filter(x => x !== c) : [...selColor, c] })
 
   const resetFilters = useCallback(() => {
-    setBrand([])
-    setSelStorage([])
-    setSelColor([])
-    setSelPriceRange(null)
-    setStockOnly(true)
-    setPage(1)
-  }, [])
+    patchState({ brands: [], storages: [], colors: [], priceRange: null, stockOnly: true })
+  }, [patchState])
 
   const resetAll = useCallback(() => {
-    setSearch('')
-    setCat('Все')
-    resetFilters()
-  }, [resetFilters])
+    patchState({ q: '', cat: 'Все', brands: [], storages: [], colors: [], priceRange: null, stockOnly: true })
+  }, [patchState])
 
   // Lock body scroll when popup is open
   useEffect(() => {
@@ -276,7 +231,7 @@ export default function CatalogPage() {
   const CategoriesContent = () => (
     <div className="cat-list">
       {categories.map(c => (
-        <div key={c} className={`cat-item${cat === c ? ' active' : ''}`} onClick={() => { setCat(c); setPage(1); setShowCatPopup(false) }}>
+        <div key={c} className={`cat-item${cat === c ? ' active' : ''}`} onClick={() => { patchState({ cat: c }); setPopup(null) }}>
           <span className="cat-icon-wrap">{ico[catIconMap[c] || 'all']}</span>
           {c === 'Бытовая техника' ? 'Быт. техника' : c}
           <span className="cat-count">{catCounts[c] || 0}</span>
@@ -291,11 +246,11 @@ export default function CatalogPage() {
       <div className="filter-section">
         <div className="filter-title">
           Цена
-          {selPriceRange !== null && <span className="filter-clear" onClick={() => { setSelPriceRange(null); setPage(1) }}>Сбросить</span>}
+          {selPriceRange !== null && <span className="filter-clear" onClick={() => patchState({ priceRange: null })}>Сбросить</span>}
         </div>
         <div className="filter-checks">
           {priceRanges.map((pr, i) => (
-            <label key={i} className={`filter-check-item${selPriceRange === i ? ' active' : ''}`} onClick={() => { setSelPriceRange(selPriceRange === i ? null : i); setPage(1) }}>
+            <label key={i} className={`filter-check-item${selPriceRange === i ? ' active' : ''}`} onClick={() => patchState({ priceRange: selPriceRange === i ? null : i })}>
               <span className={`filter-checkbox${selPriceRange === i ? ' checked' : ''}`}>
                 {selPriceRange === i && ico.check}
               </span>
@@ -309,7 +264,7 @@ export default function CatalogPage() {
       <div className="filter-section">
         <div className="filter-title">
           Бренд
-          {brand.length > 0 && <span className="filter-clear" onClick={() => { setBrand([]); setPage(1) }}>Сбросить</span>}
+          {brand.length > 0 && <span className="filter-clear" onClick={() => patchState({ brands: [] })}>Сбросить</span>}
         </div>
         <div className="brand-chips">
           {topBrands.map(b => (
@@ -323,7 +278,7 @@ export default function CatalogPage() {
         <div className="filter-section">
           <div className="filter-title">
             Память
-            {selStorage.length > 0 && <span className="filter-clear" onClick={() => { setSelStorage([]); setPage(1) }}>Сбросить</span>}
+            {selStorage.length > 0 && <span className="filter-clear" onClick={() => patchState({ storages: [] })}>Сбросить</span>}
           </div>
           <div className="brand-chips">
             {filterOpts.storages.map(s => (
@@ -338,7 +293,7 @@ export default function CatalogPage() {
         <div className="filter-section">
           <div className="filter-title">
             Цвет
-            {selColor.length > 0 && <span className="filter-clear" onClick={() => { setSelColor([]); setPage(1) }}>Сбросить</span>}
+            {selColor.length > 0 && <span className="filter-clear" onClick={() => patchState({ colors: [] })}>Сбросить</span>}
           </div>
           <div className="filter-checks filter-checks-cols">
             {filterOpts.colors.slice(0, 12).map(c => (
@@ -357,7 +312,7 @@ export default function CatalogPage() {
       <div className="filter-section">
         <div className="toggle-row">
           <span className="toggle-label">Только в наличии</span>
-          <div className={`ctoggle${stockOnly ? ' on' : ''}`} onClick={() => { setStockOnly(!stockOnly); setPage(1) }} />
+          <div className={`ctoggle${stockOnly ? ' on' : ''}`} onClick={() => patchState({ stockOnly: !stockOnly })} />
         </div>
       </div>
 
@@ -372,6 +327,27 @@ export default function CatalogPage() {
 
   return (
     <div className="catalog-root">
+      {/* ── SEO-шапка каталога ── */}
+      <header className="catalog-header max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-1">
+        <h1 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight text-text-primary mb-2">
+          Каталог электроники для бизнеса
+        </h1>
+        <p className="text-[14px] text-text-muted max-w-2xl mb-4">
+          {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])} под заказ по агентской схеме: комиссия 3%, доставка 5–7 дней. Цены указаны без комиссии.
+        </p>
+        <nav aria-label="Категории каталога" className="flex flex-wrap gap-2 pb-2">
+          {categoryLandings.map(c => (
+            <Link
+              key={c.slug}
+              to={`/catalog/${c.slug}`}
+              className="px-3.5 py-1.5 rounded-full border border-border bg-white text-[12.5px] font-medium text-text-secondary hover:border-primary hover:text-primary transition-colors no-underline"
+            >
+              {c.category}
+            </Link>
+          ))}
+        </nav>
+      </header>
+
       <main className="catalog-main">
         {/* ── Sidebar (desktop only) ── */}
         <aside className="catalog-sidebar">
@@ -389,7 +365,7 @@ export default function CatalogPage() {
           <div className="catalog-mobile-btns lg:hidden">
             <button
               className={`catalog-mob-btn${cat !== 'Все' ? ' has-active' : ''}`}
-              onClick={() => setShowCatPopup(true)}
+              onClick={() => setPopup('cats')}
             >
               {ico.category}
               <span>Категории</span>
@@ -397,7 +373,7 @@ export default function CatalogPage() {
             </button>
             <button
               className={`catalog-mob-btn${activeFiltersCount > 0 ? ' has-active' : ''}`}
-              onClick={() => setShowFilterPopup(true)}
+              onClick={() => setPopup('filters')}
             >
               {ico.filter}
               <span>Фильтры</span>
@@ -407,15 +383,15 @@ export default function CatalogPage() {
 
           <div className="catalog-search-wrap">
             <span className="csearch-icon">{ico.search}</span>
-            <input className="csearch-input" type="text" placeholder={`Поиск по ${products.length}+ товарам...`} value={search} onChange={e => { setSearch(e.target.value); setPage(1) }} />
-            {search && <button className="csearch-clear" onClick={() => setSearch('')}>✕</button>}
+            <input className="csearch-input" type="text" placeholder={`Поиск по ${products.length}+ товарам...`} value={search} onChange={e => patchState({ q: e.target.value }, { replace: true })} />
+            {search && <button className="csearch-clear" onClick={() => patchState({ q: '' }, { replace: true })}>✕</button>}
           </div>
 
           <div className="products-topbar">
             <div className="products-count">Найдено <strong>{filtered.length}</strong> товаров</div>
             <div className="products-sort-wrap">
               <span className="sort-label">Сортировка:</span>
-              <select className="sort-select" value={sort} onChange={e => setSort(e.target.value)}>
+              <select className="sort-select" value={sort} onChange={e => patchState({ sort: e.target.value })}>
                 <option value="default">По популярности</option>
                 <option value="price-asc">Сначала дешёвые</option>
                 <option value="price-desc">Сначала дорогие</option>
@@ -434,7 +410,8 @@ export default function CatalogPage() {
                       <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
                       {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
                       {imgUrl ? (
-                        <img src={imgUrl} alt={p.name}
+                        <img src={imgUrl} alt={translateProductName(p.name)}
+                          width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
                           className="product-real-img"
                           loading="lazy" />
                       ) : (
@@ -467,27 +444,43 @@ export default function CatalogPage() {
           )}
 
           {totalPages > 1 && (
-            <div className="cpagination">
-              <button className="cpage-btn arrow" disabled={page === 1} onClick={() => setPage(p => Math.max(1, p - 1))}>{ico.chevL}</button>
+            <nav className="cpagination" aria-label="Страницы каталога">
+              <Link
+                to={pageHref(Math.max(1, page - 1))}
+                aria-disabled={page === 1}
+                className={`cpage-btn arrow${page === 1 ? ' disabled pointer-events-none opacity-40' : ''}`}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >{ico.chevL}</Link>
               {pageNums().map((n, i) =>
                 n === 'dots' ? <span key={`d${i}`} className="cpage-dots">…</span> : (
-                  <button key={n} className={`cpage-btn${page === n ? ' active' : ''}`} onClick={() => { setPage(n as number); window.scrollTo({ top: 0, behavior: 'smooth' }) }}>{n}</button>
+                  <Link
+                    key={n}
+                    to={pageHref(n as number)}
+                    className={`cpage-btn${page === n ? ' active' : ''}`}
+                    aria-current={page === n ? 'page' : undefined}
+                    onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                  >{n}</Link>
                 )
               )}
-              <button className="cpage-btn arrow" disabled={page === totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>{ico.chevR}</button>
-            </div>
+              <Link
+                to={pageHref(Math.min(totalPages, page + 1))}
+                aria-disabled={page === totalPages}
+                className={`cpage-btn arrow${page === totalPages ? ' disabled pointer-events-none opacity-40' : ''}`}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              >{ico.chevR}</Link>
+            </nav>
           )}
         </div>
       </main>
 
       {/* ═══ Mobile Category Popup (Bottom Sheet) ═══ */}
       {showCatPopup && (
-        <div className="catalog-popup-overlay" onClick={() => setShowCatPopup(false)}>
+        <div className="catalog-popup-overlay" onClick={() => setPopup(null)}>
           <div className="catalog-popup-sheet" onClick={e => e.stopPropagation()}>
             <div className="popup-sheet-handle" />
             <div className="popup-sheet-header">
               <h3>Категории</h3>
-              <button className="popup-close-btn" onClick={() => setShowCatPopup(false)}>{ico.close}</button>
+              <button className="popup-close-btn" onClick={() => setPopup(null)}>{ico.close}</button>
             </div>
             <div className="popup-sheet-body">
               <CategoriesContent />
@@ -498,7 +491,7 @@ export default function CatalogPage() {
 
       {/* ═══ Mobile Filters Popup (Bottom Sheet) ═══ */}
       {showFilterPopup && (
-        <div className="catalog-popup-overlay" onClick={() => setShowFilterPopup(false)}>
+        <div className="catalog-popup-overlay" onClick={() => setPopup(null)}>
           <div className="catalog-popup-sheet catalog-popup-sheet-tall" onClick={e => e.stopPropagation()}>
             <div className="popup-sheet-handle" />
             <div className="popup-sheet-header">
@@ -507,11 +500,11 @@ export default function CatalogPage() {
                 {activeFiltersCount > 0 && (
                   <button className="popup-reset-btn" onClick={resetFilters}>Сбросить всё</button>
                 )}
-                <button className="popup-close-btn" onClick={() => setShowFilterPopup(false)}>{ico.close}</button>
+                <button className="popup-close-btn" onClick={() => setPopup(null)}>{ico.close}</button>
               </div>
             </div>
             <div className="popup-sheet-body">
-              <FiltersContent onApply={() => setShowFilterPopup(false)} />
+              <FiltersContent onApply={() => setPopup(null)} />
             </div>
           </div>
         </div>

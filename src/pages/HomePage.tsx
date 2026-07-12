@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { ArrowRight, ChevronDown, Star } from 'lucide-react'
 import { formatPrice } from '../utils/calculate'
+import { faqData } from '../data/faq'
+import { reachGoal } from '../lib/metrika'
 import {
   IconUserPlus, IconClipboardEdit, IconCreditCard, IconPackageCheck,
   IconCoins, IconBox, IconSmartphone, IconFileCheck, IconTruck,
@@ -10,20 +12,20 @@ import {
 } from '../components/icons'
 
 const features = [
-  { icon: <IconCoins size={32} />, bg: 'bg-primary/8', title: 'Комиссия 2–3%', desc: 'Прозрачная ставка без скрытых платежей. Вы всегда знаете итоговую стоимость заранее' },
+  { icon: <IconCoins size={32} />, bg: 'bg-primary/8', title: 'Комиссия 3%', desc: 'Прозрачная ставка без скрытых платежей. Вы всегда знаете итоговую стоимость заранее' },
   { icon: <IconTruck size={32} />, bg: 'bg-primary/8', title: 'Доставка 5–7 дней', desc: 'Быстрая логистика через проверенных партнёров. Отслеживание на каждом этапе' },
   { icon: <IconFileCheck size={32} />, bg: 'bg-primary/8', title: 'Легальная схема', desc: 'Полностью белая агентская модель. Партнёр = импортёр. Все документы предоставляем' },
 ]
 
 const steps = [
   { icon: <IconUserPlus size={28} />, title: 'Регистрация', desc: 'Создайте аккаунт партнёра за 2 минуты. Нужен только ИНН' },
-  { icon: <IconClipboardEdit size={28} />, title: 'Создание заказа', desc: 'Укажите товар — система рассчитает итог с комиссией от 2 до 3%' },
+  { icon: <IconClipboardEdit size={28} />, title: 'Создание заказа', desc: 'Укажите товар — система рассчитает итог с комиссией 3%' },
   { icon: <IconCreditCard size={28} />, title: 'Оплата клиентом', desc: 'Отправьте ссылку покупателю — он оплачивает через СБП' },
   { icon: <IconPackageCheck size={28} />, title: 'Получение товара', desc: 'Мы выкупаем товар, передаём карго. Вы получаете и отдаёте' },
 ]
 
 const standardFeatures = [
-  { icon: <IconCoins size={22} />, title: 'Комиссия 2–3%', sub: 'Без скрытых доплат' },
+  { icon: <IconCoins size={22} />, title: 'Комиссия 3%', sub: 'Без скрытых доплат' },
   { icon: <IconBox size={22} />, title: 'До 50 заказов в месяц', sub: 'Без лимита по сумме' },
   { icon: <IconSmartphone size={22} />, title: 'Apple, Samsung, Xiaomi', sub: 'Все популярные бренды' },
   { icon: <IconFileCheck size={22} />, title: 'Без заявок', sub: 'Регистрация за 2 минуты' },
@@ -31,7 +33,7 @@ const standardFeatures = [
 ]
 
 const proFeatures = [
-  { icon: <IconDiamond size={22} />, title: 'Комиссия от 2.5%', sub: 'Снижение при объёмах' },
+  { icon: <IconDiamond size={22} />, title: 'Комиссия 3%', sub: 'Спецусловия при объёмах — обсудим' },
   { icon: <IconUnlock size={22} />, title: 'Без лимита заказов', sub: 'Сколько угодно в месяц' },
   { icon: <IconGlobe size={22} />, title: 'Расширенный каталог', sub: 'Dyson, Sony, DJI и другие' },
   { icon: <IconZap size={22} />, title: 'Приоритетная доставка', sub: '3–5 дней вместо 5–7' },
@@ -39,15 +41,15 @@ const proFeatures = [
 ]
 
 const categories = [
-  { icon: <IconApple size={22} />, name: 'Apple iPhone', price: 'от 60 000 ₽', cat: 'Смартфоны', brand: 'Apple' },
-  { icon: <IconLaptop size={22} />, name: 'MacBook Air / Pro', price: 'от 100 000 ₽', cat: 'Ноутбуки', brand: 'Apple' },
-  { icon: <IconSmartphone size={22} />, name: 'Samsung Galaxy', price: 'от 40 000 ₽', cat: 'Смартфоны', brand: 'Samsung' },
-  { icon: <IconHeadphones size={22} />, name: 'AirPods / Beats', price: 'от 15 000 ₽', cat: 'Наушники', brand: '' },
-  { icon: <IconWatch size={22} />, name: 'Apple Watch', price: 'от 35 000 ₽', cat: 'Часы', brand: 'Apple' },
-  { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: 'от 15 000 ₽', cat: 'Смартфоны', brand: 'Xiaomi' },
-  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: 'от 45 000 ₽', cat: 'Игровые консоли', brand: '' },
-  { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: 'от 30 000 ₽', cat: 'Камеры', brand: '' },
-  { icon: <IconPlug size={22} />, name: 'Dyson', price: 'от 25 000 ₽', cat: 'Бытовая техника', brand: 'Dyson' },
+  { icon: <IconApple size={22} />, name: 'Apple iPhone', price: 'от 60 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Apple' },
+  { icon: <IconLaptop size={22} />, name: 'MacBook Air / Pro', price: 'от 100 000 ₽', cat: 'Ноутбуки', to: '/catalog?cat=Ноутбуки&brand=Apple' },
+  { icon: <IconSmartphone size={22} />, name: 'Samsung Galaxy', price: 'от 40 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Samsung' },
+  { icon: <IconHeadphones size={22} />, name: 'AirPods / Beats', price: 'от 15 000 ₽', cat: 'Наушники', to: '/catalog/naushniki' },
+  { icon: <IconWatch size={22} />, name: 'Apple Watch', price: 'от 35 000 ₽', cat: 'Часы', to: '/catalog/chasy' },
+  { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: 'от 15 000 ₽', cat: 'Смартфоны', to: '/catalog/smartfony' },
+  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: 'от 45 000 ₽', cat: 'Игровые консоли', to: '/catalog/igrovye-konsoli' },
+  { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: 'от 30 000 ₽', cat: 'Камеры и дроны', to: '/catalog/kamery-i-drony' },
+  { icon: <IconPlug size={22} />, name: 'Dyson', price: 'от 25 000 ₽', cat: 'Для дома', to: '/catalog/tehnika-dlya-doma' },
 ]
 
 const reviews = [
@@ -55,17 +57,6 @@ const reviews = [
   { name: 'Айнура Маматова', company: 'ИП Маматова А.С.', city: 'Ош', text: 'Раньше ждали по 3 недели, а тут 5-7 дней и товар у меня. Удобная оплата и документы.', rating: 5 },
   { name: 'Бакыт Жумабеков', company: 'ИП Жумабеков Б.Т.', city: 'Бишкек', text: 'Отличный сервис. Документы формируются автоматически. Рекомендую всем партнёрам.', rating: 5 },
   { name: 'Мария Волкова', company: 'Партнёр Волкова М.А.', city: 'Новосибирск', text: 'Отличный сервис для тех, кто хочет предложить клиентам низкие цены на электронику.', rating: 4 },
-]
-
-const faqData = [
-  { q: 'Как работает агентская модель?', a: 'Мы выступаем агентом — не продавцом и не импортёром. Партнёр создаёт заказ в личном кабинете, конечный покупатель оплачивает по ссылке. Мы выкупаем товар за рубежом и передаём через карго. Партнёр является импортёром, получает товар и отдаёт клиенту.' },
-  { q: 'Какова комиссия?', a: 'Комиссия — от 2 до 3% от стоимости товара. Никаких скрытых доплат, минимальных сумм или дополнительных сборов.' },
-  { q: 'Сколько занимает доставка?', a: 'Стандартная доставка — 5–7 рабочих дней с момента выкупа товара. Для клиентов тарифа Pro — 3–5 дней с приоритетной обработкой.' },
-  { q: 'Какие документы нужны для регистрации?', a: 'Только ИНН и контактные данные. Регистрация занимает 2 минуты. Не нужно подавать заявку или ждать одобрения.' },
-  { q: 'Это кредит?', a: 'Нет, это не кредит. TechAgent — агентская услуга по закупке товара. Клиент оплачивает полную стоимость сразу по ссылке (через СБП или картой).' },
-  { q: 'Как происходит оплата?', a: 'Партнёр создаёт заказ в личном кабинете, система генерирует уникальную платёжную ссылку. Покупатель оплачивает через СБП или банковской картой.' },
-  { q: 'Есть ли минимальная сумма заказа?', a: 'Нет минимальной суммы. Комиссия от 2 до 3% от стоимости товара — неважно, заказываете вы аксессуар за 5 000 ₽ или MacBook Pro за 250 000 ₽.' },
-  { q: 'Поддерживается ли Trade-in?', a: 'Да, мы поддерживаем Trade-in. Партнёр может учесть стоимость старого устройства клиента при создании заказа.' },
 ]
 
 const tabLabels = ['Популярное', 'Смартфоны', 'Ноутбуки', 'Наушники', 'Планшеты', 'Часы', 'Аксессуары']
@@ -103,10 +94,19 @@ function formatNum(n: number) {
 
 export default function HomePage() {
   const [calcCost, setCalcCost] = useState('75000')
+  const [calcTouched, setCalcTouched] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
   const costNum = parseInt(calcCost) || 0
   const commission = Math.round(costNum * 0.03)
   const total = costNum + commission
+
+  const handleCalcChange = (value: string) => {
+    setCalcCost(value)
+    if (!calcTouched) {
+      setCalcTouched(true)
+      reachGoal('calc_used')
+    }
+  }
 
   return (
     <div className="bg-white">
@@ -125,7 +125,7 @@ export default function HomePage() {
                 Агентская закупка электроники для&nbsp;бизнеса
               </h1>
               <p className="text-[15px] sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
-                Закупаем технику Apple, Samsung, Xiaomi и&nbsp;другие бренды для розничных магазинов. Комиссия всего&nbsp;2–3%&nbsp;— прозрачно и&nbsp;легально
+                Закупаем технику Apple, Samsung, Xiaomi и&nbsp;другие бренды для розничных магазинов. Комиссия всего&nbsp;3%&nbsp;— прозрачно и&nbsp;легально
               </p>
 
               {/* PHONE mockup — MOBILE ONLY, before buttons */}
@@ -151,7 +151,7 @@ export default function HomePage() {
                     </div>
                     <div className="bg-bg-section rounded-xl p-2.5">
                       <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Ставка</div>
-                      <div className="text-[18px] font-extrabold text-primary leading-none mt-0.5">2.5%</div>
+                      <div className="text-[18px] font-extrabold text-primary leading-none mt-0.5">3%</div>
                     </div>
                   </div>
                   {/* Orders */}
@@ -196,7 +196,7 @@ export default function HomePage() {
                       <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
                     </div>
                     <div className="flex-1 mx-3 px-3 py-1 bg-white rounded-md text-[10px] text-gray-400 font-mono border border-gray-100">
-                      techagent.ru/dashboard
+                      techagent.pro/dashboard
                     </div>
                   </div>
                   {/* Dashboard with sidebar */}
@@ -225,7 +225,7 @@ export default function HomePage() {
                         <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-bold text-primary">ДК</div>
                         <div>
                           <div className="text-[8px] font-semibold text-gray-700">Партнёр Кутуков</div>
-                          <div className="text-[7px] text-gray-400">demo@techagent.ru</div>
+                          <div className="text-[7px] text-gray-400">demo@techagent.pro</div>
                         </div>
                       </div>
                     </div>
@@ -249,7 +249,7 @@ export default function HomePage() {
                         </div>
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
                           <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Комиссия</div>
-                          <div className="text-[18px] font-extrabold text-primary leading-none">2.5%</div>
+                          <div className="text-[18px] font-extrabold text-primary leading-none">3%</div>
                           <div className="text-[8px] text-gray-400 font-medium mt-0.5">фикс.</div>
                         </div>
                       </div>
@@ -375,7 +375,7 @@ export default function HomePage() {
               <input
                 type="number"
                 value={calcCost}
-                onChange={(e) => setCalcCost(e.target.value)}
+                onChange={(e) => handleCalcChange(e.target.value)}
                 className="w-full px-4 py-3.5 rounded-xl bg-white/[0.05] border border-white/10 text-white text-2xl font-bold outline-none focus:border-primary transition-colors mb-6"
                 placeholder="75000"
               />
@@ -386,7 +386,7 @@ export default function HomePage() {
                   <span className="text-[15px] font-semibold text-white">{formatPrice(costNum)}</span>
                 </div>
                 <div className="flex justify-between py-2.5 border-b border-white/[0.06]">
-                  <span className="text-[13px] text-white/50">Комиссия 2–3%</span>
+                  <span className="text-[13px] text-white/50">Комиссия 3%</span>
                   <span className="text-[15px] font-semibold text-white">{formatPrice(commission)}</span>
                 </div>
                 <div className="flex justify-between pt-3">
@@ -494,11 +494,8 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {categories.map((c, i) => {
               const isMatch = activeTab === 0 || c.cat === tabLabels[activeTab]
-              const params = new URLSearchParams()
-              if (c.cat) params.set('cat', c.cat)
-              if (c.brand) params.set('brand', c.brand)
               return (
-              <Link key={i} to={`/catalog?${params.toString()}`} className={`flex items-center gap-3.5 py-4 px-5 rounded-2xl hover:-translate-y-0.5 transition-all cursor-pointer no-underline group ${isMatch ? 'bg-bg-section' : 'bg-bg-section/40 opacity-40'}`}>
+              <Link key={i} to={c.to} className={`flex items-center gap-3.5 py-4 px-5 rounded-2xl hover:-translate-y-0.5 transition-all cursor-pointer no-underline group ${isMatch ? 'bg-bg-section' : 'bg-bg-section/40 opacity-40'}`}>
                 <div className={`w-11 h-11 rounded-xl flex items-center justify-center shadow-sm shrink-0 group-hover:shadow-md transition-shadow ${isMatch ? 'bg-white text-text-primary' : 'bg-white/60 text-text-muted'}`}>
                   {c.icon}
                 </div>
@@ -564,7 +561,7 @@ export default function HomePage() {
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
                 Зарегистрироваться <ArrowRight size={16} />
               </Link>
-              <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
+              <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" onClick={() => reachGoal('support_click')} className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
                 Написать в поддержку
               </a>
             </div>

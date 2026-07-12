@@ -1,9 +1,12 @@
 /**
  * Product image and styling utilities
- * Uses local PNG images organized by category folders
- * Images located in /public/images/{category}/{productId}.png
- * Generated via OpenAI DALL-E API (generate_images.py)
+ * Uses local WebP images organized by category folders
+ * Images located in /public/images/{category}/{productId}.webp
+ * Generated via OpenAI DALL-E API (generate_images.py), converted by scripts/assets/convert-webp.mjs
  */
+
+/** Интринсик-размер карточных изображений (даунскейл convert-webp.mjs) — для width/height у <img> */
+export const PRODUCT_IMAGE_SIZE = 800
 
 // Category mapping (Russian -> folder name)
 const categoryFolders: Record<string, string> = {
@@ -23,14 +26,14 @@ const categoryFolders: Record<string, string> = {
 
 /**
  * Get local product image path based on product ID and category
- * Returns path to PNG in /images/{category}/{id}.png
+ * Returns path to WebP in /images/{category}/{id}.webp
  */
 export function getProductImage(productId: string, _productName: string = '', category: string = ''): string {
   const folder = categoryFolders[category] || '';
   if (folder) {
-    return `/images/${folder}/${productId}.png`;
+    return `/images/${folder}/${productId}.webp`;
   }
-  return `/images/smartphones/${productId}.png`;
+  return `/images/smartphones/${productId}.webp`;
 }
 
 /**
