@@ -1,13 +1,19 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Check, Copy, Search, X } from 'lucide-react'
+import { QRCodeSVG } from 'qrcode.react'
 import { products } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
 import { calculateOrder, formatPrice } from '../../utils/calculate'
-import { QRCodeSVG } from 'qrcode.react'
 
 type Step = 1 | 2 | 3 | 4 | 5
+
+const field: React.CSSProperties = { width: '100%', background: '#F5F6FB', border: '1px solid #E7E9F2', borderRadius: 12, padding: '13px 15px', fontSize: 14.5, outline: 'none' }
+const label: React.CSSProperties = { display: 'block', fontWeight: 600, fontSize: 13, color: '#3A4256', marginBottom: 8 }
+const card: React.CSSProperties = { background: '#fff', border: '1px solid #E7E9F2', borderRadius: 20, padding: 'clamp(20px,3vw,28px)' }
+const row: React.CSSProperties = { display: 'flex', justifyContent: 'space-between', padding: '8px 0', fontSize: 13.5 }
+const primaryBtn: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 8, background: '#1B44F5', color: '#fff', border: 'none', borderRadius: 12, padding: '12px 20px', fontWeight: 600, fontSize: 14 }
+const ghostBtn: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 7, background: 'none', border: 'none', color: '#5B647A', fontWeight: 600, fontSize: 14 }
 
 function ProductSearchDropdown({ value, onChange }: { value: string; onChange: (name: string, price?: number) => void }) {
   const [query, setQuery] = useState(value)
@@ -15,11 +21,8 @@ function ProductSearchDropdown({ value, onChange }: { value: string; onChange: (
   const ref = useRef<HTMLDivElement>(null)
 
   useEffect(() => { setQuery(value) }, [value])
-
   useEffect(() => {
-    const handler = (e: MouseEvent) => {
-      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false)
-    }
+    const handler = (e: MouseEvent) => { if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false) }
     document.addEventListener('mousedown', handler)
     return () => document.removeEventListener('mousedown', handler)
   }, [])
@@ -27,51 +30,52 @@ function ProductSearchDropdown({ value, onChange }: { value: string; onChange: (
   const filtered = useMemo(() => {
     if (!query.trim()) return products.slice(0, 30)
     const q = query.toLowerCase()
-    return products.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)).slice(0, 30)
+    return products.filter((p) => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)).slice(0, 30)
   }, [query])
 
   return (
-    <div ref={ref} className="relative">
-      <label className="block text-sm font-medium mb-1.5 text-text-secondary">Название товара</label>
-      <div className="relative">
-        <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
-        <input
-          type="text"
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setOpen(true); onChange(e.target.value) }}
-          onFocus={() => setOpen(true)}
-          className="w-full pl-10 pr-10 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-          placeholder="Начните вводить название..."
-        />
+    <div ref={ref} style={{ position: 'relative' }}>
+      <label style={label}>Название товара</label>
+      <div style={{ position: 'relative' }}>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8891A5" strokeWidth="1.9" style={{ position: 'absolute', left: 14, top: '50%', transform: 'translateY(-50%)' }}><circle cx="11" cy="11" r="7" /><path d="m20 20-3-3" strokeLinecap="round" /></svg>
+        <input value={query} onChange={(e) => { setQuery(e.target.value); setOpen(true); onChange(e.target.value) }} onFocus={() => setOpen(true)} className="ta-input" style={{ ...field, paddingLeft: 40, paddingRight: query ? 36 : 15 }} placeholder="Начните вводить название…" />
         {query && (
-          <button onClick={() => { setQuery(''); onChange(''); setOpen(false) }} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary bg-transparent border-none cursor-pointer p-0">
-            <X size={16} />
+          <button onClick={() => { setQuery(''); onChange(''); setOpen(false) }} style={{ position: 'absolute', right: 12, top: '50%', transform: 'translateY(-50%)', background: 'none', border: 'none', color: '#8891A5', cursor: 'pointer', padding: 0 }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
           </button>
         )}
       </div>
       {open && filtered.length > 0 && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-border rounded-xl shadow-xl max-h-64 overflow-y-auto">
-          {filtered.map(p => (
-            <button
-              key={p.id}
-              onClick={() => { onChange(p.name, p.price); setQuery(p.name); setOpen(false) }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-bg-section transition-colors bg-transparent border-none cursor-pointer border-b border-border last:border-b-0"
-            >
-              <span className="text-xl shrink-0">{p.image}</span>
-              <div className="flex-1 min-w-0">
-                <div className="text-sm font-medium text-text-primary truncate">{p.name}</div>
-                <div className="text-xs text-text-muted">{p.brand} · {p.category}</div>
+        <div style={{ position: 'absolute', zIndex: 30, marginTop: 6, width: '100%', background: '#fff', border: '1px solid #E7E9F2', borderRadius: 14, boxShadow: '0 20px 44px rgba(11,16,32,.14)', maxHeight: 280, overflowY: 'auto' }}>
+          {filtered.map((p) => (
+            <button key={p.id} onClick={() => { onChange(p.name, p.price); setQuery(p.name); setOpen(false) }} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 11, padding: '10px 14px', textAlign: 'left', background: 'none', border: 'none', borderBottom: '1px solid #F5F6FA', cursor: 'pointer' }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ fontSize: 13.5, fontWeight: 500, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</div>
+                <div style={{ fontSize: 11.5, color: '#8891A5' }}>{p.brand} · {p.category}</div>
               </div>
-              <span className="text-sm font-semibold text-primary shrink-0">{p.price.toLocaleString('ru-RU')} ₽</span>
+              <span style={{ fontSize: 13, fontWeight: 700, color: '#1B44F5', flex: 'none' }}>{formatPrice(p.price)}</span>
             </button>
           ))}
         </div>
       )}
       {open && query.trim() && filtered.length === 0 && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-border rounded-xl shadow-xl p-4 text-center text-sm text-text-muted">
-          Товар не найден. Вы можете ввести название вручную.
-        </div>
+        <div style={{ position: 'absolute', zIndex: 30, marginTop: 6, width: '100%', background: '#fff', border: '1px solid #E7E9F2', borderRadius: 14, padding: 16, textAlign: 'center', fontSize: 13, color: '#8891A5' }}>Товар не найден. Можно ввести название вручную.</div>
       )}
+    </div>
+  )
+}
+
+function StepDots({ step }: { step: Step }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 22 }}>
+      {[1, 2, 3, 4].map((s) => (
+        <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+          <span style={{ width: 28, height: 28, borderRadius: '50%', display: 'grid', placeItems: 'center', fontSize: 12, fontWeight: 700, background: s < step ? '#12B981' : s === step ? '#1B44F5' : '#F2F4FB', color: s <= step ? '#fff' : '#8891A5' }}>
+            {s < step ? <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="3" strokeLinecap="round"><path d="M4 12.5l5 5 11-11" /></svg> : s}
+          </span>
+          {s < 4 && <span style={{ width: 28, height: 2, background: s < step ? '#12B981' : '#EEF0FF' }} />}
+        </div>
+      ))}
     </div>
   )
 }
@@ -81,7 +85,6 @@ export default function NewOrderPage() {
   const navigate = useNavigate()
   const [step, setStep] = useState<Step>(1)
   const [copied, setCopied] = useState(false)
-
   const [orderType, setOrderType] = useState<'normal' | 'tradein'>('normal')
   const [productName, setProductName] = useState('')
   const [productCost, setProductCost] = useState('')
@@ -90,13 +93,11 @@ export default function NewOrderPage() {
   const [clientName, setClientName] = useState('')
   const [clientPhone, setClientPhone] = useState('')
   const [clientEmail, setClientEmail] = useState('')
-
   const [createdOrder, setCreatedOrder] = useState<typeof mockOrders[0] | null>(null)
 
   const costNum = parseInt(productCost) || 0
   const oldNum = parseInt(oldValue) || 0
   const calc = calculateOrder(costNum, orderType === 'tradein', oldNum)
-
   const canGoStep3 = productName.trim() && costNum > 0 && (orderType === 'normal' || (oldProduct.trim() && oldNum > 0))
   const canGoStep4 = clientName.trim() && clientPhone.trim()
 
@@ -104,27 +105,13 @@ export default function NewOrderPage() {
     const orderNumber = getNextOrderNumber()
     const paymentId = 'pay_' + crypto.randomUUID().slice(0, 12)
     const newOrder = {
-      id: crypto.randomUUID(),
-      orderNumber,
-      userId: user!.id,
-      productName,
-      productCost: costNum,
-      commission: calc.commission,
-      totalCost: calc.totalCost,
-      isTradeIn: orderType === 'tradein',
-      oldProduct: orderType === 'tradein' ? oldProduct : undefined,
-      oldValue: orderType === 'tradein' ? oldNum : undefined,
-      clientPayment: calc.clientPayment,
-      ipPayment: calc.ipPayment,
-      clientName,
-      clientPhone,
-      clientEmail: clientEmail || undefined,
-      paymentId,
-      paymentLink: `/pay/${paymentId}`,
-      paymentStatus: 'PENDING' as const,
-      status: 'CREATED' as const,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      id: crypto.randomUUID(), orderNumber, userId: user!.id, productName, productCost: costNum,
+      commission: calc.commission, totalCost: calc.totalCost, isTradeIn: orderType === 'tradein',
+      oldProduct: orderType === 'tradein' ? oldProduct : undefined, oldValue: orderType === 'tradein' ? oldNum : undefined,
+      clientPayment: calc.clientPayment, ipPayment: calc.ipPayment, clientName, clientPhone,
+      clientEmail: clientEmail || undefined, paymentId, paymentLink: `/pay/${paymentId}`,
+      paymentStatus: 'PENDING' as const, status: 'CREATED' as const,
+      createdAt: new Date().toISOString(), updatedAt: new Date().toISOString(),
     }
     mockOrders.unshift(newOrder)
     saveOrders()
@@ -133,382 +120,149 @@ export default function NewOrderPage() {
   }
 
   const paymentUrl = createdOrder ? `${window.location.origin}/pay/${createdOrder.paymentId}` : ''
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(paymentUrl)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
-  }
+  const handleCopy = () => { navigator.clipboard.writeText(paymentUrl); setCopied(true); setTimeout(() => setCopied(false), 2000) }
 
   return (
-    <div className="max-w-2xl mx-auto">
+    <div style={{ maxWidth: 620, margin: '0 auto' }}>
       {step < 5 && (
-        <div className="mb-6">
-          <h1 className="text-2xl font-bold mb-3 text-text-primary">Новый заказ</h1>
-          <div className="flex items-center gap-2">
-            {[1, 2, 3, 4].map((s) => (
-              <div key={s} className="flex items-center gap-2">
-                <div
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
-                    s < step ? 'bg-success text-white' : s === step ? 'bg-primary text-white' : 'bg-bg-light text-text-muted'
-                  }`}
-                >
-                  {s < step ? <Check size={14} /> : s}
-                </div>
-                {s < 4 && <div className={`w-8 h-0.5 ${s < step ? 'bg-success' : 'bg-bg-light'}`} />}
-              </div>
-            ))}
-          </div>
-        </div>
+        <>
+          <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.4rem,2.8vw,1.8rem)', letterSpacing: '-.02em', margin: '0 0 16px' }}>Новый заказ</h1>
+          <StepDots step={step} />
+        </>
       )}
 
-      {/* Step 1: Order type */}
       {step === 1 && (
-        <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Выберите тип заказа</h2>
-          <div className="space-y-3">
-            <label
-              className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
-                orderType === 'normal' ? 'border-primary bg-primary/5' : 'border-border hover:bg-bg-light'
-              }`}
-            >
-              <input
-                type="radio"
-                name="orderType"
-                checked={orderType === 'normal'}
-                onChange={() => setOrderType('normal')}
-                className="mt-1 accent-primary"
-              />
-              <div>
-                <p className="font-semibold text-text-primary">Обычная покупка</p>
-                <p className="text-text-secondary text-sm">Клиент покупает новое устройство</p>
-              </div>
-            </label>
-            <label
-              className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
-                orderType === 'tradein' ? 'border-primary bg-primary/5' : 'border-border hover:bg-bg-light'
-              }`}
-            >
-              <input
-                type="radio"
-                name="orderType"
-                checked={orderType === 'tradein'}
-                onChange={() => setOrderType('tradein')}
-                className="mt-1 accent-primary"
-              />
-              <div>
-                <p className="font-semibold text-text-primary">Trade-in (обмен)</p>
-                <p className="text-text-secondary text-sm">Клиент меняет старое устройство на новое</p>
-              </div>
-            </label>
+        <div style={card}>
+          <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16.5, marginBottom: 16 }}>Выберите тип заказа</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {[{ key: 'normal', title: 'Обычная покупка', desc: 'Клиент покупает новое устройство' }, { key: 'tradein', title: 'Trade-in (обмен)', desc: 'Клиент меняет старое устройство на новое' }].map((opt) => {
+              const active = orderType === opt.key
+              return (
+                <label key={opt.key} style={{ display: 'flex', alignItems: 'flex-start', gap: 12, padding: 15, borderRadius: 14, border: `1px solid ${active ? '#1B44F5' : '#E7E9F2'}`, background: active ? '#EDF0FF' : '#fff', cursor: 'pointer' }}>
+                  <input type="radio" checked={active} onChange={() => setOrderType(opt.key as 'normal' | 'tradein')} style={{ marginTop: 3, accentColor: '#1B44F5' }} />
+                  <div><div style={{ fontWeight: 600, fontSize: 14.5 }}>{opt.title}</div><div style={{ fontSize: 13, color: '#8891A5', marginTop: 2 }}>{opt.desc}</div></div>
+                </label>
+              )
+            })}
           </div>
-          <div className="flex justify-end mt-6">
-            <button
-              onClick={() => setStep(2)}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer"
-            >
-              Далее <ArrowRight size={16} />
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: 22 }}>
+            <button onClick={() => setStep(2)} className="ta-btn-primary" style={{ ...primaryBtn, boxShadow: '0 8px 18px rgba(27,68,245,.24)' }}>Далее <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
           </div>
         </div>
       )}
 
-      {/* Step 2: Product info */}
       {step === 2 && (
-        <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Информация о товаре</h2>
-          <div className="space-y-4">
-            <ProductSearchDropdown
-              value={productName}
-              onChange={(name, price) => {
-                setProductName(name)
-                if (price && !productCost) setProductCost(String(price))
-              }}
-            />
+        <div style={card}>
+          <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16.5, marginBottom: 16 }}>Информация о товаре</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <ProductSearchDropdown value={productName} onChange={(name, price) => { setProductName(name); if (price && !productCost) setProductCost(String(price)) }} />
             <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Стоимость товара у поставщика</label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={productCost}
-                  onChange={(e) => setProductCost(e.target.value)}
-                  className="w-full px-4 py-3 pr-10 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                  placeholder="75000"
-                  min="0"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-sm">{'\u20BD'}</span>
+              <label style={label}>Стоимость товара у поставщика</label>
+              <div style={{ position: 'relative' }}>
+                <input type="number" value={productCost} onChange={(e) => setProductCost(e.target.value)} className="ta-input" style={field} placeholder="75000" min="0" />
+                <span style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: '#8891A5', fontSize: 13.5 }}>₽</span>
               </div>
             </div>
 
             {orderType === 'tradein' && (
               <>
-                <div className="border-t border-border pt-4">
-                  <h3 className="font-bold text-sm mb-3 text-text-primary">Старое устройство (Trade-in)</h3>
+                <div style={{ borderTop: '1px solid #EEF0F6', paddingTop: 6, fontWeight: 700, fontSize: 13.5 }}>Старое устройство (Trade-in)</div>
+                <div>
+                  <label style={label}>Старое устройство</label>
+                  <input value={oldProduct} onChange={(e) => setOldProduct(e.target.value)} className="ta-input" style={field} placeholder="iPhone 13 128GB" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium mb-1.5 text-text-secondary">Старое устройство</label>
-                  <input
-                    type="text"
-                    value={oldProduct}
-                    onChange={(e) => setOldProduct(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                    placeholder="iPhone 13 128GB"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5 text-text-secondary">Оценка старого устройства</label>
-                  <div className="relative">
-                    <input
-                      type="number"
-                      value={oldValue}
-                      onChange={(e) => setOldValue(e.target.value)}
-                      className="w-full px-4 py-3 pr-10 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                      placeholder="40000"
-                      min="0"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-sm">{'\u20BD'}</span>
+                  <label style={label}>Оценка старого устройства</label>
+                  <div style={{ position: 'relative' }}>
+                    <input type="number" value={oldValue} onChange={(e) => setOldValue(e.target.value)} className="ta-input" style={field} placeholder="40000" min="0" />
+                    <span style={{ position: 'absolute', right: 14, top: '50%', transform: 'translateY(-50%)', color: '#8891A5', fontSize: 13.5 }}>₽</span>
                   </div>
                 </div>
               </>
             )}
 
-            {/* Auto calculation */}
             {costNum > 0 && (
-              <div className="card-soft rounded-lg p-4">
-                <h3 className="font-bold text-sm mb-2 text-text-primary">Автоматический расчет</h3>
-                <div className="space-y-1.5 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">Стоимость товара</span>
-                    <span className="text-text-primary">{formatPrice(costNum)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">Комиссия (3%)</span>
-                    <span className="text-text-primary">{formatPrice(calc.commission)}</span>
-                  </div>
-                  <div className="border-t border-border pt-1.5 flex justify-between font-bold">
-                    <span className="text-text-primary">Итого</span>
-                    <span className="text-primary">{formatPrice(calc.totalCost)}</span>
-                  </div>
-                  {orderType === 'tradein' && oldNum > 0 && (
-                    <>
-                      <div className="border-t border-border pt-1.5 flex justify-between">
-                        <span className="text-text-secondary">Старое устройство</span>
-                        <span className="text-success">-{formatPrice(oldNum)}</span>
-                      </div>
-                      <div className="flex justify-between font-bold">
-                        <span className="text-text-primary">Доплата клиента</span>
-                        <span className="text-primary">{formatPrice(calc.clientPayment || 0)}</span>
-                      </div>
-                      <div className="flex justify-between text-text-muted">
-                        <span>Партнёр доплачивает</span>
-                        <span>{formatPrice(calc.ipPayment || 0)}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
+              <div style={{ background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 14, padding: 16 }}>
+                <div style={{ fontWeight: 700, fontSize: 13, marginBottom: 8 }}>Автоматический расчёт</div>
+                <div style={row}><span style={{ color: '#8891A5' }}>Стоимость товара</span><span>{formatPrice(costNum)}</span></div>
+                <div style={row}><span style={{ color: '#8891A5' }}>Комиссия (3%)</span><span>{formatPrice(calc.commission)}</span></div>
+                <div style={{ ...row, borderTop: '1px solid #E7E9F2', fontWeight: 700 }}><span>Итого</span><span style={{ color: '#1B44F5' }}>{formatPrice(calc.totalCost)}</span></div>
+                {orderType === 'tradein' && oldNum > 0 && (
+                  <>
+                    <div style={{ ...row, borderTop: '1px solid #E7E9F2' }}><span style={{ color: '#8891A5' }}>Старое устройство</span><span style={{ color: '#0B7A55' }}>−{formatPrice(oldNum)}</span></div>
+                    <div style={{ ...row, fontWeight: 700 }}><span>Доплата клиента</span><span style={{ color: '#1B44F5' }}>{formatPrice(calc.clientPayment || 0)}</span></div>
+                    <div style={{ ...row, color: '#8891A5' }}><span>Партнёр доплачивает</span><span>{formatPrice(calc.ipPayment || 0)}</span></div>
+                  </>
+                )}
               </div>
             )}
           </div>
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(1)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
-              <ArrowLeft size={16} /> Назад
-            </button>
-            <button
-              onClick={() => setStep(3)}
-              disabled={!canGoStep3}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none"
-            >
-              Далее <ArrowRight size={16} />
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 22 }}>
+            <button onClick={() => setStep(1)} style={ghostBtn}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>Назад</button>
+            <button onClick={() => setStep(3)} disabled={!canGoStep3} className="ta-btn-primary" style={{ ...primaryBtn, boxShadow: '0 8px 18px rgba(27,68,245,.24)', opacity: canGoStep3 ? 1 : 0.5 }}>Далее <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
           </div>
         </div>
       )}
 
-      {/* Step 3: Client info */}
       {step === 3 && (
-        <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Данные клиента</h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Имя клиента</label>
-              <input
-                type="text"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                placeholder="Петр"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Телефон клиента</label>
-              <input
-                type="tel"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                placeholder="+7 999 555-12-34"
-              />
-            </div>
-            <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Email клиента <span className="text-text-muted">(опционально)</span></label>
-              <input
-                type="email"
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                placeholder="email@example.com"
-              />
-            </div>
+        <div style={card}>
+          <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16.5, marginBottom: 16 }}>Данные клиента</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <div><label style={label}>Имя клиента</label><input value={clientName} onChange={(e) => setClientName(e.target.value)} className="ta-input" style={field} placeholder="Пётр" /></div>
+            <div><label style={label}>Телефон клиента</label><input type="tel" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} className="ta-input" style={field} placeholder="+7 999 555-12-34" /></div>
+            <div><label style={label}>Email клиента <span style={{ color: '#AEB4C4', fontWeight: 500 }}>(опционально)</span></label><input type="email" value={clientEmail} onChange={(e) => setClientEmail(e.target.value)} className="ta-input" style={field} placeholder="email@example.com" /></div>
           </div>
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(2)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
-              <ArrowLeft size={16} /> Назад
-            </button>
-            <button
-              onClick={() => setStep(4)}
-              disabled={!canGoStep4}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none"
-            >
-              Далее <ArrowRight size={16} />
-            </button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 22 }}>
+            <button onClick={() => setStep(2)} style={ghostBtn}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>Назад</button>
+            <button onClick={() => setStep(4)} disabled={!canGoStep4} className="ta-btn-primary" style={{ ...primaryBtn, boxShadow: '0 8px 18px rgba(27,68,245,.24)', opacity: canGoStep4 ? 1 : 0.5 }}>Далее <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M13 6l6 6-6 6" /></svg></button>
           </div>
         </div>
       )}
 
-      {/* Step 4: Confirmation */}
       {step === 4 && (
-        <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Подтверждение заказа</h2>
-          <div className="space-y-4">
-            <div className="card-soft rounded-lg p-4 space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Товар</span>
-                <span className="font-medium text-text-primary">{productName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Стоимость</span>
-                <span className="text-text-primary">{formatPrice(costNum)}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Комиссия (3%)</span>
-                <span className="text-text-primary">{formatPrice(calc.commission)}</span>
-              </div>
-              <div className="border-t border-border pt-2 flex justify-between font-bold">
-                <span className="text-text-primary">Итого</span>
-                <span className="text-primary">{formatPrice(calc.totalCost)}</span>
-              </div>
-              {orderType === 'tradein' && oldNum > 0 && (
-                <>
-                  <div className="border-t border-border pt-2">
-                    <div className="flex justify-between">
-                      <span className="text-text-secondary">Trade-in: {oldProduct}</span>
-                      <span className="text-success">-{formatPrice(oldNum)}</span>
-                    </div>
-                    <div className="flex justify-between font-bold mt-1">
-                      <span className="text-text-primary">Доплата клиента</span>
-                      <span className="text-primary">{formatPrice(calc.clientPayment || 0)}</span>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="card-soft rounded-lg p-4 space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Клиент</span>
-                <span className="text-text-primary">{clientName}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Телефон</span>
-                <span className="text-text-primary">{clientPhone}</span>
-              </div>
-              {clientEmail && (
-                <div className="flex justify-between">
-                  <span className="text-text-secondary">Email</span>
-                  <span className="text-text-primary">{clientEmail}</span>
-                </div>
-              )}
-            </div>
+        <div style={card}>
+          <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16.5, marginBottom: 16 }}>Подтверждение заказа</div>
+          <div style={{ background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 14, padding: 16, marginBottom: 14 }}>
+            <div style={row}><span style={{ color: '#8891A5' }}>Товар</span><span style={{ fontWeight: 600 }}>{productName}</span></div>
+            <div style={row}><span style={{ color: '#8891A5' }}>Стоимость</span><span>{formatPrice(costNum)}</span></div>
+            <div style={row}><span style={{ color: '#8891A5' }}>Комиссия (3%)</span><span>{formatPrice(calc.commission)}</span></div>
+            <div style={{ ...row, borderTop: '1px solid #E7E9F2', fontWeight: 700 }}><span>Итого</span><span style={{ color: '#1B44F5' }}>{formatPrice(calc.totalCost)}</span></div>
+            {orderType === 'tradein' && oldNum > 0 && (
+              <>
+                <div style={{ ...row, borderTop: '1px solid #E7E9F2' }}><span style={{ color: '#8891A5' }}>Trade-in: {oldProduct}</span><span style={{ color: '#0B7A55' }}>−{formatPrice(oldNum)}</span></div>
+                <div style={{ ...row, fontWeight: 700 }}><span>Доплата клиента</span><span style={{ color: '#1B44F5' }}>{formatPrice(calc.clientPayment || 0)}</span></div>
+              </>
+            )}
           </div>
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(3)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
-              <ArrowLeft size={16} /> Назад
-            </button>
-            <button
-              onClick={handleCreate}
-              className="flex items-center gap-1 bg-success hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors text-sm border-none cursor-pointer"
-            >
-              <Check size={16} /> Создать заказ
-            </button>
+          <div style={{ background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 14, padding: 16 }}>
+            <div style={row}><span style={{ color: '#8891A5' }}>Клиент</span><span>{clientName}</span></div>
+            <div style={row}><span style={{ color: '#8891A5' }}>Телефон</span><span>{clientPhone}</span></div>
+            {clientEmail && <div style={row}><span style={{ color: '#8891A5' }}>Email</span><span>{clientEmail}</span></div>}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 22 }}>
+            <button onClick={() => setStep(3)} style={ghostBtn}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5M11 6l-6 6 6 6" /></svg>Назад</button>
+            <button onClick={handleCreate} className="ta-btn-primary" style={{ ...primaryBtn, background: '#12B981', boxShadow: '0 8px 18px rgba(18,185,129,.24)' }}><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round"><path d="M4 12.5l5 5 11-11" /></svg>Создать заказ</button>
           </div>
         </div>
       )}
 
-      {/* Step 5: Success */}
       {step === 5 && createdOrder && (
-        <div className="card p-6 text-center">
-          <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check size={32} className="text-success" />
+        <div style={{ ...card, textAlign: 'center' }}>
+          <div style={{ width: 60, height: 60, margin: '0 auto 16px', borderRadius: '50%', background: '#E4F8F0', display: 'grid', placeItems: 'center' }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#12B981" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12.5l5 5 11-11" /></svg></div>
+          <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 21, marginBottom: 6 }}>Заказ {createdOrder.orderNumber} создан!</div>
+          <div style={{ fontSize: 14, color: '#8891A5', marginBottom: 20 }}>Отправьте ссылку клиенту для оплаты</div>
+
+          <div style={{ background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 13, padding: 14, marginBottom: 14, fontSize: 12.5, color: '#5B647A', wordBreak: 'break-all' }}>{paymentUrl}</div>
+          <button onClick={handleCopy} className="ta-btn-primary" style={{ ...primaryBtn, boxShadow: '0 8px 18px rgba(27,68,245,.24)', marginBottom: 22 }}>{copied ? 'Скопировано!' : 'Копировать ссылку'}</button>
+
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: 20 }}>
+            <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 16, padding: 14 }}><QRCodeSVG value={paymentUrl} size={140} /></div>
           </div>
-          <h2 className="text-2xl font-bold mb-1 text-text-primary">Заказ {createdOrder.orderNumber} создан!</h2>
-          <p className="text-text-secondary mb-6">Отправьте ссылку клиенту для оплаты</p>
+          <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 22 }}>К оплате: <span style={{ color: '#1B44F5' }}>{formatPrice(createdOrder.isTradeIn ? (createdOrder.clientPayment || 0) : createdOrder.totalCost)}</span></div>
 
-          <div className="card-soft rounded-lg p-4 mb-4">
-            <p className="text-xs text-text-muted mb-2">Ссылка для оплаты:</p>
-            <p className="text-sm font-medium break-all text-text-primary">{paymentUrl}</p>
-          </div>
-
-          <button
-            onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer mb-6"
-          >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
-            {copied ? 'Скопировано!' : 'Копировать ссылку'}
-          </button>
-
-          <div className="flex justify-center mb-6">
-            <div className="bg-white rounded-xl p-4">
-              <QRCodeSVG value={paymentUrl} size={160} />
-            </div>
-          </div>
-
-          <p className="text-lg font-bold mb-6 text-text-primary">
-            К оплате: <span className="text-primary">{formatPrice(createdOrder.isTradeIn ? (createdOrder.clientPayment || 0) : createdOrder.totalCost)}</span>
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <button
-              onClick={() => navigate('/dashboard/orders')}
-              className="px-6 py-2.5 rounded-lg border border-border text-sm font-medium hover:bg-bg-light transition-colors bg-transparent text-text-primary cursor-pointer"
-            >
-              К списку заказов
-            </button>
-            <button
-              onClick={() => {
-                setStep(1)
-                setProductName('')
-                setProductCost('')
-                setOldProduct('')
-                setOldValue('')
-                setClientName('')
-                setClientPhone('')
-                setClientEmail('')
-                setCreatedOrder(null)
-                setOrderType('normal')
-              }}
-              className="px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 border-none cursor-pointer"
-            >
-              Создать еще один
-            </button>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10, justifyContent: 'center' }}>
+            <button onClick={() => navigate('/dashboard/orders')} className="ta-outline" style={{ background: '#fff', color: '#0B1020', border: '1px solid #E7E9F2', borderRadius: 12, padding: '12px 20px', fontWeight: 600, fontSize: 14 }}>К списку заказов</button>
+            <button onClick={() => { setStep(1); setProductName(''); setProductCost(''); setOldProduct(''); setOldValue(''); setClientName(''); setClientPhone(''); setClientEmail(''); setCreatedOrder(null); setOrderType('normal') }} className="ta-btn-primary" style={{ ...primaryBtn, boxShadow: '0 8px 18px rgba(27,68,245,.24)' }}>Создать ещё один</button>
           </div>
         </div>
       )}

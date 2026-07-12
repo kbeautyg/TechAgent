@@ -1,216 +1,142 @@
-import { Link } from 'react-router-dom'
-import { ArrowRight } from 'lucide-react'
-import {
-  IconFileCheck, IconCoins, IconTruck,
-  IconSmartphone, IconGlobe, IconBolt,
-} from '../components/icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { Icon } from '../lib/techagent'
 
 const stats = [
-  { value: '200+', label: 'Активных партнёров' },
-  { value: '2–3%', label: 'Комиссия' },
+  { value: '200+', label: 'Товаров в каталоге' },
+  { value: '3%', label: 'Комиссия агента' },
   { value: '5–7', label: 'Дней доставка' },
   { value: '24/7', label: 'Поддержка' },
 ]
 
 const advantages = [
-  { icon: <IconCoins size={24} />, title: 'Прозрачная комиссия', desc: 'От 2 до 3% от стоимости товара. Никаких скрытых сборов, минимальных сумм или доплат.' },
-  { icon: <IconTruck size={24} />, title: 'Быстрая логистика', desc: 'Доставка 5–7 рабочих дней через проверенных карго-партнёров. Отслеживание на каждом этапе.' },
-  { icon: <IconFileCheck size={24} />, title: 'Полный документооборот', desc: 'Автоматическое формирование всех документов. Инвойсы, акты, чеки — всё в личном кабинете.' },
-  { icon: <IconSmartphone size={24} />, title: 'Удобный личный кабинет', desc: 'Создание заказов, генерация платёжных ссылок, отслеживание статусов — всё в одном месте.' },
-  { icon: <IconGlobe size={24} />, title: 'Широкий каталог', desc: 'Apple, Samsung, Xiaomi, Dyson, Sony, DJI и другие топовые бренды. Всё, что нужно вашим клиентам.' },
-  { icon: <IconBolt size={24} />, title: 'Мгновенная оплата', desc: 'Генерация QR-кодов и ссылок для оплаты через СБП. Клиент оплачивает за минуту.' },
+  { glyph: 'coins', title: 'Прозрачная комиссия', desc: 'Единые 3% от стоимости товара. Никаких скрытых сборов, минимальных сумм или доплат.' },
+  { glyph: 'truck', title: 'Быстрая логистика', desc: 'Доставка 5–7 рабочих дней через проверенных карго-партнёров. Отслеживание на каждом этапе.' },
+  { glyph: 'doc', title: 'Полный документооборот', desc: 'Автоматическое формирование всех документов. Инвойсы, акты, чеки — всё в личном кабинете.' },
+  { glyph: 'grid', title: 'Удобный личный кабинет', desc: 'Создание заказов, генерация платёжных ссылок, отслеживание статусов — всё в одном месте.' },
+  { glyph: 'globe', title: 'Широкий каталог', desc: 'Apple, Samsung, Sony, DJI и другие топовые бренды. Всё, что нужно вашим клиентам.' },
+  { glyph: 'bolt', title: 'Мгновенная оплата', desc: 'Генерация QR-кодов и ссылок для оплаты через СБП. Клиент оплачивает за минуту.' },
 ]
 
 const roles = [
-  {
-    title: 'TechAgent',
-    role: 'Агент по закупке',
-    desc: 'Выкупаем товар у зарубежного поставщика по поручению партнёра. Мы НЕ продавец, НЕ импортёр, НЕ перевозчик.',
-    color: 'bg-primary',
-    items: ['Находим поставщика', 'Выкупаем товар', 'Передаём карго-компании партнёра'],
-  },
-  {
-    title: 'Партнёр',
-    role: 'Импортёр товара',
-    desc: 'Является импортёром по закону. Создаёт заказы, отправляет ссылку на оплату клиенту, получает товар.',
-    color: 'bg-accent',
-    items: ['Создаёт заказ в ЛК', 'Передаёт ссылку клиенту', 'Получает и отдаёт товар'],
-  },
-  {
-    title: 'Покупатель',
-    role: 'Конечный клиент',
-    desc: 'Приходит в магазин партнёра, выбирает устройство, оплачивает по ссылке и получает товар через 5–7 дней.',
-    color: 'bg-primary',
-    items: ['Выбирает товар', 'Оплачивает по ссылке', 'Получает от партнёра'],
-  },
+  { title: 'TechAgent', role: 'Агент по закупке', desc: 'Выкупаем товар у зарубежного поставщика по поручению партнёра. Мы НЕ продавец, НЕ импортёр, НЕ перевозчик.', items: ['Находим поставщика', 'Выкупаем товар', 'Передаём карго-компании партнёра'] },
+  { title: 'Партнёр', role: 'Импортёр товара', desc: 'Является импортёром по закону. Создаёт заказы, отправляет ссылку на оплату клиенту, получает товар.', items: ['Создаёт заказ в ЛК', 'Передаёт ссылку клиенту', 'Получает и отдаёт товар'] },
+  { title: 'Покупатель', role: 'Конечный клиент', desc: 'Приходит в магазин партнёра, выбирает устройство, оплачивает по ссылке и получает товар через 5–7 дней.', items: ['Выбирает товар', 'Оплачивает по ссылке', 'Получает от партнёра'] },
 ]
 
+const importantNotice = [
+  { label: 'Роль TechAgent', value: 'Агент по закупке, НЕ продавец и НЕ импортёр' },
+  { label: 'Роль партнёра', value: 'Выступает принципалом и импортёром товара' },
+  { label: 'Таможенное оформление', value: 'Карго-компанией от имени партнёра' },
+  { label: 'Юридическая основа', value: 'Агентский договор (глава 52 ГК РФ)' },
+]
 const legalData = [
   { label: 'Тип договора', value: 'Агентский договор (глава 52 ГК РФ)' },
-  { label: 'Комиссия агента', value: 'От 2 до 3% от стоимости товара' },
+  { label: 'Комиссия агента', value: '3% от стоимости товара' },
   { label: 'Роль партнёра', value: 'Принципал и импортёр товара' },
   { label: 'Таможня', value: 'Оформляется карго от имени партнёра' },
 ]
 
 export default function AboutPage() {
+  const navigate = useNavigate()
   return (
-    <div className="bg-white min-h-screen">
+    <section>
+      {/* hero */}
+      <div style={{ maxWidth: 800, margin: '0 auto', padding: 'clamp(30px,5vw,64px) clamp(16px,4vw,40px) clamp(10px,2vw,20px)', textAlign: 'center' }}>
+        <div style={{ font: "600 12px/1 'JetBrains Mono',monospace", color: '#1B44F5', letterSpacing: '.1em', marginBottom: 16 }}>/ О ПЛАТФОРМЕ</div>
+        <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 800, fontSize: 'clamp(2rem,4.6vw,3.2rem)', letterSpacing: '-.03em', lineHeight: 1.05, margin: '0 0 18px' }}>TechAgent — агентская закупка электроники</h1>
+        <p style={{ fontSize: 'clamp(15.5px,1.6vw,18px)', lineHeight: 1.55, color: '#5B647A', maxWidth: 620, margin: '0 auto' }}>B2B-платформа, которая помогает ИП-партнёрам закупать электронику за рубежом по выгодным ценам. Прозрачно, легально и быстро.</p>
+      </div>
 
-      {/* ===== HERO ===== */}
-      <section className="relative overflow-hidden pt-28 pb-16">
-        <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-            О платформе
-          </div>
-          <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
-            TechAgent — агентская закупка электроники
-          </h1>
-          <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            B2B-платформа, которая помогает индивидуальным предпринимателям закупать электронику за&nbsp;рубежом по&nbsp;выгодным ценам. Прозрачно, легально и&nbsp;быстро.
-          </p>
-        </div>
-      </section>
-
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ===== STATS ===== */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-20">
+      {/* stats */}
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: 'clamp(20px,3vw,34px) clamp(16px,4vw,40px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(150px,1fr))', gap: 1, background: '#E7E9F2', border: '1px solid #E7E9F2', borderRadius: 20, overflow: 'hidden' }}>
           {stats.map((s, i) => (
-            <div key={i} className="bg-bg-section rounded-3xl p-6 sm:p-8 text-center">
-              <div className="text-[32px] sm:text-[40px] font-extrabold text-primary tracking-tight leading-none mb-2">{s.value}</div>
-              <div className="text-[13px] text-text-muted font-medium">{s.label}</div>
+            <div key={i} style={{ background: '#fff', padding: '22px 20px', textAlign: 'center' }}>
+              <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(24px,3.4vw,32px)', letterSpacing: '-.02em', color: '#1B44F5' }}>{s.value}</div>
+              <div style={{ fontSize: 13, color: '#8891A5', marginTop: 4 }}>{s.label}</div>
             </div>
           ))}
         </div>
-
-        {/* ===== WHAT IS TECHAGENT ===== */}
-        <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Что такое TechAgent?
-          </h2>
-          <p className="text-text-muted text-center max-w-2xl mx-auto mb-16 text-[16px] leading-relaxed">
-            Платформа для партнёров с розничными точками электроники. Мы берём на себя закупку за рубежом — вы получаете товар по лучшей цене с минимальной комиссией.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {advantages.map((a, i) => (
-              <div key={i} className="bg-bg-section rounded-3xl p-7 hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 bg-primary/8 rounded-xl flex items-center justify-center mb-4">
-                  {a.icon}
-                </div>
-                <h3 className="text-[15px] font-bold text-text-primary mb-2 tracking-tight">{a.title}</h3>
-                <p className="text-[13px] text-text-muted leading-relaxed">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ===== HOW THE MODEL WORKS ===== */}
-        <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Как устроена модель
-          </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Три участника — каждый со своей ролью
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-            {roles.map((r, i) => (
-              <div key={i} className="bg-bg-section rounded-3xl p-8 relative overflow-hidden">
-                <div className={`w-10 h-10 ${r.color} rounded-xl flex items-center justify-center text-white text-sm font-extrabold mb-5`}>
-                  {i + 1}
-                </div>
-                <h3 className="text-xl font-extrabold text-text-primary tracking-tight mb-1">{r.title}</h3>
-                <div className="text-[13px] text-primary font-semibold mb-3">{r.role}</div>
-                <p className="text-[13px] text-text-muted leading-relaxed mb-5">{r.desc}</p>
-                <div className="flex flex-col gap-2">
-                  {r.items.map((item, j) => (
-                    <div key={j} className="flex items-center gap-2.5 px-3 py-2 bg-white rounded-xl border border-border">
-                      <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">
-                        ✓
-                      </div>
-                      <span className="text-[13px] text-text-secondary">{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* ===== LEGAL + IMPORTANT ===== */}
-        <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Юридическая основа
-          </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Полностью белая схема по законодательству РФ
-          </p>
-
-          <div className="bg-bg-dark rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
-            {/* Glow */}
-            <div className="absolute -top-24 -right-24 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
-
-            {/* Important notice */}
-            <div className="relative z-10 mb-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shrink-0">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7V17L12 22L21 17V7L12 2Z" stroke="white" strokeWidth="1.8" fill="none" strokeLinejoin="round" /><path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                </div>
-                <div>
-                  <h3 className="text-lg font-extrabold tracking-tight">Важно знать</h3>
-                  <p className="text-[13px] text-white/40">О юридической модели и ответственности</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
-                {[
-                  { label: 'Роль TechAgent', value: 'Агент по закупке, НЕ продавец и НЕ импортёр' },
-                  { label: 'Роль партнёра', value: 'Выступает принципалом и импортёром товара' },
-                  { label: 'Таможенное оформление', value: 'Карго-компанией от имени партнёра' },
-                  { label: 'Юридическая основа', value: 'Схема соответствует главе 52 ГК РФ' },
-                ].map((item, i) => (
-                  <div key={i} className="py-3.5">
-                    <div className="text-[11px] text-white/40 uppercase tracking-wider font-medium mb-1">{item.label}</div>
-                    <div className="text-[14px] font-medium text-white/80">{item.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Legal data */}
-            <div className="relative z-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
-                {legalData.map((item, i) => (
-                  <div key={i} className="py-3.5">
-                    <div className="text-[11px] text-white/40 uppercase tracking-wider font-medium mb-1">{item.label}</div>
-                    <div className="text-[14px] font-medium text-white/80">{item.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* ===== CTA ===== */}
-        <div className="mb-20">
-          <div className="bg-primary rounded-3xl py-16 px-8 text-center text-white">
-            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Начните зарабатывать с TechAgent</h2>
-            <p className="text-white/60 text-[15px] mb-8 max-w-xl mx-auto">Зарегистрируйтесь за 2 минуты, создайте первый заказ и&nbsp;предложите клиентам лучшие цены на электронику</p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
-                Стать партнёром <ArrowRight size={16} />
-              </Link>
-              <Link to="/how-it-works" className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg bg-bg-dark text-white">
-                Как это работает
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        <div className="h-4" />
       </div>
-    </div>
+
+      {/* advantages */}
+      <div style={{ maxWidth: 1220, margin: '0 auto', padding: 'clamp(30px,4vw,54px) clamp(16px,4vw,40px)' }}>
+        <h2 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.7rem,3.4vw,2.4rem)', letterSpacing: '-.02em', margin: '0 0 12px', textAlign: 'center' }}>Что такое TechAgent?</h2>
+        <p style={{ fontSize: 15.5, color: '#8891A5', textAlign: 'center', maxWidth: 620, margin: '0 auto 34px', lineHeight: 1.55 }}>Платформа для партнёров с розничными точками электроники. Мы берём на себя закупку за рубежом — вы получаете товар по лучшей цене с минимальной комиссией.</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(240px,1fr))', gap: 16 }}>
+          {advantages.map((a) => (
+            <div key={a.title} className="ta-tile" style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 20, padding: 24 }}>
+              <span style={{ width: 46, height: 46, borderRadius: 13, background: '#EDF0FF', display: 'grid', placeItems: 'center', marginBottom: 16 }}><Icon name={a.glyph} size={21} color="#1B44F5" /></span>
+              <div style={{ fontWeight: 700, fontSize: 15.5, letterSpacing: '-.01em', marginBottom: 8 }}>{a.title}</div>
+              <div style={{ fontSize: 13.5, color: '#8891A5', lineHeight: 1.55 }}>{a.desc}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* roles */}
+      <div style={{ maxWidth: 1220, margin: '0 auto', padding: 'clamp(10px,2vw,20px) clamp(16px,4vw,40px) clamp(30px,4vw,54px)' }}>
+        <h2 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.7rem,3.4vw,2.4rem)', letterSpacing: '-.02em', margin: '0 0 12px', textAlign: 'center' }}>Как устроена модель</h2>
+        <p style={{ fontSize: 15.5, color: '#8891A5', textAlign: 'center', margin: '0 0 34px' }}>Три участника — каждый со своей ролью</p>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(260px,1fr))', gap: 16 }}>
+          {roles.map((r, i) => (
+            <div key={r.title} style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 20, padding: 24 }}>
+              <span style={{ width: 38, height: 38, borderRadius: 11, background: '#0B1020', color: '#fff', display: 'grid', placeItems: 'center', font: "800 14px/1 'Unbounded',sans-serif", marginBottom: 18 }}>{i + 1}</span>
+              <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 18, letterSpacing: '-.01em' }}>{r.title}</div>
+              <div style={{ font: "600 12px/1 'JetBrains Mono',monospace", color: '#1B44F5', margin: '6px 0 12px' }}>{r.role}</div>
+              <p style={{ fontSize: 13.5, color: '#8891A5', lineHeight: 1.55, margin: '0 0 16px' }}>{r.desc}</p>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+                {r.items.map((item) => (
+                  <div key={item} style={{ display: 'flex', alignItems: 'center', gap: 10, background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 11, padding: '9px 12px' }}>
+                    <span style={{ width: 18, height: 18, flex: 'none', borderRadius: '50%', background: '#EDF0FF', color: '#1B44F5', display: 'grid', placeItems: 'center', fontSize: 10, fontWeight: 700 }}>✓</span>
+                    <span style={{ fontSize: 13, color: '#3A4256' }}>{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* legal */}
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 clamp(16px,4vw,40px) clamp(40px,5vw,64px)' }}>
+        <h2 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.7rem,3.4vw,2.4rem)', letterSpacing: '-.02em', margin: '0 0 12px', textAlign: 'center' }}>Юридическая основа</h2>
+        <p style={{ fontSize: 15.5, color: '#8891A5', textAlign: 'center', margin: '0 0 30px' }}>Полностью белая схема по законодательству РФ</p>
+        <div style={{ background: '#0B1020', color: '#fff', borderRadius: 24, padding: 'clamp(24px,4vw,40px)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
+            <span style={{ width: 40, height: 40, flex: 'none', borderRadius: 12, background: 'rgba(18,185,129,.18)', display: 'grid', placeItems: 'center' }}><Icon name="shield" size={19} color="#5EE3B4" /></span>
+            <div><div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 17 }}>Важно знать</div><div style={{ fontSize: 12.5, color: '#7C86A3' }}>О юридической модели и ответственности</div></div>
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: '4px 28px', marginBottom: 8, borderBottom: '1px solid #1C2440', paddingBottom: 18 }}>
+            {importantNotice.map((item) => (
+              <div key={item.label} style={{ padding: '9px 0' }}>
+                <div style={{ font: "600 10.5px/1 'JetBrains Mono',monospace", color: '#7C86A3', letterSpacing: '.05em', marginBottom: 6, textTransform: 'uppercase' }}>{item.label}</div>
+                <div style={{ fontSize: 13.5, color: '#D5DDFF' }}>{item.value}</div>
+              </div>
+            ))}
+          </div>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit,minmax(220px,1fr))', gap: '4px 28px', paddingTop: 10 }}>
+            {legalData.map((item) => (
+              <div key={item.label} style={{ padding: '9px 0' }}>
+                <div style={{ font: "600 10.5px/1 'JetBrains Mono',monospace", color: '#7C86A3', letterSpacing: '.05em', marginBottom: 6, textTransform: 'uppercase' }}>{item.label}</div>
+                <div style={{ fontSize: 13.5, color: '#D5DDFF' }}>{item.value}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* CTA */}
+      <div style={{ maxWidth: 1000, margin: '0 auto', padding: '0 clamp(16px,4vw,40px) clamp(40px,6vw,72px)' }}>
+        <div style={{ background: 'linear-gradient(120deg,#1B44F5,#0E2FCC)', borderRadius: 28, padding: 'clamp(34px,5vw,56px)', color: '#fff', textAlign: 'center' }}>
+          <h2 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.6rem,3.2vw,2.2rem)', letterSpacing: '-.02em', margin: '0 0 10px' }}>Начните зарабатывать с TechAgent</h2>
+          <p style={{ fontSize: 15.5, color: '#D5DDFF', margin: '0 auto 26px', maxWidth: 480, lineHeight: 1.55 }}>Зарегистрируйтесь за 2 минуты, создайте первый заказ и предложите клиентам лучшие цены на электронику.</p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 12, justifyContent: 'center' }}>
+            <Link to="/register" className="ta-lift" style={{ display: 'inline-flex', alignItems: 'center', gap: 9, background: '#fff', color: '#0B1020', border: 'none', borderRadius: 13, padding: '15px 24px', fontWeight: 600, fontSize: 15.5, textDecoration: 'none' }}>Стать партнёром</Link>
+            <button onClick={() => navigate('/how-it-works')} style={{ background: 'rgba(255,255,255,.14)', color: '#fff', border: '1px solid rgba(255,255,255,.35)', borderRadius: 13, padding: '15px 24px', fontWeight: 600, fontSize: 15.5 }}>Как это работает</button>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }

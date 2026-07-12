@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { LogIn } from 'lucide-react'
+import { Icon } from '../lib/techagent'
+
+const field: React.CSSProperties = { width: '100%', background: '#F5F6FB', border: '1px solid #E7E9F2', borderRadius: 12, padding: '13px 15px', fontSize: 14.5, outline: 'none' }
+const label: React.CSSProperties = { display: 'block', fontWeight: 600, fontSize: 13, color: '#3A4256', marginBottom: 8 }
 
 export default function LoginPage() {
   const { login, user } = useAuth()
@@ -19,109 +22,62 @@ export default function LoginPage() {
     e.preventDefault()
     setError('')
     setLoading(true)
-
     const success = await login(email, password)
-    if (success) {
-      navigate('/dashboard')
-    } else {
-      setError('Неверный email или пароль')
-    }
+    if (success) navigate('/dashboard')
+    else setError('Неверный email или пароль')
     setLoading(false)
   }
 
   return (
-    <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
-      <div className="absolute top-[-80px] right-[20%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
-      <div className="w-full max-w-md relative">
-        <div className="card-glass rounded-2xl p-8">
-          <div className="text-center mb-8">
-            <div className="icon-box mx-auto mb-4">
-              <LogIn size={24} className="text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold text-text-primary">Вход</h1>
-            <p className="text-text-muted text-sm mt-1">Войдите в личный кабинет</p>
+    <section>
+      <div style={{ maxWidth: 440, margin: '0 auto', padding: 'clamp(28px,5vw,60px) clamp(16px,4vw,40px)' }}>
+        <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 24, boxShadow: '0 20px 50px rgba(11,16,32,.08)', padding: 'clamp(24px,4vw,34px)' }}>
+          <div style={{ textAlign: 'center', marginBottom: 26 }}>
+            <span style={{ width: 48, height: 48, borderRadius: 14, background: '#EDF0FF', display: 'grid', placeItems: 'center', margin: '0 auto 16px' }}><Icon name="user" size={22} color="#1B44F5" /></span>
+            <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 24, letterSpacing: '-.02em', margin: '0 0 6px' }}>Вход</h1>
+            <div style={{ fontSize: 14, color: '#8891A5' }}>Войдите в личный кабинет партнёра</div>
           </div>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm rounded-xl p-3 mb-6">{error}</div>
+            <div style={{ background: '#FFECEC', border: '1px solid #FFD3D6', color: '#C81E2C', fontSize: 13.5, borderRadius: 12, padding: '11px 14px', marginBottom: 18 }}>{error}</div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Email</label>
-              <input
-                type="email"
-                value={email}
-                onChange={(e) => { setEmail(e.target.value); setError('') }}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm"
-                placeholder="email@example.com"
-                autoComplete="email"
-                required
-              />
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: 16 }}>
+              <label style={label}>Email</label>
+              <input type="email" value={email} onChange={(e) => { setEmail(e.target.value); setError('') }} className="ta-input" style={field} placeholder="email@example.com" autoComplete="email" required />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Пароль</label>
-              <input
-                type="password"
-                value={password}
-                onChange={(e) => { setPassword(e.target.value); setError('') }}
-                className="w-full px-4 py-3 rounded-xl border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm"
-                placeholder="Введите пароль"
-                autoComplete="current-password"
-                required
-              />
+            <div style={{ marginBottom: 20 }}>
+              <label style={label}>Пароль</label>
+              <input type="password" value={password} onChange={(e) => { setPassword(e.target.value); setError('') }} className="ta-input" style={field} placeholder="Введите пароль" autoComplete="current-password" required />
             </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
-            >
-              {loading ? 'Вход...' : 'Войти'}
+            <button type="submit" disabled={loading} className="ta-btn-primary" style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, background: '#1B44F5', color: '#fff', border: 'none', borderRadius: 13, padding: 15, fontWeight: 600, fontSize: 15.5, boxShadow: '0 8px 20px rgba(27,68,245,.26)', opacity: loading ? 0.6 : 1 }}>
+              {loading ? 'Вход…' : 'Войти'}
             </button>
           </form>
 
-          <p className="text-center mt-3">
-            <button type="button" onClick={() => alert('Для восстановления пароля обратитесь в поддержку: info@techagent.pro')} className="text-text-muted text-sm bg-transparent border-none cursor-pointer hover:text-primary transition-colors">
-              Забыли пароль?
-            </button>
+          <p style={{ textAlign: 'center', marginTop: 14 }}>
+            <button type="button" onClick={() => alert('Для восстановления пароля обратитесь в поддержку: info@techagent.pro')} className="ta-ghost" style={{ background: 'none', border: 'none', color: '#8891A5', fontSize: 13.5, cursor: 'pointer' }}>Забыли пароль?</button>
+          </p>
+          <p style={{ textAlign: 'center', color: '#8891A5', fontSize: 14, marginTop: 20 }}>
+            Нет аккаунта? <Link to="/register" style={{ color: '#1B44F5', fontWeight: 600, textDecoration: 'none' }}>Регистрация</Link>
           </p>
 
-          <p className="text-center text-text-muted text-sm mt-6">
-            Нет аккаунта?{' '}
-            <Link to="/register" className="text-primary font-semibold no-underline hover:underline">
-              Регистрация
-            </Link>
-          </p>
-
-          <div className="mt-6 border-t border-border pt-5">
-            <p className="text-xs font-semibold text-text-muted uppercase tracking-wider mb-3">Демо-доступ</p>
-            <div className="space-y-2">
-              <button
-                type="button"
-                onClick={() => { setEmail('demo@techagent.pro'); setPassword('demo') }}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
-              >
-                <div>
-                  <p className="text-sm font-medium text-text-primary">Личный кабинет партнёра</p>
-                  <p className="text-xs text-text-muted">demo@techagent.pro</p>
-                </div>
-                <span className="text-xs text-primary font-medium">Партнёр</span>
+          <div style={{ marginTop: 22, borderTop: '1px solid #EEF0F6', paddingTop: 18 }}>
+            <div style={{ font: "600 11px/1 'JetBrains Mono',monospace", color: '#8891A5', letterSpacing: '.06em', marginBottom: 12 }}>ДЕМО-ДОСТУП</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <button type="button" onClick={() => { setEmail('demo@techagent.pro'); setPassword('demo') }} className="ta-tile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 12, padding: '11px 14px', textAlign: 'left' }}>
+                <span><span style={{ display: 'block', fontWeight: 600, fontSize: 13.5 }}>Кабинет партнёра</span><span style={{ display: 'block', fontSize: 12, color: '#8891A5' }}>demo@techagent.pro</span></span>
+                <span style={{ font: "600 11px/1 'JetBrains Mono',monospace", color: '#1B44F5', background: '#EDF0FF', padding: '5px 8px', borderRadius: 999 }}>Партнёр</span>
               </button>
-              <button
-                type="button"
-                onClick={() => { setEmail('admin@techagent.pro'); setPassword('admin') }}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
-              >
-                <div>
-                  <p className="text-sm font-medium text-text-primary">Панель администратора</p>
-                  <p className="text-xs text-text-muted">admin@techagent.pro</p>
-                </div>
-                <span className="text-xs text-primary font-medium">Админ</span>
+              <button type="button" onClick={() => { setEmail('admin@techagent.pro'); setPassword('admin') }} className="ta-tile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 12, padding: '11px 14px', textAlign: 'left' }}>
+                <span><span style={{ display: 'block', fontWeight: 600, fontSize: 13.5 }}>Панель администратора</span><span style={{ display: 'block', fontSize: 12, color: '#8891A5' }}>admin@techagent.pro</span></span>
+                <span style={{ font: "600 11px/1 'JetBrains Mono',monospace", color: '#1B44F5', background: '#EDF0FF', padding: '5px 8px', borderRadius: 999 }}>Админ</span>
               </button>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

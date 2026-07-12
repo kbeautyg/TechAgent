@@ -1,62 +1,55 @@
 import { NavLink, Outlet, Navigate } from 'react-router-dom'
-import { LayoutDashboard, Users, Package } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { Icon } from '../../lib/techagent'
 
 const navItems = [
-  { to: '/admin', icon: LayoutDashboard, label: 'Обзор', end: true },
-  { to: '/admin/users', icon: Users, label: 'Партнёры', end: false },
-  { to: '/admin/orders', icon: Package, label: 'Заказы', end: false },
+  { to: '/admin', glyph: 'grid', label: 'Обзор', end: true },
+  { to: '/admin/users', glyph: 'user', label: 'Партнёры', end: false },
+  { to: '/admin/orders', glyph: 'box', label: 'Заказы', end: false },
 ]
 
 export default function AdminLayout() {
   const { user, isLoading } = useAuth()
 
   if (isLoading) {
-    return (
-      <div className="min-h-screen bg-bg-light flex items-center justify-center">
-        <div className="text-text-muted">Загрузка...</div>
-      </div>
-    )
+    return <div style={{ minHeight: '60vh', display: 'grid', placeItems: 'center', color: '#8891A5' }}>Загрузка…</div>
   }
-
   if (!user || user.role !== 'ADMIN') {
     return <Navigate to="/login" replace />
   }
 
   return (
-    <div className="min-h-screen bg-bg-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="flex flex-col lg:flex-row gap-6">
-          <aside className="lg:w-56 shrink-0">
-            <div className="bg-primary/10 border border-primary/20 text-primary rounded-xl p-3 mb-3">
-              <p className="text-xs font-semibold uppercase tracking-wide">Панель администратора</p>
+    <section>
+      <div style={{ maxWidth: 1220, margin: '0 auto', padding: 'clamp(20px,3vw,34px) clamp(16px,4vw,40px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 22 }} className="ta-dash-cols">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            <div style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: '#0B1020', color: '#8FA9FF', borderRadius: 12, padding: '11px 14px', font: "600 11px/1 'JetBrains Mono',monospace", letterSpacing: '.06em' }}>
+              <Icon name="shield" size={15} color="#8FA9FF" />ПАНЕЛЬ АДМИНИСТРАТОРА
             </div>
-            <nav className="card-glass p-2 flex lg:flex-col gap-1 overflow-x-auto">
+            <nav className="ta-sidebar">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
                   end={item.end}
-                  className={({ isActive }) =>
-                    `flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium no-underline whitespace-nowrap transition-all ${
-                      isActive
-                        ? 'bg-primary/10 text-primary'
-                        : 'text-text-secondary hover:bg-bg-light hover:text-text-primary'
-                    }`
-                  }
+                  className="ta-sidebar-link"
+                  style={({ isActive }) => ({
+                    background: isActive ? '#0B1020' : '#fff',
+                    color: isActive ? '#fff' : '#3A4256',
+                    border: `1px solid ${isActive ? '#0B1020' : '#E7E9F2'}`,
+                  })}
                 >
-                  <item.icon size={18} />
+                  <Icon name={item.glyph} size={17} />
                   {item.label}
                 </NavLink>
               ))}
             </nav>
-          </aside>
-
-          <main className="flex-1 min-w-0">
+          </div>
+          <main style={{ flex: 1, minWidth: 0 }}>
             <Outlet />
           </main>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

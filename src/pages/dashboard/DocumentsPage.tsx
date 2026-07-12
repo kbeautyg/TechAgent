@@ -1,35 +1,27 @@
 import { useState } from 'react'
-import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/mock'
 import { formatDate } from '../../utils/calculate'
+import { Icon } from '../../lib/techagent'
 import type { DocumentType } from '../../types'
 
-const typeLabels: Record<DocumentType, string> = {
-  CONTRACT: 'Договор',
-  ACT: 'Акт',
-  REPORT: 'Отчёт',
-  OFFER: 'Оферта',
-  PRIVACY: 'Конфиденциальность',
-  TERMS: 'Соглашение',
+const typeMeta: Record<DocumentType, { label: string; glyph: string }> = {
+  CONTRACT: { label: 'Договор', glyph: 'doc' },
+  ACT: { label: 'Акт', glyph: 'doc' },
+  REPORT: { label: 'Отчёт', glyph: 'doc' },
+  OFFER: { label: 'Оферта', glyph: 'doc' },
+  PRIVACY: { label: 'Конфиденциальность', glyph: 'shield' },
+  TERMS: { label: 'Соглашение', glyph: 'doc' },
 }
 
-const typeColors: Record<DocumentType, string> = {
-  CONTRACT: 'bg-blue-500/10 text-blue-600',
-  ACT: 'bg-green-500/10 text-green-600',
-  REPORT: 'bg-purple-500/10 text-purple-600',
-  OFFER: 'bg-orange-500/10 text-orange-600',
-  PRIVACY: 'bg-emerald-500/10 text-emerald-600',
-  TERMS: 'bg-indigo-500/10 text-indigo-600',
-}
-
-const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; className: string }>> = {
-  CONTRACT: FileCheck,
-  ACT: FileText,
-  REPORT: BookOpen,
-  OFFER: ScrollText,
-  PRIVACY: Shield,
-  TERMS: BookOpen,
+function downloadDoc(title: string, content: string) {
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = `${title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
+  a.click()
+  URL.revokeObjectURL(url)
 }
 
 export default function DocumentsPage() {
@@ -40,144 +32,70 @@ export default function DocumentsPage() {
   const publicDocs = mockDocuments.filter((d) => d.userId === 'public')
   const activeDoc = mockDocuments.find((d) => d.id === openDoc)
 
+  const docRow = (doc: (typeof mockDocuments)[number], action: React.ReactNode) => {
+    const meta = typeMeta[doc.type]
+    return (
+      <div key={doc.id} className="ta-tile" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, background: '#fff', border: '1px solid #E7E9F2', borderRadius: 16, padding: '14px 16px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12, minWidth: 0 }}>
+          <span style={{ width: 40, height: 40, flex: 'none', borderRadius: 11, background: '#EDF0FF', display: 'grid', placeItems: 'center' }}><Icon name={meta.glyph} size={18} color="#1B44F5" /></span>
+          <div style={{ minWidth: 0 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+              <span style={{ fontWeight: 600, fontSize: 14 }}>{doc.title}</span>
+              <span style={{ font: "600 10.5px/1 sans-serif", color: '#1B44F5', background: '#EDF0FF', padding: '3px 7px', borderRadius: 999 }}>{meta.label}</span>
+            </div>
+            <div style={{ fontSize: 12, color: '#8891A5', marginTop: 3 }}>{formatDate(doc.createdAt)}</div>
+          </div>
+        </div>
+        {action}
+      </div>
+    )
+  }
+
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6 text-text-primary">Документы</h1>
+      <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.4rem,2.8vw,1.8rem)', letterSpacing: '-.02em', margin: '0 0 22px' }}>Документы</h1>
 
-      {/* Platform documents */}
-      <div className="mb-8">
-        <h2 className="text-base font-bold text-text-secondary mb-3 flex items-center gap-2">
-          <Shield size={18} className="text-primary" />
-          Документы платформы
-        </h2>
-        <div className="space-y-2">
-          {publicDocs.map((doc) => {
-            const Icon = typeIcons[doc.type]
-            return (
-              <div
-                key={doc.id}
-                className="card p-4 flex items-center justify-between hover:bg-bg-light transition-colors cursor-pointer"
-                onClick={() => doc.content && setOpenDoc(doc.id)}
-              >
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <Icon size={18} className="text-primary" />
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <span className="font-medium text-sm text-text-primary">{doc.title}</span>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type]}`}
-                      >
-                        {typeLabels[doc.type]}
-                      </span>
-                    </div>
-                    <p className="text-text-muted text-xs mt-0.5">{formatDate(doc.createdAt)}</p>
-                  </div>
-                </div>
-                <button
-                  className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    doc.content && setOpenDoc(doc.id)
-                  }}
-                >
-                  Читать
-                </button>
-              </div>
-            )
-          })}
+      <div style={{ marginBottom: 26 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, fontSize: 14, color: '#3A4256', marginBottom: 12 }}><Icon name="shield" size={17} color="#1B44F5" />Документы платформы</div>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          {publicDocs.map((doc) => docRow(doc, (
+            <button onClick={() => doc.content && setOpenDoc(doc.id)} style={{ background: 'none', border: 'none', color: '#1B44F5', fontWeight: 600, fontSize: 13, cursor: 'pointer', flex: 'none' }}>Читать</button>
+          )))}
         </div>
       </div>
 
-      {/* User documents */}
       <div>
-        <h2 className="text-base font-bold text-text-secondary mb-3 flex items-center gap-2">
-          <FileText size={18} className="text-primary" />
-          Мои документы
-        </h2>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, fontWeight: 700, fontSize: 14, color: '#3A4256', marginBottom: 12 }}><Icon name="doc" size={17} color="#1B44F5" />Мои документы</div>
         {userDocs.length === 0 ? (
-          <div className="card p-8 text-center text-text-muted">
-            Документов пока нет. Они появятся после оформления первого заказа.
-          </div>
+          <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 16, padding: '32px 20px', textAlign: 'center', color: '#8891A5', fontSize: 14 }}>Документов пока нет. Они появятся после оформления первого заказа.</div>
         ) : (
-          <div className="space-y-2">
-            {userDocs.map((doc) => {
-              const Icon = typeIcons[doc.type]
-              return (
-                <div
-                  key={doc.id}
-                  className="card p-4 flex items-center justify-between hover:bg-bg-light transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Icon size={18} className="text-primary" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-sm text-text-primary">{doc.title}</span>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type]}`}
-                        >
-                          {typeLabels[doc.type]}
-                        </span>
-                      </div>
-                      <p className="text-text-muted text-xs mt-0.5">{formatDate(doc.createdAt)}</p>
-                    </div>
-                  </div>
-                  <button
-                    className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
-                    onClick={() => {
-                      const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
-                      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-                      const url = URL.createObjectURL(blob)
-                      const a = document.createElement('a')
-                      a.href = url
-                      a.download = `${doc.title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
-                      a.click()
-                      URL.revokeObjectURL(url)
-                    }}
-                  >
-                    <Download size={16} />
-                    Скачать
-                  </button>
-                </div>
-              )
-            })}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {userDocs.map((doc) => docRow(doc, (
+              <button
+                onClick={() => downloadDoc(doc.title, doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`)}
+                style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: 'none', border: 'none', color: '#1B44F5', fontWeight: 600, fontSize: 13, cursor: 'pointer', flex: 'none' }}
+              >
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1B44F5" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3v13M6 11l6 6 6-6M5 21h14" /></svg>Скачать
+              </button>
+            )))}
           </div>
         )}
       </div>
 
-      {/* Document viewer modal */}
       {activeDoc && activeDoc.content && (
-        <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-start justify-center pt-12 px-4"
-          onClick={() => setOpenDoc(null)}
-        >
-          <div
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <div className="flex items-center justify-between p-5 border-b border-gray-100">
+        <div onClick={() => setOpenDoc(null)} style={{ position: 'fixed', inset: 0, background: 'rgba(11,16,32,.5)', backdropFilter: 'blur(3px)', zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ background: '#fff', borderRadius: 20, maxWidth: 680, width: '100%', maxHeight: 'calc(100vh - 32px)', display: 'flex', flexDirection: 'column', boxShadow: '0 30px 70px rgba(11,16,32,.35)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, padding: '18px 22px', borderBottom: '1px solid #EEF0F6', flex: 'none' }}>
               <div>
-                <h3 className="font-bold text-lg text-text-primary">{activeDoc.title}</h3>
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[activeDoc.type]}`}
-                >
-                  {typeLabels[activeDoc.type]}
-                </span>
+                <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16.5 }}>{activeDoc.title}</div>
+                <div style={{ font: "600 11px/1 'JetBrains Mono',monospace", color: '#1B44F5', background: '#EDF0FF', display: 'inline-block', marginTop: 8, padding: '4px 8px', borderRadius: 999 }}>{typeMeta[activeDoc.type].label}</div>
               </div>
-              <button
-                className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors"
-                onClick={() => setOpenDoc(null)}
-              >
-                <X size={16} />
+              <button onClick={() => setOpenDoc(null)} style={{ width: 34, height: 34, flex: 'none', borderRadius: 10, background: '#F2F4FB', border: 'none', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#3A4256" strokeWidth="2.2" strokeLinecap="round"><path d="M6 6l12 12M18 6L6 18" /></svg>
               </button>
             </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-              <pre className="whitespace-pre-wrap font-sans text-sm text-text-secondary leading-relaxed">
-                {activeDoc.content}
-              </pre>
+            <div style={{ padding: '22px 24px', overflowY: 'auto' }}>
+              <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'inherit', fontSize: 13.5, color: '#3A4256', lineHeight: 1.65, margin: 0, wordBreak: 'break-word' }}>{activeDoc.content}</pre>
             </div>
           </div>
         </div>

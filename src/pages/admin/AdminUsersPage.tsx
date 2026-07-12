@@ -1,43 +1,40 @@
 import { mockUsers, mockOrders } from '../../data/mock'
 import { formatDate, formatPrice } from '../../utils/calculate'
 
+const th: React.CSSProperties = { textAlign: 'left', padding: '12px 16px', color: '#8891A5', fontWeight: 600 }
+const td: React.CSSProperties = { padding: '12px 16px' }
+
 export default function AdminUsersPage() {
   const clients = mockUsers.filter((u) => u.role === 'CLIENT')
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text-primary">Партнёры</h1>
-        <span className="text-text-muted text-sm">{clients.length} партнеров</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, marginBottom: 20 }}>
+        <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.4rem,2.8vw,1.8rem)', letterSpacing: '-.02em', margin: 0 }}>Партнёры</h1>
+        <span style={{ fontSize: 13.5, color: '#8891A5' }}>{clients.length} партнёров</span>
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+      <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 20, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13.5 }}>
             <thead>
-              <tr className="border-b border-border bg-bg-light">
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Название</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">ИНН</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Email</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Телефон</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Заказы</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Сумма</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Дата рег.</th>
+              <tr style={{ background: '#F7F8FC', borderBottom: '1px solid #EEF0F6' }}>
+                {['Название', 'ИНН', 'Email', 'Телефон', 'Заказы', 'Сумма', 'Дата рег.'].map((h) => <th key={h} style={th}>{h}</th>)}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody>
               {clients.map((user) => {
                 const userOrders = mockOrders.filter((o) => o.userId === user.id)
                 const totalSum = userOrders.reduce((s, o) => s + o.totalCost, 0)
                 return (
-                  <tr key={user.id} className="hover:bg-bg-light transition-colors">
-                    <td className="px-4 py-3 font-medium text-text-primary">{user.companyName || '—'}</td>
-                    <td className="px-4 py-3 text-text-secondary font-mono text-xs">{user.inn || '—'}</td>
-                    <td className="px-4 py-3 text-text-secondary">{user.email}</td>
-                    <td className="px-4 py-3 text-text-secondary">{user.phone || '—'}</td>
-                    <td className="px-4 py-3 text-center text-text-primary">{userOrders.length}</td>
-                    <td className="px-4 py-3 font-medium text-text-primary">{formatPrice(totalSum)}</td>
-                    <td className="px-4 py-3 text-text-muted">{formatDate(user.createdAt)}</td>
+                  <tr key={user.id} style={{ borderTop: '1px solid #F0F1F6' }}>
+                    <td style={{ ...td, fontWeight: 600 }}>{user.companyName || '—'}</td>
+                    <td style={{ ...td, color: '#5B647A', fontFamily: "'JetBrains Mono',monospace", fontSize: 12 }}>{user.inn || '—'}</td>
+                    <td style={{ ...td, color: '#5B647A' }}>{user.email}</td>
+                    <td style={{ ...td, color: '#5B647A' }}>{user.phone || '—'}</td>
+                    <td style={{ ...td, textAlign: 'center' }}>{userOrders.length}</td>
+                    <td style={{ ...td, fontWeight: 600 }}>{formatPrice(totalSum)}</td>
+                    <td style={{ ...td, color: '#8891A5' }}>{formatDate(user.createdAt)}</td>
                   </tr>
                 )
               })}

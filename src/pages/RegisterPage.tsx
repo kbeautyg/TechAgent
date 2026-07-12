@@ -1,26 +1,21 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
-import { UserPlus } from 'lucide-react'
+import { Icon } from '../lib/techagent'
+
+const label: React.CSSProperties = { display: 'block', fontWeight: 600, fontSize: 13, color: '#3A4256', marginBottom: 8 }
+const fieldBase = (hasError: boolean): React.CSSProperties => ({ width: '100%', background: '#F5F6FB', border: `1px solid ${hasError ? '#FB8790' : '#E7E9F2'}`, borderRadius: 12, padding: '13px 15px', fontSize: 14.5, outline: 'none' })
+const errTxt: React.CSSProperties = { color: '#C81E2C', fontSize: 12.5, marginTop: 6 }
+const legalChip: React.CSSProperties = { display: 'inline-flex', alignItems: 'center', gap: 6, font: "600 12px/1 'JetBrains Mono',monospace", color: '#1B44F5', background: '#EDF0FF', padding: '8px 11px', borderRadius: 999, textDecoration: 'none' }
 
 export default function RegisterPage() {
   const { register, user } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({
-    companyName: '',
-    inn: '',
-    ogrnip: '',
-    email: '',
-    phone: '',
-    password: '',
-    agree: false,
-  })
+  const [form, setForm] = useState({ companyName: '', inn: '', ogrnip: '', email: '', phone: '', password: '', agree: false })
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [loading, setLoading] = useState(false)
 
-  if (user) {
-    return <Navigate to="/dashboard" replace />
-  }
+  if (user) return <Navigate to="/dashboard" replace />
 
   const validate = () => {
     const errs: Record<string, string> = {}
@@ -38,183 +33,93 @@ export default function RegisterPage() {
     const errs = validate()
     setErrors(errs)
     if (Object.keys(errs).length > 0) return
-
     setLoading(true)
-    const success = await register({
-      companyName: form.companyName,
-      inn: form.inn,
-      ogrnip: form.ogrnip,
-      email: form.email,
-      phone: form.phone,
-      password: form.password,
-    })
-    if (success) {
-      navigate('/dashboard')
-    }
+    const success = await register({ companyName: form.companyName, inn: form.inn, ogrnip: form.ogrnip, email: form.email, phone: form.phone, password: form.password })
+    if (success) navigate('/dashboard')
     setLoading(false)
   }
 
-  const update = (field: string, value: string | boolean) => {
-    setForm((prev) => ({ ...prev, [field]: value }))
-    if (errors[field]) {
-      setErrors((prev) => {
-        const next = { ...prev }
-        delete next[field]
-        return next
-      })
-    }
+  const update = (field2: string, value: string | boolean) => {
+    setForm((prev) => ({ ...prev, [field2]: value }))
+    if (errors[field2]) setErrors((prev) => { const next = { ...prev }; delete next[field2]; return next })
   }
 
-  const inputCls = (field: string) =>
-    `w-full px-4 py-3 rounded-xl border ${
-      errors[field] ? 'border-red-500/50' : 'border-border'
-    } bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm`
+  const pwStrength = form.password.length >= 12 ? 'Надёжный' : form.password.length >= 9 ? 'Нормальный' : form.password.length > 0 ? 'Слишком короткий' : ''
+  const pwColor = form.password.length >= 12 ? '#12B981' : form.password.length >= 9 ? '#E38A00' : '#FB2C36'
 
   return (
-    <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
-      <div className="absolute bottom-[-80px] left-[30%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
-      <div className="w-full max-w-lg relative">
-        <div className="card-glass rounded-2xl p-8">
-          <div className="text-center mb-8">
-            <div className="icon-box mx-auto mb-4">
-              <UserPlus size={24} className="text-primary" />
-            </div>
-            <h1 className="text-2xl font-bold text-text-primary">Регистрация партнёра</h1>
-            <p className="text-text-muted text-sm mt-1">Создайте аккаунт для работы с платформой</p>
+    <section>
+      <div style={{ maxWidth: 520, margin: '0 auto', padding: 'clamp(28px,5vw,60px) clamp(16px,4vw,40px)' }}>
+        <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 24, boxShadow: '0 20px 50px rgba(11,16,32,.08)', padding: 'clamp(24px,4vw,34px)' }}>
+          <div style={{ textAlign: 'center', marginBottom: 26 }}>
+            <span style={{ width: 48, height: 48, borderRadius: 14, background: '#EDF0FF', display: 'grid', placeItems: 'center', margin: '0 auto 16px' }}><Icon name="plus" size={22} color="#1B44F5" /></span>
+            <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 24, letterSpacing: '-.02em', margin: '0 0 6px' }}>Регистрация партнёра</h1>
+            <div style={{ fontSize: 14, color: '#8891A5' }}>Создайте аккаунт для работы с платформой</div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Название компании</label>
-              <input
-                type="text"
-                value={form.companyName}
-                onChange={(e) => update('companyName', e.target.value)}
-                className={inputCls('companyName')}
-                placeholder="Партнёр Иванов Иван Иванович"
-                autoComplete="organization"
-              />
-              {errors.companyName && <p className="text-red-400 text-xs mt-1">{errors.companyName}</p>}
+          <form onSubmit={handleSubmit}>
+            <div style={{ marginBottom: 16 }}>
+              <label style={label}>Название компании</label>
+              <input value={form.companyName} onChange={(e) => update('companyName', e.target.value)} className="ta-input" style={fieldBase(!!errors.companyName)} placeholder="Партнёр Иванов Иван Иванович" autoComplete="organization" />
+              {errors.companyName && <div style={errTxt}>{errors.companyName}</div>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">ИНН</label>
-              <input
-                type="text"
-                value={form.inn}
-                onChange={(e) => update('inn', e.target.value.replace(/\D/g, '').slice(0, 12))}
-                className={inputCls('inn')}
-                placeholder="123456789012"
-                maxLength={12}
-              />
-              {errors.inn && <p className="text-red-400 text-xs mt-1">{errors.inn}</p>}
+            <div style={{ marginBottom: 16 }}>
+              <label style={label}>ИНН</label>
+              <input value={form.inn} onChange={(e) => update('inn', e.target.value.replace(/\D/g, '').slice(0, 12))} className="ta-input" style={fieldBase(!!errors.inn)} placeholder="123456789012" maxLength={12} />
+              {errors.inn && <div style={errTxt}>{errors.inn}</div>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Email</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => update('email', e.target.value)}
-                className={inputCls('email')}
-                placeholder="email@example.com"
-                autoComplete="email"
-              />
-              {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+            <div style={{ marginBottom: 16 }}>
+              <label style={label}>Email</label>
+              <input type="email" value={form.email} onChange={(e) => update('email', e.target.value)} className="ta-input" style={fieldBase(!!errors.email)} placeholder="email@example.com" autoComplete="email" />
+              {errors.email && <div style={errTxt}>{errors.email}</div>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Телефон</label>
-              <input
-                type="tel"
-                value={form.phone}
-                onChange={(e) => update('phone', e.target.value)}
-                className={inputCls('phone')}
-                placeholder="+7 999 123-45-67"
-                autoComplete="tel"
-              />
-              {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
+            <div style={{ marginBottom: 16 }}>
+              <label style={label}>Телефон</label>
+              <input type="tel" value={form.phone} onChange={(e) => update('phone', e.target.value)} className="ta-input" style={fieldBase(!!errors.phone)} placeholder="+7 999 123-45-67" autoComplete="tel" />
+              {errors.phone && <div style={errTxt}>{errors.phone}</div>}
             </div>
-
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Пароль</label>
-              <input
-                type="password"
-                value={form.password}
-                onChange={(e) => update('password', e.target.value)}
-                className={inputCls('password')}
-                placeholder="Минимум 8 символов"
-                autoComplete="new-password"
-              />
-              {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
+            <div style={{ marginBottom: 18 }}>
+              <label style={label}>Пароль</label>
+              <input type="password" value={form.password} onChange={(e) => update('password', e.target.value)} className="ta-input" style={fieldBase(!!errors.password)} placeholder="Минимум 8 символов" autoComplete="new-password" />
+              {errors.password && <div style={errTxt}>{errors.password}</div>}
               {form.password && (
-                <div className="flex items-center gap-2 mt-1">
-                  <div className="flex gap-1 flex-1">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className={`h-1 flex-1 rounded-full transition-all ${
-                        form.password.length >= i * 3
-                          ? form.password.length >= 12 ? 'bg-green-500' : form.password.length >= 9 ? 'bg-yellow-500' : 'bg-red-400'
-                          : 'bg-gray-200'
-                      }`} />
-                    ))}
-                  </div>
-                  <span className="text-xs text-text-muted">
-                    {form.password.length < 8 ? 'Слишком короткий' : form.password.length < 10 ? 'Нормальный' : 'Надёжный'}
-                  </span>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 8 }}>
+                  <div style={{ flex: 1, height: 4, borderRadius: 999, background: '#EEF0F6', overflow: 'hidden' }}><div style={{ height: '100%', width: Math.min(100, form.password.length * 8) + '%', background: pwColor, transition: '.2s' }} /></div>
+                  <span style={{ fontSize: 12, color: pwColor, fontWeight: 600, whiteSpace: 'nowrap' }}>{pwStrength}</span>
                 </div>
               )}
             </div>
 
-            {/* Legal documents */}
-            <div className="bg-bg-light rounded-xl p-4 space-y-2">
-              <p className="text-xs font-semibold text-text-secondary mb-2">Ознакомьтесь перед регистрацией:</p>
-              <div className="flex flex-wrap gap-2">
-                <Link to="/legal/offer" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  📄 Публичная оферта
-                </Link>
-                <Link to="/legal/privacy" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  🔒 Политика конфиденциальности
-                </Link>
-                <Link to="/legal/terms" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  📋 Пользовательское соглашение
-                </Link>
+            <div style={{ background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 14, padding: 16, marginBottom: 18 }}>
+              <div style={{ fontWeight: 600, fontSize: 12.5, color: '#3A4256', marginBottom: 10 }}>Ознакомьтесь перед регистрацией:</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <Link to="/legal/offer" style={legalChip}><Icon name="doc" size={13} />Оферта</Link>
+                <Link to="/legal/privacy" style={legalChip}><Icon name="shield" size={13} />Конфиденциальность</Link>
+                <Link to="/legal/terms" style={legalChip}><Icon name="doc" size={13} />Соглашение</Link>
               </div>
             </div>
 
-            <div className="flex items-start gap-2">
-              <input
-                type="checkbox"
-                checked={form.agree}
-                onChange={(e) => update('agree', e.target.checked)}
-                className="mt-1 accent-primary"
-                id="agree"
-              />
-              <label htmlFor="agree" className="text-sm text-text-muted">
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginBottom: 6, cursor: 'pointer' }}>
+              <input type="checkbox" checked={form.agree} onChange={(e) => update('agree', e.target.checked)} style={{ marginTop: 3, accentColor: '#1B44F5', flex: 'none' }} />
+              <span style={{ fontSize: 13.5, color: '#5B647A', lineHeight: 1.5 }}>
                 Я подтверждаю, что являюсь импортёром и принимаю условия{' '}
-                <Link to="/legal/offer" className="text-primary no-underline hover:underline">публичной оферты</Link>,{' '}
-                <Link to="/legal/privacy" className="text-primary no-underline hover:underline">политики конфиденциальности</Link>{' '}
-                и <Link to="/legal/terms" className="text-primary no-underline hover:underline">пользовательского соглашения</Link>
-              </label>
-            </div>
-            {errors.agree && <p className="text-red-400 text-xs">{errors.agree}</p>}
+                <Link to="/legal/offer" style={{ color: '#1B44F5', textDecoration: 'none' }}>публичной оферты</Link>,{' '}
+                <Link to="/legal/privacy" style={{ color: '#1B44F5', textDecoration: 'none' }}>политики конфиденциальности</Link>{' '}
+                и <Link to="/legal/terms" style={{ color: '#1B44F5', textDecoration: 'none' }}>пользовательского соглашения</Link>
+              </span>
+            </label>
+            {errors.agree && <div style={{ ...errTxt, marginBottom: 12 }}>{errors.agree}</div>}
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
-            >
-              {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+            <button type="submit" disabled={loading} className="ta-btn-primary" style={{ width: '100%', marginTop: 14, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, background: '#1B44F5', color: '#fff', border: 'none', borderRadius: 13, padding: 15, fontWeight: 600, fontSize: 15.5, boxShadow: '0 8px 20px rgba(27,68,245,.26)', opacity: loading ? 0.6 : 1 }}>
+              {loading ? 'Регистрация…' : 'Зарегистрироваться'}
             </button>
           </form>
 
-          <p className="text-center text-text-muted text-sm mt-6">
-            Уже есть аккаунт?{' '}
-            <Link to="/login" className="text-primary font-semibold no-underline hover:underline">
-              Войти
-            </Link>
+          <p style={{ textAlign: 'center', color: '#8891A5', fontSize: 14, marginTop: 20 }}>
+            Уже есть аккаунт? <Link to="/login" style={{ color: '#1B44F5', fontWeight: 600, textDecoration: 'none' }}>Войти</Link>
           </p>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

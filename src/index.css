@@ -43,3 +43,29 @@ input[type=number]{-moz-appearance:textfield}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
 }
+
+/* Header responsive nav (drives Header.tsx's ta-desktop-nav / ta-mobile-* classes) */
+@media (max-width: 780px){
+  .ta-desktop-nav{display:none !important}
+  .ta-mobile-toggle{display:inline-flex !important}
+  .ta-mobile-panel{display:flex !important}
+}
+
+/* Dashboard/admin sidebar: column rail on desktop, horizontal scroll strip on mobile */
+.ta-sidebar{display:flex;flex-direction:row;gap:6px;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.ta-sidebar::-webkit-scrollbar{display:none}
+.ta-sidebar-link{display:inline-flex;align-items:center;gap:9px;white-space:nowrap;padding:11px 15px;border-radius:11px;font-weight:600;font-size:14px;text-decoration:none;transition:.15s;flex:none}
+@media (min-width: 861px){
+  .ta-sidebar{flex-direction:column;width:220px;flex:none}
+  .ta-sidebar-link{width:100%}
+  .ta-dash-cols{flex-direction:row !important;align-items:flex-start !important}
+}
+
+/* Chat page: both panes on desktop, single-pane + back button on mobile */
+@media (min-width: 761px){
+  .ta-chat-list,.ta-chat-window{display:flex !important}
+  .ta-chat-back{display:none !important}
+}
+@media (max-width: 760px){
+  .ta-chat-back{display:inline-flex !important}
+}

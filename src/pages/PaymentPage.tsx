@@ -1,10 +1,11 @@
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
-import { Shield, Check, Phone } from 'lucide-react'
+import { QRCodeSVG } from 'qrcode.react'
 import { mockOrders, mockUsers, saveOrders } from '../data/mock'
 import { formatPrice, formatDateTime } from '../utils/calculate'
+import { Icon } from '../lib/techagent'
 
-// Условия приёма оплаты (Уведомление для клиента, Doc2)
+// Условия приёма оплаты (уведомление для клиента)
 const paymentNoticePoints = [
   'Продавцом товара, который вы приобретаете, является партнёр платформы TechAgent (далее — «Партнёр»), у которого вы делаете покупку. Именно Партнёр является стороной сделки купли-продажи товара с вами.',
   'TechAgent выступает техническим агентом Партнёра: принимает оплату по поручению Партнёра и организует закупку товара за рубежом в интересах Партнёра.',
@@ -13,6 +14,8 @@ const paymentNoticePoints = [
   'Оплата, произведённая вами через данную страницу, засчитывается в счёт расчётов по вашей сделке с Партнёром.',
   'Обработка ваших персональных данных, указанных при оплате, осуществляется в соответствии с Политикой обработки персональных данных, размещённой на сайте techagent.pro.',
 ]
+
+const card: React.CSSProperties = { background: '#fff', border: '1px solid #E7E9F2', borderRadius: 24, overflow: 'hidden', boxShadow: '0 20px 50px rgba(11,16,32,.08)' }
 
 export default function PaymentPage() {
   const { paymentId } = useParams()
@@ -24,11 +27,16 @@ export default function PaymentPage() {
 
   if (!order) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-white">
-        <div className="card-glass p-8 text-center max-w-md w-full mx-4">
-          <p className="text-text-muted">Заказ не найден или ссылка устарела</p>
+      <section>
+        <div style={{ maxWidth: 440, margin: '0 auto', padding: 'clamp(60px,10vw,120px) clamp(16px,4vw,40px)', textAlign: 'center' }}>
+          <div style={card as object}>
+            <div style={{ padding: '40px 24px' }}>
+              <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 18, marginBottom: 8 }}>Заказ не найден</div>
+              <div style={{ fontSize: 14, color: '#8891A5' }}>Ссылка на оплату устарела или введена неверно.</div>
+            </div>
+          </div>
         </div>
-      </div>
+      </section>
     )
   }
 
@@ -45,139 +53,94 @@ export default function PaymentPage() {
       saveOrders()
       setPaying(false)
       setPaid(true)
-    }, 2000)
+    }, 1800)
   }
 
   if (alreadyPaid || paid) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-        <div className="card-glass p-8 text-center max-w-md w-full">
-          <div className="w-16 h-16 bg-success/15 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check size={32} className="text-success" />
-          </div>
-          <h1 className="text-2xl font-bold text-text-primary mb-2">Оплата успешна!</h1>
-          <p className="text-text-muted mb-6">Спасибо за оплату</p>
-
-          <div className="bg-bg-light border border-border rounded-lg p-4 space-y-2 text-sm mb-6">
-            <div className="flex justify-between">
-              <span className="text-text-muted">Сумма</span>
-              <span className="font-bold text-text-primary">{formatPrice(amountToPay)}</span>
+      <section>
+        <div style={{ maxWidth: 480, margin: '0 auto', padding: 'clamp(24px,4vw,52px) clamp(16px,4vw,40px)' }}>
+          <div style={card as object}>
+            <div style={{ textAlign: 'center', padding: '40px 30px 28px', background: 'linear-gradient(135deg,#0B7A55,#12B981)', color: '#fff' }}>
+              <div style={{ width: 66, height: 66, margin: '0 auto 18px', borderRadius: '50%', background: 'rgba(255,255,255,.2)', display: 'grid', placeItems: 'center' }}>
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.6" strokeLinecap="round" strokeLinejoin="round"><path d="M4 12.5l5 5 11-11" /></svg>
+              </div>
+              <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 800, fontSize: 'clamp(22px,4vw,28px)', letterSpacing: '-.02em', marginBottom: 6 }}>Оплачено</div>
+              <div style={{ fontSize: 14.5, color: 'rgba(255,255,255,.9)' }}>{formatPrice(amountToPay)} · {order.orderNumber}</div>
             </div>
-            <div className="flex justify-between">
-              <span className="text-text-muted">Дата</span>
-              <span className="text-text-secondary">{formatDateTime(order.paidAt || new Date().toISOString())}</span>
+            <div style={{ padding: '26px 24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', fontSize: 14 }}><span style={{ color: '#8891A5' }}>Дата оплаты</span><span style={{ fontWeight: 500 }}>{formatDateTime(order.paidAt || new Date().toISOString())}</span></div>
+              <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '13px 15px', background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 13, marginTop: 14 }}>
+                <Icon name="box" size={19} color="#1B44F5" />
+                <div style={{ fontSize: 13.5, color: '#3A4256', lineHeight: 1.5 }}>
+                  Товар будет готов к выдаче через 5–7 дней. Забрать можно в магазине: <b>{seller?.companyName}</b>
+                  {seller?.phone && <><br />{seller.phone}</>}
+                </div>
+              </div>
             </div>
-          </div>
-
-          <div className="bg-bg-light border border-border rounded-lg p-4 text-sm text-left">
-            <p className="text-text-muted mb-1">Ваш товар будет готов к выдаче через 5-7 дней.</p>
-            <p className="text-text-muted mb-2">Забрать можно в магазине:</p>
-            <p className="font-medium text-text-primary">{seller?.companyName}</p>
-            {seller?.phone && (
-              <p className="flex items-center gap-1 text-text-muted mt-1">
-                <Phone size={14} />
-                {seller.phone}
-              </p>
-            )}
           </div>
         </div>
-      </div>
+      </section>
     )
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-      <div className="card-glass p-8 max-w-md w-full">
-        <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold text-text-primary mb-1">Оплата заказа</h1>
-          <p className="text-text-muted text-sm">{order.orderNumber}</p>
-        </div>
+    <section>
+      <div style={{ maxWidth: 540, margin: '0 auto', padding: 'clamp(24px,4vw,52px) clamp(16px,4vw,40px)' }}>
+        <div style={card as object}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, padding: '20px 24px', background: '#0B1020', color: '#fff' }}>
+            <div>
+              <div style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 16 }}>Оплата заказа</div>
+              <div style={{ font: "500 12px/1 'JetBrains Mono',monospace", color: '#8FA9FF', marginTop: 5 }}>{order.orderNumber}</div>
+            </div>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, background: 'linear-gradient(135deg,#5B34E8,#E8348C)', color: '#fff', fontWeight: 700, fontSize: 14, padding: '8px 12px', borderRadius: 10 }}>СБП</span>
+          </div>
 
-        <div className="bg-bg-light border border-border rounded-lg p-5 mb-6">
-          <p className="font-bold text-text-primary mb-3">{order.productName}</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-text-muted">Товар</span>
-              <span className="text-text-primary">{formatPrice(order.productCost)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-muted">Услуга выкупа</span>
-              <span className="text-text-primary">{formatPrice(order.commission)}</span>
-            </div>
+          <div style={{ padding: 24 }}>
+            <div style={{ fontSize: 13, color: '#8891A5', marginBottom: 4 }}>Товар</div>
+            <div style={{ fontWeight: 600, fontSize: 15.5, marginBottom: 18 }}>{order.productName}</div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', fontSize: 14 }}><span style={{ color: '#5B647A' }}>Стоимость товара</span><span style={{ fontWeight: 500 }}>{formatPrice(order.productCost)}</span></div>
+            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', fontSize: 14 }}><span style={{ color: '#5B647A' }}>Услуга выкупа</span><span style={{ fontWeight: 500 }}>{formatPrice(order.commission)}</span></div>
             {order.isTradeIn && (
-              <div className="flex justify-between">
-                <span className="text-text-muted">Trade-in ({order.oldProduct})</span>
-                <span className="text-emerald-400">-{formatPrice(order.oldValue || 0)}</span>
-              </div>
+              <div style={{ display: 'flex', justifyContent: 'space-between', padding: '9px 0', fontSize: 14 }}><span style={{ color: '#5B647A' }}>Trade-in ({order.oldProduct})</span><span style={{ fontWeight: 500, color: '#0B7A55' }}>−{formatPrice(order.oldValue || 0)}</span></div>
             )}
-            <div className="border-t border-border pt-2 flex justify-between font-bold text-lg">
-              <span className="text-text-primary">К оплате</span>
-              <span className="text-primary">{formatPrice(amountToPay)}</span>
+            <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', borderTop: '1px dashed #E0E3EE', marginTop: 6, paddingTop: 14, marginBottom: 20 }}>
+              <span style={{ fontSize: 14, color: '#5B647A' }}>К оплате</span>
+              <span style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 800, fontSize: 'clamp(24px,4vw,30px)', letterSpacing: '-.02em' }}>{formatPrice(amountToPay)}</span>
+            </div>
+
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 18, alignItems: 'center', padding: 18, background: '#F7F8FC', border: '1px solid #EEF0F6', borderRadius: 16, marginBottom: 18 }}>
+              <div style={{ width: 104, height: 104, flex: 'none', background: '#fff', border: '1px solid #E7E9F2', borderRadius: 14, padding: 8, display: 'grid', placeItems: 'center' }}><QRCodeSVG value={typeof window !== 'undefined' ? `${window.location.origin}/pay/${order.paymentId}` : order.paymentId} size={88} /></div>
+              <div style={{ flex: '1 1 180px', minWidth: 0 }}>
+                <div style={{ fontWeight: 600, fontSize: 14.5, marginBottom: 5 }}>Отсканируйте QR</div>
+                <div style={{ fontSize: 13, color: '#8891A5', lineHeight: 1.5, marginBottom: 8 }}>Камерой или в приложении банка — оплата по СБП за пару секунд.</div>
+                <div style={{ fontSize: 12.5 }}>Магазин: <b>{seller?.companyName}</b>{seller?.phone && ` · ${seller.phone}`}</div>
+              </div>
+            </div>
+
+            <div style={{ border: '1px solid #E7E9F2', borderRadius: 14, padding: 16, marginBottom: 16, background: '#F7F8FC' }}>
+              <div style={{ fontWeight: 700, fontSize: 13.5, marginBottom: 5 }}>Уведомление об условиях приёма оплаты</div>
+              <p style={{ fontSize: 12, color: '#8891A5', margin: '0 0 10px', lineHeight: 1.5 }}>Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:</p>
+              <ol style={{ margin: 0, paddingLeft: 18, fontSize: 12, color: '#5B647A', lineHeight: 1.6, maxHeight: 160, overflowY: 'auto' }}>
+                {paymentNoticePoints.map((point, i) => (<li key={i} style={{ marginBottom: 6 }}>{point}</li>))}
+              </ol>
+            </div>
+
+            <label style={{ display: 'flex', alignItems: 'flex-start', gap: 9, marginBottom: 18, cursor: 'pointer' }}>
+              <input type="checkbox" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} style={{ marginTop: 3, accentColor: '#1B44F5', flex: 'none' }} />
+              <span style={{ fontSize: 13.5, color: '#3A4256' }}>Я ознакомлен(а) и согласен(на) с условиями приёма платежа</span>
+            </label>
+
+            <button onClick={handlePay} disabled={paying || !agreed} className="ta-btn-primary" style={{ width: '100%', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 9, background: '#1B44F5', color: '#fff', border: 'none', borderRadius: 13, padding: 16, fontWeight: 600, fontSize: 16, boxShadow: '0 10px 24px rgba(27,68,245,.28)', opacity: (paying || !agreed) ? 0.55 : 1, cursor: (paying || !agreed) ? 'not-allowed' : 'pointer' }}>
+              {paying ? 'Проводим платёж…' : `Оплатить ${formatPrice(amountToPay)}`}
+            </button>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, marginTop: 14, fontSize: 12.5, color: '#8891A5' }}>
+              <Icon name="shield" size={14} color="#12B981" />Платёж защищён · чек придёт автоматически
             </div>
           </div>
         </div>
-
-        <div className="mb-6">
-          <p className="text-sm text-text-muted mb-2">Магазин:</p>
-          <p className="font-medium text-sm text-text-primary">{seller?.companyName}</p>
-          {seller?.phone && (
-            <p className="text-text-muted text-sm flex items-center gap-1 mt-0.5">
-              <Phone size={14} />
-              {seller.phone}
-            </p>
-          )}
-        </div>
-
-        <div className="border-t border-border pt-6 mb-6">
-          <p className="text-sm font-medium text-text-primary mb-3">Способ оплаты:</p>
-          <label className="flex items-center gap-3 p-3 rounded-lg border border-primary/30 bg-primary/10 cursor-pointer">
-            <input type="radio" checked readOnly className="accent-primary" />
-            <span className="font-medium text-sm text-text-primary">СБП (Система быстрых платежей)</span>
-          </label>
-        </div>
-
-        {/* Уведомление об условиях приёма оплаты (Doc2) */}
-        <div className="border border-border rounded-lg p-4 mb-4 bg-bg-light">
-          <p className="font-bold text-sm text-text-primary mb-1">Уведомление об условиях приёма оплаты</p>
-          <p className="text-xs text-text-muted mb-3">
-            Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:
-          </p>
-          <ol className="list-decimal pl-4 space-y-1.5 text-xs text-text-muted max-h-44 overflow-y-auto pr-2">
-            {paymentNoticePoints.map((point, i) => (
-              <li key={i}>{point}</li>
-            ))}
-          </ol>
-          <p className="text-xs text-text-muted mt-3">
-            Продолжая оплату, вы подтверждаете согласие с условиями настоящего уведомления.
-          </p>
-        </div>
-
-        <label htmlFor="payment-agree" className="flex items-start gap-2 mb-6 cursor-pointer">
-          <input
-            id="payment-agree"
-            type="checkbox"
-            checked={agreed}
-            onChange={(e) => setAgreed(e.target.checked)}
-            className="mt-0.5 accent-primary flex-shrink-0"
-          />
-          <span className="text-sm text-text-secondary">
-            Я ознакомлен(а) и согласен(на) с условиями приёма платежа
-          </span>
-        </label>
-
-        <button
-          onClick={handlePay}
-          disabled={paying || !agreed}
-          className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-        >
-          {paying ? 'Обработка...' : `Оплатить ${formatPrice(amountToPay)}`}
-        </button>
-
-        <div className="flex items-center justify-center gap-1.5 mt-4 text-text-muted text-xs">
-          <Shield size={14} />
-          Безопасная оплата
-        </div>
       </div>
-    </div>
+    </section>
   )
 }

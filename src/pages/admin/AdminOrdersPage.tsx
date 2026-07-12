@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { mockOrders, mockUsers, saveOrders } from '../../data/mock'
 import { formatPrice, formatDate } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, ORDER_STEPS } from '../../utils/status'
+import { ORDER_TRACK_STEPS, STATUS_META } from '../../lib/techagent'
 import type { OrderStatus } from '../../types'
 
 const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
@@ -13,6 +13,8 @@ const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: 'Завершены', value: 'COMPLETED' },
   { label: 'Отменены', value: 'CANCELLED' },
 ]
+const th: React.CSSProperties = { textAlign: 'left', padding: '12px 16px', color: '#8891A5', fontWeight: 600 }
+const td: React.CSSProperties = { padding: '12px 16px' }
 
 export default function AdminOrdersPage() {
   const [filter, setFilter] = useState<OrderStatus | 'ALL'>('ALL')
@@ -26,80 +28,51 @@ export default function AdminOrdersPage() {
       order.status = newStatus
       order.updatedAt = new Date().toISOString()
       saveOrders()
-      setRefreshKey(k => k + 1)
+      setRefreshKey((k) => k + 1)
     }
   }
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text-primary">Все заказы</h1>
-        <span className="text-text-muted text-sm">{mockOrders.length} заказов</span>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 14, marginBottom: 18 }}>
+        <h1 style={{ fontFamily: "'Unbounded',sans-serif", fontWeight: 700, fontSize: 'clamp(1.4rem,2.8vw,1.8rem)', letterSpacing: '-.02em', margin: 0 }}>Все заказы</h1>
+        <span style={{ fontSize: 13.5, color: '#8891A5' }}>{mockOrders.length} заказов</span>
       </div>
 
-      {/* Filter tabs */}
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
-        {filterTabs.map((t) => (
-          <button
-            key={t.value}
-            onClick={() => setFilter(t.value)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-colors border-none cursor-pointer ${
-              filter === t.value
-                ? 'bg-primary text-white'
-                : 'bg-bg-light text-text-secondary hover:bg-bg-light hover:text-text-primary'
-            }`}
-          >
-            {t.label}
-          </button>
-        ))}
+      <div style={{ display: 'flex', gap: 8, marginBottom: 18, overflowX: 'auto', paddingBottom: 2 }}>
+        {filterTabs.map((t) => {
+          const active = filter === t.value
+          return <button key={t.value} onClick={() => setFilter(t.value)} style={{ padding: '9px 14px', borderRadius: 11, fontWeight: 600, fontSize: 13, whiteSpace: 'nowrap', border: 'none', flex: 'none', background: active ? '#1B44F5' : '#fff', color: active ? '#fff' : '#3A4256' }}>{t.label}</button>
+        })}
       </div>
 
-      <div className="card overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+      <div style={{ background: '#fff', border: '1px solid #E7E9F2', borderRadius: 20, overflow: 'hidden' }}>
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 13 }}>
             <thead>
-              <tr className="border-b border-border bg-bg-light">
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Номер</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Товар</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Партнёр</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Клиент</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Сумма</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Статус</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Дата</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Действия</th>
+              <tr style={{ background: '#F7F8FC', borderBottom: '1px solid #EEF0F6' }}>
+                {['Номер', 'Товар', 'Партнёр', 'Клиент', 'Сумма', 'Статус', 'Дата', 'Действия'].map((h) => <th key={h} style={th}>{h}</th>)}
               </tr>
             </thead>
-            <tbody className="divide-y divide-border">
+            <tbody>
               {orders.map((order) => {
                 const ip = mockUsers.find((u) => u.id === order.userId)
-                const currentIdx = ORDER_STEPS.indexOf(order.status)
-                const nextStatus = currentIdx < ORDER_STEPS.length - 1 ? ORDER_STEPS[currentIdx + 1] : null
+                const meta = STATUS_META[order.status]
+                const currentIdx = ORDER_TRACK_STEPS.indexOf(order.status)
+                const nextStatus = currentIdx >= 0 && currentIdx < ORDER_TRACK_STEPS.length - 1 ? ORDER_TRACK_STEPS[currentIdx + 1] : null
                 return (
-                  <tr key={order.id} className="hover:bg-bg-light transition-colors">
-                    <td className="px-4 py-3">
-                      <span className="font-medium text-text-primary">{order.orderNumber}</span>
-                      {order.isTradeIn && (
-                        <span className="ml-1 text-xs text-primary font-medium">TI</span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3 text-text-secondary max-w-48 truncate">{order.productName}</td>
-                    <td className="px-4 py-3 text-text-secondary text-xs">{ip?.companyName || '—'}</td>
-                    <td className="px-4 py-3 text-text-secondary">{order.clientName}</td>
-                    <td className="px-4 py-3 font-medium text-text-primary">{formatPrice(order.totalCost)}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${ORDER_STATUS_COLORS[order.status]}`}>
-                        {ORDER_STATUS_LABELS[order.status]}
-                      </span>
-                    </td>
-                    <td className="px-4 py-3 text-text-muted text-xs">{formatDate(order.createdAt)}</td>
-                    <td className="px-4 py-3">
+                  <tr key={order.id} style={{ borderTop: '1px solid #F0F1F6' }}>
+                    <td style={{ ...td, fontWeight: 600 }}>{order.orderNumber}{order.isTradeIn && <span style={{ marginLeft: 6, fontSize: 11, color: '#1B44F5', fontWeight: 700 }}>TI</span>}</td>
+                    <td style={{ ...td, color: '#5B647A', maxWidth: 180, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{order.productName}</td>
+                    <td style={{ ...td, color: '#5B647A', fontSize: 12 }}>{ip?.companyName || '—'}</td>
+                    <td style={{ ...td, color: '#5B647A' }}>{order.clientName}</td>
+                    <td style={{ ...td, fontWeight: 600 }}>{formatPrice(order.totalCost)}</td>
+                    <td style={td}><span style={{ font: "600 11px/1 sans-serif", padding: '4px 9px', borderRadius: 999, color: meta.color, background: meta.bg }}>{meta.label}</span></td>
+                    <td style={{ ...td, color: '#8891A5', fontSize: 12 }}>{formatDate(order.createdAt)}</td>
+                    <td style={td}>
                       {nextStatus && order.status !== 'CANCELLED' && (
-                        <button
-                          onClick={() => handleStatusChange(order.id, nextStatus)}
-                          className="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20 transition-colors border-none cursor-pointer whitespace-nowrap"
-                        >
-                          &rarr; {ORDER_STATUS_LABELS[nextStatus]}
-                        </button>
+                        <button onClick={() => handleStatusChange(order.id, nextStatus)} style={{ fontSize: 12, background: '#EDF0FF', color: '#1B44F5', padding: '6px 10px', borderRadius: 8, fontWeight: 600, border: 'none', whiteSpace: 'nowrap', cursor: 'pointer' }}>
+                        → {STATUS_META[nextStatus].label}</button>
                       )}
                     </td>
                   </tr>
