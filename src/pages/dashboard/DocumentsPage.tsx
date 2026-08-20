@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck } from 'lucide-react'
+import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/mock'
 import { formatDate } from '../../utils/calculate'
@@ -12,6 +12,7 @@ const typeLabels: Record<DocumentType, string> = {
   OFFER: 'Оферта',
   PRIVACY: 'Конфиденциальность',
   TERMS: 'Соглашение',
+  PAYMENT: 'Условия оплаты',
 }
 
 const typeColors: Record<DocumentType, string> = {
@@ -21,6 +22,7 @@ const typeColors: Record<DocumentType, string> = {
   OFFER: 'bg-orange-500/10 text-orange-600',
   PRIVACY: 'bg-emerald-500/10 text-emerald-600',
   TERMS: 'bg-indigo-500/10 text-indigo-600',
+  PAYMENT: 'bg-sky-500/10 text-sky-600',
 }
 
 const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; className: string }>> = {
@@ -30,6 +32,7 @@ const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; classN
   OFFER: ScrollText,
   PRIVACY: Shield,
   TERMS: BookOpen,
+  PAYMENT: CreditCard,
 }
 
 export default function DocumentsPage() {

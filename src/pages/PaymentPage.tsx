@@ -170,10 +170,14 @@ export default function PaymentPage() {
               className="accent-primary mt-0.5 flex-shrink-0"
             />
             <span className="text-xs text-text-muted leading-relaxed">
-              Я ознакомлен(а) и согласен(на) с условиями приёма платежа. Продавцом товара является Партнёр — TechAgent принимает оплату как технический агент по его поручению. Подробнее — в{' '}
-              <Link to="/legal/offer" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                публичной оферте
-              </Link>.
+              Я ознакомлен(а) и согласен(на) с{' '}
+              <Link to="/legal/payment" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                Условиями оплаты и возврата
+              </Link>{' '}
+              и{' '}
+              <Link to="/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                Политикой конфиденциальности
+              </Link>. Продавцом товара является Партнёр, указанный выше; TechAgent принимает оплату как технический агент по его поручению.
             </span>
           </label>
         </div>

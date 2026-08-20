@@ -12,7 +12,7 @@ export type OrderStatus =
   | 'COMPLETED'
   | 'CANCELLED'
 
-export type DocumentType = 'CONTRACT' | 'ACT' | 'REPORT' | 'OFFER' | 'PRIVACY' | 'TERMS'
+export type DocumentType = 'CONTRACT' | 'ACT' | 'REPORT' | 'OFFER' | 'PRIVACY' | 'TERMS' | 'PAYMENT'
 
 export interface User {
   id: string

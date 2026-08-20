@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { X, Shield, ScrollText, BookOpen, FileCheck } from 'lucide-react'
+import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard } from 'lucide-react'
 import { mockDocuments } from '../data/mock'
 
 const typeLabels: Record<string, string> = {
@@ -8,6 +8,7 @@ const typeLabels: Record<string, string> = {
   PRIVACY: 'Политика конфиденциальности',
   TERMS: 'Пользовательское соглашение',
   CONTRACT: 'Типовой договор',
+  PAYMENT: 'Условия оплаты',
 }
 
 const typeIcons: Record<string, typeof Shield> = {
@@ -15,6 +16,7 @@ const typeIcons: Record<string, typeof Shield> = {
   PRIVACY: Shield,
   TERMS: BookOpen,
   CONTRACT: FileCheck,
+  PAYMENT: CreditCard,
 }
 
 const typeColors: Record<string, string> = {
@@ -22,9 +24,10 @@ const typeColors: Record<string, string> = {
   PRIVACY: 'bg-emerald-500/10 text-emerald-600',
   TERMS: 'bg-indigo-500/10 text-indigo-600',
   CONTRACT: 'bg-blue-500/10 text-blue-600',
+  PAYMENT: 'bg-sky-500/10 text-sky-600',
 }
 
-const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS' }
+const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS', payment: 'PAYMENT' }
 
 function docIdFromParam(docType: string | undefined): string | null {
   if (!docType) return null
