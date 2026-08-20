@@ -15,10 +15,6 @@ export default function BlogPage() {
       <section className="relative overflow-hidden pt-24 pb-10">
         <div className="absolute top-[-100px] left-[25%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-3xl mx-auto px-4 sm:px-6 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6 font-mono tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-            БЛОГ
-          </div>
           <h1 className="text-[34px] sm:text-[44px] font-extrabold mb-4 text-text-primary tracking-tight leading-[1.1]">
             Про агентскую закупку — по делу
           </h1>

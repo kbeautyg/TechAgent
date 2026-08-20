@@ -60,10 +60,6 @@ export default function AboutPage() {
       <section className="relative overflow-hidden pt-28 pb-16">
         <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6 font-mono tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-            О ПЛАТФОРМЕ
-          </div>
           <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
             TechAgent — агентская закупка электроники
           </h1>

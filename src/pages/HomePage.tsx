@@ -117,10 +117,6 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Left — text + buttons */}
             <div className="flex-1 hero-mobile-full text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-primary/20 bg-primary/5 text-primary text-[13px] font-semibold mb-6">
-                <span className="w-2 h-2 rounded-full bg-accent animate-pulse-dot" />
-                Уже работает для 200+ партнёров
-              </div>
               <h1 className="text-[32px] sm:text-[40px] lg:text-[48px] font-extrabold leading-[1.08] tracking-tight text-text-primary mb-4 sm:mb-5">
                 Агентская закупка электроники для&nbsp;бизнеса
               </h1>

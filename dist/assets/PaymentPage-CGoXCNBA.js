@@ -1,4 +1,4 @@
-import{d as y,e as g,r as n,m as v,j as e,f as w,g as r,h as k,C as P,b as m,S as A,s as I}from"./index-BjoI-Ey5.js";import{C as S}from"./check-5Pir_XUq.js";const T=[["path",{d:"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384",key:"9njp5v"}]],o=y("phone",T),C=`УВЕДОМЛЕНИЕ ОБ УСЛОВИЯХ ПРИЁМА ОПЛАТЫ
+import{d as y,e as g,r as n,m as v,j as e,f as w,g as r,h as k,C as P,b as m,S as A,s as I}from"./index-Cmg7oR18.js";import{C as S}from"./check-Bi9ctb5N.js";const T=[["path",{d:"M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384",key:"9njp5v"}]],o=y("phone",T),C=`УВЕДОМЛЕНИЕ ОБ УСЛОВИЯХ ПРИЁМА ОПЛАТЫ
 через платформу techagent.pro
 
 Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:

@@ -27,10 +27,6 @@ export default function Footer() {
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
               Агентская закупка электроники для бизнеса. Комиссия 3%.
             </p>
-            <div className="inline-flex items-center gap-2 rounded-lg px-3 py-2 font-mono text-xs font-semibold" style={{ background: '#151B33', border: '1px solid #232B47', color: '#5EE3B4' }}>
-              <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#12B981' }} />
-              ОПЛАТА ПО СБП
-            </div>
           </div>
 
           {/* Navigation */}
