@@ -175,7 +175,7 @@ export default function ProductPage() {
               <div className="pp-guarantee-icon">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
               </div>
-              <div className="pp-guarantee-text">Гарантия оригинальности</div>
+              <div className="pp-guarantee-text">Оригинальные товары</div>
             </div>
             <div className="pp-guarantee">
               <div className="pp-guarantee-icon">
@@ -217,8 +217,8 @@ export default function ProductPage() {
         <div className="pp-desc-card">
           <h3>Почему {translateProductName(product.name)}</h3>
           <p>
-            Оригинальный {product.brand} {translateProductName(product.name)} с полной гарантией и сертификацией. Закажите через TechAgent —
-            комиссия всего 3%, доставка 5–7 рабочих дней. Все документы предоставляем.
+            Оригинальный {product.brand} {translateProductName(product.name)} под заказ через TechAgent: выкуп у поставщика по вашей заявке,
+            комиссия всего 3%, доставка карго-компанией за 5–7 рабочих дней. Все документы предоставляем.
           </p>
           <div className="pp-desc-features">
             {specs.slice(0, 3).map(([label, value]) => (
