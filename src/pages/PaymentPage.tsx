@@ -1,13 +1,34 @@
 import { useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Shield, Check, Phone } from 'lucide-react'
+import { useParams, Link } from 'react-router-dom'
+import { Shield, Check, Phone, ChevronDown } from 'lucide-react'
 import { mockOrders, mockUsers, saveOrders } from '../data/mock'
 import { formatPrice, formatDateTime } from '../utils/calculate'
+
+const PAYMENT_NOTICE = `УВЕДОМЛЕНИЕ ОБ УСЛОВИЯХ ПРИЁМА ОПЛАТЫ
+через платформу techagent.pro
+
+Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:
+
+1. Продавцом товара, который вы приобретаете, является партнёр платформы TechAgent (далее — «Партнёр»), у которого вы делаете покупку. Именно Партнёр является стороной сделки купли-продажи товара с вами.
+
+2. TechAgent выступает техническим агентом Партнёра: принимает оплату по поручению Партнёра и организует закупку товара за рубежом в интересах Партнёра.
+
+3. TechAgent не является продавцом товара, не устанавливает его цену и не несёт ответственности за качество, комплектность, соответствие заявленным характеристикам, сроки и условия доставки товара.
+
+4. По всем вопросам, связанным с товаром — гарантией, обменом, возвратом, качеством, комплектацией, кассовым чеком, — вы обращаетесь непосредственно к Партнёру, у которого приобрели товар.
+
+5. Оплата, произведённая вами через данную страницу, засчитывается в счёт расчётов по вашей сделке с Партнёром.
+
+6. Обработка ваших персональных данных, указанных при оплате, осуществляется в соответствии с Политикой обработки персональных данных, размещённой на сайте techagent.pro.
+
+Продолжая оплату, вы подтверждаете согласие с условиями настоящего уведомления.`
 
 export default function PaymentPage() {
   const { paymentId } = useParams()
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
+  const [agreed, setAgreed] = useState(false)
+  const [noticeOpen, setNoticeOpen] = useState(false)
 
   const order = mockOrders.find((o) => o.paymentId === paymentId)
 
@@ -125,9 +146,41 @@ export default function PaymentPage() {
           </label>
         </div>
 
+        <div className="mb-4">
+          <button
+            type="button"
+            onClick={() => setNoticeOpen(v => !v)}
+            className="w-full flex items-center justify-between gap-2 text-left bg-transparent border-none cursor-pointer p-0 mb-2"
+          >
+            <span className="text-xs font-medium text-text-muted">Уведомление об условиях приёма оплаты</span>
+            <ChevronDown size={14} className={`text-text-muted transition-transform flex-shrink-0 ${noticeOpen ? 'rotate-180' : ''}`} />
+          </button>
+          {noticeOpen && (
+            <div className="bg-bg-light border border-border rounded-lg p-3 mb-3 max-h-48 overflow-y-auto">
+              <pre className="whitespace-pre-wrap font-sans text-xs text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
+                {PAYMENT_NOTICE}
+              </pre>
+            </div>
+          )}
+          <label className="flex items-start gap-2.5 cursor-pointer">
+            <input
+              type="checkbox"
+              checked={agreed}
+              onChange={e => setAgreed(e.target.checked)}
+              className="accent-primary mt-0.5 flex-shrink-0"
+            />
+            <span className="text-xs text-text-muted leading-relaxed">
+              Я ознакомлен(а) и согласен(на) с условиями приёма платежа. Продавцом товара является Партнёр — TechAgent принимает оплату как технический агент по его поручению. Подробнее — в{' '}
+              <Link to="/legal/offer" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                публичной оферте
+              </Link>.
+            </span>
+          </label>
+        </div>
+
         <button
           onClick={handlePay}
-          disabled={paying}
+          disabled={paying || !agreed}
           className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50"
         >
           {paying ? 'Обработка...' : `Оплатить ${formatPrice(amountToPay)}`}
