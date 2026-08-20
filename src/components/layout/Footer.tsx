@@ -76,7 +76,8 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
               <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro</a>
               <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro</a>
-              <span>г. Бишкек, Кыргызская Республика</span>
+              <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — по платежам</a>
+              <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8</span>
             </div>
           </div>
         </div>
@@ -89,7 +90,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs font-mono">
-            ОсОО «ТехЭйджент»
+            ОсОО «ТехЭйджент» · ИНН 00403202610304 · Рег. № 326302-3301-ООО
           </p>
         </div>
       </div>
