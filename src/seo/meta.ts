@@ -194,10 +194,6 @@ const legalDocMeta: Record<string, { title: string; description: string }> = {
     title: 'Пользовательское соглашение | TechAgent',
     description: 'Пользовательское соглашение платформы TechAgent: правила использования личного кабинета и сервиса агентской закупки.',
   },
-  contract: {
-    title: 'Типовой агентский договор | TechAgent',
-    description: 'Типовой агентский договор TechAgent для партнёров: предмет, вознаграждение 3%, отчётность агента и порядок поставки.',
-  },
 }
 
 /** Главный резолвер: путь без query-параметров → мета страницы */
@@ -448,7 +444,7 @@ export function getPublicRoutes(): SitemapEntry[] {
     { path: '/blog', changefreq: 'weekly', priority: 0.6 },
     ...blogPosts.map((p): SitemapEntry => ({ path: `/blog/${p.slug}`, changefreq: 'monthly', priority: 0.6 })),
     { path: '/legal', changefreq: 'monthly', priority: 0.3 },
-    ...['offer', 'privacy', 'terms', 'contract'].map((d): SitemapEntry => ({ path: `/legal/${d}`, changefreq: 'monthly', priority: 0.3 })),
+    ...['offer', 'privacy', 'terms'].map((d): SitemapEntry => ({ path: `/legal/${d}`, changefreq: 'monthly', priority: 0.3 })),
     ...categoryLandings.map((c): SitemapEntry => ({ path: `/catalog/${c.slug}`, changefreq: 'weekly', priority: 0.8 })),
     ...products.map((p): SitemapEntry => ({ path: `/catalog/${p.id}`, changefreq: 'weekly', priority: 0.6 })),
   ]

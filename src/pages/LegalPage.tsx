@@ -24,7 +24,7 @@ const typeColors: Record<string, string> = {
   CONTRACT: 'bg-blue-500/10 text-blue-600',
 }
 
-const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS', contract: 'CONTRACT' }
+const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS' }
 
 function docIdFromParam(docType: string | undefined): string | null {
   if (!docType) return null

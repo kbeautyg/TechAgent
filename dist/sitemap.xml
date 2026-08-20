@@ -79,12 +79,6 @@
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://techagent.pro/legal/contract</loc>
-    <lastmod>2026-08-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
     <loc>https://techagent.pro/catalog/smartfony</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>weekly</changefreq>

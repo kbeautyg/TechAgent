@@ -7,8 +7,8 @@ import type { DocumentType } from '../../types'
 
 const typeLabels: Record<DocumentType, string> = {
   CONTRACT: 'Договор',
-  ACT: 'Акт',
-  REPORT: 'Отчёт',
+  ACT: 'Акт услуг',
+  REPORT: 'Отчёт агента',
   OFFER: 'Оферта',
   PRIVACY: 'Конфиденциальность',
   TERMS: 'Соглашение',
@@ -107,7 +107,8 @@ export default function DocumentsPage() {
               return (
                 <div
                   key={doc.id}
-                  className="card p-4 flex items-center justify-between hover:bg-bg-light transition-colors"
+                  className={`card p-4 flex items-center justify-between hover:bg-bg-light transition-colors ${doc.content ? 'cursor-pointer' : ''}`}
+                  onClick={() => doc.content && setOpenDoc(doc.id)}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -125,22 +126,36 @@ export default function DocumentsPage() {
                       <p className="text-text-muted text-xs mt-0.5">{formatDate(doc.createdAt)}</p>
                     </div>
                   </div>
-                  <button
-                    className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
-                    onClick={() => {
-                      const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
-                      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-                      const url = URL.createObjectURL(blob)
-                      const a = document.createElement('a')
-                      a.href = url
-                      a.download = `${doc.title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
-                      a.click()
-                      URL.revokeObjectURL(url)
-                    }}
-                  >
-                    <Download size={16} />
-                    Скачать
-                  </button>
+                  <div className="flex items-center gap-4 flex-shrink-0">
+                    {doc.content && (
+                      <button
+                        className="text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          setOpenDoc(doc.id)
+                        }}
+                      >
+                        Читать
+                      </button>
+                    )}
+                    <button
+                      className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
+                      onClick={(e) => {
+                        e.stopPropagation()
+                        const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
+                        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+                        const url = URL.createObjectURL(blob)
+                        const a = document.createElement('a')
+                        a.href = url
+                        a.download = `${doc.title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
+                        a.click()
+                        URL.revokeObjectURL(url)
+                      }}
+                    >
+                      <Download size={16} />
+                      Скачать
+                    </button>
+                  </div>
                 </div>
               )
             })}
