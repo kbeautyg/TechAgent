@@ -77,8 +77,8 @@ export default function ProductPage() {
         <div className="pp-gallery">
           <div className="pp-gallery-main">
             <div className={`pp-gallery-bg ${bgClass}`} />
-            {product.inStock && <span className="pp-gbadge pp-gbadge-stock">В наличии</span>}
-            {!product.inStock && <span className="pp-gbadge pp-gbadge-out">Нет в наличии</span>}
+            {product.inStock && <span className="pp-gbadge pp-gbadge-stock">Доступен к заказу</span>}
+            {!product.inStock && <span className="pp-gbadge pp-gbadge-out">Недоступен</span>}
             {getProductImage(product.id, product.name, product.category) ? (
               <img src={getProductImage(product.id, product.name, product.category)} alt={translateProductName(product.name)}
                 width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
@@ -93,17 +93,7 @@ export default function ProductPage() {
 
         {/* Info */}
         <div className="pp-info">
-          {/* Badges */}
-          <div className="pp-badges">
-            {product.inStock && <span className="pp-badge pp-badge-stock">В наличии</span>}
-            <span className="pp-badge pp-badge-orig">100% оригинал</span>
-          </div>
-
-          <div className="pp-brand-label">{product.brand}</div>
           <h1 className="pp-title">{translateProductName(product.name)}</h1>
-          <p className="pp-subtitle">
-            {Object.entries(product.specs).map(([k, v]) => translateSpecValue(k, v)).join(', ')}
-          </p>
           {product.description && (
             <p className="pp-description">{product.description}</p>
           )}
@@ -114,7 +104,7 @@ export default function ProductPage() {
               <span className="pp-price-current">{fmt(product.price)}</span>
               <span className="pp-price-currency">₽</span>
             </div>
-            <div className="pp-price-note">Итоговая цена товара</div>
+            <div className="pp-price-note">Цена окончательная, доставка до пункта выдачи входит в цену</div>
           </div>
 
           {/* Variants */}
@@ -160,13 +150,13 @@ export default function ProductPage() {
             <PurchaseTerms />
           </section>
 
-          {/* Для Партнёров */}
+          {/* Для партнёров */}
           <div className="pp-cta-group">
             <Link to="/dashboard/orders/new" className="pp-cta-primary">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14h6M12 11v6"/>
               </svg>
-              Оформить заказ в кабинете Партнёра
+              Партнёрам: оформить заказ в кабинете
             </Link>
             <Link to="/register" className="pp-cta-secondary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -208,7 +198,7 @@ export default function ProductPage() {
               <Link to={`/catalog/${p.id}`} key={p.id} className="product-card">
                 <div className="product-img">
                   <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                  {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
+                  {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
                   {relImg ? (
                     <img src={relImg} alt={translateProductName(p.name)} width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE} className="product-real-img" loading="lazy" />
                   ) : (

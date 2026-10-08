@@ -312,7 +312,7 @@ export default function CatalogPage() {
       {/* In stock toggle */}
       <div className="filter-section">
         <div className="toggle-row">
-          <span className="toggle-label">Только в наличии</span>
+          <span className="toggle-label">Только доступные к заказу</span>
           <div className={`ctoggle${stockOnly ? ' on' : ''}`} onClick={() => patchState({ stockOnly: !stockOnly })} />
         </div>
       </div>
@@ -320,7 +320,7 @@ export default function CatalogPage() {
       {/* Apply button (mobile only) */}
       {onApply && (
         <button className="filter-apply-btn" onClick={onApply}>
-          Показать {filtered.length} товаров
+          Показать {filtered.length} {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}
         </button>
       )}
     </>
@@ -334,7 +334,7 @@ export default function CatalogPage() {
           Каталог электроники
         </h1>
         <p className="text-[14px] text-text-muted max-w-2xl mb-4">
-          {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])}, цены итоговые. Продавец — {LEGAL_NAME}, оплата через СБП, получение в пункте выдачи Партнёра TechAgent.{' '}
+          {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])}, цены окончательные. Продавец — {LEGAL_NAME}, оплата через СБП, получение в пункте выдачи партнёра TechAgent.{' '}
           <a href="#kak-kupit" className="text-primary font-semibold no-underline">Как купить</a>
         </p>
         <nav aria-label="Категории каталога" className="flex flex-wrap gap-2 pb-2">
@@ -385,16 +385,16 @@ export default function CatalogPage() {
 
           <div className="catalog-search-wrap">
             <span className="csearch-icon">{ico.search}</span>
-            <input className="csearch-input" type="text" placeholder={`Поиск по ${products.length}+ товарам...`} value={search} onChange={e => patchState({ q: e.target.value }, { replace: true })} />
+            <input className="csearch-input" type="text" placeholder="Поиск по каталогу…" value={search} onChange={e => patchState({ q: e.target.value }, { replace: true })} />
             {search && <button className="csearch-clear" onClick={() => patchState({ q: '' }, { replace: true })}>✕</button>}
           </div>
 
           <div className="products-topbar">
-            <div className="products-count">Найдено <strong>{filtered.length}</strong> товаров</div>
+            <div className="products-count">Найдено <strong>{filtered.length}</strong> {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}</div>
             <div className="products-sort-wrap">
               <span className="sort-label">Сортировка:</span>
               <select className="sort-select" value={sort} onChange={e => patchState({ sort: e.target.value })}>
-                <option value="default">По популярности</option>
+                <option value="default">По умолчанию</option>
                 <option value="price-asc">Сначала дешёвые</option>
                 <option value="price-desc">Сначала дорогие</option>
               </select>
@@ -410,7 +410,7 @@ export default function CatalogPage() {
                   <Link to={`/catalog/${p.id}`} className="product-card">
                     <div className="product-img">
                       <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                      {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
+                      {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
                       {imgUrl ? (
                         <img src={imgUrl} alt={translateProductName(p.name)}
                           width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
@@ -482,7 +482,7 @@ export default function CatalogPage() {
           <PurchaseTerms />
           <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
             Есть розничная точка?{' '}
-            <Link to="/register" className="text-primary font-semibold">Станьте Партнёром TechAgent</Link>
+            <Link to="/register" className="text-primary font-semibold">Станьте партнёром TechAgent</Link>
             : оформляйте заказы покупателей и выдавайте товар в своей точке. Вознаграждение платит ТехЭйджент.
           </p>
         </div>

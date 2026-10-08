@@ -1,6 +1,6 @@
 import type { User, Order } from '../types'
 import { products } from './products'
-import { rewardFor } from '../utils/calculate'
+import { rewardFor, rewardPercentAt } from '../utils/calculate'
 
 /*
  * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage.
@@ -42,11 +42,11 @@ function demoUsers(): User[] {
       email: 'demo@techagent.pro',
       role: 'CLIENT',
       companyName: 'Демо-партнёр 1',
-      inn: '000000000001',
-      ogrn: '000000000000001',
+      inn: '0000000000',
+      ogrn: '0000000000000',
       phone: '+7 900 000-00-01',
       contactName: 'Контактное лицо (демо)',
-      pointAddress: 'Адрес пункта выдачи (демо)',
+      pointAddress: 'г. Москва, ул. Демонстрационная, д. 1',
       bankName: 'Банк (демо)',
       bik: '000000000',
       account: '00000000000000000001',
@@ -66,8 +66,8 @@ function demoUsers(): User[] {
       email: 'demo2@techagent.pro',
       role: 'CLIENT',
       companyName: 'Демо-партнёр 2',
-      inn: '000000000002',
-      ogrn: '000000000000002',
+      inn: '0000000000',
+      ogrn: '0000000000000',
       phone: '+7 900 000-00-02',
       contactName: 'Контактное лицо (демо)',
       pointAddress: 'Адрес пункта выдачи (демо)',
@@ -188,6 +188,8 @@ function demoOrders(): Order[] {
       paidAt: '2026-02-05T16:00:00Z',
       saleOfferAcceptedAt: '2026-02-05T15:59:00Z',
       status: 'AT_POINT',
+      receivedAt: '2026-02-12T10:00:00Z',
+      notifiedAt: '2026-02-12T11:00:00Z',
       createdAt: '2026-02-05T15:30:00Z',
       updatedAt: '2026-02-12T10:00:00Z',
     },
@@ -205,6 +207,8 @@ function demoOrders(): Order[] {
       paidAt: '2026-01-25T09:30:00Z',
       saleOfferAcceptedAt: '2026-01-25T09:29:00Z',
       status: 'ISSUED',
+      receivedAt: '2026-01-31T10:00:00Z',
+      notifiedAt: '2026-01-31T11:00:00Z',
       issuedAt: '2026-02-01T16:00:00Z',
       issuedToName: 'Покупатель 6 (демо)',
       issueActUploaded: true,
@@ -257,6 +261,7 @@ function demoOrders(): Order[] {
       paidAt: '2026-02-13T12:00:00Z',
       saleOfferAcceptedAt: '2026-02-13T11:59:00Z',
       status: 'AT_POINT',
+      receivedAt: '2026-02-19T12:00:00Z',
       createdAt: '2026-02-13T11:30:00Z',
       updatedAt: '2026-02-19T12:00:00Z',
     },
@@ -274,6 +279,8 @@ function demoOrders(): Order[] {
       paidAt: '2026-02-01T10:00:00Z',
       saleOfferAcceptedAt: '2026-02-01T09:59:00Z',
       status: 'ISSUED',
+      receivedAt: '2026-02-07T10:00:00Z',
+      notifiedAt: '2026-02-07T11:00:00Z',
       issuedAt: '2026-02-08T16:00:00Z',
       issuedToName: 'Покупатель 10 (демо)',
       issueActUploaded: true,
@@ -300,6 +307,23 @@ export function updateUser(id: string, patch: Partial<User>): User | null {
   return mockUsers[idx]
 }
 
+/** Изменение процента вознаграждения подтверждённого Партнёра (оферта, п. 7.1):
+ *  новый размер применяется к заказам, оформленным через 14 дней после изменения */
+export const REWARD_CHANGE_NOTICE_DAYS = 14
+
+export function scheduleRewardChange(id: string, percent: number): User | null {
+  const u = mockUsers.find((x) => x.id === id)
+  if (!u) return null
+  const from = new Date()
+  from.setDate(from.getDate() + REWARD_CHANGE_NOTICE_DAYS)
+  return updateUser(id, {
+    // Если прежнее изменение уже вступило в силу — оно становится текущим размером
+    rewardPercent: rewardPercentAt(u),
+    rewardPercentNext: percent,
+    rewardPercentNextFrom: from.toISOString(),
+  })
+}
+
 /* ── Заказы ── */
 
 let orderCounter = parseInt(storage.getItem(COUNTER_KEY) || '1245', 10)
@@ -313,10 +337,10 @@ export function getNextOrderNumber(): string {
 /** Демо-заказы: вознаграждение — процент Партнёра от цены товара, как в новом заказе */
 function demoOrdersWithReward(): Order[] {
   const users = demoUsers()
-  return demoOrders().map((o) => ({
-    ...o,
-    partnerReward: rewardFor(o.price, users.find((u) => u.id === o.userId)?.rewardPercent),
-  }))
+  return demoOrders().map((o) => {
+    const percent = users.find((u) => u.id === o.userId)?.rewardPercent
+    return { ...o, rewardPercent: percent, partnerReward: rewardFor(o.price, percent) }
+  })
 }
 
 export const mockOrders: Order[] = load<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrdersWithReward() : [])

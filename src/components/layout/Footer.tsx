@@ -25,7 +25,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
-              Электроника с получением в пунктах выдачи партнёров. Продавец — ОсОО «ТехЭйджент».
+              Электроника с получением в пунктах выдачи партнёров. Продавец — ОсОО&nbsp;«ТехЭйджент».
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5">
               <Link to="/" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Главная</Link>
               <Link to="/about" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">О платформе</Link>
-              <Link to="/how-it-works" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Как работает</Link>
+              <Link to="/how-it-works" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Как это работает</Link>
               <Link to="/legal/sale-offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оферта купли-продажи</Link>
               <Link to="/legal/payment" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оплата и возврат</Link>
             </div>
@@ -61,7 +61,7 @@ export default function Footer() {
               <Link to="/register" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Стать партнёром</Link>
               <Link to="/login" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Личный кабинет</Link>
               <Link to="/legal" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Документы</Link>
-              <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Агентский договор</Link>
+              <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Агентский договор-оферта</Link>
               <Link to="/legal/privacy" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Конфиденциальность</Link>
             </div>
           </div>
@@ -70,9 +70,11 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Контакты</h4>
             <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
-              <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro</a>
-              <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro</a>
+              <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro — общие вопросы</a>
+              <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro — партнёрам</a>
               <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — покупателям</a>
+              <a href="mailto:compliance@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">compliance@techagent.pro — юридические вопросы</a>
+              <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" className="text-text-dark-secondary hover:text-white transition-colors no-underline">Telegram: @techagent_support</a>
               <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8</span>
             </div>
           </div>
@@ -86,7 +88,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs font-mono">
-            ОсОО «ТехЭйджент» · ИНН 00403202610304 · Рег. № 326302-3301-ООО
+            ОсОО&nbsp;«ТехЭйджент» · ИНН&nbsp;00403202610304 · Рег.&nbsp;№&nbsp;326302-3301-ООО
           </p>
         </div>
       </div>

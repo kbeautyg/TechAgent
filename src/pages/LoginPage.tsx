@@ -7,8 +7,8 @@ import { DEMO_MODE } from '../data/mock'
 
 /* Демо-учётки есть только в режиме разработки или в сборке с VITE_DEMO=1 */
 const DEMO_LOGINS = [
-  { email: 'demo@techagent.pro', title: 'Кабинет Партнёра', note: 'анкета подтверждена' },
-  { email: 'demo3@techagent.pro', title: 'Кабинет Партнёра', note: 'анкета на проверке' },
+  { email: 'demo@techagent.pro', title: 'Кабинет партнёра', note: 'анкета подтверждена' },
+  { email: 'demo3@techagent.pro', title: 'Кабинет партнёра', note: 'анкета на проверке' },
   { email: 'admin@techagent.pro', title: 'Панель администратора', note: 'сотрудник ТехЭйджент' },
 ]
 
@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
+  const [showRecovery, setShowRecovery] = useState(false)
 
   if (user) {
     return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />
@@ -48,7 +49,7 @@ export default function LoginPage() {
               <LogIn size={24} className="text-primary" />
             </div>
             <h1 className="text-2xl font-bold text-text-primary">Вход</h1>
-            <p className="text-text-muted text-sm mt-1">Личный кабинет Партнёра</p>
+            <p className="text-text-muted text-sm mt-1">Личный кабинет партнёра</p>
           </div>
 
           {error && (
@@ -85,18 +86,29 @@ export default function LoginPage() {
               disabled={loading}
               className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
             >
-              {loading ? 'Вход...' : 'Войти'}
+              {loading ? 'Вход…' : 'Войти'}
             </button>
           </form>
 
           <p className="text-center mt-3">
-            <button type="button" onClick={() => alert('Для восстановления пароля обратитесь в поддержку: info@techagent.pro')} className="text-text-muted text-sm bg-transparent border-none cursor-pointer hover:text-primary transition-colors">
+            <button
+              type="button"
+              onClick={() => setShowRecovery((v) => !v)}
+              aria-expanded={showRecovery}
+              className="text-text-muted text-sm bg-transparent border-none cursor-pointer hover:text-primary transition-colors"
+            >
               Забыли пароль?
             </button>
           </p>
+          {showRecovery && (
+            <p className="text-center text-sm text-text-secondary mt-1">
+              Для восстановления пароля напишите на{' '}
+              <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+            </p>
+          )}
 
           <p className="text-center text-text-muted text-sm mt-6">
-            Ещё не Партнёр?{' '}
+            Ещё не партнёр?{' '}
             <Link to="/register" className="text-primary font-semibold no-underline hover:underline">
               Заполнить анкету
             </Link>

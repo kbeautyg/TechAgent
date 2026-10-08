@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Shield, Check, Phone, ChevronDown, MapPin } from 'lucide-react'
-import { mockOrders, mockUsers, saveOrders } from '../data/mock'
+import { mockOrders, mockUsers, saveOrders, DEMO_MODE } from '../data/mock'
 import { mockDocuments } from '../data/documents'
-import { formatPrice, formatDateTime } from '../utils/calculate'
+import { formatPrice, formatDateTime, formatDate } from '../utils/calculate'
+import { LEGAL_NAME, DELIVERY_TERM } from '../seo/site'
 
 const SELLER = {
-  name: 'ОсОО «ТехЭйджент»',
+  name: LEGAL_NAME,
   details: 'ИНН 00403202610304 · рег. № 326302-3301-ООО',
   address: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8',
 }
@@ -17,7 +18,9 @@ export default function PaymentPage() {
   const { paymentId } = useParams()
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
-  const [agreed, setAgreed] = useState(false)
+  /* Две отдельные отметки: согласие на обработку персональных данных — отдельно от оферты */
+  const [agreedOffer, setAgreedOffer] = useState(false)
+  const [agreedPd, setAgreedPd] = useState(false)
   const [termsOpen, setTermsOpen] = useState(false)
 
   const order = mockOrders.find((o) => o.paymentId === paymentId)
@@ -35,11 +38,15 @@ export default function PaymentPage() {
   const point = mockUsers.find((u) => u.id === order.userId)
   const alreadyPaid = order.paymentStatus === 'PAID'
 
+  /* Банка пока нет: имитация оплаты — только в демо-режиме. В боевой сборке статус «Оплачен»
+   * ставит ТехЭйджент в админке по факту поступления денег («Оплата поступила») */
   const handlePay = () => {
+    if (!DEMO_MODE || !agreedOffer || !agreedPd) return
     setPaying(true)
     setTimeout(() => {
       const now = new Date().toISOString()
       order.saleOfferAcceptedAt = now
+      order.pdConsentAt = now
       order.paymentStatus = 'PAID'
       order.paidAt = now
       order.status = 'PAID'
@@ -67,6 +74,20 @@ export default function PaymentPage() {
       )}
     </div>
   )
+
+  if (order.status === 'CANCELLED') {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
+        <div className="card-glass p-8 max-w-md w-full text-center">
+          <h1 className="text-2xl font-bold text-text-primary mb-2">Заказ {order.orderNumber}</h1>
+          <p className="text-text-secondary">Заказ отменён, оплата невозможна.</p>
+          {order.refundedAt && (
+            <p className="text-text-muted text-sm mt-3">Возврат оплаты оформлен {formatDate(order.refundedAt)}.</p>
+          )}
+        </div>
+      </div>
+    )
+  }
 
   if (alreadyPaid || paid) {
     return (
@@ -104,8 +125,9 @@ export default function PaymentPage() {
 
           <div className="bg-bg-light border border-border rounded-lg p-4 text-sm">
             <p className="text-text-muted mb-2">
-              Товар будет доставлен в пункт выдачи — ориентировочно за 5–7 рабочих дней с момента выкупа у поставщика.
-              Когда он прибудет, пункт выдачи сообщит вам. Возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
+              Товар будет доставлен в пункт выдачи ориентировочно за 5–7&nbsp;рабочих дней с момента выкупа у поставщика.
+              Когда он прибудет, пункт выдачи сообщит вам; товар хранится там 5&nbsp;дней. При получении назовите номер заказа
+              и возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
             </p>
             {pointBlock}
           </div>
@@ -128,7 +150,9 @@ export default function PaymentPage() {
             <span className="text-text-primary">К оплате</span>
             <span className="text-primary">{formatPrice(order.price)}</span>
           </div>
-          <p className="text-xs text-text-muted mt-2">Доставка до пункта выдачи входит в цену.</p>
+          <p className="text-xs text-text-muted mt-2">
+            Цена окончательная, доставка до пункта выдачи входит в цену. Срок доставки — {DELIVERY_TERM}.
+          </p>
         </div>
 
         <div className="mb-5">
@@ -170,38 +194,58 @@ export default function PaymentPage() {
               </pre>
             </div>
           )}
-          <label className="flex items-start gap-2.5 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={agreed}
-              onChange={e => setAgreed(e.target.checked)}
-              className="accent-primary mt-0.5 flex-shrink-0"
-            />
-            <span className="text-xs text-text-muted leading-relaxed">
-              Принимаю условия{' '}
-              <Link to="/legal/sale-offer" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                публичной оферты купли-продажи
-              </Link>{' '}
-              {SELLER.name} и даю согласие на обработку персональных данных по{' '}
-              <Link to="/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                Политике конфиденциальности
-              </Link>.
-            </span>
-          </label>
+          <div className="space-y-2.5">
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedOffer}
+                onChange={e => setAgreedOffer(e.target.checked)}
+                className="accent-primary mt-0.5 flex-shrink-0"
+              />
+              <span className="text-xs text-text-muted leading-relaxed">
+                Принимаю условия{' '}
+                <Link to="/legal/sale-offer" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  публичной оферты купли-продажи
+                </Link>{' '}
+                {SELLER.name}
+              </span>
+            </label>
+            <label className="flex items-start gap-2.5 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={agreedPd}
+                onChange={e => setAgreedPd(e.target.checked)}
+                className="accent-primary mt-0.5 flex-shrink-0"
+              />
+              <span className="text-xs text-text-muted leading-relaxed">
+                Даю согласие на обработку персональных данных на условиях{' '}
+                <Link to="/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                  Политики конфиденциальности
+                </Link>
+              </span>
+            </label>
+          </div>
         </div>
 
         <button
           onClick={handlePay}
-          disabled={paying || !agreed}
-          className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50"
+          disabled={!DEMO_MODE || paying || !agreedOffer || !agreedPd}
+          className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {paying ? 'Обработка...' : `Оплатить ${formatPrice(order.price)}`}
+          {paying ? 'Обработка…' : `Оплатить ${formatPrice(order.price)}`}
         </button>
+        {!DEMO_MODE && (
+          <p className="text-sm text-text-secondary text-center mt-3">
+            Оплата через СБП станет доступна после подключения банка.
+          </p>
+        )}
 
-        <div className="flex items-center justify-center gap-1.5 mt-4 text-text-muted text-xs">
-          <Shield size={14} />
-          Оплата через СБП в приложении вашего банка
-        </div>
+        {DEMO_MODE && (
+          <div className="flex items-center justify-center gap-1.5 mt-4 text-text-muted text-xs">
+            <Shield size={14} />
+            Оплата через СБП в приложении вашего банка
+          </div>
+        )}
       </div>
     </div>
   )

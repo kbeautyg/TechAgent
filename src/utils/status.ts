@@ -1,4 +1,4 @@
-import type { OrderStatus, PaymentStatus, PartnerStatus } from '../types'
+import type { OrderStatus, PaymentStatus, PartnerStatus, BuyerClaimType } from '../types'
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   CREATED: 'Создан',
@@ -22,7 +22,7 @@ export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
 
 export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
   PENDING: 'Ожидает оплаты',
-  PAID: 'Оплачен',
+  PAID: 'Оплата получена',
   FAILED: 'Ошибка оплаты',
 }
 
@@ -42,12 +42,20 @@ export const ORDER_STEPS: OrderStatus[] = [
   'ISSUED',
 ]
 
-/** Какие статусы ведёт ТехЭйджент в админке. CREATED → PAID — только по факту оплаты,
- *  AT_POINT → ISSUED — подтверждает Партнёр при выдаче */
+/** Какие статусы ведёт ТехЭйджент в админке. CREATED → PAID — только по факту оплаты («Оплата поступила»).
+ *  IN_TRANSIT → AT_POINT — приёмку отмечает Партнёр, AT_POINT → ISSUED — выдачу подтверждает Партнёр */
 export const ADMIN_NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
   PAID: 'PURCHASED',
   PURCHASED: 'IN_TRANSIT',
-  IN_TRANSIT: 'AT_POINT',
+}
+
+/** Подпись статуса AT_POINT в фильтрах и плитках — одинаковая у Партнёра и в админке */
+export const AT_POINT_FILTER_LABEL = 'В пункте выдачи'
+
+export const BUYER_CLAIM_LABELS: Record<BuyerClaimType, string> = {
+  EXCHANGE: 'Обмен',
+  RETURN: 'Возврат',
+  DEFECT: 'Недостаток товара',
 }
 
 export const PARTNER_STATUS_LABELS: Record<PartnerStatus, string> = {

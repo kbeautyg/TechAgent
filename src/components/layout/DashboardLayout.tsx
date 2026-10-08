@@ -18,7 +18,7 @@ export default function DashboardLayout() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-bg-light flex items-center justify-center">
-        <div className="text-text-muted">Загрузка...</div>
+        <div className="text-text-muted">Загрузка…</div>
       </div>
     )
   }

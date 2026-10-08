@@ -7,7 +7,7 @@ const navLinks = [
   { label: 'Главная', path: '/' },
   { label: 'Каталог', path: '/catalog' },
   { label: 'О платформе', path: '/about' },
-  { label: 'Как работает', path: '/how-it-works' },
+  { label: 'Как это работает', path: '/how-it-works' },
 ]
 
 /* Кастомная SVG-иконка логотипа */

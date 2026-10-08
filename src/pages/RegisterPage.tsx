@@ -130,7 +130,7 @@ export default function RegisterPage() {
             <div className="icon-box mx-auto mb-4">
               <UserPlus size={24} className="text-primary" />
             </div>
-            <h1 className="text-2xl font-bold text-text-primary">Анкета Партнёра</h1>
+            <h1 className="text-2xl font-bold text-text-primary">Анкета партнёра</h1>
             <p className="text-text-muted text-sm mt-1">
               Анкету проверяет ТехЭйджент. Оформлять заказы можно после подтверждения.
             </p>
@@ -158,7 +158,7 @@ export default function RegisterPage() {
 
             <fieldset className="space-y-4">
               <legend className="font-bold text-text-primary mb-1">Реквизиты для выплаты вознаграждения</legend>
-              <p className="text-xs text-text-muted -mt-1">На этот счёт ТехЭйджент перечисляет вознаграждение Партнёра.</p>
+              <p className="text-xs text-text-muted -mt-1">На этот счёт ТехЭйджент перечисляет вознаграждение партнёра.</p>
               {input('bankName', 'Банк', { placeholder: 'Наименование банка' })}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {input('bik', 'БИК', { placeholder: '9 цифр', digitsMax: 9 })}
@@ -215,7 +215,7 @@ export default function RegisterPage() {
               disabled={loading}
               className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
             >
-              {loading ? 'Отправка...' : 'Отправить анкету'}
+              {loading ? 'Отправка…' : 'Отправить анкету'}
             </button>
           </form>
 

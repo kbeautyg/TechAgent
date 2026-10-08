@@ -1,11 +1,12 @@
 import { NavLink, Outlet, Navigate } from 'react-router-dom'
-import { LayoutDashboard, Users, Package } from 'lucide-react'
+import { LayoutDashboard, Users, Package, FileText } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
 const navItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Обзор', end: true },
   { to: '/admin/users', icon: Users, label: 'Партнёры', end: false },
   { to: '/admin/orders', icon: Package, label: 'Заказы', end: false },
+  { to: '/admin/reports', icon: FileText, label: 'Отчёты', end: false },
 ]
 
 export default function AdminLayout() {
@@ -14,7 +15,7 @@ export default function AdminLayout() {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-bg-light flex items-center justify-center">
-        <div className="text-text-muted">Загрузка...</div>
+        <div className="text-text-muted">Загрузка…</div>
       </div>
     )
   }
@@ -27,7 +28,8 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
-          <aside className="lg:w-56 shrink-0">
+          {/* На мобильных вместо бокового меню — нижняя навигация */}
+          <aside className="hidden lg:block lg:w-56 shrink-0">
             <nav className="card-glass p-2 flex lg:flex-col gap-1 overflow-x-auto">
               {navItems.map((item) => (
                 <NavLink

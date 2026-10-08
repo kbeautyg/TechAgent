@@ -49,7 +49,7 @@ export default function CategoryPage({ landing }: Props) {
             <p key={i} className="text-[15px] text-text-secondary leading-relaxed mb-3">{p}</p>
           ))}
           <p className="text-[14px] text-text-muted mt-4">
-            {items.length} {pluralRu(items.length, ['модель', 'модели', 'моделей'])}, {inStockCount} в наличии
+            {items.length} {pluralRu(items.length, ['модель', 'модели', 'моделей'])}, {inStockCount} доступны к заказу
             {minPrice > 0 && <>, цены от {fmt(minPrice)} ₽</>}
             {' · '}
             <a href="#kak-kupit" className="text-primary font-semibold no-underline">Как купить</a>
@@ -86,7 +86,7 @@ export default function CategoryPage({ landing }: Props) {
                 <Link to={`/catalog/${p.id}`} className="product-card">
                   <div className="product-img">
                     <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                    {p.inStock ? <span className="cbadge cbadge-stock">В наличии</span> : <span className="cbadge cbadge-out">Нет в наличии</span>}
+                    {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
                     <img src={imgUrl} alt={translateProductName(p.name)}
                       width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
                       className="product-real-img" loading={i < 4 ? 'eager' : 'lazy'} />
@@ -117,7 +117,7 @@ export default function CategoryPage({ landing }: Props) {
           </h2>
           <PurchaseTerms />
           <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
-            Цена в карточке товара — итоговая. Порядок заказа по шагам — на странице{' '}
+            Порядок заказа по шагам — на странице{' '}
             <Link to="/how-it-works" className="text-primary font-semibold">«Как это работает»</Link>.
           </p>
         </section>
@@ -141,7 +141,7 @@ export default function CategoryPage({ landing }: Props) {
         {/* CTA */}
         <div className="mt-14 bg-primary rounded-3xl py-12 px-6 sm:px-8 text-center text-white">
           <h2 className="text-[24px] sm:text-[28px] font-extrabold tracking-tight mb-3">
-            Станьте Партнёром TechAgent
+            Станьте партнёром TechAgent
           </h2>
           <p className="text-white/60 text-[15px] mb-7 max-w-xl mx-auto">
             Оформляйте заказы покупателей и выдавайте товар в своей точке. Вознаграждение платит ТехЭйджент.

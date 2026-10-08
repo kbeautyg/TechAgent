@@ -1,18 +1,5 @@
 import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
-import {
-  IconFileCheck, IconCoins, IconTruck,
-  IconSmartphone, IconGlobe, IconBolt,
-} from '../components/icons'
-
-const advantages = [
-  { icon: <IconFileCheck size={24} />, title: 'Продавец с реквизитами', desc: 'ОсОО «ТехЭйджент» продаёт товар по публичной оферте купли-продажи. Реквизиты продавца — на странице оплаты и в документах.' },
-  { icon: <IconBolt size={24} />, title: 'Оплата через СБП', desc: 'Покупатель платит продавцу напрямую по ссылке или QR-коду. Партнёр деньги покупателя не принимает.' },
-  { icon: <IconTruck size={24} />, title: 'Доставка в пункт выдачи', desc: 'ТехЭйджент выкупает товар у поставщика и доставляет его в точку партнёра за свой счёт — ориентировочно 5–7 рабочих дней с момента выкупа.' },
-  { icon: <IconCoins size={24} />, title: 'Документы по каждому заказу', desc: 'Акт приёма-передачи при выдаче товара, отчёт агента и акт по итогам месяца — в личном кабинете партнёра.' },
-  { icon: <IconSmartphone size={24} />, title: 'Личный кабинет партнёра', desc: 'Оформление заказов, ссылки на оплату, статусы доставки, отметка о выдаче товара.' },
-  { icon: <IconGlobe size={24} />, title: 'Каталог с ценами', desc: 'Apple, Samsung, Xiaomi, Dyson, Sony, DJI и другие бренды. Цены в каталоге — итоговые для покупателя.' },
-]
 
 const roles = [
   {
@@ -20,21 +7,18 @@ const roles = [
     role: 'Продавец',
     desc: 'Покупает товар у поставщика в собственность, доставляет его в пункт выдачи за свой счёт и продаёт покупателю по оферте купли-продажи.',
     color: 'bg-primary',
-    items: ['Контракт поставки и инвойс', 'Доставка до пункта выдачи', 'Договор купли-продажи с покупателем'],
   },
   {
     title: 'Партнёр',
     role: 'Агент и пункт выдачи',
     desc: 'Привлекает покупателей, оформляет заказы и выдаёт товар в своей точке от имени ТехЭйджент. Денег покупателя не принимает.',
     color: 'bg-accent',
-    items: ['Оформляет заказ в кабинете', 'Принимает товар в точке', 'Выдаёт товар под акт'],
   },
   {
     title: 'Покупатель',
     role: 'Физическое лицо',
     desc: 'Выбирает товар в точке партнёра, оплачивает его ТехЭйджент через СБП и получает в том же пункте выдачи.',
     color: 'bg-primary',
-    items: ['Принимает оферту купли-продажи', 'Платит продавцу через СБП', 'Получает товар под подпись'],
   },
 ]
 
@@ -78,34 +62,12 @@ export default function AboutPage() {
             TechAgent — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            Продавец — ОсОО «ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП.
+            Продавец — ОсОО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
           </p>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ===== WHAT IS TECHAGENT ===== */}
-        <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Что такое TechAgent?
-          </h2>
-          <p className="text-text-muted text-center max-w-2xl mx-auto mb-16 text-[16px] leading-relaxed">
-            Платформа, через которую ОсОО «ТехЭйджент» продаёт электронику покупателям в&nbsp;пунктах выдачи партнёров.
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {advantages.map((a, i) => (
-              <div key={i} className="bg-bg-section rounded-3xl p-7 hover:-translate-y-1 transition-transform">
-                <div className="w-12 h-12 bg-primary/8 rounded-xl flex items-center justify-center mb-4">
-                  {a.icon}
-                </div>
-                <h3 className="text-[15px] font-bold text-text-primary mb-2 tracking-tight">{a.title}</h3>
-                <p className="text-[13px] text-text-muted leading-relaxed">{a.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
 
         {/* ===== HOW THE MODEL WORKS ===== */}
         <div className="mb-20">
@@ -124,17 +86,7 @@ export default function AboutPage() {
                 </div>
                 <h3 className="text-xl font-extrabold text-text-primary tracking-tight mb-1">{r.title}</h3>
                 <div className="text-[13px] text-primary font-semibold mb-3 font-mono">{r.role}</div>
-                <p className="text-[13px] text-text-muted leading-relaxed mb-5">{r.desc}</p>
-                <div className="flex flex-col gap-2">
-                  {r.items.map((item, j) => (
-                    <div key={j} className="flex items-center gap-2.5 px-3 py-2 bg-white rounded-xl border border-border">
-                      <div className="w-5 h-5 rounded-full bg-primary/10 text-primary flex items-center justify-center text-[10px] font-bold shrink-0">
-                        ✓
-                      </div>
-                      <span className="text-[13px] text-text-secondary">{item}</span>
-                    </div>
-                  ))}
-                </div>
+                <p className="text-[13px] text-text-muted leading-relaxed">{r.desc}</p>
               </div>
             ))}
           </div>
@@ -174,15 +126,11 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-bg-section rounded-3xl p-8">
               <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">
-                Почему компания зарегистрирована в Бишкеке
+                Договоры
               </h3>
               <div className="flex flex-col gap-3 text-[14px] text-text-secondary leading-relaxed">
                 <p>
-                  ОсОО «ТехЭйджент» покупает товар у зарубежных поставщиков и рассчитывается с ними,
-                  поэтому компания зарегистрирована в Кыргызстане — стране-участнице ЕАЭС.
-                </p>
-                <p>
-                  Покупатель заключает договор купли-продажи с ОсОО «ТехЭйджент» и платит ему напрямую.
+                  Покупатель заключает договор купли-продажи с ОсОО «ТехЭйджент» и платит ему напрямую.
                   Партнёр работает по агентскому договору: оформляет заказы и выдаёт товар, а вознаграждение
                   получает от ТехЭйджент.
                 </p>
@@ -200,12 +148,14 @@ export default function AboutPage() {
               </h3>
               <div className="flex flex-col gap-0">
                 {[
-                  { label: 'Продавец', value: 'ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО' },
+                  { label: 'Продавец', value: 'ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО' },
                   { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8' },
                   { label: 'Директор', value: 'Аширбеков Н.М.Т.' },
                   { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
                   { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
                   { label: 'Покупателям', value: 'help@techagent.pro', href: 'mailto:help@techagent.pro' },
+                  { label: 'Юридические вопросы', value: 'compliance@techagent.pro', href: 'mailto:compliance@techagent.pro' },
+                  { label: 'Поддержка в Telegram', value: '@techagent_support', href: 'https://t.me/techagent_support' },
                   { label: 'Документы', value: 'Оферты, политика, соглашение', href: '/legal' },
                 ].map((item, i) => (
                   <div key={i} className="py-3 border-b border-black/[0.05] last:border-0">

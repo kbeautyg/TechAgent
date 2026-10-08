@@ -18,7 +18,7 @@ export default function NotFoundPage() {
         <div className="mt-8 flex flex-wrap gap-3 justify-center text-sm text-text-muted">
           <Link to="/about" className="hover:text-primary transition-colors no-underline text-text-muted">О платформе</Link>
           <span>·</span>
-          <Link to="/how-it-works" className="hover:text-primary transition-colors no-underline text-text-muted">Как работает</Link>
+          <Link to="/how-it-works" className="hover:text-primary transition-colors no-underline text-text-muted">Как это работает</Link>
           <span>·</span>
           <Link to="/login" className="hover:text-primary transition-colors no-underline text-text-muted">Войти</Link>
         </div>

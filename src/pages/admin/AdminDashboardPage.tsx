@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 import { Users, Package, Wallet, PackageOpen, PackageCheck, Award } from 'lucide-react'
 import { mockOrders, mockUsers } from '../../data/mock'
-import { formatPrice, formatReward, accruedReward, paidTotal } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '../../utils/status'
+import { formatPrice, formatReward, accruedReward, paidTotal, storageExpired } from '../../utils/calculate'
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, AT_POINT_FILTER_LABEL } from '../../utils/status'
 
 export default function AdminDashboardPage() {
   const partners = mockUsers.filter((u) => u.role === 'CLIENT')
@@ -13,9 +13,9 @@ export default function AdminDashboardPage() {
     { label: 'Партнёров', value: partners.length.toString(), icon: Users },
     { label: 'Заказов', value: orders.length.toString(), icon: Package },
     { label: 'Оплачено покупателями', value: formatPrice(paidTotal(orders)), icon: Wallet },
-    { label: 'Ждут выдачи', value: orders.filter((o) => o.status === 'AT_POINT').length.toString(), icon: PackageOpen },
+    { label: AT_POINT_FILTER_LABEL, value: orders.filter((o) => o.status === 'AT_POINT').length.toString(), icon: PackageOpen },
     { label: 'Выдано', value: orders.filter((o) => o.status === 'ISSUED').length.toString(), icon: PackageCheck },
-    { label: 'Вознаграждение Партнёров', value: formatReward(accruedReward(orders)), icon: Award },
+    { label: 'Начислено вознаграждения', value: formatReward(accruedReward(orders)), icon: Award },
   ]
 
   const work = [
@@ -23,6 +23,7 @@ export default function AdminDashboardPage() {
     { label: 'Выкупить у поставщика', value: orders.filter((o) => o.status === 'PAID').length },
     { label: 'Выкуплены, ждут отправки', value: orders.filter((o) => o.status === 'PURCHASED').length },
     { label: 'В пути', value: orders.filter((o) => o.status === 'IN_TRANSIT').length },
+    { label: 'Срок хранения истёк', value: orders.filter((o) => o.status === 'AT_POINT' && storageExpired(o)).length },
   ]
 
   return (
@@ -51,7 +52,7 @@ export default function AdminDashboardPage() {
         ))}
       </div>
       <p className="text-xs text-text-muted mb-8">
-        Вознаграждение — по выданным заказам с загруженным актом приёма-передачи.
+        Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.
       </p>
 
       <h2 className="font-bold text-lg text-text-primary mb-4">В работе у ТехЭйджент</h2>

@@ -5,7 +5,7 @@
 
 export const SITE_URL = 'https://techagent.pro'
 export const SITE_NAME = 'TechAgent'
-export const LEGAL_NAME = 'ОсОО «ТехЭйджент»'
+export const LEGAL_NAME = 'ОсОО\u00A0«ТехЭйджент»'
 
 /** Позиционирование сайта — одно на title, описание, OG и index.html */
 export const DEFAULT_TITLE = 'TechAgent — электроника с получением в пунктах выдачи партнёров'
@@ -16,19 +16,16 @@ export const DEFAULT_DESCRIPTION =
 export const SALE_OFFER_PATH = '/legal/sale-offer'
 
 /** Срок доставки — единственная цифра, которая уже была на сайте; других сроков не писать */
-export const DELIVERY_TERM = 'ориентировочно 5–7 рабочих дней с момента выкупа у поставщика'
+export const DELIVERY_TERM = 'ориентировочно 5–7\u00A0рабочих дней с момента выкупа у поставщика'
 
-/**
- * Где покупателю оформить заказ. Списка пунктов выдачи пока нет —
- * маркер заменить на адреса или ссылку, когда появятся данные.
- */
-/** Списка пунктов выдачи на сайте нет: адрес сообщает Партнёр, оформивший заказ */
-export const PICKUP_POINTS = 'адрес сообщает Партнёр, оформивший заказ, он же указан на странице оплаты'
+/** Списка пунктов выдачи на сайте нет: у каждого партнёра свой пункт, адрес — на странице оплаты */
+export const PICKUP_POINTS = 'адрес пункта указан на странице оплаты'
 
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/og-default.png`
 
 export const CONTACT_EMAIL = 'info@techagent.pro'
 export const PARTNERS_EMAIL = 'partners@techagent.pro'
+export const SUPPORT_EMAIL = 'help@techagent.pro'
 
 export function absoluteUrl(path: string): string {
   if (path.startsWith('http')) return path

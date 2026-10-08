@@ -26,12 +26,17 @@ const DashboardPage = lazy(() => import('./pages/dashboard/DashboardPage'))
 const OrdersPage = lazy(() => import('./pages/dashboard/OrdersPage'))
 const NewOrderPage = lazy(() => import('./pages/dashboard/NewOrderPage'))
 const OrderDetailPage = lazy(() => import('./pages/dashboard/OrderDetailPage'))
+const ActPrintPage = lazy(() => import('./pages/dashboard/ActPrintPage'))
 const ProfilePage = lazy(() => import('./pages/dashboard/ProfilePage'))
 const DocumentsPage = lazy(() => import('./pages/dashboard/DocumentsPage'))
 const ChatPage = lazy(() => import('./pages/dashboard/ChatPage'))
 const AdminDashboardPage = lazy(() => import('./pages/admin/AdminDashboardPage'))
 const AdminUsersPage = lazy(() => import('./pages/admin/AdminUsersPage'))
 const AdminOrdersPage = lazy(() => import('./pages/admin/AdminOrdersPage'))
+const AdminReportsPage = lazy(() => import('./pages/admin/AdminReportsPage'))
+
+/** Печатные формы открываются без шапки, подвала и нижнего меню */
+const BARE_ROUTE = /^\/dashboard\/orders\/[^/]+\/act\/?$/
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -44,12 +49,14 @@ function RouteFallback() {
 }
 
 function App() {
+  const { pathname } = useLocation()
+  const bare = BARE_ROUTE.test(pathname)
   return (
     <AuthProvider>
       <ScrollToTop />
       <SeoManager />
       <div className="flex flex-col min-h-screen">
-        <Header />
+        {!bare && <Header />}
         <main className="flex-1">
           <ErrorBoundary>
             <Suspense fallback={<RouteFallback />}>
@@ -66,6 +73,8 @@ function App() {
 
                 <Route path="/pay/:paymentId" element={<PaymentPage />} />
 
+                <Route path="/dashboard/orders/:id/act" element={<ActPrintPage />} />
+
                 <Route path="/dashboard" element={<DashboardLayout />}>
                   <Route index element={<DashboardPage />} />
                   <Route path="orders" element={<OrdersPage />} />
@@ -80,6 +89,7 @@ function App() {
                   <Route index element={<AdminDashboardPage />} />
                   <Route path="users" element={<AdminUsersPage />} />
                   <Route path="orders" element={<AdminOrdersPage />} />
+                  <Route path="reports" element={<AdminReportsPage />} />
                 </Route>
 
                 <Route path="*" element={<NotFoundPage />} />
@@ -87,8 +97,8 @@ function App() {
             </Suspense>
           </ErrorBoundary>
         </main>
-        <Footer />
-        <MobileBottomNav />
+        {!bare && <Footer />}
+        {!bare && <MobileBottomNav />}
       </div>
     </AuthProvider>
   )

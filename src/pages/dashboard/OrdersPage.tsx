@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom'
 import { PlusCircle, Search } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders } from '../../data/mock'
-import { formatPrice, formatDate } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '../../utils/status'
+import { formatPrice, formatDate, storageNote } from '../../utils/calculate'
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, AT_POINT_FILTER_LABEL } from '../../utils/status'
 import type { OrderStatus } from '../../types'
 
 const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
@@ -13,7 +13,7 @@ const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: 'Оплачены', value: 'PAID' },
   { label: 'Выкуплены', value: 'PURCHASED' },
   { label: 'В пути', value: 'IN_TRANSIT' },
-  { label: 'Ждут выдачи', value: 'AT_POINT' },
+  { label: AT_POINT_FILTER_LABEL, value: 'AT_POINT' },
   { label: 'Выданы', value: 'ISSUED' },
   { label: 'Отменены', value: 'CANCELLED' },
 ]
@@ -25,8 +25,8 @@ export default function OrdersPage() {
   const canOrder = user?.partnerStatus === 'VERIFIED'
 
   const q = search.trim().toLowerCase()
-  const filtered = mockOrders
-    .filter((o) => o.userId === user?.id)
+  const own = mockOrders.filter((o) => o.userId === user?.id)
+  const filtered = own
     .filter((o) => filter === 'ALL' || o.status === filter)
     .filter((o) =>
       q === '' ||
@@ -80,11 +80,13 @@ export default function OrdersPage() {
       <div className="card">
         {filtered.length === 0 ? (
           <div className="p-8 text-center text-text-muted">
-            <p>Заказы не найдены</p>
+            <p>{own.length === 0 ? 'Заказов пока нет' : 'Ничего не найдено'}</p>
           </div>
         ) : (
           <div className="divide-y divide-border">
-            {filtered.map((order) => (
+            {filtered.map((order) => {
+              const note = storageNote(order)
+              return (
               <Link
                 key={order.id}
                 to={`/dashboard/orders/${order.id}`}
@@ -101,10 +103,14 @@ export default function OrdersPage() {
                   <p className="text-text-muted text-xs mt-0.5">
                     Покупатель: {order.buyerName} &middot; {formatDate(order.createdAt)}
                   </p>
+                  {note && (
+                    <p className={`text-xs mt-0.5 ${note.expired ? 'text-red-600 font-medium' : 'text-text-secondary'}`}>{note.text}</p>
+                  )}
                 </div>
-                <p className="font-bold text-sm text-text-primary shrink-0 ml-4">{formatPrice(order.price)}</p>
+                <p className="font-bold text-sm text-text-primary shrink-0 ml-4 whitespace-nowrap">{formatPrice(order.price)}</p>
               </Link>
-            ))}
+              )
+            })}
           </div>
         )}
       </div>

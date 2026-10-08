@@ -2,6 +2,8 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
 import { faqData } from '../data/faq'
+import { products } from '../data/products'
+import { formatPrice } from '../utils/calculate'
 import { reachGoal } from '../lib/metrika'
 import {
   IconUserPlus, IconClipboardEdit, IconCreditCard, IconPackageCheck,
@@ -10,31 +12,37 @@ import {
 } from '../components/icons'
 
 const features = [
-  { icon: <IconFileCheck size={32} />, bg: 'bg-primary/8', title: 'Продавец — ТехЭйджент', desc: 'ОсОО «ТехЭйджент» покупает товар у поставщика по контракту и инвойсу и продаёт его покупателю по оферте купли-продажи. Вы — агент продавца и пункт выдачи' },
+  { icon: <IconFileCheck size={32} />, bg: 'bg-primary/8', title: 'Продавец — ОсОО «ТехЭйджент»', desc: 'Покупает товар у поставщика по контракту и инвойсу и продаёт его покупателю по оферте купли-продажи. Вы — агент продавца и пункт выдачи' },
   { icon: <IconCoins size={32} />, bg: 'bg-primary/8', title: 'Оплата напрямую продавцу', desc: 'Покупатель платит ТехЭйджент через СБП по ссылке или QR-коду. Вы деньги покупателя не принимаете' },
-  { icon: <IconTruck size={32} />, bg: 'bg-primary/8', title: 'Доставка в вашу точку', desc: 'ТехЭйджент доставляет товар в ваш пункт выдачи за свой счёт — ориентировочно 5–7 рабочих дней с момента выкупа у поставщика' },
+  { icon: <IconTruck size={32} />, bg: 'bg-primary/8', title: 'Выдача — в вашей точке', desc: 'ТехЭйджент доставляет товар в ваш пункт выдачи за свой счёт — ориентировочно 5–7 рабочих дней с момента выкупа у поставщика. Вы выдаёте его покупателю под акт приёма-передачи' },
 ]
 
 const steps = [
-  { icon: <IconUserPlus size={28} />, title: 'Анкета и проверка', desc: 'Заполните анкету: ИНН, ОГРН, адрес точки, реквизиты. ТехЭйджент проверит данные до первого заказа' },
+  { icon: <IconUserPlus size={28} />, title: 'Анкета и проверка', desc: 'Заполните анкету: ИНН, ОГРН или ОГРНИП, адрес пункта выдачи, банковские реквизиты. ТехЭйджент проверит данные до первого заказа' },
   { icon: <IconClipboardEdit size={28} />, title: 'Заказ покупателя', desc: 'Выберите товар в каталоге и оформите заказ на покупателя в личном кабинете. Цена — из каталога' },
-  { icon: <IconCreditCard size={28} />, title: 'Оплата продавцу', desc: 'Покупатель оплачивает заказ ТехЭйджент через СБП по ссылке или QR-коду' },
-  { icon: <IconPackageCheck size={28} />, title: 'Выдача в точке', desc: 'Товар приходит к вам. Сверьте данные покупателя, выдайте товар и загрузите подписанный акт' },
+  { icon: <IconCreditCard size={28} />, title: 'Оплата продавцу', desc: 'Отправьте покупателю ссылку или QR-код — он оплатит заказ ТехЭйджент через СБП' },
+  { icon: <IconPackageCheck size={28} />, title: 'Выдача в точке', desc: 'Товар приходит к вам — сообщите покупателю. При выдаче проверьте, что заказ оплачен, сверьте данные покупателя и загрузите подписанный акт приёма-передачи' },
 ]
+
+/** Минимальная цена среди товаров, доступных к заказу: цифра на плитке всегда из каталога */
+function fromPrice(cat: string, brands: string[]): string {
+  const prices = products.filter((p) => p.inStock && p.category === cat && brands.includes(p.brand)).map((p) => p.price)
+  return prices.length ? `от ${formatPrice(Math.min(...prices))}` : ''
+}
+
+const q = (cat: string, brand: string) => `/catalog?cat=${encodeURIComponent(cat)}&brand=${encodeURIComponent(brand)}`
 
 const categories = [
-  { icon: <IconApple size={22} />, name: 'Apple iPhone', price: 'от 60 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Apple' },
-  { icon: <IconLaptop size={22} />, name: 'MacBook Air / Pro', price: 'от 100 000 ₽', cat: 'Ноутбуки', to: '/catalog?cat=Ноутбуки&brand=Apple' },
-  { icon: <IconSmartphone size={22} />, name: 'Samsung Galaxy', price: 'от 40 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Samsung' },
-  { icon: <IconHeadphones size={22} />, name: 'AirPods', price: 'от 15 000 ₽', cat: 'Наушники', to: '/catalog/naushniki' },
-  { icon: <IconWatch size={22} />, name: 'Apple Watch', price: 'от 35 000 ₽', cat: 'Часы', to: '/catalog/chasy' },
-  { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: 'от 15 000 ₽', cat: 'Смартфоны', to: '/catalog/smartfony' },
-  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: 'от 45 000 ₽', cat: 'Игровые консоли', to: '/catalog/igrovye-konsoli' },
-  { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: 'от 30 000 ₽', cat: 'Камеры и дроны', to: '/catalog/kamery-i-drony' },
-  { icon: <IconPlug size={22} />, name: 'Dyson', price: 'от 25 000 ₽', cat: 'Для дома', to: '/catalog/tehnika-dlya-doma' },
+  { icon: <IconApple size={22} />, name: 'Apple iPhone', price: fromPrice('Смартфоны', ['Apple']), to: q('Смартфоны', 'Apple') },
+  { icon: <IconLaptop size={22} />, name: 'MacBook Air / Pro', price: fromPrice('Ноутбуки', ['Apple']), to: q('Ноутбуки', 'Apple') },
+  { icon: <IconSmartphone size={22} />, name: 'Samsung Galaxy', price: fromPrice('Смартфоны', ['Samsung']), to: q('Смартфоны', 'Samsung') },
+  { icon: <IconHeadphones size={22} />, name: 'AirPods', price: fromPrice('Наушники', ['Apple']), to: q('Наушники', 'Apple') },
+  { icon: <IconWatch size={22} />, name: 'Apple Watch', price: fromPrice('Часы', ['Apple']), to: q('Часы', 'Apple') },
+  { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: fromPrice('Смартфоны', ['Xiaomi']), to: q('Смартфоны', 'Xiaomi') },
+  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: fromPrice('Игровые консоли', ['Sony', 'Microsoft']), to: '/catalog/igrovye-konsoli' },
+  { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: fromPrice('Камеры и дроны', ['DJI', 'GoPro']), to: '/catalog/kamery-i-drony' },
+  { icon: <IconPlug size={22} />, name: 'Dyson', price: fromPrice('Для дома', ['Dyson']), to: q('Для дома', 'Dyson') },
 ]
-
-const tabLabels = ['Популярное', 'Смартфоны', 'Ноутбуки', 'Наушники', 'Планшеты', 'Часы', 'Аксессуары']
 
 function FAQ() {
   const [open, setOpen] = useState<number | null>(null)
@@ -53,7 +61,7 @@ function FAQ() {
           </button>
           <div
             className="overflow-hidden transition-all duration-300"
-            style={{ maxHeight: open === i ? '200px' : '0px', opacity: open === i ? 1 : 0 }}
+            style={{ maxHeight: open === i ? '480px' : '0px', opacity: open === i ? 1 : 0 }}
           >
             <p className="pb-5 text-text-secondary text-[15px] leading-relaxed">{item.a}</p>
           </div>
@@ -64,7 +72,6 @@ function FAQ() {
 }
 
 export default function HomePage() {
-  const [activeTab, setActiveTab] = useState(0)
 
   return (
     <div className="bg-white">
@@ -79,7 +86,7 @@ export default function HomePage() {
                 Станьте пунктом выдачи электроники TechAgent
               </h1>
               <p className="text-[15px] sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
-                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ОсОО «ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
+                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ОсОО «ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
               </p>
 
               {/* PHONE mockup — MOBILE ONLY, before buttons */}
@@ -91,7 +98,7 @@ export default function HomePage() {
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </div>
                     <span className="text-[12px] font-bold"><span className="text-red-600">Tech</span><span className="text-primary">Agent</span></span>
-                    <span className="ml-auto text-[10px] text-gray-400">Пример кабинета · демо</span>
+                    <span className="ml-auto text-[10px] text-gray-400">Пример кабинета</span>
                   </div>
                   {/* Stats */}
                   <div className="p-3 grid grid-cols-3 gap-2">
@@ -100,7 +107,7 @@ export default function HomePage() {
                       <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">12</div>
                     </div>
                     <div className="bg-bg-section rounded-xl p-2.5">
-                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Ждут выдачи</div>
+                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">В пункте выдачи</div>
                       <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">3</div>
                     </div>
                     <div className="bg-bg-section rounded-xl p-2.5">
@@ -111,8 +118,8 @@ export default function HomePage() {
                   {/* Orders */}
                   <div className="px-3 pb-3">
                     {[
-                      { item: 'iPhone 16 Pro Max', sum: '169 900 ₽', status: 'В пути', sColor: 'text-blue-600' },
-                      { item: 'MacBook Air M4', sum: '139 900 ₽', status: 'В пункте выдачи', sColor: 'text-green-600' },
+                      { item: 'iPhone 16 Pro Max', sum: '199 900 ₽', status: 'В пути', sColor: 'text-blue-600' },
+                      { item: 'MacBook Air 13" M3', sum: '99 900 ₽', status: 'Прибыл в пункт выдачи', sColor: 'text-green-600' },
                     ].map((o, i) => (
                       <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50 last:border-0">
                         <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-[12px] font-bold text-gray-300">{o.item[0]}</div>
@@ -152,7 +159,7 @@ export default function HomePage() {
                     <div className="flex-1 mx-3 px-3 py-1 bg-white rounded-md text-[10px] text-gray-400 font-mono border border-gray-100">
                       techagent.pro/dashboard
                     </div>
-                    <span className="text-[9px] text-gray-400 font-medium">Пример · демо</span>
+                    <span className="text-[9px] text-gray-400 font-medium">Пример кабинета</span>
                   </div>
                   {/* Dashboard with sidebar */}
                   <div className="flex" style={{ height: 360 }}>
@@ -197,7 +204,7 @@ export default function HomePage() {
                           <div className="text-[18px] font-extrabold text-gray-800 leading-none">12</div>
                         </div>
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Ждут выдачи</div>
+                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">В пункте выдачи</div>
                           <div className="text-[18px] font-extrabold text-gray-800 leading-none">3</div>
                         </div>
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
@@ -212,10 +219,10 @@ export default function HomePage() {
                           <span className="text-[9px] text-primary font-bold">Все →</span>
                         </div>
                         {[
-                          { id: '#1847', item: 'iPhone 16 Pro Max', sum: '169 900 ₽', status: 'В пути', color: 'text-blue-600 bg-blue-50' },
+                          { id: '#1847', item: 'iPhone 16 Pro Max', sum: '199 900 ₽', status: 'В пути', color: 'text-blue-600 bg-blue-50' },
                           { id: '#1846', item: 'Galaxy S25 Ultra', sum: '149 900 ₽', status: 'Оплачен', color: 'text-amber-600 bg-amber-50' },
-                          { id: '#1845', item: 'MacBook Air M4', sum: '139 900 ₽', status: 'В пункте выдачи', color: 'text-green-600 bg-green-50' },
-                          { id: '#1844', item: 'AirPods Pro 2', sum: '24 990 ₽', status: 'Выдан', color: 'text-green-600 bg-green-50' },
+                          { id: '#1845', item: 'MacBook Air 13" M3', sum: '99 900 ₽', status: 'Прибыл в пункт выдачи', color: 'text-green-600 bg-green-50' },
+                          { id: '#1844', item: 'AirPods Pro 2', sum: '29 900 ₽', status: 'Выдан покупателю', color: 'text-green-600 bg-green-50' },
                         ].map((o, i) => (
                           <div key={i} className="flex items-center px-3 py-1.5 border-b border-gray-50/80 last:border-0">
                             <span className="text-[10px] font-mono text-gray-400 w-[40px]">{o.id}</span>
@@ -315,7 +322,7 @@ export default function HomePage() {
               Покупателям
             </h2>
             <p className="text-[15px] text-text-secondary leading-relaxed max-w-3xl mb-6">
-              Товар продаёт ОсОО «ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
+              Товар продаёт ОсОО «ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
               напрямую продавцу, товар выдаётся в том же пункте. Деньги за товар в пункте выдачи не принимают.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
@@ -335,41 +342,22 @@ export default function HomePage() {
             Популярные категории товаров
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-12 text-[16px]">
-            Цены в каталоге — итоговые для покупателя
+            Цена окончательная: доставка до пункта выдачи входит в&nbsp;цену
           </p>
 
-          <div className="flex flex-wrap gap-2 justify-center mb-8">
-            {tabLabels.map((t, i) => (
-              <button
-                key={i}
-                onClick={() => setActiveTab(i)}
-                className={`px-5 py-2 rounded-full text-[13px] font-medium border transition-all cursor-pointer ${
-                  activeTab === i
-                    ? 'bg-text-primary border-text-primary text-white'
-                    : 'bg-white border-border text-text-secondary hover:border-text-muted'
-                }`}
-              >
-                {t}
-              </button>
-            ))}
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {categories.map((c, i) => {
-              const isMatch = activeTab === 0 || c.cat === tabLabels[activeTab]
-              return (
-              <Link key={i} to={c.to} className={`flex items-center gap-3.5 py-4 px-5 rounded-2xl hover:-translate-y-0.5 transition-all cursor-pointer no-underline group ${isMatch ? 'bg-bg-section' : 'bg-bg-section/40 opacity-40'}`}>
-                <div className={`w-11 h-11 rounded-xl flex items-center justify-center shadow-sm shrink-0 group-hover:shadow-md transition-shadow ${isMatch ? 'bg-white text-text-primary' : 'bg-white/60 text-text-muted'}`}>
+            {categories.map((c) => (
+              <Link key={c.name} to={c.to} className="flex items-center gap-3.5 py-4 px-5 rounded-2xl hover:-translate-y-0.5 transition-all cursor-pointer no-underline group bg-bg-section">
+                <div className="w-11 h-11 rounded-xl flex items-center justify-center shadow-sm shrink-0 group-hover:shadow-md transition-shadow bg-white text-text-primary">
                   {c.icon}
                 </div>
                 <div className="flex-1">
-                  <div className={`text-[14px] font-semibold ${isMatch ? 'text-text-primary' : 'text-text-muted'}`}>{c.name}</div>
+                  <div className="text-[14px] font-semibold text-text-primary">{c.name}</div>
                   <div className="text-[12px] text-text-muted">{c.price}</div>
                 </div>
                 <ArrowRight size={14} className="text-text-light group-hover:text-primary transition-colors shrink-0" />
               </Link>
-              )
-            })}
+            ))}
           </div>
         </div>
 

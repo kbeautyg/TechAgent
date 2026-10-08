@@ -12,7 +12,7 @@ import { faqData } from '../data/faq'
 import { categoryLandings, getCategoryBySlug, type CategoryLanding } from './categories'
 import {
   SITE_URL, SITE_NAME, LEGAL_NAME, DEFAULT_TITLE, DEFAULT_DESCRIPTION,
-  DEFAULT_OG_IMAGE, CONTACT_EMAIL, PARTNERS_EMAIL, absoluteUrl, clampDescription, pluralRu,
+  DEFAULT_OG_IMAGE, CONTACT_EMAIL, PARTNERS_EMAIL, SUPPORT_EMAIL, absoluteUrl, clampDescription, pluralRu,
 } from './site'
 
 export interface PageMeta {
@@ -46,7 +46,7 @@ function organizationLd(): object {
       {
         '@type': 'ContactPoint',
         contactType: 'customer support',
-        email: CONTACT_EMAIL,
+        email: SUPPORT_EMAIL,
         availableLanguage: ['Russian'],
       },
       {
@@ -166,19 +166,19 @@ function baseMeta(overrides: Partial<PageMeta> & { title: string; description: s
 const legalDocMeta: Record<string, { title: string; description: string }> = {
   'sale-offer': {
     title: 'Публичная оферта купли-продажи | TechAgent',
-    description: 'Условия покупки у продавца ОсОО «ТехЭйджент»: оплата через СБП, получение товара в пункте выдачи Партнёра, отказ от заказа и возврат денежных средств.',
+    description: 'Условия покупки у продавца ОсОО «ТехЭйджент»: оплата через СБП, получение товара в пункте выдачи партнёра, отказ от заказа и возврат денежных средств.',
   },
   offer: {
-    title: 'Агентский договор-оферта для Партнёров | TechAgent',
-    description: 'Агентский договор-оферта для Партнёров ОсОО «ТехЭйджент»: оформление заказов покупателей, выдача товара в точке, вознаграждение, отчёт агента и акт.',
+    title: 'Агентский договор-оферта для партнёров | TechAgent',
+    description: 'Агентский договор-оферта для партнёров ОсОО «ТехЭйджент»: оформление заказов покупателей, выдача товара в точке, вознаграждение, отчёт агента и акт.',
   },
   privacy: {
     title: 'Политика конфиденциальности | TechAgent',
-    description: 'Политика конфиденциальности TechAgent: какие данные Партнёров и покупателей обрабатывает ОсОО «ТехЭйджент», зачем, кому передаёт и как отозвать согласие.',
+    description: 'Политика конфиденциальности TechAgent: какие данные партнёров и покупателей обрабатывает ОсОО «ТехЭйджент», зачем, кому передаёт и как отозвать согласие.',
   },
   terms: {
     title: 'Пользовательское соглашение | TechAgent',
-    description: 'Пользовательское соглашение TechAgent: правила использования сайта, каталога и личного кабинета Партнёра.',
+    description: 'Пользовательское соглашение TechAgent: правила использования сайта, каталога и личного кабинета партнёра.',
   },
   payment: {
     title: 'Условия оплаты и возврата | TechAgent',
@@ -200,7 +200,8 @@ export function resolveMeta(pathname: string): PageMeta {
   if (path === '/') {
     return baseMeta({
       title: DEFAULT_TITLE,
-      description: DEFAULT_DESCRIPTION,
+      description:
+        'Станьте пунктом выдачи электроники TechAgent: оформляйте заказы покупателей и выдавайте товар в своей точке. Продавец — ОсОО «ТехЭйджент», оплата через СБП.',
       canonical: SITE_URL + '/',
       jsonLd: [organizationLd(), websiteLd(), faqLd()],
     })
@@ -220,7 +221,7 @@ export function resolveMeta(pathname: string): PageMeta {
     return baseMeta({
       title: 'Как это работает — заказ, оплата через СБП и получение товара | TechAgent',
       description:
-        'Партнёр оформляет заказ в пункте выдачи, покупатель платит ТехЭйджент через СБП, товар приезжает в этот пункт через 5–7 рабочих дней после выкупа у поставщика.',
+        'Партнёр оформляет заказ, покупатель платит ОсОО «ТехЭйджент» через СБП, товар приходит в пункт выдачи ориентировочно за 5–7 рабочих дней после выкупа у поставщика.',
       canonical: `${SITE_URL}/how-it-works`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Как это работает' }])],
     })
@@ -306,15 +307,15 @@ export function resolveMeta(pathname: string): PageMeta {
   if (path === '/login') {
     return baseMeta({
       title: 'Вход в личный кабинет | TechAgent',
-      description: 'Вход в личный кабинет Партнёра TechAgent.',
+      description: 'Вход в личный кабинет партнёра TechAgent.',
       canonical: `${SITE_URL}/login`,
       robots: NOINDEX,
     })
   }
   if (path === '/register') {
     return baseMeta({
-      title: 'Регистрация Партнёра | TechAgent',
-      description: 'Регистрация Партнёра TechAgent: анкета компании и точки выдачи. ТехЭйджент проверяет данные и подтверждает аккаунт до первого заказа.',
+      title: 'Регистрация партнёра | TechAgent',
+      description: 'Регистрация партнёра TechAgent: анкета компании и пункта выдачи. ОсОО «ТехЭйджент» проверяет данные до первого заказа.',
       canonical: `${SITE_URL}/register`,
       robots: NOINDEX,
     })
@@ -327,10 +328,18 @@ export function resolveMeta(pathname: string): PageMeta {
       robots: NOINDEX,
     })
   }
-  if (path.startsWith('/dashboard') || path.startsWith('/admin')) {
+  if (path.startsWith('/admin')) {
+    return baseMeta({
+      title: 'Админка | TechAgent',
+      description: 'Админка TechAgent.',
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
+  if (path.startsWith('/dashboard')) {
     return baseMeta({
       title: 'Личный кабинет | TechAgent',
-      description: 'Личный кабинет Партнёра TechAgent.',
+      description: 'Личный кабинет партнёра TechAgent.',
       canonical: SITE_URL + path,
       robots: NOINDEX,
     })

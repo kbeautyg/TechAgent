@@ -2,6 +2,13 @@ import { useState } from 'react'
 import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/documents'
+import {
+  userDocuments,
+  isAgentDocument,
+  reviewState,
+  acceptDocument,
+  objectDocument,
+} from '../../data/partnerDocuments'
 import { formatDate } from '../../utils/calculate'
 import type { Document, DocumentType } from '../../types'
 
@@ -35,13 +42,106 @@ const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; classN
   PAYMENT: CreditCard,
 }
 
+/** Принятие отчёта агента и акта или возражения (оферта, п. 7.5) */
+function ReviewBlock({ doc, onChange }: { doc: Document; onChange: () => void }) {
+  const [objecting, setObjecting] = useState(false)
+  const [text, setText] = useState('')
+  const state = reviewState(doc)
+  const what = doc.type === 'REPORT' ? 'отчёт агента' : 'акт'
+
+  if (state.kind === 'ACCEPTED') {
+    return <p className="text-xs text-emerald-700">Принят {formatDate(state.at)}</p>
+  }
+  if (state.kind === 'DEEMED_ACCEPTED') {
+    return (
+      <p className="text-xs text-emerald-700">
+        Считается принятым: возражений до {formatDate(state.deadline.toISOString())} не поступило
+      </p>
+    )
+  }
+  if (state.kind === 'OBJECTED') {
+    return (
+      <div className="text-xs">
+        <p className="text-red-700">Возражения направлены {formatDate(state.at)}</p>
+        <p className="text-text-secondary mt-1 whitespace-pre-wrap break-words border-l-2 border-red-200 pl-2">{state.text}</p>
+      </div>
+    )
+  }
+
+  const accept = () => {
+    if (!confirm(`Принять ${what} «${doc.title}»?`)) return
+    acceptDocument(doc.id)
+    onChange()
+  }
+
+  const sendObjection = () => {
+    if (!text.trim()) return
+    objectDocument(doc.id, text)
+    setObjecting(false)
+    setText('')
+    onChange()
+  }
+
+  return (
+    <div className="text-sm space-y-2">
+      <p className="text-xs text-amber-700">
+        <span className="font-semibold">Ждёт вашего решения.</span> Возражения — до {formatDate(state.deadline.toISOString())}
+      </p>
+      {!objecting ? (
+        <div className="flex items-center gap-2 flex-wrap">
+          <button
+            onClick={accept}
+            className="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer"
+          >
+            Принять
+          </button>
+          <button
+            onClick={() => setObjecting(true)}
+            className="text-xs bg-red-50 text-red-700 px-3 py-1.5 rounded-lg font-medium hover:bg-red-100 transition-colors border-none cursor-pointer"
+          >
+            Направить возражения
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <label htmlFor={`obj-${doc.id}`} className="block text-xs font-medium text-text-secondary">Возражения</label>
+          <textarea
+            id={`obj-${doc.id}`}
+            rows={3}
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            className="w-full px-3 py-2 rounded-lg border border-border bg-bg-light text-text-primary text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
+          />
+          <div className="flex items-center gap-3">
+            <button
+              onClick={sendObjection}
+              disabled={!text.trim()}
+              className="text-xs bg-primary text-white px-3 py-1.5 rounded-lg font-medium hover:bg-primary-dark transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Отправить
+            </button>
+            <button
+              onClick={() => { setObjecting(false); setText('') }}
+              className="text-xs text-text-secondary bg-transparent border-none cursor-pointer hover:text-text-primary"
+            >
+              Отмена
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function DocumentsPage() {
   const { user } = useAuth()
   const [openDoc, setOpenDoc] = useState<string | null>(null)
+  const [, setRefresh] = useState(0)
+  const refresh = () => setRefresh((k) => k + 1)
 
-  const userDocs = mockDocuments.filter((d) => d.userId === user?.id)
+  const userDocs = user ? userDocuments(user.id) : []
   const publicDocs = mockDocuments.filter((d) => d.userId === 'public')
-  const activeDoc = mockDocuments.find((d) => d.id === openDoc)
+  const activeDoc = [...publicDocs, ...userDocs].find((d) => d.id === openDoc)
 
   return (
     <div>
@@ -63,14 +163,14 @@ export default function DocumentsPage() {
                 onClick={() => { if (doc.content) setOpenDoc(doc.id) }}
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
                     <Icon size={18} className="text-primary" />
                   </div>
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-sm text-text-primary">{doc.title}</span>
                     </div>
-                    <p className="text-text-muted text-xs mt-0.5">{[typeHint(doc), formatDate(doc.createdAt)].filter(Boolean).join(' · ')}</p>
+                    {typeHint(doc) && <p className="text-text-muted text-xs mt-0.5">{typeHint(doc)}</p>}
                   </div>
                 </div>
                 <button
@@ -103,52 +203,56 @@ export default function DocumentsPage() {
             {userDocs.map((doc) => {
               const Icon = typeIcons[doc.type]
               return (
-                <div
-                  key={doc.id}
-                  className={`card p-4 flex items-center justify-between hover:bg-bg-light transition-colors ${doc.content ? 'cursor-pointer' : ''}`}
-                  onClick={() => { if (doc.content) setOpenDoc(doc.id) }}
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                      <Icon size={18} className="text-primary" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-sm text-text-primary">{doc.title}</span>
+                <div key={doc.id} className="card p-4">
+                  <div
+                    className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 ${doc.content ? 'cursor-pointer' : ''}`}
+                    onClick={() => { if (doc.content) setOpenDoc(doc.id) }}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
+                        <Icon size={18} className="text-primary" />
                       </div>
-                      <p className="text-text-muted text-xs mt-0.5">{[typeHint(doc), formatDate(doc.createdAt)].filter(Boolean).join(' · ')}</p>
+                      <div className="min-w-0">
+                        <span className="font-medium text-sm text-text-primary break-words">{doc.title}</span>
+                        <p className="text-text-muted text-xs mt-0.5">{[typeHint(doc), formatDate(doc.createdAt)].filter(Boolean).join(' · ')}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex items-center gap-4 flex-shrink-0">
-                    {doc.content && (
+                    <div className="flex items-center gap-4 flex-shrink-0 pl-13 sm:pl-0">
+                      {doc.content && (
+                        <button
+                          className="text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline p-0"
+                          onClick={(e) => {
+                            e.stopPropagation()
+                            setOpenDoc(doc.id)
+                          }}
+                        >
+                          Читать
+                        </button>
+                      )}
                       <button
-                        className="text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
+                        className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline p-0"
                         onClick={(e) => {
                           e.stopPropagation()
-                          setOpenDoc(doc.id)
+                          const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
+                          const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
+                          const url = URL.createObjectURL(blob)
+                          const a = document.createElement('a')
+                          a.href = url
+                          a.download = `${doc.title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
+                          a.click()
+                          URL.revokeObjectURL(url)
                         }}
                       >
-                        Читать
+                        <Download size={16} />
+                        Скачать
                       </button>
-                    )}
-                    <button
-                      className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
-                        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' })
-                        const url = URL.createObjectURL(blob)
-                        const a = document.createElement('a')
-                        a.href = url
-                        a.download = `${doc.title.replace(/[^\w\sа-яА-ЯёЁ-]/g, '')}.txt`
-                        a.click()
-                        URL.revokeObjectURL(url)
-                      }}
-                    >
-                      <Download size={16} />
-                      Скачать
-                    </button>
+                    </div>
                   </div>
+                  {isAgentDocument(doc) && (
+                    <div className="mt-3 pt-3 border-t border-border sm:pl-13">
+                      <ReviewBlock doc={doc} onChange={refresh} />
+                    </div>
+                  )}
                 </div>
               )
             })}
@@ -159,7 +263,7 @@ export default function DocumentsPage() {
       {/* Document viewer modal */}
       {activeDoc && activeDoc.content && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-start justify-center pt-12 px-4"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[200] flex items-start justify-center pt-12 px-4"
           onClick={() => setOpenDoc(null)}
         >
           <div
@@ -179,9 +283,14 @@ export default function DocumentsPage() {
               </button>
             </div>
             <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-              <pre className="whitespace-pre-wrap font-sans text-sm text-text-secondary leading-relaxed">
+              <pre className="whitespace-pre-wrap break-words font-sans text-sm text-text-secondary leading-relaxed">
                 {activeDoc.content}
               </pre>
+              {isAgentDocument(activeDoc) && activeDoc.userId === user?.id && (
+                <div className="mt-5 pt-4 border-t border-border">
+                  <ReviewBlock doc={activeDoc} onChange={refresh} />
+                </div>
+              )}
             </div>
           </div>
         </div>

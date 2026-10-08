@@ -4,7 +4,7 @@ import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag } f
 import { mockDocuments } from '../data/documents'
 
 const typeLabels: Record<string, string> = {
-  OFFER: 'Для Партнёров',
+  OFFER: 'Для партнёров',
   SALE_OFFER: 'Для покупателей',
   PRIVACY: 'Для всех',
   TERMS: 'Для всех',
@@ -67,7 +67,7 @@ export default function LegalPage() {
             <Shield size={28} className="text-primary" />
           </div>
           <h1 className="text-3xl font-bold text-text-primary mb-2">Правовая информация</h1>
-          <p className="text-text-muted">Продавец товаров на techagent.pro — ОсОО «ТехЭйджент»</p>
+          <p className="text-text-muted">Продавец товаров на techagent.pro — ОсОО «ТехЭйджент»</p>
         </div>
 
         <div className="space-y-3">

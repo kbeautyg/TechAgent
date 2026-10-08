@@ -1,12 +1,14 @@
 import { useState } from 'react'
 import { mockOrders, mockUsers, saveOrders } from '../../data/mock'
-import { formatPrice, formatDate, formatReward } from '../../utils/calculate'
+import { formatPrice, formatDate, formatReward, storageUntil, storageExpired } from '../../utils/calculate'
 import {
   ORDER_STATUS_LABELS,
   ORDER_STATUS_COLORS,
   PAYMENT_STATUS_LABELS,
   PAYMENT_STATUS_COLORS,
   ADMIN_NEXT_STATUS,
+  AT_POINT_FILTER_LABEL,
+  BUYER_CLAIM_LABELS,
 } from '../../utils/status'
 import type { Order, OrderStatus } from '../../types'
 
@@ -16,12 +18,45 @@ const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: 'Оплачены', value: 'PAID' },
   { label: 'Выкуплены', value: 'PURCHASED' },
   { label: 'В пути', value: 'IN_TRANSIT' },
-  { label: 'В пункте выдачи', value: 'AT_POINT' },
+  { label: AT_POINT_FILTER_LABEL, value: 'AT_POINT' },
   { label: 'Выданы', value: 'ISSUED' },
   { label: 'Отменены', value: 'CANCELLED' },
 ]
 
 const actionBtn = 'text-xs px-2 py-1 rounded font-medium transition-colors border-none cursor-pointer whitespace-nowrap'
+
+/** Отметки о заказе, на которые ТехЭйджент нужно обратить внимание: приёмка, хранение, обращения, возврат */
+function OrderNotes({ order }: { order: Order }) {
+  const notes: { text: string; tone: 'muted' | 'warn' | 'alert' }[] = []
+  if (order.receivedIssue) {
+    notes.push({
+      text: `При приёмке: ${order.receivedIssue}${order.receivedIssuePhoto ? ' (фото приложено)' : ''}`,
+      tone: 'warn',
+    })
+  }
+  if (order.status === 'AT_POINT') {
+    const until = storageUntil(order)
+    if (!order.notifiedAt) notes.push({ text: 'Покупатель ещё не уведомлён о поступлении', tone: 'muted' })
+    else if (storageExpired(order)) notes.push({ text: 'Срок хранения истёк', tone: 'alert' })
+    else if (until) notes.push({ text: `Хранится до ${formatDate(until.toISOString())}`, tone: 'muted' })
+  }
+  for (const c of order.buyerClaims ?? []) {
+    notes.push({
+      text: `Обращение покупателя (${BUYER_CLAIM_LABELS[c.type].toLowerCase()}), ${formatDate(c.createdAt)}: ${c.text}${c.photoAttached ? ' (фото приложено)' : ''}`,
+      tone: 'alert',
+    })
+  }
+  if (order.refundedAt) notes.push({ text: `Возврат оплаты оформлен ${formatDate(order.refundedAt)}`, tone: 'muted' })
+  if (notes.length === 0) return null
+  const tone = { muted: 'text-text-muted', warn: 'text-amber-700', alert: 'text-red-700' }
+  return (
+    <div className="mt-1.5 space-y-1 max-w-64">
+      {notes.map((n, i) => (
+        <p key={i} className={`text-xs whitespace-normal break-words ${tone[n.tone]}`}>{n.text}</p>
+      ))}
+    </div>
+  )
+}
 
 export default function AdminOrdersPage() {
   const [filter, setFilter] = useState<OrderStatus | 'ALL'>('ALL')
@@ -40,9 +75,26 @@ export default function AdminOrdersPage() {
     patch(order, { paymentStatus: 'PAID', paidAt: new Date().toISOString(), status: 'PAID' })
   }
 
+  const moveTo = (order: Order, next: OrderStatus) => {
+    if (!confirm(`Перевести заказ ${order.orderNumber} в статус «${ORDER_STATUS_LABELS[next]}»?`)) return
+    patch(order, { status: next })
+  }
+
   const cancel = (order: Order) => {
-    if (!confirm(`Отменить заказ ${order.orderNumber}?`)) return
+    if (!confirm(`Отменить заказ ${order.orderNumber}? Оплаты по нему не было.`)) return
     patch(order, { status: 'CANCELLED' })
+  }
+
+  const cancelWithRefund = (order: Order) => {
+    if (
+      !confirm(
+        `Отменить заказ ${order.orderNumber} и вернуть покупателю ${formatPrice(order.price)}? ` +
+          'Деньги возвращаются тем же способом, которым была произведена оплата.',
+      )
+    )
+      return
+    const now = new Date().toISOString()
+    patch(order, { status: 'CANCELLED', refundedAt: now })
   }
 
   return (
@@ -74,7 +126,7 @@ export default function AdminOrdersPage() {
             <thead>
               <tr className="border-b border-border bg-bg-light">
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Заказ</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Товар и Партнёр</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Товар и партнёр</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Покупатель</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Цена</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Статус и действия</th>
@@ -83,13 +135,16 @@ export default function AdminOrdersPage() {
             <tbody className="divide-y divide-border">
               {orders.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-4 py-8 text-center text-text-muted">Заказов нет</td>
+                  <td colSpan={5} className="px-4 py-8 text-center text-text-muted">
+                    {mockOrders.length === 0 ? 'Заказов пока нет' : 'Ничего не найдено'}
+                  </td>
                 </tr>
               )}
               {orders.map((order) => {
                 const partner = mockUsers.find((u) => u.id === order.userId)
                 const next = ADMIN_NEXT_STATUS[order.status]
                 const unpaid = order.status === 'CREATED' && order.paymentStatus !== 'PAID'
+                const refundable = (order.status === 'PAID' || order.status === 'PURCHASED') && order.paymentStatus === 'PAID'
                 return (
                   <tr key={order.id} className="hover:bg-bg-light transition-colors align-top">
                     <td className="px-4 py-3 whitespace-nowrap">
@@ -106,7 +161,9 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <p className="font-medium text-text-primary">{formatPrice(order.price)}</p>
-                      <p className="text-xs text-text-muted">вознагр. {formatReward(order.partnerReward)}</p>
+                      <p className="text-xs text-text-muted">
+                        вознагр. {order.status === 'CANCELLED' ? 'не начисляется' : formatReward(order.partnerReward)}
+                      </p>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-col items-start gap-1">
@@ -119,6 +176,7 @@ export default function AdminOrdersPage() {
                           </span>
                         )}
                       </div>
+                      <OrderNotes order={order} />
                       <div className="flex flex-col items-start gap-1.5 mt-2">
                         {unpaid && (
                           <>
@@ -131,12 +189,20 @@ export default function AdminOrdersPage() {
                           </>
                         )}
                         {next && (
-                          <button onClick={() => patch(order, { status: next })} className={`${actionBtn} bg-primary/10 text-primary hover:bg-primary/20`}>
+                          <button onClick={() => moveTo(order, next)} className={`${actionBtn} bg-primary/10 text-primary hover:bg-primary/20`}>
                             &rarr; {ORDER_STATUS_LABELS[next]}
                           </button>
                         )}
+                        {refundable && (
+                          <button onClick={() => cancelWithRefund(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+                            Отменить с возвратом
+                          </button>
+                        )}
+                        {order.status === 'IN_TRANSIT' && (
+                          <span className="text-xs text-text-muted">Приёмку отмечает партнёр</span>
+                        )}
                         {order.status === 'AT_POINT' && (
-                          <span className="text-xs text-text-muted">Выдачу подтверждает Партнёр</span>
+                          <span className="text-xs text-text-muted">Выдачу подтверждает партнёр</span>
                         )}
                         {order.status === 'ISSUED' && (
                           <span className={`text-xs ${order.issueActUploaded ? 'text-text-muted' : 'text-red-600'}`}>

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Save, Check, User, Building2, Landmark, ShieldCheck } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
-import { formatDate } from '../../utils/calculate'
+import { formatDate, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import type { User as UserT } from '../../types'
 
 const fieldCls =
@@ -31,6 +31,8 @@ export default function ProfilePage() {
   const verified = status === 'VERIFIED'
   // После подтверждения данные анкеты и реквизиты меняются только через ТехЭйджент
   const anketaLocked = verified
+  const percent = rewardPercentAt(user)
+  const pending = pendingRewardChange(user)
 
   const set = (k: FormKey, v: string) => setForm((f) => ({ ...f, [k]: v }))
 
@@ -89,11 +91,17 @@ export default function ProfilePage() {
           </span>
           <span className="text-text-muted">Анкета от {formatDate(user.createdAt)}</span>
         </div>
-        {verified && user.rewardPercent ? (
-          <p className="text-sm text-text-secondary mt-3">
-            Ваше вознаграждение — {user.rewardPercent}% от цены товара по каждому выданному заказу. Начисляется после выдачи
-            товара и загрузки подписанного акта приёма-передачи.
-          </p>
+        {verified && percent ? (
+          <div className="text-sm text-text-secondary mt-3 space-y-1">
+            <p>Ваше вознаграждение — {percent}% от цены товара.</p>
+            {pending && (
+              <p className="text-amber-700">
+                С {formatDate(pending.from)} — {pending.percent}% для заказов, оформленных с этой даты.
+              </p>
+            )}
+            <p>Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.</p>
+            <p>По итогам месяца в кабинете — отчёт агента и акт; выплата на счёт из анкеты.</p>
+          </div>
         ) : null}
         {verified && (
           <p className="text-sm text-text-secondary mt-3">

@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from 'react'
+import { Fragment, useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { products } from '../../data/products'
@@ -23,6 +23,8 @@ interface Message {
   id: string
   from: 'me' | 'them'
   text: string
+  /** День для разделителя: «Сегодня», «Вчера» или дата */
+  day: string
   time: string
   read?: boolean
   productId?: string
@@ -31,6 +33,7 @@ interface Message {
 /* ── Контакты и переписка ──
  * Бэкенда у чата нет. Демо-переписка — только в режиме разработки или при VITE_DEMO=1. */
 const PARTNERS_EMAIL = 'partners@techagent.pro'
+const SUPPORT_TG = 't.me/techagent_support'
 
 const managerContact: ChatContact = {
   id: 'manager', name: 'Менеджер TechAgent', initials: 'TA', role: 'Менеджер',
@@ -45,13 +48,13 @@ function demoChat(): { contacts: ChatContact[]; messages: Record<string, Message
     ],
     messages: {
       manager: [
-        { id: 'm1', from: 'me', text: 'Покупатель спрашивает товар, которого нет в каталоге.', time: '14:20', read: true },
-        { id: 'm2', from: 'them', text: 'Пришлите название и характеристики — проверим у поставщика.', time: '14:32' },
+        { id: 'm1', from: 'me', text: 'Покупатель спрашивает товар, которого нет в каталоге.', day: 'Сегодня', time: '14:20', read: true },
+        { id: 'm2', from: 'them', text: 'Пришлите название и характеристики — проверим у поставщика.', day: 'Сегодня', time: '14:32' },
       ],
       delivery: [
-        { id: 'm1', from: 'them', text: 'Заказ #1238 прибыл в ваш пункт выдачи.', time: 'Вчера' },
-        { id: 'm2', from: 'them', text: 'Выдавайте товар только оплаченным заказам и по ФИО из заказа. Подписанный акт загрузите в карточке заказа.', time: 'Вчера' },
-        { id: 'm3', from: 'me', text: 'Принято', time: 'Вчера', read: true },
+        { id: 'm1', from: 'them', text: 'Заказ #1240 отправлен в ваш пункт выдачи. Когда прибудет, отметьте приёмку в карточке заказа.', day: 'Вчера', time: '11:05' },
+        { id: 'm2', from: 'them', text: 'Выдавайте товар только оплаченным заказам и по ФИО из заказа. Подписанный акт загрузите в карточке заказа.', day: 'Вчера', time: '11:06' },
+        { id: 'm3', from: 'me', text: 'Принято', day: 'Вчера', time: '11:20', read: true },
       ],
     },
   }
@@ -62,7 +65,6 @@ const contacts = initial.contacts
 const chatMessages = initial.messages
 
 /* ── Icons (inline SVG) ── */
-const SearchIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
 const SendIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
 const InfoIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
 const ArrowIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
@@ -106,7 +108,6 @@ export default function ChatPage() {
   const [activeChat, setActiveChat] = useState<string | null>(contacts[0]?.id ?? null)
   const [messages, setMessages] = useState<Record<string, Message[]>>(chatMessages)
   const [input, setInput] = useState('')
-  const [search, setSearch] = useState('')
   const [showInfo, setShowInfo] = useState(false)
   const [mobileView, setMobileView] = useState<'list' | 'chat'>('list')
   const messagesRef = useRef<HTMLDivElement>(null)
@@ -114,12 +115,6 @@ export default function ChatPage() {
 
   const activeContact = contacts.find(c => c.id === activeChat) || null
   const activeMessages = activeChat ? (messages[activeChat] || []) : []
-
-  const filteredContacts = useMemo(() => {
-    if (!search.trim()) return contacts
-    const q = search.toLowerCase()
-    return contacts.filter(c => c.name.toLowerCase().includes(q) || c.lastMsg.toLowerCase().includes(q))
-  }, [search])
 
   // Scroll to bottom when messages change
   useEffect(() => {
@@ -136,7 +131,7 @@ export default function ChatPage() {
     if (!text || !activeChat) return
     const now = new Date()
     const timeStr = now.toLocaleTimeString('ru', { hour: '2-digit', minute: '2-digit' })
-    const newMsg: Message = { id: `m${Date.now()}`, from: 'me', text, time: timeStr, read: false }
+    const newMsg: Message = { id: `m${Date.now()}`, from: 'me', text, day: 'Сегодня', time: timeStr, read: false }
     setMessages(prev => ({ ...prev, [activeChat]: [...(prev[activeChat] || []), newMsg] }))
     setInput('')
     if (inputRef.current) {
@@ -158,23 +153,14 @@ export default function ChatPage() {
       {/* ═══ Chat List ═══ */}
       <div className={`ch-list ${mobileView === 'chat' ? 'ch-list-hidden' : ''}`}>
         <div className="ch-list-header">
-          <div className="ch-list-title">
+          <div className="ch-list-title" style={{ marginBottom: 0 }}>
             Чаты
-            {contacts.some(c => c.unread > 0) && <span className="ch-count">{contacts.filter(c => c.unread > 0).length} новых</span>}
-          </div>
-          <div className="ch-search">
-            <span className="ch-search-icon"><SearchIcon /></span>
-            <input
-              type="text"
-              placeholder="Найти диалог..."
-              value={search}
-              onChange={e => setSearch(e.target.value)}
-            />
+            {contacts.some(c => c.unread > 0) && <span className="ch-count">Новых: {contacts.filter(c => c.unread > 0).length}</span>}
           </div>
         </div>
 
         <div className="ch-items">
-          {filteredContacts.map(c => (
+          {contacts.map(c => (
             <div
               key={c.id}
               className={`ch-item ${c.id === activeChat ? 'active' : ''} ${c.unread > 0 ? 'unread' : ''}`}
@@ -241,15 +227,18 @@ export default function ChatPage() {
 
             {/* Messages */}
             <div className="ch-messages" ref={messagesRef}>
-              {activeMessages.length === 0 ? (
+              {activeMessages.length === 0 && (
                 <div className="ch-empty">
-                  <p>Вопросы по заказам покупателей и товарам, которых нет в каталоге: <a href={`mailto:${PARTNERS_EMAIL}`} className="text-primary">{PARTNERS_EMAIL}</a></p>
+                  <p>Вопросы по заказам покупателей и товарам, которых нет в каталоге</p>
                 </div>
-              ) : (
-                <div className="ch-date-divider"><span>Сегодня</span></div>
               )}
-              {activeMessages.map(msg => (
-                <div key={msg.id} className={`ch-msg ${msg.from === 'me' ? 'mine' : ''}`}>
+              {activeMessages.map((msg, i) => (
+                <Fragment key={msg.id}>
+                {/* Разделитель — только когда меняется день */}
+                {(i === 0 || activeMessages[i - 1].day !== msg.day) && (
+                  <div className="ch-date-divider"><span>{msg.day}</span></div>
+                )}
+                <div className={`ch-msg ${msg.from === 'me' ? 'mine' : ''}`}>
                   {msg.from !== 'me' && (
                     <div className="ch-msg-avatar" style={{ background: activeContact.gradient }}>
                       {activeContact.initials}
@@ -266,10 +255,20 @@ export default function ChatPage() {
                     </div>
                   </div>
                 </div>
+                </Fragment>
               ))}
             </div>
 
-            {/* Input */}
+            {/* Бэкенда у чата нет: в боевой сборке вместо поля ввода — контакты */}
+            {!DEMO_MODE ? (
+              <div className="ch-input-area">
+                <p className="text-sm text-text-secondary">
+                  Связь с менеджером ТехЭйджент:{' '}
+                  <a href={`mailto:${PARTNERS_EMAIL}`} className="text-primary no-underline hover:underline">{PARTNERS_EMAIL}</a>,{' '}
+                  <a href={`https://${SUPPORT_TG}`} target="_blank" rel="noopener noreferrer" className="text-primary no-underline hover:underline">{SUPPORT_TG}</a>
+                </p>
+              </div>
+            ) : (
             <div className="ch-input-area">
               <div className="ch-quick-replies">
                 {['Нет товара в каталоге', 'Вопрос по заказу', 'Вопрос по выдаче'].map(q => (
@@ -280,7 +279,7 @@ export default function ChatPage() {
                 <textarea
                   ref={inputRef}
                   rows={1}
-                  placeholder="Написать сообщение..."
+                  placeholder="Написать сообщение…"
                   value={input}
                   onChange={e => {
                     setInput(e.target.value)
@@ -294,12 +293,11 @@ export default function ChatPage() {
                 </button>
               </div>
             </div>
+            )}
           </>
         ) : (
           <div className="ch-empty">
-            <div className="ch-empty-icon">💬</div>
             <h3>Выберите диалог</h3>
-            <p>Выберите чат слева для начала общения</p>
           </div>
         )}
       </div>
@@ -324,6 +322,13 @@ export default function ChatPage() {
               <div>
                 <div className="ch-info-row-label">Email</div>
                 <div className="ch-info-row-value"><a href={`mailto:${PARTNERS_EMAIL}`}>{PARTNERS_EMAIL}</a></div>
+              </div>
+            </div>
+            <div className="ch-info-row">
+              <span className="ch-info-row-icon"><SendIcon /></span>
+              <div>
+                <div className="ch-info-row-label">Telegram</div>
+                <div className="ch-info-row-value"><a href={`https://${SUPPORT_TG}`} target="_blank" rel="noopener noreferrer">{SUPPORT_TG}</a></div>
               </div>
             </div>
           </div>

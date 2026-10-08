@@ -52,6 +52,22 @@ export interface User {
   partnerStatus?: PartnerStatus
   /** Вознаграждение Партнёра, % от цены товара. Задаёт ТехЭйджент при подтверждении анкеты; видит только сам Партнёр */
   rewardPercent?: number
+  /** Новый размер вознаграждения (оферта, п. 7.1): применяется к заказам, оформленным начиная с rewardPercentNextFrom —
+   *  через 14 дней после изменения */
+  rewardPercentNext?: number
+  rewardPercentNextFrom?: string
+  createdAt: string
+}
+
+/** Обращение покупателя об обмене или возврате, принятое в пункте выдачи (оферта, п. 5.1, 8.4) */
+export type BuyerClaimType = 'EXCHANGE' | 'RETURN' | 'DEFECT'
+
+export interface BuyerClaim {
+  id: string
+  type: BuyerClaimType
+  text: string
+  /** Фото приложено. Бэкенда нет — храним только отметку */
+  photoAttached: boolean
   createdAt: string
 }
 
@@ -66,6 +82,8 @@ export interface Order {
   price: number
   /** Вознаграждение Партнёра от ТехЭйджент, считается по rewardPercent Партнёра; null — размер Партнёру не назначен */
   partnerReward: number | null
+  /** Процент, по которому посчитано вознаграждение (действовал на дату оформления заказа) */
+  rewardPercent?: number
   buyerName: string
   buyerPhone: string
   buyerEmail?: string
@@ -75,7 +93,21 @@ export interface Order {
   paidAt?: string
   /** Когда Покупатель принял оферту купли-продажи (отметка перед оплатой) */
   saleOfferAcceptedAt?: string
+  /** Когда Покупатель дал согласие на обработку персональных данных — отдельная отметка перед оплатой */
+  pdConsentAt?: string
   status: OrderStatus
+  /** Приёмка товара в пункте выдачи Партнёром (оферта, п. 5.1, 8.2) */
+  receivedAt?: string
+  /** Повреждение упаковки или расхождение в количестве мест, отмеченное при приёмке */
+  receivedIssue?: string
+  /** К отметке о повреждении приложено фото (храним только отметку) */
+  receivedIssuePhoto?: boolean
+  /** Партнёр сообщил покупателю о поступлении — с этой даты товар хранится 5 дней (оферта, п. 8.3) */
+  notifiedAt?: string
+  /** Заказ отменён ТехЭйджент с возвратом оплаты покупателю */
+  refundedAt?: string
+  /** Обращения покупателя об обмене и возврате */
+  buyerClaims?: BuyerClaim[]
   /** Выдача товара в пункте Партнёра */
   issuedAt?: string
   issuedToName?: string
@@ -94,6 +126,18 @@ export interface Document {
   fileUrl: string
   createdAt: string
   content?: string
+  /** Отчётный период отчёта агента и акта: 'ГГГГ-ММ' */
+  period?: string
+  /** Заказы, вошедшие в отчёт агента и акт */
+  orderIds?: string[]
+}
+
+/** Решение Партнёра по отчёту агента или акту (оферта, п. 7.5) */
+export interface DocumentReview {
+  status: 'ACCEPTED' | 'OBJECTED'
+  at: string
+  /** Текст возражений */
+  text?: string
 }
 
 export interface Stats {

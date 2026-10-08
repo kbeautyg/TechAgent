@@ -5,7 +5,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
-import { formatPrice, formatReward, rewardFor } from '../../utils/calculate'
+import { formatPrice, formatReward, rewardFor, rewardPercentAt } from '../../utils/calculate'
 import { reachGoal } from '../../lib/metrika'
 import type { Order } from '../../types'
 
@@ -75,7 +75,7 @@ function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
               <span className="text-xl shrink-0">{p.image}</span>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium text-text-primary truncate">{p.name}</div>
-                <div className="text-xs text-text-muted">{p.brand} · {p.category}{!p.inStock && ' · нет в наличии'}</div>
+                <div className="text-xs text-text-muted">{p.brand} · {p.category}{!p.inStock && ' · недоступен'}</div>
               </div>
               <span className="text-sm font-semibold text-primary shrink-0">{formatPrice(p.price)}</span>
             </button>
@@ -102,6 +102,8 @@ export default function NewOrderPage() {
   const [buyerName, setBuyerName] = useState('')
   const [buyerPhone, setBuyerPhone] = useState('')
   const [buyerEmail, setBuyerEmail] = useState('')
+  /* Оферта, п. 5.1: заказ — только по просьбе покупателя, продавец и условия покупки названы до оформления */
+  const [buyerInformed, setBuyerInformed] = useState(false)
 
   const [createdOrder, setCreatedOrder] = useState<Order | null>(null)
 
@@ -115,9 +117,6 @@ export default function NewOrderPage() {
           <Lock size={20} className="text-text-muted shrink-0 mt-0.5" />
           <div className="text-sm text-text-secondary">
             <p>
-              Создание заказа откроется, когда ТехЭйджент подтвердит анкету Партнёра.
-            </p>
-            <p className="mt-2">
               <Link to="/dashboard/profile" className="text-primary font-medium no-underline hover:underline">Данные анкеты</Link>
             </p>
           </div>
@@ -127,9 +126,11 @@ export default function NewOrderPage() {
   }
 
   const canGoStep3 = buyerName.trim() !== '' && buyerPhone.trim() !== ''
+  /* Процент, действующий сегодня: изменение размера применяется к заказам через 14 дней (оферта, п. 7.1) */
+  const percent = rewardPercentAt(user)
 
   const handleCreate = () => {
-    if (!product) return
+    if (!product || !buyerInformed) return
     const now = new Date().toISOString()
     const paymentId = 'pay_' + crypto.randomUUID().replace(/-/g, '').slice(0, 12)
     const newOrder: Order = {
@@ -139,7 +140,8 @@ export default function NewOrderPage() {
       productId: product.id,
       productName: product.name,
       price: product.price,
-      partnerReward: rewardFor(product.price, user.rewardPercent),
+      partnerReward: rewardFor(product.price, percent),
+      rewardPercent: percent,
       buyerName: buyerName.trim(),
       buyerPhone: buyerPhone.trim(),
       buyerEmail: buyerEmail.trim() || undefined,
@@ -171,6 +173,7 @@ export default function NewOrderPage() {
     setBuyerName('')
     setBuyerPhone('')
     setBuyerEmail('')
+    setBuyerInformed(false)
     setCreatedOrder(null)
   }
 
@@ -312,11 +315,11 @@ export default function NewOrderPage() {
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-text-secondary">
-                  Ваше вознаграждение{user.rewardPercent ? ` (${user.rewardPercent}%)` : ''}
+                  Ваше вознаграждение{percent ? ` (${percent}%)` : ''}
                 </span>
-                <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(product.price, user.rewardPercent))}</span>
+                <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(product.price, percent))}</span>
               </div>
-              <p className="text-xs text-text-muted">Вознаграждение платит ТехЭйджент после выдачи товара и загрузки подписанного акта.</p>
+              <p className="text-xs text-text-muted">Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.</p>
             </div>
 
             <div className="card-soft rounded-lg p-4 space-y-2 text-sm">
@@ -336,13 +339,26 @@ export default function NewOrderPage() {
               )}
             </div>
           </div>
+          <label className="flex items-start gap-2.5 mt-5 cursor-pointer text-sm text-text-primary">
+            <input
+              type="checkbox"
+              checked={buyerInformed}
+              onChange={(e) => setBuyerInformed(e.target.checked)}
+              className="accent-primary mt-0.5 shrink-0"
+            />
+            <span>
+              Покупатель просил оформить заказ и знает, что продавец — ОсОО&nbsp;«ТехЭйджент», а условия покупки — в{' '}
+              <Link to="/legal/sale-offer" target="_blank" className="text-primary no-underline hover:underline">оферте купли-продажи</Link>
+            </span>
+          </label>
           <div className="flex justify-between mt-6">
             <button onClick={() => setStep(2)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
             <button
               onClick={handleCreate}
-              className="flex items-center gap-1 bg-success hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors text-sm border-none cursor-pointer"
+              disabled={!buyerInformed}
+              className="flex items-center gap-1 bg-success hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors text-sm border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <Check size={16} /> Создать заказ
             </button>

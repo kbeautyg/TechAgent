@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { mockUsers, mockOrders, updateUser } from '../../data/mock'
-import { formatDate, formatPrice, paidTotal } from '../../utils/calculate'
+import { mockUsers, mockOrders, updateUser, scheduleRewardChange, REWARD_CHANGE_NOTICE_DAYS } from '../../data/mock'
+import { formatDate, formatPrice, paidTotal, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
 import type { PartnerStatus } from '../../types'
 
@@ -15,14 +15,31 @@ export default function AdminUsersPage() {
     setRefresh((k) => k + 1)
   }
 
-  /** Подтверждение анкеты вместе с размером вознаграждения — его видит только сам Партнёр */
-  const verify = (id: string) => {
+  const readPercent = (id: string): number | null => {
     const percent = Number((percents[id] ?? '').replace(',', '.'))
     if (!(percent > 0 && percent < 100)) {
-      alert('Укажите вознаграждение Партнёра в процентах от цены товара')
-      return
+      alert('Укажите вознаграждение партнёра в процентах от цены товара')
+      return null
     }
-    updateUser(id, { partnerStatus: 'VERIFIED', rewardPercent: percent })
+    return percent
+  }
+
+  /** Подтверждение анкеты вместе с размером вознаграждения — его видит только сам Партнёр */
+  const verify = (id: string) => {
+    const percent = readPercent(id)
+    if (percent === null) return
+    updateUser(id, { partnerStatus: 'VERIFIED', rewardPercent: percent, rewardPercentNext: undefined, rewardPercentNextFrom: undefined })
+    setPercents((p) => ({ ...p, [id]: '' }))
+    setRefresh((k) => k + 1)
+  }
+
+  /** Изменение размера у подтверждённого Партнёра: применяется к заказам через 14 дней (оферта, п. 7.1) */
+  const changePercent = (id: string, name: string) => {
+    const percent = readPercent(id)
+    if (percent === null) return
+    if (!confirm(`Изменить вознаграждение «${name}» на ${percent}%? Новый размер — для заказов через ${REWARD_CHANGE_NOTICE_DAYS} дней после изменения.`)) return
+    scheduleRewardChange(id, percent)
+    setPercents((p) => ({ ...p, [id]: '' }))
     setRefresh((k) => k + 1)
   }
 
@@ -56,6 +73,8 @@ export default function AdminUsersPage() {
                 {partners.map((u) => {
                   const orders = mockOrders.filter((o) => o.userId === u.id)
                   const status = u.partnerStatus ?? 'PENDING'
+                  const currentPercent = rewardPercentAt(u)
+                  const pending = pendingRewardChange(u)
                   return (
                     <tr key={u.id} className="hover:bg-bg-light transition-colors align-top">
                       <td className="px-4 py-3 min-w-40">
@@ -66,21 +85,37 @@ export default function AdminUsersPage() {
                         <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${PARTNER_STATUS_COLORS[status]}`}>
                           {PARTNER_STATUS_LABELS[status]}
                         </span>
-                        {u.rewardPercent ? (
-                          <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {u.rewardPercent}%</p>
+                        {currentPercent ? (
+                          <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {currentPercent}%</p>
                         ) : null}
-                        {status !== 'VERIFIED' && (
-                          <label className="flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap">
-                            <input
-                              type="text"
-                              inputMode="decimal"
-                              value={percents[u.id] ?? ''}
-                              onChange={(e) => setPercents((p) => ({ ...p, [u.id]: e.target.value }))}
-                              className="w-14 px-2 py-1 rounded border border-border bg-white text-text-primary text-xs"
-                              aria-label="Вознаграждение, %"
-                            />
-                            % от цены товара
-                          </label>
+                        {pending && (
+                          <p className="text-xs text-amber-700 mt-0.5 whitespace-nowrap">
+                            с {formatDate(pending.from)} — {pending.percent}%
+                          </p>
+                        )}
+                        <label className="flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap">
+                          <input
+                            type="text"
+                            inputMode="decimal"
+                            value={percents[u.id] ?? ''}
+                            onChange={(e) => setPercents((p) => ({ ...p, [u.id]: e.target.value }))}
+                            className="w-14 px-2 py-1 rounded border border-border bg-white text-text-primary text-xs"
+                            aria-label="Вознаграждение, %"
+                          />
+                          % от цены товара
+                        </label>
+                        {status === 'VERIFIED' && (
+                          <>
+                            <button
+                              onClick={() => changePercent(u.id, u.companyName || u.email)}
+                              className="mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20 transition-colors border-none cursor-pointer whitespace-nowrap"
+                            >
+                              Изменить размер
+                            </button>
+                            <p className="text-xs text-text-muted mt-1 max-w-48">
+                              Новый размер — для заказов через {REWARD_CHANGE_NOTICE_DAYS} дней после изменения
+                            </p>
+                          </>
                         )}
                         <div className="flex gap-2 mt-2">
                           {status !== 'VERIFIED' && (
