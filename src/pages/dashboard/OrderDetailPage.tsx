@@ -24,8 +24,6 @@ import {
 } from '../../utils/status'
 import type { Order, BuyerClaimType } from '../../types'
 
-const normName = (s: string) => s.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim()
-
 const REWARD_RULE = 'Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.'
 const PARTNERS_EMAIL = 'partners@techagent.pro'
 
@@ -60,8 +58,7 @@ export default function OrderDetailPage() {
   const [issueText, setIssueText] = useState('')
   const [issuePhoto, setIssuePhoto] = useState<File | null>(null)
 
-  // Выдача
-  const [recipientName, setRecipientName] = useState('')
+  // Выдача: распечатать акт → подписать → сфотографировать → подтвердить
   const [actFile, setActFile] = useState<File | null>(null)
 
   // Обращение покупателя
@@ -86,8 +83,7 @@ export default function OrderDetailPage() {
   const currentStepIndex = ORDER_STEPS.indexOf(order.status)
   const isPaid = order.paymentStatus === 'PAID'
   const paymentUrl = `${window.location.origin}/pay/${order.paymentId}`
-  const nameMatches = recipientName.trim() !== '' && normName(recipientName) === normName(order.buyerName)
-  const canIssue = order.status === 'AT_POINT' && isPaid && nameMatches && actFile !== null
+  const canIssue = order.status === 'AT_POINT' && isPaid && actFile !== null
   const until = storageUntil(order)
   const expired = order.status === 'AT_POINT' && storageExpired(order)
 
@@ -131,7 +127,7 @@ export default function OrderDetailPage() {
     patch({
       status: 'ISSUED',
       issuedAt: new Date().toISOString(),
-      // ФИО совпадает с заказом (проверено выше) — сохраняем в написании из заказа
+      // Выдача только покупателю из заказа: партнёр сверил данные и подтвердил это кнопкой
       issuedToName: order.buyerName,
       // Файл пока никуда не загружается (бэкенда нет), фиксируем факт прикреплённого акта
       issueActUploaded: true,
@@ -318,55 +314,51 @@ export default function OrderDetailPage() {
               </p>
               {isPaid && (
                 <div className="space-y-4 text-sm">
-                  <ol className="list-decimal pl-5 space-y-1.5 text-text-secondary">
-                    <li>
-                      Попросите покупателя назвать номер заказа и сверьте ФИО:{' '}
-                      <span className="font-semibold text-text-primary">{order.buyerName}</span>. Документ, удостоверяющий
-                      личность, — по вашей просьбе.
-                    </li>
-                    <li>Распечатайте акт в двух экземплярах.</li>
-                    <li>
-                      Покупатель проверяет товар и подписывает оба экземпляра, вы подписываете от имени ТехЭйджент. Один
-                      экземпляр — покупателю.
-                    </li>
-                    <li>Загрузите фото или скан подписанного акта и подтвердите выдачу.</li>
-                  </ol>
-                  <Link
-                    to={`/dashboard/orders/${order.id}/act?print=1`}
-                    target="_blank"
-                    rel="noopener"
-                    className="inline-flex items-center gap-1.5 bg-bg-light text-text-primary border border-border px-4 py-2.5 rounded-lg text-sm font-semibold no-underline hover:bg-primary/10 transition-colors"
-                  >
-                    <Printer size={16} /> Распечатать акт (2 экз.)
-                  </Link>
-                  <div>
-                    <label htmlFor="recipient" className="block font-medium mb-1.5 text-text-secondary">ФИО получателя</label>
-                    <input
-                      id="recipient"
-                      type="text"
-                      value={recipientName}
-                      onChange={(e) => setRecipientName(e.target.value)}
-                      className={fieldCls}
-                      placeholder="Фамилия Имя Отчество"
-                      autoComplete="off"
-                    />
-                    {recipientName.trim() !== '' && !nameMatches && (
-                      <p className="text-red-500 text-xs mt-1">ФИО не совпадает с заказом. Выдавать товар можно только покупателю из заказа.</p>
-                    )}
+                  <p className="text-text-secondary">
+                    Покупатель называет номер заказа, вы сверяете ФИО:{' '}
+                    <span className="font-semibold text-text-primary">{order.buyerName}</span>. Документ, удостоверяющий
+                    личность, — по вашей просьбе.
+                  </p>
+                  <div className="flex flex-col gap-3">
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0 mt-2">1</span>
+                      <Link
+                        to={`/dashboard/orders/${order.id}/act?print=1`}
+                        target="_blank"
+                        rel="noopener"
+                        className="inline-flex items-center gap-1.5 bg-bg-light text-text-primary border border-border px-4 py-2.5 rounded-lg text-sm font-semibold no-underline hover:bg-primary/10 transition-colors"
+                      >
+                        <Printer size={16} /> Распечатать акт (2 экз.)
+                      </Link>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0">2</span>
+                      <p className="text-text-secondary m-0">
+                        Покупатель проверяет товар и подписывает оба экземпляра, вы подписываете от имени ТехЭйджент. Один
+                        экземпляр — покупателю.
+                      </p>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0 mt-1">3</span>
+                      <div className="flex-1 min-w-0">
+                        <label htmlFor="act" className="block font-medium mb-1.5 text-text-secondary">Фото подписанного акта</label>
+                        <input
+                          id="act"
+                          type="file"
+                          accept="image/*,application/pdf"
+                          capture="environment"
+                          onChange={(e) => setActFile(e.target.files?.[0] ?? null)}
+                          className={fileCls}
+                        />
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3">
+                      <span className="w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0 mt-2">4</span>
+                      <button onClick={handleIssue} disabled={!canIssue} className={successBtn}>
+                        <Check size={16} /> Данные сверены — подтвердить выдачу
+                      </button>
+                    </div>
                   </div>
-                  <div>
-                    <label htmlFor="act" className="block font-medium mb-1.5 text-text-secondary">Подписанный акт приёма-передачи</label>
-                    <input
-                      id="act"
-                      type="file"
-                      accept="image/*,application/pdf"
-                      onChange={(e) => setActFile(e.target.files?.[0] ?? null)}
-                      className={fileCls}
-                    />
-                  </div>
-                  <button onClick={handleIssue} disabled={!canIssue} className={successBtn}>
-                    <Check size={16} /> Подтвердить выдачу
-                  </button>
                   <p className="text-xs text-text-muted">{REWARD_RULE}</p>
                 </div>
               )}
