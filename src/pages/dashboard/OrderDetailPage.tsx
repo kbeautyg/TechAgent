@@ -164,7 +164,11 @@ export default function OrderDetailPage() {
   const reportedPeriod = reported ? documentPeriod(reported) : null
   let rewardNote: string | null = REWARD_RULE
   if (order.status === 'CANCELLED') rewardNote = null
-  else if (order.status === 'ISSUED' && order.issueActUploaded && order.issuedAt) {
+  else if (order.returnedAt) {
+    rewardNote = reportedPeriod
+      ? 'Товар возвращён покупателем — вознаграждение аннулировано и будет удержано из следующей выплаты (п. 7.3 оферты).'
+      : 'Товар возвращён покупателем — вознаграждение аннулировано (п. 7.3 оферты).'
+  } else if (order.status === 'ISSUED' && order.issueActUploaded && order.issuedAt) {
     rewardNote = reportedPeriod
       ? `Начислено, вошло в отчёт агента за ${periodLabel(reportedPeriod)}.`
       : `Начислено, войдёт в отчёт агента за ${periodLabel(periodOf(order.issuedAt))}.`
@@ -478,7 +482,7 @@ export default function OrderDetailPage() {
                   Вознаграждение{order.rewardPercent && order.status !== 'CANCELLED' ? ` (${order.rewardPercent}%)` : ''}
                 </span>
                 <span className="text-text-primary whitespace-nowrap">
-                  {order.status === 'CANCELLED' ? 'не начисляется' : formatReward(order.partnerReward)}
+                  {order.status === 'CANCELLED' ? 'не начисляется' : order.returnedAt ? 'аннулировано' : formatReward(order.partnerReward)}
                 </span>
               </div>
               {rewardNote && <p className="text-xs text-text-muted">{rewardNote}</p>}
@@ -541,6 +545,7 @@ export default function OrderDetailPage() {
               </div>
               <Row label="Получатель оплаты">ТехЭйджент</Row>
               {order.refundedAt && <Row label="Возврат оплаты">оформлен {formatDate(order.refundedAt)}</Row>}
+              {order.returnedAt && <Row label="Возврат товара">{formatDate(order.returnedAt)}</Row>}
             </div>
           </div>
 

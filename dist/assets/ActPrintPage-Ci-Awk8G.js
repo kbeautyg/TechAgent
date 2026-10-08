@@ -1,4 +1,4 @@
-import{e as h,S as g,u as j,m as b,r as f,j as t,N as u,a as o,g as p,h as w}from"./index-BqTeMVyA.js";const N="ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО, адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8",y=["Экземпляр Покупателя","Экземпляр Продавца"],m=`
+import{e as h,S as g,u as j,m as b,r as f,j as t,N as u,a as o,g as p,h as w}from"./index-CEKZZXEV.js";const N="ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО, адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8",y=["Экземпляр Покупателя","Экземпляр Продавца"],m=`
 .act-root { min-height: 100vh; background: #eef0f3; padding: 16px 12px 40px; }
 .act-toolbar { max-width: 210mm; margin: 0 auto 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .act-sheet { background: #fff; color: #111; max-width: 210mm; margin: 0 auto 20px; padding: 18mm 16mm;

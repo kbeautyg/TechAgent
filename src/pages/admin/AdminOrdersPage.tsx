@@ -47,6 +47,7 @@ function OrderNotes({ order }: { order: Order }) {
     })
   }
   if (order.refundedAt) notes.push({ text: `Возврат оплаты оформлен ${formatDate(order.refundedAt)}`, tone: 'muted' })
+  if (order.returnedAt) notes.push({ text: `Товар возвращён после выдачи ${formatDate(order.returnedAt)}, вознаграждение аннулировано`, tone: 'muted' })
   if (notes.length === 0) return null
   const tone = { muted: 'text-text-muted', warn: 'text-amber-700', alert: 'text-red-700' }
   return (
@@ -95,6 +96,18 @@ export default function AdminOrdersPage() {
       return
     const now = new Date().toISOString()
     patch(order, { status: 'CANCELLED', refundedAt: now })
+  }
+
+  const returnAfterIssue = (order: Order) => {
+    if (
+      !confirm(
+        `Оформить возврат товара по заказу ${order.orderNumber} и вернуть покупателю ${formatPrice(order.price)}? ` +
+          'Вознаграждение партнёра по заказу аннулируется (п. 7.3 оферты).',
+      )
+    )
+      return
+    const now = new Date().toISOString()
+    patch(order, { returnedAt: now, refundedAt: now })
   }
 
   return (
@@ -209,6 +222,11 @@ export default function AdminOrdersPage() {
                             {order.issuedToName ? `${order.issuedToName}, ` : ''}
                             {order.issueActUploaded ? 'акт загружен' : 'акт не загружен'}
                           </span>
+                        )}
+                        {order.status === 'ISSUED' && !order.returnedAt && (
+                          <button onClick={() => returnAfterIssue(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+                            Возврат после выдачи
+                          </button>
                         )}
                       </div>
                     </td>

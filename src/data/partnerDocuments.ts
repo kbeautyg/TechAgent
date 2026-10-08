@@ -96,10 +96,17 @@ export function reportableOrders(orders: Order[], userId: string, period: string
         o.userId === userId &&
         o.status === 'ISSUED' &&
         o.issueActUploaded &&
+        !o.returnedAt &&
         o.issuedAt !== undefined &&
         periodOf(o.issuedAt) === period,
     )
     .sort((a, b) => (a.issuedAt ?? '').localeCompare(b.issuedAt ?? ''))
+}
+
+/** Возвращённые после выдачи заказы, вознаграждение по которым уже вошло в отчёт и ещё не удержано (п. 7.3) */
+export function pendingDeductions(orders: Order[], userId: string): Order[] {
+  const deducted = new Set(allAgentDocuments().flatMap((d) => d.deductedOrderIds ?? []))
+  return orders.filter((o) => o.userId === userId && o.returnedAt && !deducted.has(o.id) && reportedIn(o) !== undefined)
 }
 
 /* ── Принятие отчёта Партнёром (п. 7.5) ── */
@@ -165,7 +172,8 @@ export function generateAgentDocuments(partner: User, period: string, orders: Or
   if (existing.length > 0) return { status: 'exists', docs: existing }
 
   const list = reportableOrders(orders, partner.id, period)
-  if (list.length === 0) return { status: 'empty' }
+  const deductions = pendingDeductions(orders, partner.id)
+  if (list.length === 0 && deductions.length === 0) return { status: 'empty' }
 
   const now = new Date()
   const createdAt = now.toISOString()
@@ -176,7 +184,14 @@ export function generateAgentDocuments(partner: User, period: string, orders: Or
 
   const name = partner.companyName || partner.email
   const goodsTotal = list.reduce((s, o) => s + o.price, 0)
-  const rewardTotal = list.reduce((s, o) => s + (o.partnerReward ?? 0), 0)
+  const accruedTotal = list.reduce((s, o) => s + (o.partnerReward ?? 0), 0)
+  const deductedTotal = deductions.reduce((s, o) => s + (o.partnerReward ?? 0), 0)
+  const rewardTotal = accruedTotal - deductedTotal
+  const deductionBlock = deductions.length
+    ? `\n\nУДЕРЖАНИЕ ПО ВОЗВРАТАМ (п. 7.3)\n\n${deductions
+        .map((o) => `Заказ ${o.orderNumber}: Товар возвращён Покупателем ${o.returnedAt ? formatDate(o.returnedAt) : ''}, вознаграждение по отчёту за ${o.issuedAt ? periodLabel(periodOf(o.issuedAt)) : '—'} удерживается: −${formatPrice(o.partnerReward ?? 0)}`)
+        .join('\n')}`
+    : ''
   const percents = Array.from(new Set(list.map(orderPercent).filter((p): p is number => p !== null)))
   const totalPercent = percents.length === 1 ? ` (${percentText(percents[0])})` : ''
   const numbers = list.map((o) => o.orderNumber.replace(/^#/, '')).join(', ')
@@ -208,6 +223,7 @@ export function generateAgentDocuments(partner: User, period: string, orders: Or
     createdAt,
     period,
     orderIds: list.map((o) => o.id),
+    deductedOrderIds: deductions.map((o) => o.id),
     content: `ОТЧЁТ АГЕНТА
 за период с ${from} по ${to}
 Дата формирования: ${today}
@@ -226,11 +242,12 @@ ${lines.join('\n\n')}
 
 Выдано Заказов: ${list.length}
 Сумма Товаров, выданных Покупателям: ${formatPrice(goodsTotal)}
+Вознаграждение Партнёра за выданные Заказы: ${formatPrice(accruedTotal)}${deductionBlock}
 Вознаграждение Партнёра к выплате: ${formatPrice(rewardTotal)}
 
 Денежные средства Покупателей Партнёр не получал: оплата поступила ТехЭйджент по ссылкам Платформы.
 
-Вознаграждение выплачивается на банковский счёт Партнёра, указанный в анкете, в срок: {{PARTNER_REWARD_PAYMENT_TERM}} (п. 7.6).
+Вознаграждение выплачивается на банковский счёт Партнёра, указанный в анкете, в течение 7 (семи) дней с даты принятия отчёта агента и акта (п. 7.6).
 
 Возражения по отчёту принимаются в течение 10 (десяти) рабочих дней с даты его формирования — до ${deadline} включительно (п. 7.5). При отсутствии возражений отчёт считается принятым.
 
@@ -253,19 +270,19 @@ ${PRINCIPAL}`,
     content: `АКТ ОБ ОКАЗАНИИ УСЛУГ № ${actNumber}
 от ${today}
 
-Исполнитель (Агент): ${name}, ИНН ${partner.inn || '—'}
-Заказчик (Принципал): ${PRINCIPAL}, ИНН ${PRINCIPAL_INN}, рег. № ${PRINCIPAL_REG}
+Партнёр (Агент): ${name}, ИНН ${partner.inn || '—'}
+ТехЭйджент (Принципал): ${PRINCIPAL}, ИНН ${PRINCIPAL_INN}, рег. № ${PRINCIPAL_REG}
 Основание: агентский договор-оферта, отчёт агента за период с ${from} по ${to}
 
 Агент оказал, а Принципал принял услуги за период с ${from} по ${to}: привлечение Покупателей, оформление Заказов, приём и хранение Товара, выдача Товара Покупателям от имени Принципала.
 
 Выдано Заказов: ${list.length} (№ ${numbers})
 Сумма Товаров, выданных Покупателям: ${formatPrice(goodsTotal)}
-Вознаграждение Агента${totalPercent}: ${formatPrice(rewardTotal)}
+Вознаграждение Агента${totalPercent}: ${formatPrice(accruedTotal)}${deductedTotal ? `\nУдержано по возвратам (п. 7.3): −${formatPrice(deductedTotal)}\nК выплате: ${formatPrice(rewardTotal)}` : ''}
 
 РАСЧЁТЫ
 
-Принципал выплачивает вознаграждение на банковский счёт Агента, указанный в анкете, в срок: {{PARTNER_REWARD_PAYMENT_TERM}}.
+Принципал выплачивает вознаграждение на банковский счёт Агента, указанный в анкете, в течение 7 (семи) дней с даты принятия отчёта агента и акта.
 
 Услуги оказаны в полном объёме. Акт считается принятым при отсутствии мотивированных возражений в течение 10 (десяти) рабочих дней с даты его формирования — до ${deadline} включительно.
 

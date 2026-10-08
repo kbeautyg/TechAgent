@@ -45,7 +45,7 @@ export function formatReward(reward: number | null): string {
 export function accruedReward(orders: Order[]): number | null {
   let sum = 0
   for (const o of orders) {
-    if (o.status !== 'ISSUED' || !o.issueActUploaded) continue
+    if (o.status !== 'ISSUED' || !o.issueActUploaded || o.returnedAt) continue
     if (o.partnerReward === null) return null
     sum += o.partnerReward
   }
