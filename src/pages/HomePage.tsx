@@ -168,74 +168,67 @@ export default function HomePage() {
                     </div>
                     <span className="text-[9px] text-gray-400 font-medium">Пример кабинета</span>
                   </div>
-                  {/* Dashboard with sidebar */}
-                  <div className="flex" style={{ height: 360 }}>
-                    {/* Mini sidebar */}
-                    <div className="w-[130px] bg-white border-r border-gray-100 p-3 flex flex-col">
-                      <div className="flex items-center gap-1.5 mb-4">
-                        <div className="w-5 h-5 rounded-lg bg-primary flex items-center justify-center">
-                          <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-                        </div>
-                        <span className="text-[10px] font-bold"><span className="text-red-600">Tech</span><span className="text-primary">Agent</span></span>
-                      </div>
-                      {[
-                        { label: 'Обзор', active: true },
-                        { label: 'Заказы', active: false },
-                        { label: 'Новый заказ', active: false },
-                        { label: 'Чат', active: false },
-                        { label: 'Профиль', active: false },
-                        { label: 'Документы', active: false },
-                      ].map((nav, i) => (
-                        <div key={i} className={`text-[10px] px-2 py-1.5 rounded-lg mb-0.5 ${nav.active ? 'bg-primary/8 text-primary font-bold' : 'text-gray-400'}`}>
-                          {nav.label}
-                        </div>
-                      ))}
-                      <div className="mt-auto flex items-center gap-1.5 px-1 pt-2 border-t border-gray-50">
-                        <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-bold text-primary">Д</div>
-                        <div>
-                          <div className="text-[8px] font-semibold text-gray-700">Демо-партнёр</div>
-                          <div className="text-[7px] text-gray-400">пункт выдачи</div>
-                        </div>
+                  {/* Кабинет в новом виде — как на сайте после входа */}
+                  <div className="flex bg-bg-light pb-1">
+                    {/* Боковое меню */}
+                    <div className="w-[138px] p-2.5 shrink-0">
+                      <div className="bg-white rounded-xl border border-gray-100 p-1.5">
+                        {['Обзор', 'Заказы', 'Новый заказ', 'Связь', 'Профиль', 'Документы'].map((label, i) => (
+                          <div key={label} className={`text-[11px] px-2 py-1.5 rounded-lg ${i === 0 ? 'bg-primary/10 text-primary font-bold' : 'text-gray-500'}`}>
+                            {label}
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    {/* Main content */}
-                    <div className="flex-1 p-4 overflow-hidden bg-[#FAFBFC]">
-                      <div className="flex items-center justify-between mb-3">
-                        <div className="text-[13px] font-bold text-gray-800">Обзор</div>
-                        <div className="text-[9px] text-gray-400 px-2 py-1 bg-white rounded-md border border-gray-100">Февраль 2026</div>
+                    {/* Обзор */}
+                    <div className="flex-1 min-w-0 py-2.5 pr-3">
+                      <div className="flex items-center gap-2 mb-2.5">
+                        <span className="w-7 h-7 rounded-full bg-primary/10 text-primary grid place-items-center text-[10px] font-bold shrink-0">ДП</span>
+                        <div className="min-w-0">
+                          <div className="text-[12px] font-bold text-gray-800 leading-tight">Демо-партнёр</div>
+                          <div className="text-[9.5px] text-gray-400 truncate">Пункт выдачи · Москва</div>
+                        </div>
+                        <span className="ml-auto text-[10px] font-semibold text-white bg-primary rounded-md px-2 py-1">+ Новый заказ</span>
                       </div>
-                      {/* Stats row */}
-                      <div className="grid grid-cols-3 gap-2 mb-3">
-                        <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Заказов</div>
-                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">12</div>
-                        </div>
-                        <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">В пункте выдачи</div>
-                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">3</div>
-                        </div>
-                        <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Выдано</div>
-                          <div className="text-[18px] font-extrabold text-primary leading-none">8</div>
+                      <div className="rounded-2xl p-3 text-white" style={{ background: 'linear-gradient(140deg, #1B44F5 0%, #2A3FD8 55%, #4527B8 100%)' }}>
+                        <div className="text-[10px] opacity-80">Начислено вознаграждения</div>
+                        <div className="font-display text-[22px] font-bold leading-tight tracking-tight">12 490 ₽</div>
+                        <div className="flex mt-2 pt-2 border-t border-white/20 text-[9.5px]">
+                          <div className="flex-1"><div className="opacity-75">Оплачено покупателями</div><div className="font-bold text-[11px]">574 500 ₽</div></div>
+                          <div className="flex-1 pl-2.5 border-l border-white/20"><div className="opacity-75">Выдано</div><div className="font-bold text-[11px]">2 из 10 заказов</div></div>
                         </div>
                       </div>
-                      {/* Orders table */}
-                      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
-                        <div className="flex items-center justify-between px-3 py-1.5 border-b border-gray-50">
-                          <span className="text-[10px] font-bold text-gray-700">Последние заказы</span>
-                          <span className="text-[9px] text-primary font-bold">Все →</span>
-                        </div>
+                      <div className="grid grid-cols-4 gap-1 my-2.5">
                         {[
-                          { id: '#1847', item: 'iPhone 16 Pro Max', sum: '199 900 ₽', status: 'В пути', color: 'text-blue-600 bg-blue-50' },
-                          { id: '#1846', item: 'Galaxy S25 Ultra', sum: '149 900 ₽', status: 'Оплачен', color: 'text-amber-600 bg-amber-50' },
-                          { id: '#1845', item: 'MacBook Air 13" M3', sum: '99 900 ₽', status: 'Прибыл в пункт выдачи', color: 'text-green-600 bg-green-50' },
-                          { id: '#1844', item: 'AirPods Pro 2', sum: '29 900 ₽', status: 'Выдан покупателю', color: 'text-green-600 bg-green-50' },
-                        ].map((o, i) => (
-                          <div key={i} className="flex items-center px-3 py-1.5 border-b border-gray-50/80 last:border-0">
-                            <span className="text-[10px] font-mono text-gray-400 w-[40px]">{o.id}</span>
-                            <span className="text-[10px] text-gray-700 font-semibold flex-1">{o.item}</span>
-                            <span className="text-[10px] font-bold text-gray-800 w-[68px] text-right">{o.sum}</span>
-                            <span className={`text-[8px] font-bold px-1.5 py-0.5 rounded-full ml-2 ${o.color}`}>{o.status}</span>
+                          { label: 'Новый заказ', main: true, path: 'M12 5v14M5 12h14' },
+                          { label: 'Выдать товар', badge: 1, path: 'M16.5 9.4 7.55 4.24M21 8v8a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8zM3.27 6.96 12 12.01l8.73-5.05M12 22.08V12' },
+                          { label: 'Принять товар', badge: 1, path: 'M21 8v8a2 2 0 0 1-1 1.73l-7 4a2 2 0 0 1-2 0l-7-4A2 2 0 0 1 3 16V8a2 2 0 0 1 1-1.73l7-4a2 2 0 0 1 2 0l7 4A2 2 0 0 1 21 8zM3.27 6.96 12 12.01l8.73-5.05M12 22.08V12' },
+                          { label: 'Ссылка на оплату', path: 'M9 17H7A5 5 0 0 1 7 7h2M15 7h2a5 5 0 1 1 0 10h-2M8 12h8' },
+                        ].map((a) => (
+                          <div key={a.label} className="flex flex-col items-center gap-1 relative">
+                            <span className={`w-9 h-9 rounded-full grid place-items-center ${a.main ? 'bg-primary text-white' : 'bg-white border border-gray-100 text-primary'}`}>
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d={a.path} /></svg>
+                            </span>
+                            {a.badge && <span className="absolute -top-1 left-[calc(50%+8px)] w-3.5 h-3.5 rounded-full bg-red-500 text-white text-[8px] font-bold grid place-items-center">{a.badge}</span>}
+                            <span className="text-[9px] font-semibold text-gray-700 text-center leading-tight">{a.label}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
+                        {[
+                          { item: 'iPhone 16 Pro Max', img: getProductImage('iph16promax', '', 'Смартфоны'), sub: '#1847 · едет в ваш пункт', sum: '199 900 ₽', status: 'В пути', color: 'text-amber-700' },
+                          { item: 'MacBook Air 13" M3', img: getProductImage('macbookairm3256', '', 'Ноутбуки'), sub: '#1845 · ждёт покупателя', sum: '99 900 ₽', status: 'В пункте', color: 'text-violet-700' },
+                        ].map((o) => (
+                          <div key={o.item} className="flex items-center gap-2 px-2.5 py-1.5 border-b border-gray-50 last:border-0">
+                            <img src={o.img} alt="" width={28} height={28} loading="lazy" className="w-7 h-7 rounded-lg bg-gray-50 object-contain shrink-0" />
+                            <div className="flex-1 min-w-0">
+                              <div className="text-[10.5px] font-semibold text-gray-800 truncate">{o.item}</div>
+                              <div className="text-[9px] text-gray-400 truncate">{o.sub}</div>
+                            </div>
+                            <div className="text-right shrink-0">
+                              <div className="text-[10.5px] font-bold text-gray-800">{o.sum}</div>
+                              <div className={`text-[9px] font-semibold ${o.color}`}>{o.status}</div>
+                            </div>
                           </div>
                         ))}
                       </div>
