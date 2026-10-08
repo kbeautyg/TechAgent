@@ -1,19 +1,21 @@
 {
   "cleanUrls": false,
   "trailingSlash": false,
+  "redirects": [
+    { "source": "/calculator", "destination": "/catalog", "type": 301 },
+    { "source": "/blog", "destination": "/how-it-works", "type": 301 },
+    { "source": "/blog/**", "destination": "/how-it-works", "type": 301 }
+  ],
   "rewrites": [
     { "source": "/healthz", "destination": "/healthz.txt" },
 
     { "source": "/", "destination": "/index.html" },
     { "source": "/about", "destination": "/about/index.html" },
     { "source": "/how-it-works", "destination": "/how-it-works/index.html" },
-    { "source": "/calculator", "destination": "/calculator/index.html" },
-    { "source": "/blog", "destination": "/blog/index.html" },
-    { "source": "/blog/:slug([a-z0-9_-]+)", "destination": "/blog/:slug/index.html" },
     { "source": "/catalog", "destination": "/catalog/index.html" },
     { "source": "/catalog/:id([a-z0-9_-]+)", "destination": "/catalog/:id/index.html" },
     { "source": "/legal", "destination": "/legal/index.html" },
-    { "source": "/legal/:docType([a-z]+)", "destination": "/legal/:docType/index.html" },
+    { "source": "/legal/:docType([a-z-]+)", "destination": "/legal/:docType/index.html" },
 
     { "source": "/login", "destination": "/spa.html" },
     { "source": "/register", "destination": "/spa.html" },

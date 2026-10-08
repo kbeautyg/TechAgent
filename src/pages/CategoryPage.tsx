@@ -4,6 +4,8 @@ import { products } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
 import { translateProductName, translateSpecValue } from '../utils/translate'
 import { categoryLandings, type CategoryLanding } from '../seo/categories'
+import { pluralRu } from '../seo/site'
+import PurchaseTerms from '../components/catalog/PurchaseTerms'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -46,22 +48,12 @@ export default function CategoryPage({ landing }: Props) {
           {landing.intro.map((p, i) => (
             <p key={i} className="text-[15px] text-text-secondary leading-relaxed mb-3">{p}</p>
           ))}
-          <div className="flex flex-wrap gap-2.5 mt-5">
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-bg-section text-[12.5px] font-semibold text-text-secondary">
-              {items.length} моделей
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-bg-section text-[12.5px] font-semibold text-text-secondary">
-              {inStockCount} в наличии
-            </span>
-            {minPrice > 0 && (
-              <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-bg-section text-[12.5px] font-semibold text-text-secondary">
-                от {fmt(minPrice)} ₽
-              </span>
-            )}
-            <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-primary/8 text-[12.5px] font-semibold text-primary">
-              Комиссия 3%
-            </span>
-          </div>
+          <p className="text-[14px] text-text-muted mt-4">
+            {items.length} {pluralRu(items.length, ['модель', 'модели', 'моделей'])}, {inStockCount} в наличии
+            {minPrice > 0 && <>, цены от {fmt(minPrice)} ₽</>}
+            {' · '}
+            <a href="#kak-kupit" className="text-primary font-semibold no-underline">Как купить</a>
+          </p>
         </header>
 
         {/* Brand quick filters → каталог с фильтрами */}
@@ -118,18 +110,15 @@ export default function CategoryPage({ landing }: Props) {
           })}
         </div>
 
-        {/* SEO text */}
-        <section className="mt-14 max-w-3xl">
+        {/* Условия покупки */}
+        <section id="kak-kupit" className="mt-14 max-w-3xl scroll-mt-24">
           <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">
-            {landing.category}: закупка по агентской схеме
+            Как купить
           </h2>
-          {landing.seoText.map((p, i) => (
-            <p key={i} className="text-[14.5px] text-text-secondary leading-relaxed mb-3">{p}</p>
-          ))}
-          <p className="text-[14.5px] text-text-secondary leading-relaxed">
-            Как проходит заказ и какие документы вы получаете — на странице{' '}
-            <Link to="/how-it-works" className="text-primary font-semibold">«Как это работает»</Link>. Итоговую сумму с комиссией удобно посчитать в{' '}
-            <Link to="/calculator" className="text-primary font-semibold">калькуляторе</Link>.
+          <PurchaseTerms />
+          <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
+            Цена в карточке товара — итоговая. Порядок заказа по шагам — на странице{' '}
+            <Link to="/how-it-works" className="text-primary font-semibold">«Как это работает»</Link>.
           </p>
         </section>
 
@@ -152,10 +141,10 @@ export default function CategoryPage({ landing }: Props) {
         {/* CTA */}
         <div className="mt-14 bg-primary rounded-3xl py-12 px-6 sm:px-8 text-center text-white">
           <h2 className="text-[24px] sm:text-[28px] font-extrabold tracking-tight mb-3">
-            Нужна позиция, которой нет в каталоге?
+            Станьте Партнёром TechAgent
           </h2>
           <p className="text-white/60 text-[15px] mb-7 max-w-xl mx-auto">
-            Зарегистрируйтесь и напишите менеджеру — найдём и привезём под заказ с той же комиссией 3%
+            Оформляйте заказы покупателей и выдавайте товар в своей точке. Вознаграждение платит ТехЭйджент.
           </p>
           <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
             Стать партнёром <ArrowRight size={16} />

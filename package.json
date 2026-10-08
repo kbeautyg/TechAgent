@@ -2,7 +2,7 @@
   "name": "techagent",
   "private": true,
   "version": "1.0.0",
-  "description": "B2B-платформа агентских услуг по закупке электроники для российских ИП",
+  "description": "TechAgent — продажа электроники ОсОО «ТехЭйджент» с получением в пунктах выдачи партнёров",
   "type": "module",
   "scripts": {
     "dev": "vite",

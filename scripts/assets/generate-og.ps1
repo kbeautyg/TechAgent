@@ -78,16 +78,11 @@ $techSize = $g.MeasureString("Tech", $fontLogo)
 $g.DrawString("Tech", $fontLogo, $redBrush, $logoX, $logoY)
 $g.DrawString("Agent", $fontLogo, $blueBrush, ($logoX + $techSize.Width - 26), $logoY)
 
-# Заголовок
-$fontH1 = New-Object System.Drawing.Font("Segoe UI", 56, [System.Drawing.FontStyle]::Bold)
+# Строка позиционирования (та же, что DEFAULT_TITLE в src/seo/site.ts); цифр и условий на картинке нет
+$fontH1 = New-Object System.Drawing.Font("Segoe UI", 48, [System.Drawing.FontStyle]::Bold)
 $whiteBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#F8FAFC"))
-$g.DrawString("Агентская закупка", $fontH1, $whiteBrush, 76, 268)
-$g.DrawString("электроники для бизнеса", $fontH1, $whiteBrush, 76, 360)
-
-# Подзаголовок-факты
-$fontSub = New-Object System.Drawing.Font("Segoe UI", 27)
-$mutedBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#AEB6C9"))
-$g.DrawString("Комиссия 3%   ·   Доставка 5–7 дней   ·   200+ товаров", $fontSub, $mutedBrush, 80, 492)
+$g.DrawString("Электроника с получением", $fontH1, $whiteBrush, 76, 282)
+$g.DrawString("в пунктах выдачи партнёров", $fontH1, $whiteBrush, 76, 366)
 
 # Домен
 $fontDomain = New-Object System.Drawing.Font("Consolas", 24, [System.Drawing.FontStyle]::Bold)

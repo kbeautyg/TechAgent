@@ -1,40 +1,32 @@
-import type { OrderCalculation } from '../types'
+import type { Order } from '../types'
 
-const COMMISSION_RATE = 0.03
-
-export function calculateOrder(
-  productCost: number,
-  isTradeIn: boolean,
-  oldValue?: number
-): OrderCalculation {
-  const commission = Math.round(productCost * COMMISSION_RATE)
-  const totalCost = productCost + commission
-
-  if (isTradeIn && oldValue && oldValue > 0) {
-    const clientPayment = Math.max(0, totalCost - oldValue)
-    const ipPayment = oldValue
-
-    return {
-      productCost,
-      commission,
-      totalCost,
-      isTradeIn: true,
-      oldValue,
-      clientPayment,
-      ipPayment,
-    }
-  }
-
-  return {
-    productCost,
-    commission,
-    totalCost,
-    isTradeIn: false,
-  }
-}
+/** Маркер вместо суммы вознаграждения, пока его размер не определён */
+export const PARTNER_REWARD_MARKER = '{{PARTNER_REWARD}}'
 
 export function formatPrice(amount: number): string {
-  return new Intl.NumberFormat('ru-RU').format(amount) + '\u20BD'
+  return new Intl.NumberFormat('ru-RU').format(amount) + '₽'
+}
+
+/** Вознаграждение Партнёра: null — размер ещё не определён, показываем маркер */
+export function formatReward(reward: number | null): string {
+  return reward === null ? PARTNER_REWARD_MARKER : formatPrice(reward)
+}
+
+/** Начисленное вознаграждение: только выданные заказы с загруженным актом.
+ *  Если хотя бы у одного размер не определён — итог тоже не определён (null). */
+export function accruedReward(orders: Order[]): number | null {
+  let sum = 0
+  for (const o of orders) {
+    if (o.status !== 'ISSUED' || !o.issueActUploaded) continue
+    if (o.partnerReward === null) return null
+    sum += o.partnerReward
+  }
+  return sum
+}
+
+/** Сумма цен оплаченных заказов */
+export function paidTotal(orders: Order[]): number {
+  return orders.reduce((s, o) => (o.paymentStatus === 'PAID' ? s + o.price : s), 0)
 }
 
 export function formatDate(dateStr: string): string {

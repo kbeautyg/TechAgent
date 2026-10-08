@@ -334,7 +334,7 @@ export const products: Product[] = [
   
   
   
-  { id: 'samsungevob1tb', name: 'Samsung 870 EVO 1TB 2.5" SSD', brand: 'Samsung', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '1TB', interface: 'SATA 2.5"', speed: '560MB/s' }, inStock: true, description: 'SSD Samsung 870 EVO 1 ТБ формата 2.5" SATA III для апгрейда ноутбука или ПК. Скорость чтения до 560 МБ/с, надёжная TLC NAND V-NAND, ресурс 600 TBW, шифрование AES-256, 5 лет гарантии.' },
+  { id: 'samsungevob1tb', name: 'Samsung 870 EVO 1TB 2.5" SSD', brand: 'Samsung', category: 'Аксессуары', price: 6990, image: '💾', specs: { capacity: '1TB', interface: 'SATA 2.5"', speed: '560MB/s' }, inStock: true, description: 'SSD Samsung 870 EVO 1 ТБ формата 2.5" SATA III для апгрейда ноутбука или ПК. Скорость чтения до 560 МБ/с, надёжная TLC NAND V-NAND, ресурс 600 TBW, шифрование AES-256.' },
   
   
   { id: 'sgtvq70d', name: 'Samsung Q70D 55" QLED 4K', brand: 'Samsung', category: 'Телевизоры', price: 64900, image: '📺', specs: { size: '55"', resolution: '4K', panel: 'QLED', refresh: '120Hz' }, inStock: true, description: 'Samsung Q70D QLED 55" с квантовыми точками для ярких и точных цветов. 4K 120 Гц для плавного изображения и гейминга, Tizen OS, HDR10+, Object Tracking Sound Lite, Gaming Hub, Wi-Fi 6.' },

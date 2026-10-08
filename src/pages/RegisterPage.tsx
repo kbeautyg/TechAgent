@@ -1,36 +1,55 @@
 import { useState } from 'react'
 import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth, type RegisterData } from '../context/AuthContext'
 import { UserPlus } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
+
+type Field = keyof RegisterData | 'agreeOffer' | 'agreePrivacy'
+
+const emptyForm: RegisterData & { agreeOffer: boolean; agreePrivacy: boolean } = {
+  companyName: '',
+  inn: '',
+  ogrn: '',
+  pointAddress: '',
+  contactName: '',
+  phone: '',
+  email: '',
+  bankName: '',
+  bik: '',
+  account: '',
+  password: '',
+  agreeOffer: false,
+  agreePrivacy: false,
+}
+
+const digits = (v: string, max: number) => v.replace(/\D/g, '').slice(0, max)
 
 export default function RegisterPage() {
   const { register, user } = useAuth()
   const navigate = useNavigate()
-  const [form, setForm] = useState({
-    companyName: '',
-    inn: '',
-    ogrnip: '',
-    email: '',
-    phone: '',
-    password: '',
-    agree: false,
-  })
-  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [form, setForm] = useState(emptyForm)
+  const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [loading, setLoading] = useState(false)
 
   if (user) {
-    return <Navigate to="/dashboard" replace />
+    return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />
   }
 
   const validate = () => {
-    const errs: Record<string, string> = {}
-    if (!form.companyName.trim()) errs.companyName = 'Введите название компании'
-    if (!/^\d{12}$/.test(form.inn)) errs.inn = 'ИНН должен содержать 12 цифр'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) errs.email = 'Введите корректный email'
-    if (!form.phone.trim()) errs.phone = 'Введите телефон'
+    const errs: Partial<Record<Field, string>> = {}
+    if (!form.companyName.trim()) errs.companyName = 'Укажите наименование'
+    if (!/^(\d{10}|\d{12})$/.test(form.inn)) errs.inn = 'ИНН — 10 или 12 цифр'
+    if (!/^(\d{13}|\d{15})$/.test(form.ogrn)) errs.ogrn = 'ОГРН — 13 цифр, ОГРНИП — 15 цифр'
+    if (!form.pointAddress.trim()) errs.pointAddress = 'Укажите адрес пункта выдачи'
+    if (!form.contactName.trim()) errs.contactName = 'Укажите контактное лицо'
+    if (!form.phone.trim()) errs.phone = 'Укажите телефон'
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) errs.email = 'Введите корректный email'
+    if (!form.bankName.trim()) errs.bankName = 'Укажите банк'
+    if (!/^\d{9}$/.test(form.bik)) errs.bik = 'БИК — 9 цифр'
+    if (!/^\d{20}$/.test(form.account)) errs.account = 'Расчётный счёт — 20 цифр'
     if (form.password.length < 8) errs.password = 'Минимум 8 символов'
-    if (!form.agree) errs.agree = 'Необходимо согласие'
+    if (!form.agreeOffer) errs.agreeOffer = 'Без принятия оферты регистрация невозможна'
+    if (!form.agreePrivacy) errs.agreePrivacy = 'Нужно согласие на обработку персональных данных'
     return errs
   }
 
@@ -41,22 +60,30 @@ export default function RegisterPage() {
     if (Object.keys(errs).length > 0) return
 
     setLoading(true)
-    const success = await register({
+    const data: RegisterData = {
       companyName: form.companyName,
       inn: form.inn,
-      ogrnip: form.ogrnip,
-      email: form.email,
+      ogrn: form.ogrn,
+      pointAddress: form.pointAddress,
+      contactName: form.contactName,
       phone: form.phone,
+      email: form.email,
+      bankName: form.bankName,
+      bik: form.bik,
+      account: form.account,
       password: form.password,
-    })
-    if (success) {
-      reachGoal('register_submit')
-      navigate('/dashboard')
     }
+    const result = await register(data)
     setLoading(false)
+    if (result === 'email_taken') {
+      setErrors({ email: 'Этот email уже зарегистрирован' })
+      return
+    }
+    reachGoal('register_submit')
+    navigate('/dashboard')
   }
 
-  const update = (field: string, value: string | boolean) => {
+  const update = (field: Field, value: string | boolean) => {
     setForm((prev) => ({ ...prev, [field]: value }))
     if (errors[field]) {
       setErrors((prev) => {
@@ -67,150 +94,133 @@ export default function RegisterPage() {
     }
   }
 
-  const inputCls = (field: string) =>
+  const inputCls = (field: Field) =>
     `w-full px-4 py-3 rounded-xl border ${
       errors[field] ? 'border-red-500/50' : 'border-border'
     } bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm`
 
+  const input = (
+    field: keyof RegisterData,
+    label: string,
+    opts: { type?: string; placeholder?: string; autoComplete?: string; digitsMax?: number } = {},
+  ) => (
+    <div>
+      <label htmlFor={`reg-${field}`} className="block text-sm font-medium text-text-secondary mb-1.5">{label}</label>
+      <input
+        id={`reg-${field}`}
+        type={opts.type ?? 'text'}
+        inputMode={opts.digitsMax ? 'numeric' : undefined}
+        value={form[field]}
+        onChange={(e) => update(field, opts.digitsMax ? digits(e.target.value, opts.digitsMax) : e.target.value)}
+        className={inputCls(field)}
+        placeholder={opts.placeholder}
+        autoComplete={opts.autoComplete}
+        maxLength={opts.digitsMax}
+      />
+      {errors[field] && <p className="text-red-400 text-xs mt-1">{errors[field]}</p>}
+    </div>
+  )
+
   return (
     <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
       <div className="absolute bottom-[-80px] left-[30%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
-      <div className="w-full max-w-lg relative">
-        <div className="card-glass rounded-2xl p-8">
+      <div className="w-full max-w-xl relative">
+        <div className="card-glass rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <div className="icon-box mx-auto mb-4">
               <UserPlus size={24} className="text-primary" />
             </div>
-            <h1 className="text-2xl font-bold text-text-primary">Регистрация партнёра</h1>
-            <p className="text-text-muted text-sm mt-1">Создайте аккаунт для работы с платформой</p>
+            <h1 className="text-2xl font-bold text-text-primary">Анкета Партнёра</h1>
+            <p className="text-text-muted text-sm mt-1">
+              Анкету проверяет ТехЭйджент. Оформлять заказы можно после подтверждения.
+            </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Название компании</label>
-              <input
-                type="text"
-                value={form.companyName}
-                onChange={(e) => update('companyName', e.target.value)}
-                className={inputCls('companyName')}
-                placeholder="Партнёр Иванов Иван Иванович"
-                autoComplete="organization"
-              />
-              {errors.companyName && <p className="text-red-400 text-xs mt-1">{errors.companyName}</p>}
-            </div>
+          <form onSubmit={handleSubmit} className="space-y-6" noValidate>
+            <fieldset className="space-y-4">
+              <legend className="font-bold text-text-primary mb-3">Партнёр</legend>
+              {input('companyName', 'Наименование', { placeholder: 'Полное наименование', autoComplete: 'organization' })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {input('inn', 'ИНН', { placeholder: '10 или 12 цифр', digitsMax: 12 })}
+                {input('ogrn', 'ОГРН / ОГРНИП', { placeholder: '13 или 15 цифр', digitsMax: 15 })}
+              </div>
+              {input('pointAddress', 'Адрес пункта выдачи', { placeholder: 'Город, улица, дом, помещение', autoComplete: 'street-address' })}
+            </fieldset>
 
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">ИНН</label>
-              <input
-                type="text"
-                value={form.inn}
-                onChange={(e) => update('inn', e.target.value.replace(/\D/g, '').slice(0, 12))}
-                className={inputCls('inn')}
-                placeholder="123456789012"
-                maxLength={12}
-              />
-              {errors.inn && <p className="text-red-400 text-xs mt-1">{errors.inn}</p>}
-            </div>
+            <fieldset className="space-y-4">
+              <legend className="font-bold text-text-primary mb-3">Контакты</legend>
+              {input('contactName', 'Контактное лицо', { placeholder: 'ФИО', autoComplete: 'name' })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {input('phone', 'Телефон', { type: 'tel', placeholder: '+7', autoComplete: 'tel' })}
+                {input('email', 'Email', { type: 'email', placeholder: 'email@example.com', autoComplete: 'email' })}
+              </div>
+            </fieldset>
 
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Email</label>
-              <input
-                type="email"
-                value={form.email}
-                onChange={(e) => update('email', e.target.value)}
-                className={inputCls('email')}
-                placeholder="email@example.com"
-                autoComplete="email"
-              />
-              {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
-            </div>
+            <fieldset className="space-y-4">
+              <legend className="font-bold text-text-primary mb-1">Реквизиты для выплаты вознаграждения</legend>
+              <p className="text-xs text-text-muted -mt-1">На этот счёт ТехЭйджент перечисляет вознаграждение Партнёра.</p>
+              {input('bankName', 'Банк', { placeholder: 'Наименование банка' })}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                {input('bik', 'БИК', { placeholder: '9 цифр', digitsMax: 9 })}
+                {input('account', 'Расчётный счёт', { placeholder: '20 цифр', digitsMax: 20 })}
+              </div>
+            </fieldset>
 
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Телефон</label>
-              <input
-                type="tel"
-                value={form.phone}
-                onChange={(e) => update('phone', e.target.value)}
-                className={inputCls('phone')}
-                placeholder="+7 999 123-45-67"
-                autoComplete="tel"
-              />
-              {errors.phone && <p className="text-red-400 text-xs mt-1">{errors.phone}</p>}
-            </div>
+            <fieldset className="space-y-4">
+              <legend className="font-bold text-text-primary mb-3">Вход в кабинет</legend>
+              {input('password', 'Пароль', { type: 'password', placeholder: 'Минимум 8 символов', autoComplete: 'new-password' })}
+            </fieldset>
 
-            <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Пароль</label>
-              <input
-                type="password"
-                value={form.password}
-                onChange={(e) => update('password', e.target.value)}
-                className={inputCls('password')}
-                placeholder="Минимум 8 символов"
-                autoComplete="new-password"
-              />
-              {errors.password && <p className="text-red-400 text-xs mt-1">{errors.password}</p>}
-              {form.password && (
-                <div className="flex items-center gap-2 mt-1">
-                  <div className="flex gap-1 flex-1">
-                    {[1,2,3,4].map(i => (
-                      <div key={i} className={`h-1 flex-1 rounded-full transition-all ${
-                        form.password.length >= i * 3
-                          ? form.password.length >= 12 ? 'bg-green-500' : form.password.length >= 9 ? 'bg-yellow-500' : 'bg-red-400'
-                          : 'bg-gray-200'
-                      }`} />
-                    ))}
-                  </div>
-                  <span className="text-xs text-text-muted">
-                    {form.password.length < 8 ? 'Слишком короткий' : form.password.length < 10 ? 'Нормальный' : 'Надёжный'}
-                  </span>
+            <div className="space-y-3">
+              <div>
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={form.agreeOffer}
+                    onChange={(e) => update('agreeOffer', e.target.checked)}
+                    className="mt-1 accent-primary"
+                    id="agreeOffer"
+                  />
+                  <label htmlFor="agreeOffer" className="text-sm text-text-secondary">
+                    Принимаю условия{' '}
+                    <Link to="/legal/offer" target="_blank" className="text-primary no-underline hover:underline">агентского договора-оферты</Link>
+                  </label>
                 </div>
-              )}
-            </div>
-
-            {/* Legal documents */}
-            <div className="bg-bg-light rounded-xl p-4 space-y-2">
-              <p className="text-xs font-semibold text-text-secondary mb-2">Ознакомьтесь перед регистрацией:</p>
-              <div className="flex flex-wrap gap-2">
-                <Link to="/legal/offer" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  📄 Публичная оферта
-                </Link>
-                <Link to="/legal/privacy" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  🔒 Политика конфиденциальности
-                </Link>
-                <Link to="/legal/terms" className="inline-flex items-center gap-1.5 text-xs font-medium text-primary bg-primary/8 px-3 py-1.5 rounded-lg no-underline hover:bg-primary/15 transition-colors">
-                  📋 Пользовательское соглашение
-                </Link>
+                {errors.agreeOffer && <p className="text-red-400 text-xs mt-1">{errors.agreeOffer}</p>}
+              </div>
+              <div>
+                <div className="flex items-start gap-2">
+                  <input
+                    type="checkbox"
+                    checked={form.agreePrivacy}
+                    onChange={(e) => update('agreePrivacy', e.target.checked)}
+                    className="mt-1 accent-primary"
+                    id="agreePrivacy"
+                  />
+                  <label htmlFor="agreePrivacy" className="text-sm text-text-secondary">
+                    Даю согласие на обработку персональных данных в соответствии с{' '}
+                    <Link to="/legal/privacy" target="_blank" className="text-primary no-underline hover:underline">политикой конфиденциальности</Link>
+                  </label>
+                </div>
+                {errors.agreePrivacy && <p className="text-red-400 text-xs mt-1">{errors.agreePrivacy}</p>}
               </div>
             </div>
 
-            <div className="flex items-start gap-2">
-              <input
-                type="checkbox"
-                checked={form.agree}
-                onChange={(e) => update('agree', e.target.checked)}
-                className="mt-1 accent-primary"
-                id="agree"
-              />
-              <label htmlFor="agree" className="text-sm text-text-muted">
-                Я подтверждаю, что являюсь импортёром и принимаю условия{' '}
-                <Link to="/legal/offer" className="text-primary no-underline hover:underline">публичной оферты</Link>,{' '}
-                <Link to="/legal/privacy" className="text-primary no-underline hover:underline">политики конфиденциальности</Link>{' '}
-                и <Link to="/legal/terms" className="text-primary no-underline hover:underline">пользовательского соглашения</Link>
-              </label>
-            </div>
-            {errors.agree && <p className="text-red-400 text-xs">{errors.agree}</p>}
+            {Object.keys(errors).length > 0 && (
+              <p className="text-red-400 text-sm">Проверьте поля анкеты, отмеченные выше.</p>
+            )}
 
             <button
               type="submit"
               disabled={loading}
               className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
             >
-              {loading ? 'Регистрация...' : 'Зарегистрироваться'}
+              {loading ? 'Отправка...' : 'Отправить анкету'}
             </button>
           </form>
 
           <p className="text-center text-text-muted text-sm mt-6">
-            Уже есть аккаунт?{' '}
+            Уже есть кабинет?{' '}
             <Link to="/login" className="text-primary font-semibold no-underline hover:underline">
               Войти
             </Link>

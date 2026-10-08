@@ -1,5 +1,5 @@
-import { NavLink, Outlet, Navigate } from 'react-router-dom'
-import { LayoutDashboard, Package, PlusCircle, User, FileText, MessageCircle } from 'lucide-react'
+import { NavLink, Outlet, Navigate, Link, useLocation } from 'react-router-dom'
+import { LayoutDashboard, Package, PlusCircle, User, FileText, MessageCircle, Clock, XCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
 const navItems = [
@@ -13,6 +13,7 @@ const navItems = [
 
 export default function DashboardLayout() {
   const { user, isLoading } = useAuth()
+  const { pathname } = useLocation()
 
   if (isLoading) {
     return (
@@ -26,9 +27,30 @@ export default function DashboardLayout() {
     return <Navigate to="/login" replace />
   }
 
+  const status = user.partnerStatus ?? 'PENDING'
+
   return (
     <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 lg:py-6">
+        {status === 'PENDING' && (
+          <div className="mb-4 lg:mb-6 flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900">
+            <Clock size={20} className="shrink-0 mt-0.5" />
+            <p className="text-sm">
+              <span className="font-semibold">Анкета на проверке у ТехЭйджент.</span> Оформлять заказы можно после подтверждения.
+            </p>
+          </div>
+        )}
+        {status === 'REJECTED' && (
+          <div className="mb-4 lg:mb-6 flex items-start gap-3 rounded-xl border border-red-300 bg-red-50 px-4 py-3 text-red-900">
+            <XCircle size={20} className="shrink-0 mt-0.5" />
+            <p className="text-sm">
+              <span className="font-semibold">ТехЭйджент отклонил анкету.</span> Оформлять заказы нельзя. Проверьте данные в{' '}
+              <Link to="/dashboard/profile" className="text-red-900 underline">профиле</Link> или напишите на{' '}
+              <a href="mailto:partners@techagent.pro" className="text-red-900 underline">partners@techagent.pro</a>.
+            </p>
+          </div>
+        )}
+
         <div className="flex flex-col lg:flex-row gap-4 lg:gap-6">
           {/* Sidebar — hidden on mobile (bottom nav replaces it) */}
           <aside className="hidden lg:block lg:w-56 shrink-0">
@@ -40,7 +62,8 @@ export default function DashboardLayout() {
                   end={item.end}
                   className={({ isActive }) =>
                     `flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium no-underline whitespace-nowrap transition-all ${
-                      isActive
+                      // «Заказы» не подсвечиваем на странице нового заказа
+                      isActive && !(item.to === '/dashboard/orders' && pathname === '/dashboard/orders/new')
                         ? 'bg-primary/10 text-primary'
                         : 'text-text-secondary hover:bg-bg-light hover:text-text-primary'
                     }`

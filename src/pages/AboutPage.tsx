@@ -5,51 +5,65 @@ import {
   IconSmartphone, IconGlobe, IconBolt,
 } from '../components/icons'
 
-const stats = [
-  { value: '200+', label: 'Активных партнёров' },
-  { value: '3%', label: 'Комиссия' },
-  { value: '5–7', label: 'Дней доставка' },
-  { value: '24/7', label: 'Поддержка' },
-]
-
 const advantages = [
-  { icon: <IconCoins size={24} />, title: 'Прозрачная комиссия', desc: '3% от стоимости товара. Никаких скрытых сборов, минимальных сумм или доплат.' },
-  { icon: <IconTruck size={24} />, title: 'Быстрая логистика', desc: 'Доставка 5–7 рабочих дней через проверенных карго-партнёров. Отслеживание на каждом этапе.' },
-  { icon: <IconFileCheck size={24} />, title: 'Полный документооборот', desc: 'Автоматическое формирование всех документов. Инвойсы, акты, чеки — всё в личном кабинете.' },
-  { icon: <IconSmartphone size={24} />, title: 'Удобный личный кабинет', desc: 'Создание заказов, генерация платёжных ссылок, отслеживание статусов — всё в одном месте.' },
-  { icon: <IconGlobe size={24} />, title: 'Широкий каталог', desc: 'Apple, Samsung, Xiaomi, Dyson, Sony, DJI и другие топовые бренды. Всё, что нужно вашим клиентам.' },
-  { icon: <IconBolt size={24} />, title: 'Мгновенная оплата', desc: 'Генерация QR-кодов и ссылок для оплаты через СБП. Клиент оплачивает за минуту.' },
+  { icon: <IconFileCheck size={24} />, title: 'Продавец с реквизитами', desc: 'ОсОО «ТехЭйджент» продаёт товар по публичной оферте купли-продажи. Реквизиты продавца — на странице оплаты и в документах.' },
+  { icon: <IconBolt size={24} />, title: 'Оплата через СБП', desc: 'Покупатель платит продавцу напрямую по ссылке или QR-коду. Партнёр деньги покупателя не принимает.' },
+  { icon: <IconTruck size={24} />, title: 'Доставка в пункт выдачи', desc: 'ТехЭйджент выкупает товар у поставщика и доставляет его в точку партнёра за свой счёт — ориентировочно 5–7 рабочих дней с момента выкупа.' },
+  { icon: <IconCoins size={24} />, title: 'Документы по каждому заказу', desc: 'Акт приёма-передачи при выдаче товара, отчёт агента и акт по итогам месяца — в личном кабинете партнёра.' },
+  { icon: <IconSmartphone size={24} />, title: 'Личный кабинет партнёра', desc: 'Оформление заказов, ссылки на оплату, статусы доставки, отметка о выдаче товара.' },
+  { icon: <IconGlobe size={24} />, title: 'Каталог с ценами', desc: 'Apple, Samsung, Xiaomi, Dyson, Sony, DJI и другие бренды. Цены в каталоге — итоговые для покупателя.' },
 ]
 
 const roles = [
   {
-    title: 'TechAgent',
-    role: 'Агент по закупке',
-    desc: 'Выкупаем товар у зарубежного поставщика по поручению партнёра. Мы НЕ продавец, НЕ импортёр, НЕ перевозчик.',
+    title: 'ТехЭйджент',
+    role: 'Продавец',
+    desc: 'Покупает товар у поставщика в собственность, доставляет его в пункт выдачи за свой счёт и продаёт покупателю по оферте купли-продажи.',
     color: 'bg-primary',
-    items: ['Находим поставщика', 'Выкупаем товар', 'Передаём карго-компании партнёра'],
+    items: ['Контракт поставки и инвойс', 'Доставка до пункта выдачи', 'Договор купли-продажи с покупателем'],
   },
   {
     title: 'Партнёр',
-    role: 'Импортёр товара',
-    desc: 'Является импортёром по закону. Создаёт заказы, отправляет ссылку на оплату клиенту, получает товар.',
+    role: 'Агент и пункт выдачи',
+    desc: 'Привлекает покупателей, оформляет заказы и выдаёт товар в своей точке от имени ТехЭйджент. Денег покупателя не принимает.',
     color: 'bg-accent',
-    items: ['Создаёт заказ в ЛК', 'Передаёт ссылку клиенту', 'Получает и отдаёт товар'],
+    items: ['Оформляет заказ в кабинете', 'Принимает товар в точке', 'Выдаёт товар под акт'],
   },
   {
     title: 'Покупатель',
-    role: 'Конечный клиент',
-    desc: 'Приходит в магазин партнёра, выбирает устройство, оплачивает по ссылке и получает товар через 5–7 дней.',
+    role: 'Физическое лицо',
+    desc: 'Выбирает товар в точке партнёра, оплачивает его ТехЭйджент через СБП и получает в том же пункте выдачи.',
     color: 'bg-primary',
-    items: ['Выбирает товар', 'Оплачивает по ссылке', 'Получает от партнёра'],
+    items: ['Принимает оферту купли-продажи', 'Платит продавцу через СБП', 'Получает товар под подпись'],
   },
 ]
 
-const legalData = [
-  { label: 'Тип договора', value: 'Агентский договор (глава 52 ГК РФ)' },
-  { label: 'Комиссия агента', value: '3% от стоимости товара' },
-  { label: 'Роль партнёра', value: 'Принципал и импортёр товара' },
-  { label: 'Таможня', value: 'Оформляется карго от имени партнёра' },
+const flows = [
+  {
+    title: 'Деньги',
+    rows: [
+      { label: 'Покупатель → ТехЭйджент', value: 'Цена товара, через СБП' },
+      { label: 'ТехЭйджент → поставщик', value: 'Оплата по контракту поставки' },
+      { label: 'ТехЭйджент → партнёр', value: 'Агентское вознаграждение' },
+    ],
+  },
+  {
+    title: 'Товар',
+    rows: [
+      { label: 'Поставщик → ТехЭйджент', value: 'Право собственности по инвойсу' },
+      { label: 'ТехЭйджент → пункт выдачи', value: 'Доставка за счёт ТехЭйджент' },
+      { label: 'Пункт выдачи → покупатель', value: 'Передача по акту приёма-передачи' },
+    ],
+  },
+  {
+    title: 'Основания',
+    rows: [
+      { label: 'ТехЭйджент и поставщик', value: 'Контракт поставки, инвойс' },
+      { label: 'ТехЭйджент и покупатель', value: 'Публичная оферта купли-продажи' },
+      { label: 'ТехЭйджент и партнёр', value: 'Агентский договор-оферта, отчёт агента, акт' },
+      { label: 'ТехЭйджент и перевозчик', value: 'Договор перевозки' },
+    ],
+  },
 ]
 
 export default function AboutPage() {
@@ -61,25 +75,15 @@ export default function AboutPage() {
         <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
-            TechAgent — агентская закупка электроники
+            TechAgent — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
-            B2B-платформа, которая помогает индивидуальным предпринимателям закупать электронику за&nbsp;рубежом по&nbsp;выгодным ценам. Прозрачно, легально и&nbsp;быстро.
+            Продавец — ОсОО «ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП.
           </p>
         </div>
       </section>
 
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-
-        {/* ===== STATS ===== */}
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-4 gap-4 mb-20">
-          {stats.map((s, i) => (
-            <div key={i} className="bg-bg-section rounded-3xl p-6 sm:p-8 text-center">
-              <div className="text-[32px] sm:text-[40px] font-extrabold text-primary tracking-tight leading-none mb-2">{s.value}</div>
-              <div className="text-[13px] text-text-muted font-medium">{s.label}</div>
-            </div>
-          ))}
-        </div>
 
         {/* ===== WHAT IS TECHAGENT ===== */}
         <div className="mb-20">
@@ -87,7 +91,7 @@ export default function AboutPage() {
             Что такое TechAgent?
           </h2>
           <p className="text-text-muted text-center max-w-2xl mx-auto mb-16 text-[16px] leading-relaxed">
-            Платформа для партнёров с розничными точками электроники. Мы берём на себя закупку за рубежом — вы получаете товар по лучшей цене с минимальной комиссией.
+            Платформа, через которую ОсОО «ТехЭйджент» продаёт электронику покупателям в&nbsp;пунктах выдачи партнёров.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -109,7 +113,7 @@ export default function AboutPage() {
             Как устроена модель
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Три участника — каждый со своей ролью
+            Поставщик продаёт товар ТехЭйджент по&nbsp;контракту поставки. Дальше работают три участника
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -136,67 +140,36 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* ===== LEGAL + IMPORTANT ===== */}
+        {/* ===== MONEY, GOODS, DOCUMENTS ===== */}
         <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Юридическая основа
+          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+            Деньги, товар и документы
           </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Полностью белая схема по законодательству РФ
-          </p>
 
           <div className="bg-bg-dark rounded-3xl p-8 sm:p-12 text-white relative overflow-hidden">
-            {/* Glow */}
             <div className="absolute -top-24 -right-24 w-80 h-80 bg-accent/10 rounded-full blur-3xl pointer-events-none" />
-
-            {/* Important notice */}
-            <div className="relative z-10 mb-10">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 bg-accent rounded-xl flex items-center justify-center shrink-0">
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2L3 7V17L12 22L21 17V7L12 2Z" stroke="white" strokeWidth="1.8" fill="none" strokeLinejoin="round" /><path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-3 gap-8">
+              {flows.map((f) => (
+                <div key={f.title}>
+                  <h3 className="text-lg font-extrabold tracking-tight mb-3">{f.title}</h3>
+                  {f.rows.map((r) => (
+                    <div key={r.label} className="py-3 border-b border-white/[0.06] last:border-0">
+                      <div className="text-[13px] font-semibold text-white/80 mb-0.5">{r.label}</div>
+                      <div className="text-[13px] text-white/50">{r.value}</div>
+                    </div>
+                  ))}
                 </div>
-                <div>
-                  <h3 className="text-lg font-extrabold tracking-tight">Важно знать</h3>
-                  <p className="text-[13px] text-white/40">О юридической модели и ответственности</p>
-                </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
-                {[
-                  { label: 'Роль TechAgent', value: 'Агент по закупке, НЕ продавец и НЕ импортёр' },
-                  { label: 'Роль партнёра', value: 'Выступает принципалом и импортёром товара' },
-                  { label: 'Таможенное оформление', value: 'Карго-компанией от имени партнёра' },
-                  { label: 'Юридическая основа', value: 'Схема соответствует главе 52 ГК РФ' },
-                ].map((item, i) => (
-                  <div key={i} className="py-3.5">
-                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono" style={{ color: '#7C86A3' }}>{item.label}</div>
-                    <div className="text-[14px] font-medium text-white/80">{item.value}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Legal data */}
-            <div className="relative z-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-0">
-                {legalData.map((item, i) => (
-                  <div key={i} className="py-3.5">
-                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono" style={{ color: '#7C86A3' }}>{item.label}</div>
-                    <div className="text-[14px] font-medium text-white/80">{item.value}</div>
-                  </div>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </div>
 
         {/* ===== COMPANY / REQUISITES ===== */}
         <div className="mb-20" id="company">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
+          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
             Кто мы юридически
           </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Открыто отвечаем на вопрос, который задаёт каждый новый партнёр
-          </p>
+
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
             <div className="bg-bg-section rounded-3xl p-8">
@@ -205,19 +178,18 @@ export default function AboutPage() {
               </h3>
               <div className="flex flex-col gap-3 text-[14px] text-text-secondary leading-relaxed">
                 <p>
-                  TechAgent — агент по закупке: мы рассчитываемся с зарубежными поставщиками и работаем
-                  на внешних рынках, поэтому оператор сервиса — компания в Кыргызстане, стране-участнице ЕАЭС.
-                  Это упрощает закупку и логистику в Россию.
+                  ОсОО «ТехЭйджент» покупает товар у зарубежных поставщиков и рассчитывается с ними,
+                  поэтому компания зарегистрирована в Кыргызстане — стране-участнице ЕАЭС.
                 </p>
                 <p>
-                  Для российского партнёра схема при этом полностью прозрачна: вы работаете по агентскому
-                  договору (глава 52 ГК РФ), выступаете импортёром товара и получаете полный комплект
-                  документов по каждой поставке — договор, отчёт агента и акт.
+                  Покупатель заключает договор купли-продажи с ОсОО «ТехЭйджент» и платит ему напрямую.
+                  Партнёр работает по агентскому договору: оформляет заказы и выдаёт товар, а вознаграждение
+                  получает от ТехЭйджент.
                 </p>
                 <p>
-                  Условия зафиксированы в{' '}
-                  <Link to="/legal/offer" className="text-primary font-semibold">публичной оферте</Link> —
-                  комиссия 3%, порядок расчётов и ответственность агента прописаны в ней.
+                  Условия — в документах:{' '}
+                  <Link to="/legal/sale-offer" className="text-primary font-semibold">оферта купли-продажи</Link> для покупателей и{' '}
+                  <Link to="/legal/offer" className="text-primary font-semibold">агентский договор-оферта</Link> для партнёров.
                 </p>
               </div>
             </div>
@@ -228,11 +200,13 @@ export default function AboutPage() {
               </h3>
               <div className="flex flex-col gap-0">
                 {[
-                  { label: 'Оператор сервиса', value: 'ОсОО «ТехЭйджент»' },
-                  { label: 'Адрес', value: 'г. Бишкек, Кыргызская Республика' },
+                  { label: 'Продавец', value: 'ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО' },
+                  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8' },
+                  { label: 'Директор', value: 'Аширбеков Н.М.Т.' },
                   { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
                   { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
-                  { label: 'Документы', value: 'Оферта, политика, соглашение', href: '/legal' },
+                  { label: 'Покупателям', value: 'help@techagent.pro', href: 'mailto:help@techagent.pro' },
+                  { label: 'Документы', value: 'Оферты, политика, соглашение', href: '/legal' },
                 ].map((item, i) => (
                   <div key={i} className="py-3 border-b border-black/[0.05] last:border-0">
                     <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono text-text-muted">{item.label}</div>
@@ -255,8 +229,8 @@ export default function AboutPage() {
         {/* ===== CTA ===== */}
         <div className="mb-20">
           <div className="bg-primary rounded-3xl py-16 px-8 text-center text-white">
-            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Начните зарабатывать с TechAgent</h2>
-            <p className="text-white/60 text-[15px] mb-8 max-w-xl mx-auto">Зарегистрируйтесь за 2 минуты, создайте первый заказ и&nbsp;предложите клиентам лучшие цены на электронику</p>
+            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Станьте партнёром TechAgent</h2>
+            <p className="text-white/60 text-[15px] mb-8 max-w-xl mx-auto">Заполните анкету — после проверки ТехЭйджент вы&nbsp;сможете оформлять заказы покупателей</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
                 Стать партнёром <ArrowRight size={16} />

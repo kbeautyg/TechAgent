@@ -1,47 +1,303 @@
 import type { User, Order } from '../types'
+import { products } from './products'
 
-const ORDERS_KEY = 'techagent_orders'
+/*
+ * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage.
+ *
+ * Демо-учётки и демо-заказы попадают в данные только в режиме разработки
+ * (npm run dev) или при явном флаге сборки VITE_DEMO=1. В обычной боевой
+ * сборке массивы пустые: входа по демо-учёткам нет, демо-имён в бандле нет.
+ */
+export const DEMO_MODE: boolean = import.meta.env.DEV || import.meta.env.VITE_DEMO === '1'
+
+/* Новые ключи: в старых лежат заказы прежнего формата, их поля не совпадают с текущими типами */
+const ORDERS_KEY = 'techagent_orders_v2'
+const USERS_KEY = 'techagent_users_v2'
 const COUNTER_KEY = 'techagent_order_counter'
-
-export const mockUsers: User[] = [
-  {
-    id: '1',
-    email: 'demo@techagent.pro',
-    role: 'CLIENT',
-    companyName: 'Партнёр Демонов Д.Д.',
-    inn: '770312345678',
-    ogrnip: '321774600012345',
-    phone: '+7 999 123-45-67',
-    cargoName: 'Cargo Express',
-    cargoContact: '+7 800 555-00-01',
-    createdAt: '2026-01-15T10:00:00Z',
-  },
-  {
-    id: '2',
-    email: 'admin@techagent.pro',
-    role: 'ADMIN',
-    companyName: 'TechAgent',
-    createdAt: '2026-01-01T10:00:00Z',
-  },
-  {
-    id: '3',
-    email: 'ivanov@ip.ru',
-    role: 'CLIENT',
-    companyName: 'Партнёр Иванов И.И.',
-    inn: '770498765432',
-    ogrnip: '321774600098765',
-    phone: '+7 999 888-77-66',
-    cargoName: 'FastCargo',
-    cargoContact: '+7 800 100-20-03',
-    createdAt: '2026-01-20T10:00:00Z',
-  },
-]
+const LEGACY_KEYS = ['techagent_orders']
 
 /* localStorage недоступен при пререндере (Node) — используем безопасный шим */
-const storage: Pick<Storage, 'getItem' | 'setItem'> =
+const storage: Pick<Storage, 'getItem' | 'setItem' | 'removeItem'> =
   typeof localStorage !== 'undefined'
     ? localStorage
-    : { getItem: () => null, setItem: () => undefined }
+    : { getItem: () => null, setItem: () => undefined, removeItem: () => undefined }
+
+for (const key of LEGACY_KEYS) storage.removeItem(key)
+
+function load<T>(key: string): T | null {
+  try {
+    const raw = storage.getItem(key)
+    if (raw) return JSON.parse(raw) as T
+  } catch { /* ignore */ }
+  return null
+}
+
+/* ── Демо-данные (только DEMO_MODE) ── */
+
+function demoUsers(): User[] {
+  return [
+    {
+      id: '1',
+      email: 'demo@techagent.pro',
+      role: 'CLIENT',
+      companyName: 'Демо-партнёр 1',
+      inn: '000000000001',
+      ogrn: '000000000000001',
+      phone: '+7 900 000-00-01',
+      contactName: 'Контактное лицо (демо)',
+      pointAddress: 'Адрес пункта выдачи (демо)',
+      bankName: 'Банк (демо)',
+      bik: '000000000',
+      account: '00000000000000000001',
+      partnerStatus: 'VERIFIED',
+      createdAt: '2026-01-15T10:00:00Z',
+    },
+    {
+      id: '2',
+      email: 'admin@techagent.pro',
+      role: 'ADMIN',
+      companyName: 'TechAgent',
+      createdAt: '2026-01-01T10:00:00Z',
+    },
+    {
+      id: '3',
+      email: 'demo2@techagent.pro',
+      role: 'CLIENT',
+      companyName: 'Демо-партнёр 2',
+      inn: '000000000002',
+      ogrn: '000000000000002',
+      phone: '+7 900 000-00-02',
+      contactName: 'Контактное лицо (демо)',
+      pointAddress: 'Адрес пункта выдачи (демо)',
+      bankName: 'Банк (демо)',
+      bik: '000000000',
+      account: '00000000000000000002',
+      partnerStatus: 'VERIFIED',
+      createdAt: '2026-01-20T10:00:00Z',
+    },
+    {
+      id: '4',
+      email: 'demo3@techagent.pro',
+      role: 'CLIENT',
+      companyName: 'Демо-партнёр 3',
+      inn: '000000000003',
+      ogrn: '000000000000003',
+      phone: '+7 900 000-00-03',
+      contactName: 'Контактное лицо (демо)',
+      pointAddress: 'Адрес пункта выдачи (демо)',
+      bankName: 'Банк (демо)',
+      bik: '000000000',
+      account: '00000000000000000003',
+      partnerStatus: 'PENDING',
+      createdAt: '2026-02-18T10:00:00Z',
+    },
+  ]
+}
+
+/** Товар и цена — из каталога, как при оформлении настоящего заказа */
+function item(productId: string): Pick<Order, 'productId' | 'productName' | 'price'> {
+  const p = products.find((x) => x.id === productId)
+  return { productId, productName: p?.name ?? productId, price: p?.price ?? 0 }
+}
+
+function demoOrders(): Order[] {
+  return [
+    // === Демо-партнёр 1 (id: 1) ===
+    {
+      id: 'o1',
+      orderNumber: '#1245',
+      userId: '1',
+      ...item('sgts24u256b'),
+      partnerReward: null,
+      buyerName: 'Покупатель 1 (демо)',
+      buyerPhone: '+7 900 000-00-11',
+      paymentId: 'pay_demo01',
+      paymentLink: '/pay/pay_demo01',
+      paymentStatus: 'PENDING',
+      status: 'CREATED',
+      createdAt: '2026-02-17T09:00:00Z',
+      updatedAt: '2026-02-17T09:00:00Z',
+    },
+    {
+      id: 'o2',
+      orderNumber: '#1243',
+      userId: '1',
+      ...item('macbookairm315256'),
+      partnerReward: null,
+      buyerName: 'Покупатель 2 (демо)',
+      buyerPhone: '+7 900 000-00-12',
+      buyerEmail: 'buyer2@example.com',
+      paymentId: 'pay_demo02',
+      paymentLink: '/pay/pay_demo02',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-14T15:00:00Z',
+      saleOfferAcceptedAt: '2026-02-14T14:58:00Z',
+      status: 'PAID',
+      createdAt: '2026-02-14T14:30:00Z',
+      updatedAt: '2026-02-14T15:00:00Z',
+    },
+    {
+      id: 'o3',
+      orderNumber: '#1241',
+      userId: '1',
+      ...item('iph15p256b'),
+      partnerReward: 1500,
+      buyerName: 'Покупатель 3 (демо)',
+      buyerPhone: '+7 900 000-00-13',
+      paymentId: 'pay_demo03',
+      paymentLink: '/pay/pay_demo03',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-12T14:45:00Z',
+      saleOfferAcceptedAt: '2026-02-12T14:44:00Z',
+      status: 'PURCHASED',
+      createdAt: '2026-02-12T14:30:00Z',
+      updatedAt: '2026-02-13T10:00:00Z',
+    },
+    {
+      id: 'o4',
+      orderNumber: '#1240',
+      userId: '1',
+      ...item('macbookairm3512'),
+      partnerReward: null,
+      buyerName: 'Покупатель 4 (демо)',
+      buyerPhone: '+7 900 000-00-14',
+      paymentId: 'pay_demo04',
+      paymentLink: '/pay/pay_demo04',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-10T10:20:00Z',
+      saleOfferAcceptedAt: '2026-02-10T10:19:00Z',
+      status: 'IN_TRANSIT',
+      createdAt: '2026-02-10T10:00:00Z',
+      updatedAt: '2026-02-11T12:00:00Z',
+    },
+    {
+      id: 'o5',
+      orderNumber: '#1238',
+      userId: '1',
+      ...item('xm14512b'),
+      partnerReward: 1000,
+      buyerName: 'Покупатель 5 (демо)',
+      buyerPhone: '+7 900 000-00-15',
+      buyerEmail: 'buyer5@example.com',
+      paymentId: 'pay_demo05',
+      paymentLink: '/pay/pay_demo05',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-05T16:00:00Z',
+      saleOfferAcceptedAt: '2026-02-05T15:59:00Z',
+      status: 'AT_POINT',
+      createdAt: '2026-02-05T15:30:00Z',
+      updatedAt: '2026-02-12T10:00:00Z',
+    },
+    {
+      id: 'o6',
+      orderNumber: '#1235',
+      userId: '1',
+      ...item('sgts24256b'),
+      partnerReward: 1000,
+      buyerName: 'Покупатель 6 (демо)',
+      buyerPhone: '+7 900 000-00-16',
+      paymentId: 'pay_demo06',
+      paymentLink: '/pay/pay_demo06',
+      paymentStatus: 'PAID',
+      paidAt: '2026-01-25T09:30:00Z',
+      saleOfferAcceptedAt: '2026-01-25T09:29:00Z',
+      status: 'ISSUED',
+      issuedAt: '2026-02-01T16:00:00Z',
+      issuedToName: 'Покупатель 6 (демо)',
+      issueActUploaded: true,
+      createdAt: '2026-01-25T09:00:00Z',
+      updatedAt: '2026-02-01T16:00:00Z',
+    },
+    {
+      id: 'o7',
+      orderNumber: '#1234',
+      userId: '1',
+      ...item('xmrn14p256b'),
+      partnerReward: null,
+      buyerName: 'Покупатель 7 (демо)',
+      buyerPhone: '+7 900 000-00-17',
+      paymentId: 'pay_demo07',
+      paymentLink: '/pay/pay_demo07',
+      paymentStatus: 'PENDING',
+      status: 'CANCELLED',
+      createdAt: '2026-01-22T12:00:00Z',
+      updatedAt: '2026-01-24T12:00:00Z',
+    },
+
+    // === Демо-партнёр 2 (id: 3) ===
+    {
+      id: 'o8',
+      orderNumber: '#1244',
+      userId: '3',
+      ...item('sgts25u256b'),
+      partnerReward: null,
+      buyerName: 'Покупатель 8 (демо)',
+      buyerPhone: '+7 900 000-00-18',
+      paymentId: 'pay_demo08',
+      paymentLink: '/pay/pay_demo08',
+      paymentStatus: 'PENDING',
+      status: 'CREATED',
+      createdAt: '2026-02-16T14:00:00Z',
+      updatedAt: '2026-02-16T14:00:00Z',
+    },
+    {
+      id: 'o9',
+      orderNumber: '#1242',
+      userId: '3',
+      ...item('iph15pm256n'),
+      partnerReward: null,
+      buyerName: 'Покупатель 9 (демо)',
+      buyerPhone: '+7 900 000-00-19',
+      paymentId: 'pay_demo09',
+      paymentLink: '/pay/pay_demo09',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-13T12:00:00Z',
+      saleOfferAcceptedAt: '2026-02-13T11:59:00Z',
+      status: 'AT_POINT',
+      createdAt: '2026-02-13T11:30:00Z',
+      updatedAt: '2026-02-19T12:00:00Z',
+    },
+    {
+      id: 'o10',
+      orderNumber: '#1237',
+      userId: '3',
+      ...item('macbookairm3256'),
+      partnerReward: null,
+      buyerName: 'Покупатель 10 (демо)',
+      buyerPhone: '+7 900 000-00-20',
+      paymentId: 'pay_demo10',
+      paymentLink: '/pay/pay_demo10',
+      paymentStatus: 'PAID',
+      paidAt: '2026-02-01T10:00:00Z',
+      saleOfferAcceptedAt: '2026-02-01T09:59:00Z',
+      status: 'ISSUED',
+      issuedAt: '2026-02-08T16:00:00Z',
+      issuedToName: 'Покупатель 10 (демо)',
+      issueActUploaded: true,
+      createdAt: '2026-02-01T09:30:00Z',
+      updatedAt: '2026-02-08T16:00:00Z',
+    },
+  ]
+}
+
+/* ── Пользователи ── */
+
+export const mockUsers: User[] = load<User[]>(USERS_KEY) ?? (DEMO_MODE ? demoUsers() : [])
+
+export function saveUsers(): void {
+  storage.setItem(USERS_KEY, JSON.stringify(mockUsers))
+}
+
+/** Изменить данные пользователя (анкета, статус проверки) и сохранить */
+export function updateUser(id: string, patch: Partial<User>): User | null {
+  const idx = mockUsers.findIndex((u) => u.id === id)
+  if (idx < 0) return null
+  mockUsers[idx] = { ...mockUsers[idx], ...patch }
+  saveUsers()
+  return mockUsers[idx]
+}
+
+/* ── Заказы ── */
 
 let orderCounter = parseInt(storage.getItem(COUNTER_KEY) || '1245', 10)
 
@@ -51,247 +307,11 @@ export function getNextOrderNumber(): string {
   return `#${orderCounter}`
 }
 
+export const mockOrders: Order[] = load<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrders() : [])
+
 export function saveOrders(): void {
   storage.setItem(ORDERS_KEY, JSON.stringify(mockOrders))
 }
 
-function loadSavedOrders(): Order[] | null {
-  try {
-    const raw = storage.getItem(ORDERS_KEY)
-    if (raw) return JSON.parse(raw) as Order[]
-  } catch { /* ignore */ }
-  return null
-}
-
-const defaultOrders: Order[] = [
-  // === Заказы пользователя demo (id: 1) ===
-  {
-    id: 'o1',
-    orderNumber: '#1241',
-    userId: '1',
-    productName: 'iPhone 15 Pro 256GB Black Titanium',
-    productCost: 95000,
-    commission: 2850,
-    totalCost: 97850,
-    isTradeIn: false,
-    clientName: 'Петров Алексей',
-    clientPhone: '+7 916 555-12-34',
-    clientEmail: 'petrov@mail.ru',
-    paymentId: 'pay_abc123',
-    paymentLink: '/pay/pay_abc123',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-12T14:45:00Z',
-    status: 'PURCHASING',
-    createdAt: '2026-02-12T14:30:00Z',
-    updatedAt: '2026-02-12T14:45:00Z',
-  },
-  {
-    id: 'o2',
-    orderNumber: '#1240',
-    userId: '1',
-    productName: 'MacBook Pro M3 14" 512GB',
-    productCost: 180000,
-    commission: 5400,
-    totalCost: 185400,
-    isTradeIn: false,
-    clientName: 'Кузнецова Анна',
-    clientPhone: '+7 925 444-33-22',
-    paymentId: 'pay_def456',
-    paymentLink: '/pay/pay_def456',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-10T10:20:00Z',
-    status: 'SHIPPING',
-    createdAt: '2026-02-10T10:00:00Z',
-    updatedAt: '2026-02-11T12:00:00Z',
-  },
-  {
-    id: 'o3',
-    orderNumber: '#1238',
-    userId: '1',
-    productName: 'iPhone 15 128GB Blue',
-    productCost: 75000,
-    commission: 2250,
-    totalCost: 77250,
-    isTradeIn: true,
-    oldProduct: 'iPhone 13 128GB',
-    oldValue: 40000,
-    clientPayment: 37250,
-    ipPayment: 40000,
-    clientName: 'Смирнов Сергей',
-    clientPhone: '+7 903 333-22-11',
-    paymentId: 'pay_ghi789',
-    paymentLink: '/pay/pay_ghi789',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-05T16:00:00Z',
-    status: 'COMPLETED',
-    createdAt: '2026-02-05T15:30:00Z',
-    updatedAt: '2026-02-12T10:00:00Z',
-  },
-  {
-    id: 'o4',
-    orderNumber: '#1245',
-    userId: '1',
-    productName: 'Samsung Galaxy S24 Ultra 512GB',
-    productCost: 105000,
-    commission: 3150,
-    totalCost: 108150,
-    isTradeIn: false,
-    clientName: 'Волкова Мария',
-    clientPhone: '+7 926 222-11-00',
-    paymentId: 'pay_jkl012',
-    paymentLink: '/pay/pay_jkl012',
-    paymentStatus: 'PENDING',
-    status: 'CREATED',
-    createdAt: '2026-02-17T09:00:00Z',
-    updatedAt: '2026-02-17T09:00:00Z',
-  },
-  {
-    id: 'o5',
-    orderNumber: '#1236',
-    userId: '1',
-    productName: 'iPad Pro M4 11" 256GB',
-    productCost: 85000,
-    commission: 2550,
-    totalCost: 87550,
-    isTradeIn: false,
-    clientName: 'Козлов Дмитрий',
-    clientPhone: '+7 905 111-00-99',
-    paymentId: 'pay_ipad01',
-    paymentLink: '/pay/pay_ipad01',
-    paymentStatus: 'PAID',
-    paidAt: '2026-01-28T11:00:00Z',
-    status: 'DELIVERED',
-    createdAt: '2026-01-28T10:30:00Z',
-    updatedAt: '2026-02-04T14:00:00Z',
-  },
-  {
-    id: 'o6',
-    orderNumber: '#1235',
-    userId: '1',
-    productName: 'AirPods Pro 2',
-    productCost: 22000,
-    commission: 660,
-    totalCost: 22660,
-    isTradeIn: false,
-    clientName: 'Новикова Елена',
-    clientPhone: '+7 917 777-66-55',
-    paymentId: 'pay_air01',
-    paymentLink: '/pay/pay_air01',
-    paymentStatus: 'PAID',
-    paidAt: '2026-01-25T09:30:00Z',
-    status: 'COMPLETED',
-    createdAt: '2026-01-25T09:00:00Z',
-    updatedAt: '2026-02-01T16:00:00Z',
-  },
-  {
-    id: 'o7',
-    orderNumber: '#1243',
-    userId: '1',
-    productName: 'MacBook Air M3 15" 256GB',
-    productCost: 130000,
-    commission: 3900,
-    totalCost: 133900,
-    isTradeIn: true,
-    oldProduct: 'MacBook Air M1',
-    oldValue: 55000,
-    clientPayment: 78900,
-    ipPayment: 55000,
-    clientName: 'Соколов Андрей',
-    clientPhone: '+7 909 888-77-66',
-    paymentId: 'pay_mba01',
-    paymentLink: '/pay/pay_mba01',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-14T15:00:00Z',
-    status: 'PURCHASED',
-    createdAt: '2026-02-14T14:30:00Z',
-    updatedAt: '2026-02-15T10:00:00Z',
-  },
-
-  // === Заказы пользователя ivanov (id: 3) ===
-  {
-    id: 'o8',
-    orderNumber: '#1239',
-    userId: '3',
-    productName: 'MacBook Air M3 13" 512GB',
-    productCost: 120000,
-    commission: 3600,
-    totalCost: 123600,
-    isTradeIn: false,
-    clientName: 'Фёдоров Дмитрий',
-    clientPhone: '+7 903 111-00-99',
-    paymentId: 'pay_mno345',
-    paymentLink: '/pay/pay_mno345',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-08T11:00:00Z',
-    status: 'DELIVERED',
-    createdAt: '2026-02-08T10:30:00Z',
-    updatedAt: '2026-02-14T14:00:00Z',
-  },
-  {
-    id: 'o9',
-    orderNumber: '#1242',
-    userId: '3',
-    productName: 'iPhone 15 Pro Max 512GB Natural Titanium',
-    productCost: 140000,
-    commission: 4200,
-    totalCost: 144200,
-    isTradeIn: true,
-    oldProduct: 'iPhone 14 Pro 256GB',
-    oldValue: 65000,
-    clientPayment: 79200,
-    ipPayment: 65000,
-    clientName: 'Морозова Ольга',
-    clientPhone: '+7 915 456-78-90',
-    paymentId: 'pay_iph15pm',
-    paymentLink: '/pay/pay_iph15pm',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-13T12:00:00Z',
-    status: 'PURCHASING',
-    createdAt: '2026-02-13T11:30:00Z',
-    updatedAt: '2026-02-13T12:00:00Z',
-  },
-  {
-    id: 'o10',
-    orderNumber: '#1244',
-    userId: '3',
-    productName: 'Samsung Galaxy Z Fold5 512GB',
-    productCost: 145000,
-    commission: 4350,
-    totalCost: 149350,
-    isTradeIn: false,
-    clientName: 'Лебедев Артём',
-    clientPhone: '+7 926 321-54-87',
-    paymentId: 'pay_fold5',
-    paymentLink: '/pay/pay_fold5',
-    paymentStatus: 'PENDING',
-    status: 'CREATED',
-    createdAt: '2026-02-16T14:00:00Z',
-    updatedAt: '2026-02-16T14:00:00Z',
-  },
-  {
-    id: 'o11',
-    orderNumber: '#1237',
-    userId: '3',
-    productName: 'Apple Watch Ultra 2',
-    productCost: 68000,
-    commission: 2040,
-    totalCost: 70040,
-    isTradeIn: false,
-    clientName: 'Павлова Наталья',
-    clientPhone: '+7 917 654-32-10',
-    paymentId: 'pay_awu2',
-    paymentLink: '/pay/pay_awu2',
-    paymentStatus: 'PAID',
-    paidAt: '2026-02-01T10:00:00Z',
-    status: 'COMPLETED',
-    createdAt: '2026-02-01T09:30:00Z',
-    updatedAt: '2026-02-08T16:00:00Z',
-  },
-]
-
-export const mockOrders: Order[] = loadSavedOrders() || [...defaultOrders]
-
-// Persist default orders on first load
-if (!storage.getItem(ORDERS_KEY)) {
-  saveOrders()
-}
+if (!storage.getItem(ORDERS_KEY)) saveOrders()
+if (!storage.getItem(USERS_KEY)) saveUsers()

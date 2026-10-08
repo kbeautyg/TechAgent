@@ -1,31 +1,29 @@
-import type { OrderStatus, PaymentStatus } from '../types'
+import type { OrderStatus, PaymentStatus, PartnerStatus } from '../types'
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   CREATED: 'Создан',
   PAID: 'Оплачен',
-  PURCHASING: 'Выкупаем товар',
-  PURCHASED: 'Выкуплен',
-  SHIPPING: 'Передан карго',
-  DELIVERED: 'Доставлен',
-  COMPLETED: 'Завершен',
-  CANCELLED: 'Отменен',
+  PURCHASED: 'Выкуплен у поставщика',
+  IN_TRANSIT: 'В пути',
+  AT_POINT: 'Прибыл в пункт выдачи',
+  ISSUED: 'Выдан покупателю',
+  CANCELLED: 'Отменён',
 }
 
 export const ORDER_STATUS_COLORS: Record<OrderStatus, string> = {
   CREATED: 'bg-blue-50 text-blue-700',
   PAID: 'bg-emerald-50 text-emerald-700',
-  PURCHASING: 'bg-indigo-50 text-indigo-700',
   PURCHASED: 'bg-indigo-50 text-indigo-700',
-  SHIPPING: 'bg-amber-50 text-amber-700',
-  DELIVERED: 'bg-green-50 text-green-700',
-  COMPLETED: 'bg-teal-50 text-teal-700',
+  IN_TRANSIT: 'bg-amber-50 text-amber-700',
+  AT_POINT: 'bg-violet-50 text-violet-700',
+  ISSUED: 'bg-teal-50 text-teal-700',
   CANCELLED: 'bg-red-50 text-red-700',
 }
 
 export const PAYMENT_STATUS_LABELS: Record<PaymentStatus, string> = {
   PENDING: 'Ожидает оплаты',
-  PAID: 'Оплачено',
-  FAILED: 'Ошибка',
+  PAID: 'Оплачен',
+  FAILED: 'Ошибка оплаты',
 }
 
 export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
@@ -34,12 +32,32 @@ export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
   FAILED: 'bg-red-50 text-red-700',
 }
 
+/** Шкала заказа: создан → оплачен → выкуплен у поставщика → в пути → прибыл в пункт выдачи → выдан покупателю */
 export const ORDER_STEPS: OrderStatus[] = [
   'CREATED',
   'PAID',
-  'PURCHASING',
   'PURCHASED',
-  'SHIPPING',
-  'DELIVERED',
-  'COMPLETED',
+  'IN_TRANSIT',
+  'AT_POINT',
+  'ISSUED',
 ]
+
+/** Какие статусы ведёт ТехЭйджент в админке. CREATED → PAID — только по факту оплаты,
+ *  AT_POINT → ISSUED — подтверждает Партнёр при выдаче */
+export const ADMIN_NEXT_STATUS: Partial<Record<OrderStatus, OrderStatus>> = {
+  PAID: 'PURCHASED',
+  PURCHASED: 'IN_TRANSIT',
+  IN_TRANSIT: 'AT_POINT',
+}
+
+export const PARTNER_STATUS_LABELS: Record<PartnerStatus, string> = {
+  PENDING: 'На проверке',
+  VERIFIED: 'Подтверждён',
+  REJECTED: 'Отклонён',
+}
+
+export const PARTNER_STATUS_COLORS: Record<PartnerStatus, string> = {
+  PENDING: 'bg-amber-50 text-amber-700',
+  VERIFIED: 'bg-emerald-50 text-emerald-700',
+  REJECTED: 'bg-red-50 text-red-700',
+}

@@ -28,9 +28,6 @@ export default function AdminLayout() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="flex flex-col lg:flex-row gap-6">
           <aside className="lg:w-56 shrink-0">
-            <div className="bg-primary/10 border border-primary/20 text-primary rounded-xl p-3 mb-3">
-              <p className="text-xs font-semibold uppercase tracking-wide">Панель администратора</p>
-            </div>
             <nav className="card-glass p-2 flex lg:flex-col gap-1 overflow-x-auto">
               {navItems.map((item) => (
                 <NavLink

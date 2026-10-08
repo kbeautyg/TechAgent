@@ -1,68 +1,69 @@
-import { Users, Package, TrendingUp, Clock, AlertCircle, Truck } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Users, Package, Wallet, PackageOpen, PackageCheck, Award } from 'lucide-react'
 import { mockOrders, mockUsers } from '../../data/mock'
-import { formatPrice } from '../../utils/calculate'
+import { formatPrice, formatReward, accruedReward, paidTotal } from '../../utils/calculate'
+import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS } from '../../utils/status'
 
 export default function AdminDashboardPage() {
-  const clients = mockUsers.filter((u) => u.role === 'CLIENT')
+  const partners = mockUsers.filter((u) => u.role === 'CLIENT')
+  const pendingPartners = partners.filter((u) => (u.partnerStatus ?? 'PENDING') === 'PENDING').length
   const orders = mockOrders
 
-  const totalRevenue = orders.reduce((s, o) => s + o.totalCost, 0)
-  const totalCommission = orders.reduce((s, o) => s + o.commission, 0)
-  const pendingPayments = orders.filter((o) => o.paymentStatus === 'PENDING').length
-  const inProgress = orders.filter((o) => ['PURCHASING', 'PURCHASED'].includes(o.status)).length
-  const inDelivery = orders.filter((o) => o.status === 'SHIPPING').length
-
   const stats = [
-    { label: 'Партнёров', value: clients.length.toString(), icon: Users, color: 'text-primary', bg: 'bg-primary/5' },
-    { label: 'Всего заказов', value: orders.length.toString(), icon: Package, color: 'text-secondary', bg: 'bg-secondary/5' },
-    { label: 'Сумма заказов', value: formatPrice(totalRevenue), icon: TrendingUp, color: 'text-secondary', bg: 'bg-secondary/5' },
-    { label: 'Прибыль (3%)', value: formatPrice(totalCommission), icon: TrendingUp, color: 'text-success', bg: 'bg-success/5' },
+    { label: 'Партнёров', value: partners.length.toString(), icon: Users },
+    { label: 'Заказов', value: orders.length.toString(), icon: Package },
+    { label: 'Оплачено покупателями', value: formatPrice(paidTotal(orders)), icon: Wallet },
+    { label: 'Ждут выдачи', value: orders.filter((o) => o.status === 'AT_POINT').length.toString(), icon: PackageOpen },
+    { label: 'Выдано', value: orders.filter((o) => o.status === 'ISSUED').length.toString(), icon: PackageCheck },
+    { label: 'Вознаграждение Партнёров', value: formatReward(accruedReward(orders)), icon: Award },
   ]
 
-  const activeStats = [
-    { label: 'Ожидают оплаты', value: pendingPayments, icon: Clock, color: 'text-warning', bg: 'bg-warning/5' },
-    { label: 'В работе', value: inProgress, icon: AlertCircle, color: 'text-secondary', bg: 'bg-secondary/5' },
-    { label: 'В доставке', value: inDelivery, icon: Truck, color: 'text-primary', bg: 'bg-primary/5' },
+  const work = [
+    { label: 'Ждут оплаты', value: orders.filter((o) => o.status === 'CREATED' && o.paymentStatus !== 'PAID').length },
+    { label: 'Выкупить у поставщика', value: orders.filter((o) => o.status === 'PAID').length },
+    { label: 'Выкуплены, ждут отправки', value: orders.filter((o) => o.status === 'PURCHASED').length },
+    { label: 'В пути', value: orders.filter((o) => o.status === 'IN_TRANSIT').length },
   ]
 
   return (
     <div>
       <h1 className="text-2xl font-bold text-text-primary mb-6">Панель администратора</h1>
 
-      {/* Main stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      {pendingPartners > 0 && (
+        <Link
+          to="/admin/users"
+          className="mb-6 flex items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900 no-underline hover:bg-amber-100 transition-colors"
+        >
+          <span className="text-sm font-semibold">Анкет на проверке: {pendingPartners}</span>
+          <span className="text-sm">Открыть &rarr;</span>
+        </Link>
+      )}
+
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
         {stats.map((s) => (
-          <div key={s.label} className="card p-5">
-            <div className="flex items-center gap-3">
-              <div className={`icon-box ${s.bg} ${s.color}`}>
-                <s.icon size={20} />
-              </div>
-              <div>
-                <p className="text-text-muted text-xs font-mono uppercase tracking-wide">{s.label}</p>
-                <p className="font-display text-xl font-bold text-text-primary mt-0.5">{s.value}</p>
-              </div>
+          <div key={s.label} className="card p-4">
+            <div className="flex items-center gap-2 text-text-muted">
+              <s.icon size={16} />
+              <p className="text-xs">{s.label}</p>
             </div>
+            <p className="font-display text-xl font-bold text-text-primary mt-1 break-words">{s.value}</p>
+          </div>
+        ))}
+      </div>
+      <p className="text-xs text-text-muted mb-8">
+        Вознаграждение — по выданным заказам с загруженным актом приёма-передачи.
+      </p>
+
+      <h2 className="font-bold text-lg text-text-primary mb-4">В работе у ТехЭйджент</h2>
+      <div className="card divide-y divide-border mb-8">
+        {work.map((w) => (
+          <div key={w.label} className="flex items-center justify-between px-5 py-3 text-sm">
+            <span className="text-text-secondary">{w.label}</span>
+            <span className="font-bold text-text-primary">{w.value}</span>
           </div>
         ))}
       </div>
 
-      {/* Active orders */}
-      <h2 className="font-bold text-lg text-text-primary mb-4">Активные заказы</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
-        {activeStats.map((s) => (
-          <div key={s.label} className="card p-5 flex items-center gap-3">
-            <div className={`icon-box ${s.bg} ${s.color}`}>
-              <s.icon size={20} />
-            </div>
-            <div>
-              <p className="text-text-muted text-xs font-mono uppercase tracking-wide">{s.label}</p>
-              <p className="font-display text-2xl font-bold text-text-primary">{s.value}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Recent orders */}
       <h2 className="font-bold text-lg text-text-primary mb-4">Последние заказы</h2>
       <div className="card overflow-hidden">
         <div className="overflow-x-auto">
@@ -72,30 +73,27 @@ export default function AdminDashboardPage() {
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Номер</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Товар</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Партнёр</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Сумма</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Цена</th>
                 <th className="text-left px-4 py-3 font-medium text-text-muted">Статус</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-8 text-center text-text-muted">Заказов пока нет</td>
+                </tr>
+              )}
               {orders.slice(0, 10).map((order) => {
-                const ip = mockUsers.find((u) => u.id === order.userId)
+                const partner = mockUsers.find((u) => u.id === order.userId)
                 return (
                   <tr key={order.id} className="hover:bg-bg-light transition-colors">
                     <td className="px-4 py-3 font-medium text-text-primary">{order.orderNumber}</td>
                     <td className="px-4 py-3 text-text-secondary">{order.productName}</td>
-                    <td className="px-4 py-3 text-text-secondary">{ip?.companyName || '—'}</td>
-                    <td className="px-4 py-3 font-medium text-text-primary">{formatPrice(order.totalCost)}</td>
+                    <td className="px-4 py-3 text-text-secondary">{partner?.companyName || '—'}</td>
+                    <td className="px-4 py-3 font-medium text-text-primary whitespace-nowrap">{formatPrice(order.price)}</td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${
-                        order.status === 'COMPLETED' ? 'bg-green-500/10 text-green-400' :
-                        order.status === 'CANCELLED' ? 'bg-red-500/10 text-red-400' :
-                        order.paymentStatus === 'PENDING' ? 'bg-amber-500/10 text-amber-400' :
-                        'bg-blue-500/10 text-blue-400'
-                      }`}>
-                        {order.status === 'COMPLETED' ? 'Завершен' :
-                         order.status === 'CANCELLED' ? 'Отменен' :
-                         order.paymentStatus === 'PENDING' ? 'Ожидает оплаты' :
-                         'В работе'}
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${ORDER_STATUS_COLORS[order.status]}`}>
+                        {ORDER_STATUS_LABELS[order.status]}
                       </span>
                     </td>
                   </tr>

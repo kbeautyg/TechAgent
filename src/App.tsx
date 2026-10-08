@@ -13,9 +13,6 @@ import AboutPage from './pages/AboutPage'
 import HowItWorksPage from './pages/HowItWorksPage'
 import CatalogPage from './pages/CatalogPage'
 import CatalogChildPage from './pages/CatalogChildPage'
-import BlogPage from './pages/BlogPage'
-import BlogPostPage from './pages/BlogPostPage'
-import CalculatorPage from './pages/CalculatorPage'
 import NotFoundPage from './pages/NotFoundPage'
 import LegalPage from './pages/LegalPage'
 
@@ -62,9 +59,6 @@ function App() {
                 <Route path="/how-it-works" element={<HowItWorksPage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/catalog/:id" element={<CatalogChildPage />} />
-                <Route path="/calculator" element={<CalculatorPage />} />
-                <Route path="/blog" element={<BlogPage />} />
-                <Route path="/blog/:slug" element={<BlogPostPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/legal" element={<LegalPage />} />

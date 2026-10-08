@@ -25,7 +25,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
-              Агентская закупка электроники для бизнеса. Комиссия 3%.
+              Электроника с получением в пунктах выдачи партнёров. Продавец — ОсОО «ТехЭйджент».
             </p>
           </div>
 
@@ -36,8 +36,8 @@ export default function Footer() {
               <Link to="/" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Главная</Link>
               <Link to="/about" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">О платформе</Link>
               <Link to="/how-it-works" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Как работает</Link>
-              <Link to="/calculator" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Калькулятор</Link>
-              <Link to="/blog" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Блог</Link>
+              <Link to="/legal/sale-offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оферта купли-продажи</Link>
+              <Link to="/legal/payment" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оплата и возврат</Link>
             </div>
           </div>
 
@@ -58,10 +58,10 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Партнёрам</h4>
             <div className="flex flex-col gap-2.5">
-              <Link to="/register" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Регистрация</Link>
+              <Link to="/register" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Стать партнёром</Link>
               <Link to="/login" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Личный кабинет</Link>
               <Link to="/legal" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Документы</Link>
-              <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оферта</Link>
+              <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Агентский договор</Link>
               <Link to="/legal/privacy" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Конфиденциальность</Link>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Footer() {
             <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
               <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro</a>
               <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro</a>
-              <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — по платежам</a>
+              <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — покупателям</a>
               <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8</span>
             </div>
           </div>

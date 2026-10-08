@@ -15,7 +15,7 @@ const publicNav = [
   { to: '/catalog', icon: ShoppingBag, label: 'Каталог', end: false },
   { to: '/login', icon: LogIn, label: 'Войти', end: false, accent: true },
   { to: '/about', icon: MessageCircle, label: 'О нас', end: false },
-  { to: '/register', icon: User, label: 'Старт', end: false },
+  { to: '/register', icon: User, label: 'Партнёрам', end: false },
 ]
 
 export default function MobileBottomNav() {

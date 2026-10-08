@@ -3,6 +3,7 @@ import { products } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
 import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from '../utils/translate'
 import { getCategoryByName } from '../seo/categories'
+import PurchaseTerms from '../components/catalog/PurchaseTerms'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -113,7 +114,7 @@ export default function ProductPage() {
               <span className="pp-price-current">{fmt(product.price)}</span>
               <span className="pp-price-currency">₽</span>
             </div>
-            <div className="pp-price-note">Комиссия 3% · Доставка 5–7 дней</div>
+            <div className="pp-price-note">Итоговая цена товара</div>
           </div>
 
           {/* Variants */}
@@ -153,48 +154,26 @@ export default function ProductPage() {
             </div>
           )}
 
-          {/* CTA */}
+          {/* Условия покупки */}
+          <section className="mb-8" aria-labelledby="pp-terms-title">
+            <h2 id="pp-terms-title" className="text-[17px] font-extrabold tracking-tight text-text-primary mb-3">Как купить</h2>
+            <PurchaseTerms />
+          </section>
+
+          {/* Для Партнёров */}
           <div className="pp-cta-group">
-            <Link to="/dashboard/chat" className="pp-cta-primary">
+            <Link to="/dashboard/orders/new" className="pp-cta-primary">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14h6M12 11v6"/>
               </svg>
-              Связаться с менеджером
+              Оформить заказ в кабинете Партнёра
             </Link>
             <Link to="/register" className="pp-cta-secondary">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v-2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/>
               </svg>
-              Зарегистрироваться
+              Стать партнёром
             </Link>
-          </div>
-
-          {/* Guarantees */}
-          <div className="pp-guarantees">
-            <div className="pp-guarantee">
-              <div className="pp-guarantee-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-              </div>
-              <div className="pp-guarantee-text">Оригинальные товары</div>
-            </div>
-            <div className="pp-guarantee">
-              <div className="pp-guarantee-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
-              </div>
-              <div className="pp-guarantee-text">Доставка 5–7 дней</div>
-            </div>
-            <div className="pp-guarantee">
-              <div className="pp-guarantee-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
-              </div>
-              <div className="pp-guarantee-text">Комиссия 3%</div>
-            </div>
-            <div className="pp-guarantee">
-              <div className="pp-guarantee-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
-              </div>
-              <div className="pp-guarantee-text">Персональный менеджер</div>
-            </div>
           </div>
         </div>
       </section>
@@ -209,25 +188,6 @@ export default function ProductPage() {
               <div className="pp-spec-value">{translateSpecValue(label, value)}</div>
             </div>
           ))}
-        </div>
-      </section>
-
-      {/* Description dark block */}
-      <section className="pp-desc-section">
-        <div className="pp-desc-card">
-          <h3>Почему {translateProductName(product.name)}</h3>
-          <p>
-            Оригинальный {product.brand} {translateProductName(product.name)} под заказ через TechAgent: выкуп у поставщика по вашей заявке,
-            комиссия всего 3%, доставка карго-компанией за 5–7 рабочих дней. Все документы предоставляем.
-          </p>
-          <div className="pp-desc-features">
-            {specs.slice(0, 3).map(([label, value]) => (
-              <div key={label} className="pp-desc-feat">
-                <div className="pp-desc-feat-val">{translateSpecValue(label, value)}</div>
-                <div className="pp-desc-feat-label">{translateSpecKey(label)}</div>
-              </div>
-            ))}
-          </div>
         </div>
       </section>
 

@@ -1,12 +1,19 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { LogIn } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
+import { DEMO_MODE } from '../data/mock'
+
+/* Демо-учётки есть только в режиме разработки или в сборке с VITE_DEMO=1 */
+const DEMO_LOGINS = [
+  { email: 'demo@techagent.pro', title: 'Кабинет Партнёра', note: 'анкета подтверждена' },
+  { email: 'demo3@techagent.pro', title: 'Кабинет Партнёра', note: 'анкета на проверке' },
+  { email: 'admin@techagent.pro', title: 'Панель администратора', note: 'сотрудник ТехЭйджент' },
+]
 
 export default function LoginPage() {
   const { login, user } = useAuth()
-  const navigate = useNavigate()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -23,8 +30,8 @@ export default function LoginPage() {
 
     const success = await login(email, password)
     if (success) {
+      // Переход в кабинет или админку — редиректом выше, по роли
       reachGoal('login_submit')
-      navigate('/dashboard')
     } else {
       setError('Неверный email или пароль')
     }
@@ -41,7 +48,7 @@ export default function LoginPage() {
               <LogIn size={24} className="text-primary" />
             </div>
             <h1 className="text-2xl font-bold text-text-primary">Вход</h1>
-            <p className="text-text-muted text-sm mt-1">Войдите в личный кабинет</p>
+            <p className="text-text-muted text-sm mt-1">Личный кабинет Партнёра</p>
           </div>
 
           {error && (
@@ -89,39 +96,30 @@ export default function LoginPage() {
           </p>
 
           <p className="text-center text-text-muted text-sm mt-6">
-            Нет аккаунта?{' '}
+            Ещё не Партнёр?{' '}
             <Link to="/register" className="text-primary font-semibold no-underline hover:underline">
-              Регистрация
+              Заполнить анкету
             </Link>
           </p>
 
-          <div className="mt-6 border-t border-border pt-5">
-            <p className="text-xs font-semibold text-primary uppercase tracking-wider mb-3 font-mono">Демо-доступ</p>
-            <div className="space-y-2">
-              <button
-                type="button"
-                onClick={() => { setEmail('demo@techagent.pro'); setPassword('demo') }}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
-              >
-                <div>
-                  <p className="text-sm font-medium text-text-primary">Личный кабинет партнёра</p>
-                  <p className="text-xs text-text-muted">demo@techagent.pro</p>
-                </div>
-                <span className="text-xs text-primary font-medium">Партнёр</span>
-              </button>
-              <button
-                type="button"
-                onClick={() => { setEmail('admin@techagent.pro'); setPassword('admin') }}
-                className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
-              >
-                <div>
-                  <p className="text-sm font-medium text-text-primary">Панель администратора</p>
-                  <p className="text-xs text-text-muted">admin@techagent.pro</p>
-                </div>
-                <span className="text-xs text-primary font-medium">Админ</span>
-              </button>
+          {DEMO_MODE && (
+            <div className="mt-6 border-t border-border pt-5">
+              <p className="text-sm font-semibold text-text-secondary mb-3">Демо-доступ</p>
+              <div className="space-y-2">
+                {DEMO_LOGINS.map((d) => (
+                  <button
+                    key={d.email}
+                    type="button"
+                    onClick={() => { setEmail(d.email); setPassword('demo') }}
+                    className="w-full px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
+                  >
+                    <p className="text-sm font-medium text-text-primary">{d.title}</p>
+                    <p className="text-xs text-text-muted">{d.email} · {d.note}</p>
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

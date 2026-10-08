@@ -1,18 +1,20 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard } from 'lucide-react'
+import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
 import { mockDocuments } from '../data/documents'
 
 const typeLabels: Record<string, string> = {
-  OFFER: 'Публичная оферта',
-  PRIVACY: 'Политика конфиденциальности',
-  TERMS: 'Пользовательское соглашение',
+  OFFER: 'Для Партнёров',
+  SALE_OFFER: 'Для покупателей',
+  PRIVACY: 'Для всех',
+  TERMS: 'Для всех',
   CONTRACT: 'Типовой договор',
-  PAYMENT: 'Условия оплаты',
+  PAYMENT: 'Для покупателей',
 }
 
 const typeIcons: Record<string, typeof Shield> = {
   OFFER: ScrollText,
+  SALE_OFFER: ShoppingBag,
   PRIVACY: Shield,
   TERMS: BookOpen,
   CONTRACT: FileCheck,
@@ -21,13 +23,20 @@ const typeIcons: Record<string, typeof Shield> = {
 
 const typeColors: Record<string, string> = {
   OFFER: 'bg-orange-500/10 text-orange-600',
+  SALE_OFFER: 'bg-sky-500/10 text-sky-600',
   PRIVACY: 'bg-emerald-500/10 text-emerald-600',
   TERMS: 'bg-indigo-500/10 text-indigo-600',
   CONTRACT: 'bg-blue-500/10 text-blue-600',
   PAYMENT: 'bg-sky-500/10 text-sky-600',
 }
 
-const docTypeMap: Record<string, string> = { offer: 'OFFER', privacy: 'PRIVACY', terms: 'TERMS', payment: 'PAYMENT' }
+const docTypeMap: Record<string, string> = {
+  offer: 'OFFER',
+  'sale-offer': 'SALE_OFFER',
+  privacy: 'PRIVACY',
+  terms: 'TERMS',
+  payment: 'PAYMENT',
+}
 
 function docIdFromParam(docType: string | undefined): string | null {
   if (!docType) return null
@@ -58,7 +67,7 @@ export default function LegalPage() {
             <Shield size={28} className="text-primary" />
           </div>
           <h1 className="text-3xl font-bold text-text-primary mb-2">Правовая информация</h1>
-          <p className="text-text-muted">Документы платформы TechAgent</p>
+          <p className="text-text-muted">Продавец товаров на techagent.pro — ОсОО «ТехЭйджент»</p>
         </div>
 
         <div className="space-y-3">
@@ -93,7 +102,7 @@ export default function LegalPage() {
 
         <div className="text-center mt-10">
           <Link to="/register" className="btn-primary inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold">
-            Зарегистрироваться
+            Стать партнёром
           </Link>
         </div>
       </div>

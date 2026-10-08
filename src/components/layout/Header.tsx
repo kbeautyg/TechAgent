@@ -117,7 +117,7 @@ export default function Header() {
                   to="/register"
                   className="btn-blue px-5 py-2.5 rounded-xl text-sm no-underline inline-flex items-center"
                 >
-                  Регистрация
+                  Стать партнёром
                 </Link>
               </>
             )}
@@ -174,7 +174,7 @@ export default function Header() {
               ) : (
                 <div className="flex gap-2 mx-4 mt-1">
                   <Link to="/login" className="flex-1 px-4 py-3 rounded-xl text-[15px] font-semibold text-center no-underline bg-text-primary text-white">Войти</Link>
-                  <Link to="/register" className="flex-1 btn-blue px-4 py-3 rounded-xl text-[15px] text-center no-underline">Регистрация</Link>
+                  <Link to="/register" className="flex-1 btn-blue px-4 py-3 rounded-xl text-[15px] text-center no-underline">Стать партнёром</Link>
                 </div>
               )}
             </div>

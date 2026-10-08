@@ -9,7 +9,6 @@ import { products, type Product } from '../data/products'
 import { getProductImage } from '../utils/productImages'
 import { translateProductName } from '../utils/translate'
 import { faqData } from '../data/faq'
-import { blogPosts, getPostBySlug } from '../data/blog'
 import { categoryLandings, getCategoryBySlug, type CategoryLanding } from './categories'
 import {
   SITE_URL, SITE_NAME, LEGAL_NAME, DEFAULT_TITLE, DEFAULT_DESCRIPTION,
@@ -150,24 +149,6 @@ function categoryItemListLd(landing: CategoryLanding, items: Product[]): object 
   }
 }
 
-function articleLd(slug: string): object | null {
-  const post = getPostBySlug(slug)
-  if (!post) return null
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: post.title,
-    description: post.description,
-    inLanguage: 'ru',
-    datePublished: post.date,
-    dateModified: post.date,
-    mainEntityOfPage: absoluteUrl(`/blog/${post.slug}`),
-    image: DEFAULT_OG_IMAGE,
-    author: { '@id': `${SITE_URL}/#organization` },
-    publisher: { '@id': `${SITE_URL}/#organization` },
-  }
-}
-
 /* ────────────────────────── resolver ────────────────────────── */
 
 const NOINDEX = 'noindex, nofollow'
@@ -181,24 +162,36 @@ function baseMeta(overrides: Partial<PageMeta> & { title: string; description: s
   }
 }
 
+/** Документы /legal/:docType — ключ совпадает с адресом */
 const legalDocMeta: Record<string, { title: string; description: string }> = {
+  'sale-offer': {
+    title: 'Публичная оферта купли-продажи | TechAgent',
+    description: 'Условия покупки у продавца ОсОО «ТехЭйджент»: оплата через СБП, получение товара в пункте выдачи Партнёра, отказ от заказа и возврат денежных средств.',
+  },
   offer: {
-    title: 'Публичная оферта — агентский договор | TechAgent',
-    description: 'Публичная оферта TechAgent: условия агентского договора на закупку электроники, вознаграждение агента 3%, порядок расчётов и ответственность сторон.',
+    title: 'Агентский договор-оферта для Партнёров | TechAgent',
+    description: 'Агентский договор-оферта для Партнёров ОсОО «ТехЭйджент»: оформление заказов покупателей, выдача товара в точке, вознаграждение, отчёт агента и акт.',
   },
   privacy: {
     title: 'Политика конфиденциальности | TechAgent',
-    description: 'Политика конфиденциальности TechAgent: какие данные мы обрабатываем, как храним и защищаем персональные данные партнёров.',
+    description: 'Политика конфиденциальности TechAgent: какие данные Партнёров и покупателей обрабатывает ОсОО «ТехЭйджент», зачем, кому передаёт и как отозвать согласие.',
   },
   terms: {
     title: 'Пользовательское соглашение | TechAgent',
-    description: 'Пользовательское соглашение платформы TechAgent: правила использования личного кабинета и сервиса агентской закупки.',
+    description: 'Пользовательское соглашение TechAgent: правила использования сайта, каталога и личного кабинета Партнёра.',
   },
   payment: {
     title: 'Условия оплаты и возврата | TechAgent',
-    description: 'Условия оплаты и возврата для покупателей: кто является продавцом товара, роль TechAgent при приёме платежа, порядок оплаты по СБП и возврата денежных средств.',
+    description: 'Условия оплаты и возврата для покупателей: продавец — ОсОО «ТехЭйджент», оплата через СБП по ссылке или QR-коду, порядок возврата денежных средств.',
   },
 }
+
+const LEGAL_DOC_PATHS = Object.keys(legalDocMeta)
+
+/** Короткая строка условий покупки для сниппетов товаров */
+const PURCHASE_TERMS_SNIPPET = `Продавец — ${LEGAL_NAME}, оплата через СБП, получение в пункте выдачи партнёра.`
+
+const fmtPrice = (n: number) => n.toLocaleString('ru-RU')
 
 /** Главный резолвер: путь без query-параметров → мета страницы */
 export function resolveMeta(pathname: string): PageMeta {
@@ -215,9 +208,9 @@ export function resolveMeta(pathname: string): PageMeta {
 
   if (path === '/about') {
     return baseMeta({
-      title: 'О платформе TechAgent — как устроена агентская закупка электроники',
+      title: 'О TechAgent — продавец ОсОО «ТехЭйджент» и пункты выдачи партнёров',
       description:
-        'TechAgent — B2B-платформа агентской закупки электроники: роли агента и партнёра, юридическая модель по главе 52 ГК РФ, комиссия 3%, реквизиты компании.',
+        'Как устроен TechAgent: ОсОО «ТехЭйджент» покупает товар у поставщика и продаёт его покупателю, партнёры оформляют заказы и выдают товар в своих точках.',
       canonical: `${SITE_URL}/about`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'О платформе' }])],
     })
@@ -225,9 +218,9 @@ export function resolveMeta(pathname: string): PageMeta {
 
   if (path === '/how-it-works') {
     return baseMeta({
-      title: 'Как работает агентская закупка электроники — 4 шага | TechAgent',
+      title: 'Как это работает — заказ, оплата через СБП и получение товара | TechAgent',
       description:
-        'Пошагово: как магазин заказывает электронику через TechAgent — создание заказа, оплата клиентом по ссылке, выкуп и доставка за 5–7 дней. Комиссия 3%.',
+        'Партнёр оформляет заказ в пункте выдачи, покупатель платит ТехЭйджент через СБП, товар приезжает в этот пункт через 5–7 рабочих дней после выкупа у поставщика.',
       canonical: `${SITE_URL}/how-it-works`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Как это работает' }])],
     })
@@ -235,58 +228,19 @@ export function resolveMeta(pathname: string): PageMeta {
 
   if (path === '/catalog') {
     return baseMeta({
-      title: `Каталог электроники для бизнеса — ${products.length} ${pluralRu(products.length, ['товар', 'товара', 'товаров'])} по агентской схеме | TechAgent`,
+      title: `Каталог электроники — ${products.length} ${pluralRu(products.length, ['товар', 'товара', 'товаров'])} с ценами | TechAgent`,
       description:
-        'Каталог TechAgent: смартфоны, ноутбуки, планшеты, наушники и техника для дома. Закупка для бизнеса по агентской схеме с комиссией 3% и доставкой 5–7 дней.',
+        'Цены на смартфоны, ноутбуки, планшеты, наушники и технику для дома. Продавец — ОсОО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.',
       canonical: `${SITE_URL}/catalog`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Каталог' }])],
     })
-  }
-
-  if (path === '/calculator') {
-    return baseMeta({
-      title: 'Калькулятор стоимости агентской закупки — комиссия 3% | TechAgent',
-      description:
-        'Рассчитайте итоговую стоимость закупки электроники через TechAgent: цена товара + комиссия агента 3%. Сумма фиксируется до оплаты.',
-      canonical: `${SITE_URL}/calculator`,
-      jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Калькулятор' }])],
-    })
-  }
-
-  if (path === '/blog') {
-    return baseMeta({
-      title: 'Блог TechAgent — агентская закупка электроники для бизнеса',
-      description:
-        'Статьи TechAgent: как работает агентская схема, документы и налоги для ИП, сравнение агента и самостоятельного ввоза электроники.',
-      canonical: `${SITE_URL}/blog`,
-      jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Блог' }])],
-    })
-  }
-
-  const blogMatch = path.match(/^\/blog\/([^/]+)$/)
-  if (blogMatch) {
-    const post = getPostBySlug(blogMatch[1])
-    if (post) {
-      const ld = articleLd(post.slug)
-      return baseMeta({
-        title: `${post.title} | TechAgent`,
-        description: post.description,
-        canonical: `${SITE_URL}/blog/${post.slug}`,
-        ogType: 'article',
-        jsonLd: [
-          organizationLd(),
-          ...(ld ? [ld] : []),
-          breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Блог', path: '/blog' }, { name: post.title }]),
-        ],
-      })
-    }
   }
 
   if (path === '/legal') {
     return baseMeta({
       title: 'Правовая информация — документы платформы | TechAgent',
       description:
-        'Юридические документы TechAgent: публичная оферта, политика конфиденциальности, пользовательское соглашение и типовой агентский договор.',
+        'Документы TechAgent: оферта купли-продажи для покупателей, агентский договор-оферта для партнёров, условия оплаты и возврата, политика конфиденциальности.',
       canonical: `${SITE_URL}/legal`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Документы' }])],
     })
@@ -294,12 +248,13 @@ export function resolveMeta(pathname: string): PageMeta {
 
   const legalMatch = path.match(/^\/legal\/([^/]+)$/)
   if (legalMatch) {
-    const doc = legalDocMeta[legalMatch[1].toLowerCase()]
+    const key = legalMatch[1].toLowerCase()
+    const doc = legalDocMeta[key]
     if (doc) {
       return baseMeta({
         title: doc.title,
         description: doc.description,
-        canonical: `${SITE_URL}/legal/${legalMatch[1].toLowerCase()}`,
+        canonical: `${SITE_URL}/legal/${key}`,
         jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Документы', path: '/legal' }, { name: doc.title.split(' | ')[0] }])],
       })
     }
@@ -326,9 +281,9 @@ export function resolveMeta(pathname: string): PageMeta {
     if (product) {
       const name = translateProductName(product.name)
       return baseMeta({
-        title: `${name} для бизнеса — купить по агентской схеме | TechAgent`,
+        title: `${name} — цена ${fmtPrice(product.price)} ₽ | TechAgent`,
         description: clampDescription(
-          `${name}: закупка для бизнеса по агентской схеме с комиссией 3%. ${product.description}`,
+          `${name}: ${fmtPrice(product.price)} ₽. ${PURCHASE_TERMS_SNIPPET} ${product.description}`,
         ),
         canonical: `${SITE_URL}/catalog/${product.id}`,
         ogImage: absoluteUrl(getProductImage(product.id, product.name, product.category)),
@@ -351,23 +306,31 @@ export function resolveMeta(pathname: string): PageMeta {
   if (path === '/login') {
     return baseMeta({
       title: 'Вход в личный кабинет | TechAgent',
-      description: 'Вход в личный кабинет партнёра TechAgent.',
+      description: 'Вход в личный кабинет Партнёра TechAgent.',
       canonical: `${SITE_URL}/login`,
       robots: NOINDEX,
     })
   }
   if (path === '/register') {
     return baseMeta({
-      title: 'Регистрация партнёра | TechAgent',
-      description: 'Регистрация партнёра TechAgent: создайте аккаунт за 2 минуты — нужен только ИНН.',
+      title: 'Регистрация Партнёра | TechAgent',
+      description: 'Регистрация Партнёра TechAgent: анкета компании и точки выдачи. ТехЭйджент проверяет данные и подтверждает аккаунт до первого заказа.',
       canonical: `${SITE_URL}/register`,
       robots: NOINDEX,
     })
   }
-  if (path.startsWith('/dashboard') || path.startsWith('/admin') || path.startsWith('/pay/')) {
+  if (path.startsWith('/pay/')) {
+    return baseMeta({
+      title: 'Оплата заказа | TechAgent',
+      description: `Оплата заказа через СБП. Продавец — ${LEGAL_NAME}.`,
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
+  if (path.startsWith('/dashboard') || path.startsWith('/admin')) {
     return baseMeta({
       title: 'Личный кабинет | TechAgent',
-      description: 'Личный кабинет партнёра TechAgent.',
+      description: 'Личный кабинет Партнёра TechAgent.',
       canonical: SITE_URL + path,
       robots: NOINDEX,
     })
@@ -444,11 +407,9 @@ export function getPublicRoutes(): SitemapEntry[] {
     { path: '/catalog', changefreq: 'daily', priority: 0.9 },
     { path: '/about', changefreq: 'monthly', priority: 0.7 },
     { path: '/how-it-works', changefreq: 'monthly', priority: 0.7 },
-    { path: '/calculator', changefreq: 'monthly', priority: 0.6 },
-    { path: '/blog', changefreq: 'weekly', priority: 0.6 },
-    ...blogPosts.map((p): SitemapEntry => ({ path: `/blog/${p.slug}`, changefreq: 'monthly', priority: 0.6 })),
     { path: '/legal', changefreq: 'monthly', priority: 0.3 },
-    ...['offer', 'privacy', 'terms', 'payment'].map((d): SitemapEntry => ({ path: `/legal/${d}`, changefreq: 'monthly', priority: 0.3 })),
+    /* Оферта купли-продажи — главный документ для покупателя, поэтому приоритет выше остальных */
+    ...LEGAL_DOC_PATHS.map((d): SitemapEntry => ({ path: `/legal/${d}`, changefreq: 'monthly', priority: d === 'sale-offer' ? 0.5 : 0.3 })),
     ...categoryLandings.map((c): SitemapEntry => ({ path: `/catalog/${c.slug}`, changefreq: 'weekly', priority: 0.8 })),
     ...products.map((p): SitemapEntry => ({ path: `/catalog/${p.id}`, changefreq: 'weekly', priority: 0.6 })),
   ]

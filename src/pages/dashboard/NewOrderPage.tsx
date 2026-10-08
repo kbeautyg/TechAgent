@@ -1,21 +1,24 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Check, Copy, Search, X } from 'lucide-react'
-import { products } from '../../data/products'
+import { Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft, ArrowRight, Check, Copy, Search, X, Lock } from 'lucide-react'
+import { QRCodeSVG } from 'qrcode.react'
+import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
-import { calculateOrder, formatPrice } from '../../utils/calculate'
+import { formatPrice, formatReward } from '../../utils/calculate'
 import { reachGoal } from '../../lib/metrika'
-import { QRCodeSVG } from 'qrcode.react'
+import type { Order } from '../../types'
 
-type Step = 1 | 2 | 3 | 4 | 5
+type Step = 1 | 2 | 3 | 4
 
-function ProductSearchDropdown({ value, onChange }: { value: string; onChange: (name: string, price?: number) => void }) {
-  const [query, setQuery] = useState(value)
+const fieldCls =
+  'w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm'
+
+/** Поиск по каталогу ТехЭйджент. Товар можно только выбрать — цену задаёт каталог */
+function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
+  const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
-
-  useEffect(() => { setQuery(value) }, [value])
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -26,51 +29,63 @@ function ProductSearchDropdown({ value, onChange }: { value: string; onChange: (
   }, [])
 
   const filtered = useMemo(() => {
-    if (!query.trim()) return products.slice(0, 30)
-    const q = query.toLowerCase()
-    return products.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)).slice(0, 30)
+    const q = query.trim().toLowerCase()
+    const list = q
+      ? products.filter((p) => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q))
+      : products
+    return list.slice(0, 30)
   }, [query])
 
   return (
     <div ref={ref} className="relative">
-      <label className="block text-sm font-medium mb-1.5 text-text-secondary">Название товара</label>
+      <label htmlFor="catalog-search" className="block text-sm font-medium mb-1.5 text-text-secondary">Товар из каталога</label>
       <div className="relative">
         <Search size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
         <input
+          id="catalog-search"
           type="text"
           value={query}
-          onChange={(e) => { setQuery(e.target.value); setOpen(true); onChange(e.target.value) }}
+          onChange={(e) => { setQuery(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
-          className="w-full pl-10 pr-10 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-          placeholder="Начните вводить название..."
+          className={`${fieldCls} pl-10 pr-10`}
+          placeholder="Название или бренд"
+          autoComplete="off"
         />
         {query && (
-          <button onClick={() => { setQuery(''); onChange(''); setOpen(false) }} className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary bg-transparent border-none cursor-pointer p-0">
+          <button
+            type="button"
+            onClick={() => { setQuery(''); setOpen(false) }}
+            className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary bg-transparent border-none cursor-pointer p-0"
+            aria-label="Очистить"
+          >
             <X size={16} />
           </button>
         )}
       </div>
       {open && filtered.length > 0 && (
-        <div className="absolute z-50 mt-1 w-full bg-white border border-border rounded-xl shadow-xl max-h-64 overflow-y-auto">
-          {filtered.map(p => (
+        <div className="absolute z-50 mt-1 w-full bg-white border border-border rounded-xl shadow-xl max-h-72 overflow-y-auto">
+          {filtered.map((p) => (
             <button
               key={p.id}
-              onClick={() => { onChange(p.name, p.price); setQuery(p.name); setOpen(false) }}
-              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-bg-section transition-colors bg-transparent border-none cursor-pointer border-b border-border last:border-b-0"
+              type="button"
+              disabled={!p.inStock}
+              onClick={() => { onPick(p); setOpen(false) }}
+              className="w-full flex items-center gap-3 px-4 py-2.5 text-left hover:bg-bg-section transition-colors bg-transparent border-none cursor-pointer border-b border-border last:border-b-0 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-transparent"
             >
               <span className="text-xl shrink-0">{p.image}</span>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-medium text-text-primary truncate">{p.name}</div>
-                <div className="text-xs text-text-muted">{p.brand} · {p.category}</div>
+                <div className="text-xs text-text-muted">{p.brand} · {p.category}{!p.inStock && ' · нет в наличии'}</div>
               </div>
-              <span className="text-sm font-semibold text-primary shrink-0">{p.price.toLocaleString('ru-RU')} ₽</span>
+              <span className="text-sm font-semibold text-primary shrink-0">{formatPrice(p.price)}</span>
             </button>
           ))}
         </div>
       )}
       {open && query.trim() && filtered.length === 0 && (
         <div className="absolute z-50 mt-1 w-full bg-white border border-border rounded-xl shadow-xl p-4 text-center text-sm text-text-muted">
-          Товар не найден. Вы можете ввести название вручную.
+          В каталоге такого товара нет.{' '}
+          <Link to="/dashboard/chat" className="text-primary font-medium no-underline hover:underline">Напишите менеджеру</Link>
         </div>
       )}
     </div>
@@ -83,55 +98,63 @@ export default function NewOrderPage() {
   const [step, setStep] = useState<Step>(1)
   const [copied, setCopied] = useState(false)
 
-  const [orderType, setOrderType] = useState<'normal' | 'tradein'>('normal')
-  const [productName, setProductName] = useState('')
-  const [productCost, setProductCost] = useState('')
-  const [oldProduct, setOldProduct] = useState('')
-  const [oldValue, setOldValue] = useState('')
-  const [clientName, setClientName] = useState('')
-  const [clientPhone, setClientPhone] = useState('')
-  const [clientEmail, setClientEmail] = useState('')
+  const [product, setProduct] = useState<Product | null>(null)
+  const [buyerName, setBuyerName] = useState('')
+  const [buyerPhone, setBuyerPhone] = useState('')
+  const [buyerEmail, setBuyerEmail] = useState('')
 
-  const [createdOrder, setCreatedOrder] = useState<typeof mockOrders[0] | null>(null)
+  const [createdOrder, setCreatedOrder] = useState<Order | null>(null)
 
-  const costNum = parseInt(productCost) || 0
-  const oldNum = parseInt(oldValue) || 0
-  const calc = calculateOrder(costNum, orderType === 'tradein', oldNum)
+  if (!user) return null
 
-  const canGoStep3 = productName.trim() && costNum > 0 && (orderType === 'normal' || (oldProduct.trim() && oldNum > 0))
-  const canGoStep4 = clientName.trim() && clientPhone.trim()
+  if (user.partnerStatus !== 'VERIFIED') {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-2xl font-bold mb-4 text-text-primary">Новый заказ</h1>
+        <div className="card p-6 flex items-start gap-3">
+          <Lock size={20} className="text-text-muted shrink-0 mt-0.5" />
+          <div className="text-sm text-text-secondary">
+            <p>
+              Создание заказа откроется, когда ТехЭйджент подтвердит анкету Партнёра.
+            </p>
+            <p className="mt-2">
+              <Link to="/dashboard/profile" className="text-primary font-medium no-underline hover:underline">Данные анкеты</Link>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const canGoStep3 = buyerName.trim() !== '' && buyerPhone.trim() !== ''
 
   const handleCreate = () => {
-    const orderNumber = getNextOrderNumber()
-    const paymentId = 'pay_' + crypto.randomUUID().slice(0, 12)
-    const newOrder = {
+    if (!product) return
+    const now = new Date().toISOString()
+    const paymentId = 'pay_' + crypto.randomUUID().replace(/-/g, '').slice(0, 12)
+    const newOrder: Order = {
       id: crypto.randomUUID(),
-      orderNumber,
-      userId: user!.id,
-      productName,
-      productCost: costNum,
-      commission: calc.commission,
-      totalCost: calc.totalCost,
-      isTradeIn: orderType === 'tradein',
-      oldProduct: orderType === 'tradein' ? oldProduct : undefined,
-      oldValue: orderType === 'tradein' ? oldNum : undefined,
-      clientPayment: calc.clientPayment,
-      ipPayment: calc.ipPayment,
-      clientName,
-      clientPhone,
-      clientEmail: clientEmail || undefined,
+      orderNumber: getNextOrderNumber(),
+      userId: user.id,
+      productId: product.id,
+      productName: product.name,
+      price: product.price,
+      partnerReward: null,
+      buyerName: buyerName.trim(),
+      buyerPhone: buyerPhone.trim(),
+      buyerEmail: buyerEmail.trim() || undefined,
       paymentId,
       paymentLink: `/pay/${paymentId}`,
-      paymentStatus: 'PENDING' as const,
-      status: 'CREATED' as const,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      paymentStatus: 'PENDING',
+      status: 'CREATED',
+      createdAt: now,
+      updatedAt: now,
     }
     mockOrders.unshift(newOrder)
     saveOrders()
-    reachGoal('order_created', { totalCost: calc.totalCost })
+    reachGoal('order_created', { price: newOrder.price })
     setCreatedOrder(newOrder)
-    setStep(5)
+    setStep(4)
   }
 
   const paymentUrl = createdOrder ? `${window.location.origin}/pay/${createdOrder.paymentId}` : ''
@@ -142,13 +165,25 @@ export default function NewOrderPage() {
     setTimeout(() => setCopied(false), 2000)
   }
 
+  const reset = () => {
+    setStep(1)
+    setProduct(null)
+    setBuyerName('')
+    setBuyerPhone('')
+    setBuyerEmail('')
+    setCreatedOrder(null)
+  }
+
+  const nextBtn = 'flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none'
+  const backBtn = 'flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer'
+
   return (
     <div className="max-w-2xl mx-auto">
-      {step < 5 && (
+      {step < 4 && (
         <div className="mb-6">
           <h1 className="text-2xl font-bold mb-3 text-text-primary">Новый заказ</h1>
           <div className="flex items-center gap-2">
-            {[1, 2, 3, 4].map((s) => (
+            {[1, 2, 3].map((s) => (
               <div key={s} className="flex items-center gap-2">
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold ${
@@ -157,292 +192,150 @@ export default function NewOrderPage() {
                 >
                   {s < step ? <Check size={14} /> : s}
                 </div>
-                {s < 4 && <div className={`w-8 h-0.5 ${s < step ? 'bg-success' : 'bg-bg-light'}`} />}
+                {s < 3 && <div className={`w-8 h-0.5 ${s < step ? 'bg-success' : 'bg-bg-light'}`} />}
               </div>
             ))}
           </div>
         </div>
       )}
 
-      {/* Step 1: Order type */}
+      {/* Шаг 1: товар из каталога */}
       {step === 1 && (
         <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Выберите тип заказа</h2>
-          <div className="space-y-3">
-            <label
-              className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
-                orderType === 'normal' ? 'border-primary bg-primary/5' : 'border-border hover:bg-bg-light'
-              }`}
-            >
-              <input
-                type="radio"
-                name="orderType"
-                checked={orderType === 'normal'}
-                onChange={() => setOrderType('normal')}
-                className="mt-1 accent-primary"
-              />
-              <div>
-                <p className="font-semibold text-text-primary">Обычная покупка</p>
-                <p className="text-text-secondary text-sm">Клиент покупает новое устройство</p>
+          <h2 className="font-bold text-lg mb-4 text-text-primary">Товар</h2>
+          {product ? (
+            <div className="card-soft rounded-lg p-4">
+              <div className="flex items-start gap-3">
+                <span className="text-2xl shrink-0">{product.image}</span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-text-primary">{product.name}</p>
+                  <p className="text-xs text-text-muted mt-0.5">{product.brand} · {product.category}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setProduct(null)}
+                  className="text-sm text-primary font-medium bg-transparent border-none cursor-pointer hover:underline shrink-0"
+                >
+                  Изменить
+                </button>
               </div>
-            </label>
-            <label
-              className={`flex items-start gap-3 p-4 rounded-lg border cursor-pointer transition-colors ${
-                orderType === 'tradein' ? 'border-primary bg-primary/5' : 'border-border hover:bg-bg-light'
-              }`}
-            >
-              <input
-                type="radio"
-                name="orderType"
-                checked={orderType === 'tradein'}
-                onChange={() => setOrderType('tradein')}
-                className="mt-1 accent-primary"
-              />
-              <div>
-                <p className="font-semibold text-text-primary">Trade-in (обмен)</p>
-                <p className="text-text-secondary text-sm">Клиент меняет старое устройство на новое</p>
+              <div className="border-t border-border mt-3 pt-3 flex justify-between text-sm">
+                <span className="text-text-secondary">Цена для покупателя</span>
+                <span className="font-bold text-text-primary">{formatPrice(product.price)}</span>
               </div>
-            </label>
-          </div>
+            </div>
+          ) : (
+            <CatalogPicker onPick={setProduct} />
+          )}
+          <p className="text-xs text-text-muted mt-3">
+            Цену товара устанавливает ТехЭйджент, в заказе она не меняется.
+            Нужного товара нет в каталоге?{' '}
+            <Link to="/dashboard/chat" className="text-primary font-medium no-underline hover:underline">Напишите менеджеру</Link>
+          </p>
           <div className="flex justify-end mt-6">
-            <button
-              onClick={() => setStep(2)}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer"
-            >
+            <button onClick={() => setStep(2)} disabled={!product} className={nextBtn}>
               Далее <ArrowRight size={16} />
             </button>
           </div>
         </div>
       )}
 
-      {/* Step 2: Product info */}
+      {/* Шаг 2: покупатель */}
       {step === 2 && (
         <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Информация о товаре</h2>
-          <div className="space-y-4">
-            <ProductSearchDropdown
-              value={productName}
-              onChange={(name, price) => {
-                setProductName(name)
-                if (price && !productCost) setProductCost(String(price))
-              }}
-            />
-            <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Стоимость товара у поставщика</label>
-              <div className="relative">
-                <input
-                  type="number"
-                  value={productCost}
-                  onChange={(e) => setProductCost(e.target.value)}
-                  className="w-full px-4 py-3 pr-10 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                  placeholder="75000"
-                  min="0"
-                />
-                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-sm">{'\u20BD'}</span>
-              </div>
-            </div>
-
-            {orderType === 'tradein' && (
-              <>
-                <div className="border-t border-border pt-4">
-                  <h3 className="font-bold text-sm mb-3 text-text-primary">Старое устройство (Trade-in)</h3>
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5 text-text-secondary">Старое устройство</label>
-                  <input
-                    type="text"
-                    value={oldProduct}
-                    onChange={(e) => setOldProduct(e.target.value)}
-                    className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                    placeholder="iPhone 13 128GB"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium mb-1.5 text-text-secondary">Оценка старого устройства</label>
-                  <div className="relative">
-                    <input
-                      type="number"
-                      value={oldValue}
-                      onChange={(e) => setOldValue(e.target.value)}
-                      className="w-full px-4 py-3 pr-10 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                      placeholder="40000"
-                      min="0"
-                    />
-                    <span className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted text-sm">{'\u20BD'}</span>
-                  </div>
-                </div>
-              </>
-            )}
-
-            {/* Auto calculation */}
-            {costNum > 0 && (
-              <div className="card-soft rounded-lg p-4">
-                <h3 className="font-bold text-sm mb-2 text-text-primary">Автоматический расчет</h3>
-                <div className="space-y-1.5 text-sm">
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">Стоимость товара</span>
-                    <span className="text-text-primary">{formatPrice(costNum)}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span className="text-text-secondary">Комиссия (3%)</span>
-                    <span className="text-text-primary">{formatPrice(calc.commission)}</span>
-                  </div>
-                  <div className="border-t border-border pt-1.5 flex justify-between font-bold">
-                    <span className="text-text-primary">Итого</span>
-                    <span className="text-primary">{formatPrice(calc.totalCost)}</span>
-                  </div>
-                  {orderType === 'tradein' && oldNum > 0 && (
-                    <>
-                      <div className="border-t border-border pt-1.5 flex justify-between">
-                        <span className="text-text-secondary">Старое устройство</span>
-                        <span className="text-success">-{formatPrice(oldNum)}</span>
-                      </div>
-                      <div className="flex justify-between font-bold">
-                        <span className="text-text-primary">Доплата клиента</span>
-                        <span className="text-primary">{formatPrice(calc.clientPayment || 0)}</span>
-                      </div>
-                      <div className="flex justify-between text-text-muted">
-                        <span>Партнёр доплачивает</span>
-                        <span>{formatPrice(calc.ipPayment || 0)}</span>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            )}
-          </div>
-          <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(1)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
-              <ArrowLeft size={16} /> Назад
-            </button>
-            <button
-              onClick={() => setStep(3)}
-              disabled={!canGoStep3}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none"
-            >
-              Далее <ArrowRight size={16} />
-            </button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3: Client info */}
-      {step === 3 && (
-        <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Данные клиента</h2>
+          <h2 className="font-bold text-lg mb-4 text-text-primary">Покупатель</h2>
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Имя клиента</label>
+              <label htmlFor="buyer-name" className="block text-sm font-medium mb-1.5 text-text-secondary">ФИО покупателя</label>
               <input
+                id="buyer-name"
                 type="text"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                placeholder="Петр"
+                value={buyerName}
+                onChange={(e) => setBuyerName(e.target.value)}
+                className={fieldCls}
+                placeholder="Фамилия Имя Отчество"
+                autoComplete="off"
               />
+              <p className="text-xs text-text-muted mt-1">Товар выдаётся только этому человеку — ФИО сверяется при выдаче.</p>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Телефон клиента</label>
+              <label htmlFor="buyer-phone" className="block text-sm font-medium mb-1.5 text-text-secondary">Телефон</label>
               <input
+                id="buyer-phone"
                 type="tel"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
-                placeholder="+7 999 555-12-34"
+                value={buyerPhone}
+                onChange={(e) => setBuyerPhone(e.target.value)}
+                className={fieldCls}
+                placeholder="+7"
+                autoComplete="off"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1.5 text-text-secondary">Email клиента <span className="text-text-muted">(опционально)</span></label>
+              <label htmlFor="buyer-email" className="block text-sm font-medium mb-1.5 text-text-secondary">
+                Email <span className="text-text-muted">(необязательно)</span>
+              </label>
               <input
+                id="buyer-email"
                 type="email"
-                value={clientEmail}
-                onChange={(e) => setClientEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
+                value={buyerEmail}
+                onChange={(e) => setBuyerEmail(e.target.value)}
+                className={fieldCls}
                 placeholder="email@example.com"
+                autoComplete="off"
               />
             </div>
           </div>
           <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(2)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
+            <button onClick={() => setStep(1)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
-            <button
-              onClick={() => setStep(4)}
-              disabled={!canGoStep4}
-              className="flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none"
-            >
+            <button onClick={() => setStep(3)} disabled={!canGoStep3} className={nextBtn}>
               Далее <ArrowRight size={16} />
             </button>
           </div>
         </div>
       )}
 
-      {/* Step 4: Confirmation */}
-      {step === 4 && (
+      {/* Шаг 3: проверка */}
+      {step === 3 && product && (
         <div className="card p-6">
-          <h2 className="font-bold text-lg mb-4 text-text-primary">Подтверждение заказа</h2>
+          <h2 className="font-bold text-lg mb-4 text-text-primary">Проверка заказа</h2>
           <div className="space-y-4">
             <div className="card-soft rounded-lg p-4 space-y-2 text-sm">
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span className="text-text-secondary">Товар</span>
-                <span className="font-medium text-text-primary">{productName}</span>
+                <span className="font-medium text-text-primary text-right">{product.name}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Стоимость</span>
-                <span className="text-text-primary">{formatPrice(costNum)}</span>
+              <div className="border-t border-border pt-2 flex justify-between gap-4 font-bold">
+                <span className="text-text-primary">Цена для покупателя — к оплате ТехЭйджент</span>
+                <span className="text-primary whitespace-nowrap">{formatPrice(product.price)}</span>
               </div>
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Комиссия (3%)</span>
-                <span className="text-text-primary">{formatPrice(calc.commission)}</span>
+              <div className="flex justify-between gap-4">
+                <span className="text-text-secondary">Ваше вознаграждение</span>
+                <span className="text-text-primary whitespace-nowrap">{formatReward(null)}</span>
               </div>
-              <div className="border-t border-border pt-2 flex justify-between font-bold">
-                <span className="text-text-primary">Итого</span>
-                <span className="text-primary">{formatPrice(calc.totalCost)}</span>
-              </div>
-              {orderType === 'tradein' && oldNum > 0 && (
-                <>
-                  <div className="border-t border-border pt-2">
-                    <div className="flex justify-between">
-                      <span className="text-text-secondary">Trade-in: {oldProduct}</span>
-                      <span className="text-success">-{formatPrice(oldNum)}</span>
-                    </div>
-                    <div className="flex justify-between font-bold mt-1">
-                      <span className="text-text-primary">Доплата клиента</span>
-                      <span className="text-primary">{formatPrice(calc.clientPayment || 0)}</span>
-                    </div>
-                  </div>
-                </>
-              )}
+              <p className="text-xs text-text-muted">Вознаграждение платит ТехЭйджент после выдачи товара и загрузки подписанного акта.</p>
             </div>
 
             <div className="card-soft rounded-lg p-4 space-y-2 text-sm">
-              <div className="flex justify-between">
-                <span className="text-text-secondary">Клиент</span>
-                <span className="text-text-primary">{clientName}</span>
+              <div className="flex justify-between gap-4">
+                <span className="text-text-secondary">Покупатель</span>
+                <span className="text-text-primary text-right">{buyerName}</span>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-4">
                 <span className="text-text-secondary">Телефон</span>
-                <span className="text-text-primary">{clientPhone}</span>
+                <span className="text-text-primary">{buyerPhone}</span>
               </div>
-              {clientEmail && (
-                <div className="flex justify-between">
+              {buyerEmail && (
+                <div className="flex justify-between gap-4">
                   <span className="text-text-secondary">Email</span>
-                  <span className="text-text-primary">{clientEmail}</span>
+                  <span className="text-text-primary">{buyerEmail}</span>
                 </div>
               )}
             </div>
           </div>
           <div className="flex justify-between mt-6">
-            <button
-              onClick={() => setStep(3)}
-              className="flex items-center gap-1 text-text-secondary hover:text-text-primary text-sm font-medium bg-transparent border-none cursor-pointer"
-            >
+            <button onClick={() => setStep(2)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
             <button
@@ -455,17 +348,26 @@ export default function NewOrderPage() {
         </div>
       )}
 
-      {/* Step 5: Success */}
-      {step === 5 && createdOrder && (
+      {/* Заказ создан: ссылка и QR для оплаты покупателем */}
+      {step === 4 && createdOrder && (
         <div className="card p-6 text-center">
           <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
             <Check size={32} className="text-success" />
           </div>
-          <h2 className="text-2xl font-bold mb-1 text-text-primary">Заказ {createdOrder.orderNumber} создан!</h2>
-          <p className="text-text-secondary mb-6">Отправьте ссылку клиенту для оплаты</p>
+          <h2 className="text-2xl font-bold mb-1 text-text-primary">Заказ {createdOrder.orderNumber} создан</h2>
+          <p className="text-text-secondary mb-6">Отправьте покупателю ссылку на оплату или покажите QR-код</p>
+
+          <p className="text-lg font-bold mb-4 text-text-primary">
+            К оплате: <span className="text-primary">{formatPrice(createdOrder.price)}</span>
+          </p>
+
+          <div className="flex justify-center mb-4">
+            <div className="bg-white rounded-xl p-4 border border-border">
+              <QRCodeSVG value={paymentUrl} size={160} />
+            </div>
+          </div>
 
           <div className="card-soft rounded-lg p-4 mb-4">
-            <p className="text-xs text-text-muted mb-2">Ссылка для оплаты:</p>
             <p className="text-sm font-medium break-all text-text-primary">{paymentUrl}</p>
           </div>
 
@@ -474,42 +376,29 @@ export default function NewOrderPage() {
             className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer mb-6"
           >
             {copied ? <Check size={14} /> : <Copy size={14} />}
-            {copied ? 'Скопировано!' : 'Копировать ссылку'}
+            {copied ? 'Скопировано' : 'Копировать ссылку'}
           </button>
 
-          <div className="flex justify-center mb-6">
-            <div className="bg-white rounded-xl p-4">
-              <QRCodeSVG value={paymentUrl} size={160} />
-            </div>
+          <div className="text-left rounded-lg border border-amber-300 bg-amber-50 p-4 mb-6 text-sm text-amber-900 space-y-1">
+            <p>
+              Оплату принимает только ТехЭйджент — по этой ссылке или QR-коду через СБП. Перед оплатой покупатель принимает{' '}
+              <Link to="/legal/sale-offer" target="_blank" className="text-amber-900 underline">оферту купли-продажи</Link>.
+            </p>
+            <p className="font-semibold">Принимать деньги от покупателя наличными или на свои реквизиты нельзя.</p>
           </div>
-
-          <p className="text-lg font-bold mb-6 text-text-primary">
-            К оплате: <span className="text-primary">{formatPrice(createdOrder.isTradeIn ? (createdOrder.clientPayment || 0) : createdOrder.totalCost)}</span>
-          </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <button
-              onClick={() => navigate('/dashboard/orders')}
+              onClick={() => navigate(`/dashboard/orders/${createdOrder.id}`)}
               className="px-6 py-2.5 rounded-lg border border-border text-sm font-medium hover:bg-bg-light transition-colors bg-transparent text-text-primary cursor-pointer"
             >
-              К списку заказов
+              Открыть заказ
             </button>
             <button
-              onClick={() => {
-                setStep(1)
-                setProductName('')
-                setProductCost('')
-                setOldProduct('')
-                setOldValue('')
-                setClientName('')
-                setClientPhone('')
-                setClientEmail('')
-                setCreatedOrder(null)
-                setOrderType('normal')
-              }}
+              onClick={reset}
               className="px-6 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-white text-sm font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 border-none cursor-pointer"
             >
-              Создать еще один
+              Новый заказ
             </button>
           </div>
         </div>

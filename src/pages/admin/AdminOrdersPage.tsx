@@ -1,18 +1,27 @@
 import { useState } from 'react'
 import { mockOrders, mockUsers, saveOrders } from '../../data/mock'
-import { formatPrice, formatDate } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, ORDER_STEPS } from '../../utils/status'
-import type { OrderStatus } from '../../types'
+import { formatPrice, formatDate, formatReward } from '../../utils/calculate'
+import {
+  ORDER_STATUS_LABELS,
+  ORDER_STATUS_COLORS,
+  PAYMENT_STATUS_LABELS,
+  PAYMENT_STATUS_COLORS,
+  ADMIN_NEXT_STATUS,
+} from '../../utils/status'
+import type { Order, OrderStatus } from '../../types'
 
 const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: 'Все', value: 'ALL' },
-  { label: 'Созданы', value: 'CREATED' },
+  { label: 'Ждут оплаты', value: 'CREATED' },
   { label: 'Оплачены', value: 'PAID' },
-  { label: 'Выкупаем', value: 'PURCHASING' },
-  { label: 'Доставка', value: 'SHIPPING' },
-  { label: 'Завершены', value: 'COMPLETED' },
+  { label: 'Выкуплены', value: 'PURCHASED' },
+  { label: 'В пути', value: 'IN_TRANSIT' },
+  { label: 'В пункте выдачи', value: 'AT_POINT' },
+  { label: 'Выданы', value: 'ISSUED' },
   { label: 'Отменены', value: 'CANCELLED' },
 ]
+
+const actionBtn = 'text-xs px-2 py-1 rounded font-medium transition-colors border-none cursor-pointer whitespace-nowrap'
 
 export default function AdminOrdersPage() {
   const [filter, setFilter] = useState<OrderStatus | 'ALL'>('ALL')
@@ -20,24 +29,29 @@ export default function AdminOrdersPage() {
 
   const orders = mockOrders.filter((o) => filter === 'ALL' || o.status === filter)
 
-  const handleStatusChange = (orderId: string, newStatus: OrderStatus) => {
-    const order = mockOrders.find((o) => o.id === orderId)
-    if (order) {
-      order.status = newStatus
-      order.updatedAt = new Date().toISOString()
-      saveOrders()
-      setRefreshKey(k => k + 1)
-    }
+  const patch = (order: Order, data: Partial<Order>) => {
+    Object.assign(order, data, { updatedAt: new Date().toISOString() })
+    saveOrders()
+    setRefreshKey((k) => k + 1)
+  }
+
+  const markPaid = (order: Order) => {
+    if (!confirm(`Отметить заказ ${order.orderNumber} оплаченным? Только если оплата ${formatPrice(order.price)} поступила на счёт ТехЭйджент.`)) return
+    patch(order, { paymentStatus: 'PAID', paidAt: new Date().toISOString(), status: 'PAID' })
+  }
+
+  const cancel = (order: Order) => {
+    if (!confirm(`Отменить заказ ${order.orderNumber}?`)) return
+    patch(order, { status: 'CANCELLED' })
   }
 
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text-primary">Все заказы</h1>
-        <span className="text-text-muted text-sm">{mockOrders.length} заказов</span>
+        <h1 className="text-2xl font-bold text-text-primary">Заказы</h1>
+        <span className="text-text-muted text-sm">{mockOrders.length} всего</span>
       </div>
 
-      {/* Filter tabs */}
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
         {filterTabs.map((t) => (
           <button
@@ -59,48 +73,78 @@ export default function AdminOrdersPage() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-border bg-bg-light">
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Номер</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Товар</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Партнёр</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Клиент</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Сумма</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Статус</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Дата</th>
-                <th className="text-left px-4 py-3 font-medium text-text-muted">Действия</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Заказ</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Товар и Партнёр</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Покупатель</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Цена</th>
+                <th className="text-left px-4 py-3 font-medium text-text-muted">Статус и действия</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-border">
+              {orders.length === 0 && (
+                <tr>
+                  <td colSpan={5} className="px-4 py-8 text-center text-text-muted">Заказов нет</td>
+                </tr>
+              )}
               {orders.map((order) => {
-                const ip = mockUsers.find((u) => u.id === order.userId)
-                const currentIdx = ORDER_STEPS.indexOf(order.status)
-                const nextStatus = currentIdx < ORDER_STEPS.length - 1 ? ORDER_STEPS[currentIdx + 1] : null
+                const partner = mockUsers.find((u) => u.id === order.userId)
+                const next = ADMIN_NEXT_STATUS[order.status]
+                const unpaid = order.status === 'CREATED' && order.paymentStatus !== 'PAID'
                 return (
-                  <tr key={order.id} className="hover:bg-bg-light transition-colors">
-                    <td className="px-4 py-3">
-                      <span className="font-medium text-text-primary">{order.orderNumber}</span>
-                      {order.isTradeIn && (
-                        <span className="ml-1 text-xs text-primary font-medium">TI</span>
-                      )}
+                  <tr key={order.id} className="hover:bg-bg-light transition-colors align-top">
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <p className="font-medium text-text-primary">{order.orderNumber}</p>
+                      <p className="text-xs text-text-muted">{formatDate(order.createdAt)}</p>
                     </td>
-                    <td className="px-4 py-3 text-text-secondary max-w-48 truncate">{order.productName}</td>
-                    <td className="px-4 py-3 text-text-secondary text-xs">{ip?.companyName || '—'}</td>
-                    <td className="px-4 py-3 text-text-secondary">{order.clientName}</td>
-                    <td className="px-4 py-3 font-medium text-text-primary">{formatPrice(order.totalCost)}</td>
-                    <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${ORDER_STATUS_COLORS[order.status]}`}>
-                        {ORDER_STATUS_LABELS[order.status]}
-                      </span>
+                    <td className="px-4 py-3 max-w-48">
+                      <p className="text-text-primary truncate">{order.productName}</p>
+                      <p className="text-xs text-text-muted truncate">{partner?.companyName || '—'}</p>
                     </td>
-                    <td className="px-4 py-3 text-text-muted text-xs">{formatDate(order.createdAt)}</td>
+                    <td className="px-4 py-3 text-xs text-text-secondary min-w-36">
+                      <p className="text-text-primary text-sm">{order.buyerName}</p>
+                      <p className="whitespace-nowrap">{order.buyerPhone}</p>
+                    </td>
+                    <td className="px-4 py-3 whitespace-nowrap">
+                      <p className="font-medium text-text-primary">{formatPrice(order.price)}</p>
+                      <p className="text-xs text-text-muted">вознагр. {formatReward(order.partnerReward)}</p>
+                    </td>
                     <td className="px-4 py-3">
-                      {nextStatus && order.status !== 'CANCELLED' && (
-                        <button
-                          onClick={() => handleStatusChange(order.id, nextStatus)}
-                          className="text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20 transition-colors border-none cursor-pointer whitespace-nowrap"
-                        >
-                          &rarr; {ORDER_STATUS_LABELS[nextStatus]}
-                        </button>
-                      )}
+                      <div className="flex flex-col items-start gap-1">
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${ORDER_STATUS_COLORS[order.status]}`}>
+                          {ORDER_STATUS_LABELS[order.status]}
+                        </span>
+                        {(order.status !== 'CANCELLED' || order.paymentStatus === 'PAID') && (
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${PAYMENT_STATUS_COLORS[order.paymentStatus]}`}>
+                            {PAYMENT_STATUS_LABELS[order.paymentStatus]}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex flex-col items-start gap-1.5 mt-2">
+                        {unpaid && (
+                          <>
+                            <button onClick={() => markPaid(order)} className={`${actionBtn} bg-emerald-50 text-emerald-700 hover:bg-emerald-100`}>
+                              Оплата поступила
+                            </button>
+                            <button onClick={() => cancel(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+                              Отменить
+                            </button>
+                          </>
+                        )}
+                        {next && (
+                          <button onClick={() => patch(order, { status: next })} className={`${actionBtn} bg-primary/10 text-primary hover:bg-primary/20`}>
+                            &rarr; {ORDER_STATUS_LABELS[next]}
+                          </button>
+                        )}
+                        {order.status === 'AT_POINT' && (
+                          <span className="text-xs text-text-muted">Выдачу подтверждает Партнёр</span>
+                        )}
+                        {order.status === 'ISSUED' && (
+                          <span className={`text-xs ${order.issueActUploaded ? 'text-text-muted' : 'text-red-600'}`}>
+                            {order.issuedToName ? `${order.issuedToName}, ` : ''}
+                            {order.issueActUploaded ? 'акт загружен' : 'акт не загружен'}
+                          </span>
+                        )}
+                      </div>
                     </td>
                   </tr>
                 )

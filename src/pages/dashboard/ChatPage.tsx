@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { products } from '../../data/products'
 import { getProductImage } from '../../utils/productImages'
+import { DEMO_MODE } from '../../data/mock'
 
 /* ── Types ── */
 interface ChatContact {
@@ -27,40 +28,38 @@ interface Message {
   productId?: string
 }
 
-/* ── Mock Data ── */
-const contacts: ChatContact[] = [
-  { id: '1', name: 'Алексей Петров', initials: 'АП', role: 'Менеджер', gradient: 'linear-gradient(135deg,#1B44F5,#4E74FF)', online: true, lastMsg: 'Наличие подтверждаю — 42 шт. на складе', time: '14:32', unread: 2, productId: 'iph15pm256b' },
-  { id: '2', name: 'Мария Соколова', initials: 'МС', role: 'Менеджер', gradient: 'linear-gradient(135deg,#059669,#34D399)', online: true, lastMsg: 'Прайс на Galaxy S25 Ultra обновлён', time: '13:15', unread: 1, productId: 'sgts25u256b' },
-  { id: '3', name: 'Игорь Волков', initials: 'ИВ', role: 'Логист', gradient: 'linear-gradient(135deg,#7C3AED,#A78BFA)', online: false, lastMsg: 'Доставка MacBook Pro оформлена', time: '12:40', unread: 0, productId: 'mbp14-m3p-18-512' },
-  { id: '4', name: 'Елена Новикова', initials: 'ЕН', role: 'Менеджер', gradient: 'linear-gradient(135deg,#EA580C,#FB923C)', online: true, lastMsg: 'Sony WH-1000XM5 — партия 50 шт., скидка 12%', time: 'Вчера', unread: 0 },
-  { id: '5', name: 'Дмитрий Морозов', initials: 'ДМ', role: 'Менеджер', gradient: 'linear-gradient(135deg,#DB2777,#F472B6)', online: false, lastMsg: 'Заказ #4821 — отгружен', time: 'Вчера', unread: 0 },
-]
+/* ── Контакты и переписка ──
+ * Бэкенда у чата нет. Демо-переписка — только в режиме разработки или при VITE_DEMO=1. */
+const PARTNERS_EMAIL = 'partners@techagent.pro'
 
-const chatMessages: Record<string, Message[]> = {
-  '1': [
-    { id: 'm1', from: 'them', text: 'Добрый день! Чем могу помочь?', time: '14:20' },
-    { id: 'm2', from: 'me', text: 'Здравствуйте! Интересует iPhone 15 Pro Max 256GB. Есть в наличии? Нужно 25 штук.', time: '14:22', read: true },
-    { id: 'm3', from: 'them', text: 'Отличный выбор! Сейчас проверю наличие на складе.', time: '14:23' },
-    { id: 'm4', from: 'them', text: 'Наличие подтверждаю — 42 шт. на складе. Для партии 25 шт. могу предложить специальную цену: 149 990 ₽ за единицу вместо 159 900 ₽.', time: '14:28', productId: 'iph15pm256b' },
-    { id: 'm5', from: 'me', text: 'Отличная цена! А какие цвета доступны в этом количестве?', time: '14:30', read: true },
-    { id: 'm6', from: 'them', text: 'Natural Titanium — 18 шт., Black — 14 шт., White Titanium — 10 шт. Можем скомплектовать микс под ваши нужды. Доставка 5–7 дней.', time: '14:32' },
-  ],
-  '2': [
-    { id: 'm1', from: 'them', text: 'Добрый день! Обновили прайс на Samsung Galaxy S25 Ultra.', time: '13:00' },
-    { id: 'm2', from: 'them', text: 'Новая цена на 256GB — 139 900 ₽ при партии от 10 шт. Действует до конца месяца.', time: '13:15', productId: 'sgts25u256b' },
-  ],
-  '3': [
-    { id: 'm1', from: 'them', text: 'Доставка MacBook Pro 14" M3 Pro оформлена, трек отправлю завтра утром.', time: '12:40' },
-    { id: 'm2', from: 'me', text: 'Отлично, спасибо! Жду трек.', time: '12:42', read: true },
-  ],
-  '4': [
-    { id: 'm1', from: 'them', text: 'Sony WH-1000XM5 — поступила партия 50 шт. Могу предложить скидку 12% при заказе от 20 шт.', time: 'Вчера' },
-  ],
-  '5': [
-    { id: 'm1', from: 'them', text: 'Заказ #4821 — Nintendo Switch, 20 шт. — отгружен. Доставка 2-3 дня.', time: 'Вчера' },
-    { id: 'm2', from: 'me', text: 'Принято, ждём!', time: 'Вчера', read: true },
-  ],
+const managerContact: ChatContact = {
+  id: 'manager', name: 'Менеджер TechAgent', initials: 'TA', role: 'Менеджер',
+  gradient: 'linear-gradient(135deg,#1B44F5,#4E74FF)', online: false, lastMsg: '', time: '', unread: 0,
 }
+
+function demoChat(): { contacts: ChatContact[]; messages: Record<string, Message[]> } {
+  return {
+    contacts: [
+      { ...managerContact, name: 'Менеджер (демо)', initials: 'МД', lastMsg: 'Пришлите название и характеристики', time: '14:32', unread: 1 },
+      { id: 'delivery', name: 'Доставка (демо)', initials: 'ДД', role: 'Доставка', gradient: 'linear-gradient(135deg,#7C3AED,#A78BFA)', online: false, lastMsg: 'Принято', time: 'Вчера', unread: 0 },
+    ],
+    messages: {
+      manager: [
+        { id: 'm1', from: 'me', text: 'Покупатель спрашивает товар, которого нет в каталоге.', time: '14:20', read: true },
+        { id: 'm2', from: 'them', text: 'Пришлите название и характеристики — проверим у поставщика.', time: '14:32' },
+      ],
+      delivery: [
+        { id: 'm1', from: 'them', text: 'Заказ #1238 прибыл в ваш пункт выдачи.', time: 'Вчера' },
+        { id: 'm2', from: 'them', text: 'Выдавайте товар только оплаченным заказам и по ФИО из заказа. Подписанный акт загрузите в карточке заказа.', time: 'Вчера' },
+        { id: 'm3', from: 'me', text: 'Принято', time: 'Вчера', read: true },
+      ],
+    },
+  }
+}
+
+const initial = DEMO_MODE ? demoChat() : { contacts: [managerContact], messages: {} as Record<string, Message[]> }
+const contacts = initial.contacts
+const chatMessages = initial.messages
 
 /* ── Icons (inline SVG) ── */
 const SearchIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
@@ -68,7 +67,6 @@ const SendIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="cur
 const InfoIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
 const ArrowIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
 const CloseIcon = () => <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6L6 18"/><path d="M6 6l12 12"/></svg>
-const PhoneIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
 const MailIcon = () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg>
 const BackIcon = () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
 
@@ -105,7 +103,7 @@ function ProductMiniCard({ productId }: { productId: string }) {
 /* ══════════════════════════════════════════════════ */
 export default function ChatPage() {
   const { user } = useAuth()
-  const [activeChat, setActiveChat] = useState<string | null>('1')
+  const [activeChat, setActiveChat] = useState<string | null>(contacts[0]?.id ?? null)
   const [messages, setMessages] = useState<Record<string, Message[]>>(chatMessages)
   const [input, setInput] = useState('')
   const [search, setSearch] = useState('')
@@ -162,7 +160,7 @@ export default function ChatPage() {
         <div className="ch-list-header">
           <div className="ch-list-title">
             Чаты
-            <span className="ch-count">{contacts.filter(c => c.unread > 0).length} новых</span>
+            {contacts.some(c => c.unread > 0) && <span className="ch-count">{contacts.filter(c => c.unread > 0).length} новых</span>}
           </div>
           <div className="ch-search">
             <span className="ch-search-icon"><SearchIcon /></span>
@@ -217,7 +215,7 @@ export default function ChatPage() {
                 <div className="ch-header-name">{activeContact.name}</div>
                 <div className={`ch-header-status ${activeContact.online ? 'online' : ''}`}>
                   {activeContact.online && <span className="ch-status-dot" />}
-                  {activeContact.online ? 'Онлайн' : 'Был(а) недавно'}
+                  {activeContact.online ? 'Онлайн' : activeContact.role}
                 </div>
               </div>
               <button
@@ -243,7 +241,13 @@ export default function ChatPage() {
 
             {/* Messages */}
             <div className="ch-messages" ref={messagesRef}>
-              <div className="ch-date-divider"><span>Сегодня</span></div>
+              {activeMessages.length === 0 ? (
+                <div className="ch-empty">
+                  <p>Вопросы по заказам покупателей и товарам, которых нет в каталоге: <a href={`mailto:${PARTNERS_EMAIL}`} className="text-primary">{PARTNERS_EMAIL}</a></p>
+                </div>
+              ) : (
+                <div className="ch-date-divider"><span>Сегодня</span></div>
+              )}
               {activeMessages.map(msg => (
                 <div key={msg.id} className={`ch-msg ${msg.from === 'me' ? 'mine' : ''}`}>
                   {msg.from !== 'me' && (
@@ -268,7 +272,7 @@ export default function ChatPage() {
             {/* Input */}
             <div className="ch-input-area">
               <div className="ch-quick-replies">
-                {['Оформить заказ', 'Запросить прайс', 'Узнать доставку'].map(q => (
+                {['Нет товара в каталоге', 'Вопрос по заказу', 'Вопрос по выдаче'].map(q => (
                   <button key={q} className="ch-quick" onClick={() => { setInput(q); inputRef.current?.focus() }}>{q}</button>
                 ))}
               </div>
@@ -319,14 +323,7 @@ export default function ChatPage() {
               <span className="ch-info-row-icon"><MailIcon /></span>
               <div>
                 <div className="ch-info-row-label">Email</div>
-                <div className="ch-info-row-value">{activeContact.name.split(' ')[0].toLowerCase()[0]}.{activeContact.name.split(' ')[1]?.toLowerCase() || ''}@techagent.ru</div>
-              </div>
-            </div>
-            <div className="ch-info-row">
-              <span className="ch-info-row-icon"><PhoneIcon /></span>
-              <div>
-                <div className="ch-info-row-label">Телефон</div>
-                <div className="ch-info-row-value">+7 (495) 123-45-67</div>
+                <div className="ch-info-row-value"><a href={`mailto:${PARTNERS_EMAIL}`}>{PARTNERS_EMAIL}</a></div>
               </div>
             </div>
           </div>

@@ -1,28 +1,27 @@
 import { useState } from 'react'
-import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard } from 'lucide-react'
+import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/documents'
 import { formatDate } from '../../utils/calculate'
-import type { DocumentType } from '../../types'
+import type { Document, DocumentType } from '../../types'
 
 const typeLabels: Record<DocumentType, string> = {
-  CONTRACT: 'Договор',
-  ACT: 'Акт услуг',
+  CONTRACT: 'Подтверждение акцепта оферты',
   REPORT: 'Отчёт агента',
-  OFFER: 'Оферта',
-  PRIVACY: 'Конфиденциальность',
-  TERMS: 'Соглашение',
-  PAYMENT: 'Условия оплаты',
+  ACT: 'Акт об оказании услуг',
+  OFFER: 'Агентский договор-оферта',
+  SALE_OFFER: 'Оферта купли-продажи',
+  PAYMENT: 'Условия оплаты и возврата',
+  PRIVACY: 'Политика конфиденциальности',
+  TERMS: 'Пользовательское соглашение',
 }
 
-const typeColors: Record<DocumentType, string> = {
-  CONTRACT: 'bg-blue-500/10 text-blue-600',
-  ACT: 'bg-green-500/10 text-green-600',
-  REPORT: 'bg-purple-500/10 text-purple-600',
-  OFFER: 'bg-orange-500/10 text-orange-600',
-  PRIVACY: 'bg-emerald-500/10 text-emerald-600',
-  TERMS: 'bg-indigo-500/10 text-indigo-600',
-  PAYMENT: 'bg-sky-500/10 text-sky-600',
+/** Тип документа показываем, только если название его не повторяет */
+function typeHint(doc: Document): string | null {
+  const label = typeLabels[doc.type].toLowerCase()
+  const title = doc.title.toLowerCase()
+  const firstWord = label.split(' ')[0]
+  return title.includes(label) || title.startsWith(firstWord) ? null : typeLabels[doc.type]
 }
 
 const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; className: string }>> = {
@@ -30,6 +29,7 @@ const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; classN
   ACT: FileText,
   REPORT: BookOpen,
   OFFER: ScrollText,
+  SALE_OFFER: ShoppingBag,
   PRIVACY: Shield,
   TERMS: BookOpen,
   PAYMENT: CreditCard,
@@ -60,7 +60,7 @@ export default function DocumentsPage() {
               <div
                 key={doc.id}
                 className="card p-4 flex items-center justify-between hover:bg-bg-light transition-colors cursor-pointer"
-                onClick={() => doc.content && setOpenDoc(doc.id)}
+                onClick={() => { if (doc.content) setOpenDoc(doc.id) }}
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -69,20 +69,15 @@ export default function DocumentsPage() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="font-medium text-sm text-text-primary">{doc.title}</span>
-                      <span
-                        className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type]}`}
-                      >
-                        {typeLabels[doc.type]}
-                      </span>
                     </div>
-                    <p className="text-text-muted text-xs mt-0.5">{formatDate(doc.createdAt)}</p>
+                    <p className="text-text-muted text-xs mt-0.5">{[typeHint(doc), formatDate(doc.createdAt)].filter(Boolean).join(' · ')}</p>
                   </div>
                 </div>
                 <button
                   className="flex items-center gap-1.5 text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline"
                   onClick={(e) => {
                     e.stopPropagation()
-                    doc.content && setOpenDoc(doc.id)
+                    if (doc.content) setOpenDoc(doc.id)
                   }}
                 >
                   Читать
@@ -101,7 +96,7 @@ export default function DocumentsPage() {
         </h2>
         {userDocs.length === 0 ? (
           <div className="card p-8 text-center text-text-muted">
-            Документов пока нет. Они появятся после оформления первого заказа.
+            Документов пока нет.
           </div>
         ) : (
           <div className="space-y-2">
@@ -111,7 +106,7 @@ export default function DocumentsPage() {
                 <div
                   key={doc.id}
                   className={`card p-4 flex items-center justify-between hover:bg-bg-light transition-colors ${doc.content ? 'cursor-pointer' : ''}`}
-                  onClick={() => doc.content && setOpenDoc(doc.id)}
+                  onClick={() => { if (doc.content) setOpenDoc(doc.id) }}
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -120,13 +115,8 @@ export default function DocumentsPage() {
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="font-medium text-sm text-text-primary">{doc.title}</span>
-                        <span
-                          className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type]}`}
-                        >
-                          {typeLabels[doc.type]}
-                        </span>
                       </div>
-                      <p className="text-text-muted text-xs mt-0.5">{formatDate(doc.createdAt)}</p>
+                      <p className="text-text-muted text-xs mt-0.5">{[typeHint(doc), formatDate(doc.createdAt)].filter(Boolean).join(' · ')}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-4 flex-shrink-0">
@@ -179,11 +169,7 @@ export default function DocumentsPage() {
             <div className="flex items-center justify-between p-5 border-b border-gray-100">
               <div>
                 <h3 className="font-bold text-lg text-text-primary">{activeDoc.title}</h3>
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[activeDoc.type]}`}
-                >
-                  {typeLabels[activeDoc.type]}
-                </span>
+                {typeHint(activeDoc) && <p className="text-xs text-text-muted mt-0.5">{typeHint(activeDoc)}</p>}
               </div>
               <button
                 className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors"

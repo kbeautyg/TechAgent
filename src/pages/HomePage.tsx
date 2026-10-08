@@ -1,62 +1,37 @@
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
-import { ArrowRight, ChevronDown, Star } from 'lucide-react'
-import { formatPrice } from '../utils/calculate'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import { faqData } from '../data/faq'
 import { reachGoal } from '../lib/metrika'
 import {
   IconUserPlus, IconClipboardEdit, IconCreditCard, IconPackageCheck,
-  IconCoins, IconBox, IconSmartphone, IconFileCheck, IconTruck,
-  IconDiamond, IconUnlock, IconGlobe, IconZap, IconUser,
+  IconCoins, IconSmartphone, IconFileCheck, IconTruck,
   IconApple, IconLaptop, IconHeadphones, IconWatch, IconGamepad, IconCamera, IconPlug,
 } from '../components/icons'
 
 const features = [
-  { icon: <IconCoins size={32} />, bg: 'bg-primary/8', title: 'Комиссия 3%', desc: 'Прозрачная ставка без скрытых платежей. Вы всегда знаете итоговую стоимость заранее' },
-  { icon: <IconTruck size={32} />, bg: 'bg-primary/8', title: 'Доставка 5–7 дней', desc: 'Быстрая логистика через проверенных партнёров. Отслеживание на каждом этапе' },
-  { icon: <IconFileCheck size={32} />, bg: 'bg-primary/8', title: 'Легальная схема', desc: 'Полностью белая агентская модель. Партнёр = импортёр. Все документы предоставляем' },
+  { icon: <IconFileCheck size={32} />, bg: 'bg-primary/8', title: 'Продавец — ТехЭйджент', desc: 'ОсОО «ТехЭйджент» покупает товар у поставщика по контракту и инвойсу и продаёт его покупателю по оферте купли-продажи. Вы — агент продавца и пункт выдачи' },
+  { icon: <IconCoins size={32} />, bg: 'bg-primary/8', title: 'Оплата напрямую продавцу', desc: 'Покупатель платит ТехЭйджент через СБП по ссылке или QR-коду. Вы деньги покупателя не принимаете' },
+  { icon: <IconTruck size={32} />, bg: 'bg-primary/8', title: 'Доставка в вашу точку', desc: 'ТехЭйджент доставляет товар в ваш пункт выдачи за свой счёт — ориентировочно 5–7 рабочих дней с момента выкупа у поставщика' },
 ]
 
 const steps = [
-  { icon: <IconUserPlus size={28} />, title: 'Регистрация', desc: 'Создайте аккаунт партнёра за 2 минуты. Нужен только ИНН' },
-  { icon: <IconClipboardEdit size={28} />, title: 'Создание заказа', desc: 'Укажите товар — система рассчитает итог с комиссией 3%' },
-  { icon: <IconCreditCard size={28} />, title: 'Оплата клиентом', desc: 'Отправьте ссылку покупателю — он оплачивает через СБП' },
-  { icon: <IconPackageCheck size={28} />, title: 'Получение товара', desc: 'Мы выкупаем товар, передаём карго. Вы получаете и отдаёте' },
-]
-
-const standardFeatures = [
-  { icon: <IconCoins size={22} />, title: 'Комиссия 3%', sub: 'Без скрытых доплат' },
-  { icon: <IconBox size={22} />, title: 'До 50 заказов в месяц', sub: 'Без лимита по сумме' },
-  { icon: <IconSmartphone size={22} />, title: 'Apple, Samsung, Xiaomi', sub: 'Все популярные бренды' },
-  { icon: <IconFileCheck size={22} />, title: 'Без заявок', sub: 'Регистрация за 2 минуты' },
-  { icon: <IconTruck size={22} />, title: 'Доставка 5–7 дней', sub: 'Через проверенные карго' },
-]
-
-const proFeatures = [
-  { icon: <IconDiamond size={22} />, title: 'Комиссия 3%', sub: 'Спецусловия при объёмах — обсудим' },
-  { icon: <IconUnlock size={22} />, title: 'Без лимита заказов', sub: 'Сколько угодно в месяц' },
-  { icon: <IconGlobe size={22} />, title: 'Расширенный каталог', sub: 'Dyson, Sony, DJI и другие' },
-  { icon: <IconZap size={22} />, title: 'Приоритетная доставка', sub: '3–5 дней вместо 5–7' },
-  { icon: <IconUser size={22} />, title: 'Персональный менеджер', sub: 'На связи в рабочее время' },
+  { icon: <IconUserPlus size={28} />, title: 'Анкета и проверка', desc: 'Заполните анкету: ИНН, ОГРН, адрес точки, реквизиты. ТехЭйджент проверит данные до первого заказа' },
+  { icon: <IconClipboardEdit size={28} />, title: 'Заказ покупателя', desc: 'Выберите товар в каталоге и оформите заказ на покупателя в личном кабинете. Цена — из каталога' },
+  { icon: <IconCreditCard size={28} />, title: 'Оплата продавцу', desc: 'Покупатель оплачивает заказ ТехЭйджент через СБП по ссылке или QR-коду' },
+  { icon: <IconPackageCheck size={28} />, title: 'Выдача в точке', desc: 'Товар приходит к вам. Сверьте данные покупателя, выдайте товар и загрузите подписанный акт' },
 ]
 
 const categories = [
   { icon: <IconApple size={22} />, name: 'Apple iPhone', price: 'от 60 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Apple' },
   { icon: <IconLaptop size={22} />, name: 'MacBook Air / Pro', price: 'от 100 000 ₽', cat: 'Ноутбуки', to: '/catalog?cat=Ноутбуки&brand=Apple' },
   { icon: <IconSmartphone size={22} />, name: 'Samsung Galaxy', price: 'от 40 000 ₽', cat: 'Смартфоны', to: '/catalog?cat=Смартфоны&brand=Samsung' },
-  { icon: <IconHeadphones size={22} />, name: 'AirPods / Beats', price: 'от 15 000 ₽', cat: 'Наушники', to: '/catalog/naushniki' },
+  { icon: <IconHeadphones size={22} />, name: 'AirPods', price: 'от 15 000 ₽', cat: 'Наушники', to: '/catalog/naushniki' },
   { icon: <IconWatch size={22} />, name: 'Apple Watch', price: 'от 35 000 ₽', cat: 'Часы', to: '/catalog/chasy' },
   { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: 'от 15 000 ₽', cat: 'Смартфоны', to: '/catalog/smartfony' },
   { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: 'от 45 000 ₽', cat: 'Игровые консоли', to: '/catalog/igrovye-konsoli' },
   { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: 'от 30 000 ₽', cat: 'Камеры и дроны', to: '/catalog/kamery-i-drony' },
   { icon: <IconPlug size={22} />, name: 'Dyson', price: 'от 25 000 ₽', cat: 'Для дома', to: '/catalog/tehnika-dlya-doma' },
-]
-
-const reviews = [
-  { name: 'Азамат Турсунов', company: 'ИП Турсунов А.К.', city: 'Бишкек', text: 'Работаем с TechAgent уже полгода. Создал заказ, скинул ссылку клиенту, через неделю товар на точке.', rating: 5 },
-  { name: 'Айнура Маматова', company: 'ИП Маматова А.С.', city: 'Ош', text: 'Раньше ждали по 3 недели, а тут 5-7 дней и товар у меня. Удобная оплата и документы.', rating: 5 },
-  { name: 'Бакыт Жумабеков', company: 'ИП Жумабеков Б.Т.', city: 'Бишкек', text: 'Отличный сервис. Документы формируются автоматически. Рекомендую всем партнёрам.', rating: 5 },
-  { name: 'Мария Волкова', company: 'Партнёр Волкова М.А.', city: 'Новосибирск', text: 'Отличный сервис для тех, кто хочет предложить клиентам низкие цены на электронику.', rating: 4 },
 ]
 
 const tabLabels = ['Популярное', 'Смартфоны', 'Ноутбуки', 'Наушники', 'Планшеты', 'Часы', 'Аксессуары']
@@ -88,25 +63,8 @@ function FAQ() {
   )
 }
 
-function formatNum(n: number) {
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')
-}
-
 export default function HomePage() {
-  const [calcCost, setCalcCost] = useState('75000')
-  const [calcTouched, setCalcTouched] = useState(false)
   const [activeTab, setActiveTab] = useState(0)
-  const costNum = parseInt(calcCost) || 0
-  const commission = Math.round(costNum * 0.03)
-  const total = costNum + commission
-
-  const handleCalcChange = (value: string) => {
-    setCalcCost(value)
-    if (!calcTouched) {
-      setCalcTouched(true)
-      reachGoal('calc_used')
-    }
-  }
 
   return (
     <div className="bg-white">
@@ -118,10 +76,10 @@ export default function HomePage() {
             {/* Left — text + buttons */}
             <div className="flex-1 hero-mobile-full text-center lg:text-left">
               <h1 className="text-[32px] sm:text-[40px] lg:text-[48px] font-extrabold leading-[1.08] tracking-tight text-text-primary mb-4 sm:mb-5">
-                Агентская закупка электроники для&nbsp;бизнеса
+                Станьте пунктом выдачи электроники TechAgent
               </h1>
               <p className="text-[15px] sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
-                Закупаем технику Apple, Samsung, Xiaomi и&nbsp;другие бренды для розничных магазинов. Комиссия всего&nbsp;3%&nbsp;— прозрачно и&nbsp;легально
+                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ОсОО «ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
               </p>
 
               {/* PHONE mockup — MOBILE ONLY, before buttons */}
@@ -133,28 +91,28 @@ export default function HomePage() {
                       <svg width="10" height="10" viewBox="0 0 24 24" fill="white"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
                     </div>
                     <span className="text-[12px] font-bold"><span className="text-red-600">Tech</span><span className="text-primary">Agent</span></span>
-                    <span className="ml-auto text-[10px] text-gray-400">Личный кабинет</span>
+                    <span className="ml-auto text-[10px] text-gray-400">Пример кабинета · демо</span>
                   </div>
                   {/* Stats */}
                   <div className="p-3 grid grid-cols-3 gap-2">
                     <div className="bg-bg-section rounded-xl p-2.5">
                       <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Заказов</div>
-                      <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">24</div>
+                      <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">12</div>
                     </div>
                     <div className="bg-bg-section rounded-xl p-2.5">
-                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Оборот</div>
-                      <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">1.8M</div>
+                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Ждут выдачи</div>
+                      <div className="text-[18px] font-extrabold text-gray-800 leading-none mt-0.5">3</div>
                     </div>
                     <div className="bg-bg-section rounded-xl p-2.5">
-                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Ставка</div>
-                      <div className="text-[18px] font-extrabold text-primary leading-none mt-0.5">3%</div>
+                      <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider">Выдано</div>
+                      <div className="text-[18px] font-extrabold text-primary leading-none mt-0.5">8</div>
                     </div>
                   </div>
                   {/* Orders */}
                   <div className="px-3 pb-3">
                     {[
                       { item: 'iPhone 16 Pro Max', sum: '169 900 ₽', status: 'В пути', sColor: 'text-blue-600' },
-                      { item: 'MacBook Air M4', sum: '139 900 ₽', status: 'Доставлен', sColor: 'text-green-600' },
+                      { item: 'MacBook Air M4', sum: '139 900 ₽', status: 'В пункте выдачи', sColor: 'text-green-600' },
                     ].map((o, i) => (
                       <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50 last:border-0">
                         <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-[12px] font-bold text-gray-300">{o.item[0]}</div>
@@ -171,7 +129,7 @@ export default function HomePage() {
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
                 <Link to="/register" className="btn-primary inline-flex items-center justify-center gap-2 px-8 py-4 text-[15px] font-semibold no-underline">
-                  Начать работу
+                  Стать партнёром
                 </Link>
                 <a href="#how" className="btn-blue inline-flex items-center justify-center gap-2 px-8 py-4 text-[15px] font-semibold no-underline rounded-[0.875rem]">
                   Как это работает
@@ -194,6 +152,7 @@ export default function HomePage() {
                     <div className="flex-1 mx-3 px-3 py-1 bg-white rounded-md text-[10px] text-gray-400 font-mono border border-gray-100">
                       techagent.pro/dashboard
                     </div>
+                    <span className="text-[9px] text-gray-400 font-medium">Пример · демо</span>
                   </div>
                   {/* Dashboard with sidebar */}
                   <div className="flex" style={{ height: 360 }}>
@@ -218,10 +177,10 @@ export default function HomePage() {
                         </div>
                       ))}
                       <div className="mt-auto flex items-center gap-1.5 px-1 pt-2 border-t border-gray-50">
-                        <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-bold text-primary">ДК</div>
+                        <div className="w-5 h-5 rounded-md bg-primary/10 flex items-center justify-center text-[8px] font-bold text-primary">Д</div>
                         <div>
-                          <div className="text-[8px] font-semibold text-gray-700">Партнёр Кутуков</div>
-                          <div className="text-[7px] text-gray-400">demo@techagent.pro</div>
+                          <div className="text-[8px] font-semibold text-gray-700">Демо-партнёр</div>
+                          <div className="text-[7px] text-gray-400">пункт выдачи</div>
                         </div>
                       </div>
                     </div>
@@ -235,18 +194,15 @@ export default function HomePage() {
                       <div className="grid grid-cols-3 gap-2 mb-3">
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
                           <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Заказов</div>
-                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">24</div>
-                          <div className="text-[8px] text-accent font-semibold mt-0.5">+12%</div>
+                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">12</div>
                         </div>
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Оборот</div>
-                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">1.8M</div>
-                          <div className="text-[8px] text-accent font-semibold mt-0.5">+8%</div>
+                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Ждут выдачи</div>
+                          <div className="text-[18px] font-extrabold text-gray-800 leading-none">3</div>
                         </div>
                         <div className="bg-white rounded-xl p-2 border border-gray-100">
-                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Комиссия</div>
-                          <div className="text-[18px] font-extrabold text-primary leading-none">3%</div>
-                          <div className="text-[8px] text-gray-400 font-medium mt-0.5">фикс.</div>
+                          <div className="text-[8px] text-gray-400 font-medium uppercase tracking-wider mb-0.5">Выдано</div>
+                          <div className="text-[18px] font-extrabold text-primary leading-none">8</div>
                         </div>
                       </div>
                       {/* Orders table */}
@@ -258,8 +214,8 @@ export default function HomePage() {
                         {[
                           { id: '#1847', item: 'iPhone 16 Pro Max', sum: '169 900 ₽', status: 'В пути', color: 'text-blue-600 bg-blue-50' },
                           { id: '#1846', item: 'Galaxy S25 Ultra', sum: '149 900 ₽', status: 'Оплачен', color: 'text-amber-600 bg-amber-50' },
-                          { id: '#1845', item: 'MacBook Air M4', sum: '139 900 ₽', status: 'Доставлен', color: 'text-green-600 bg-green-50' },
-                          { id: '#1844', item: 'AirPods Pro 2', sum: '24 990 ₽', status: 'Доставлен', color: 'text-green-600 bg-green-50' },
+                          { id: '#1845', item: 'MacBook Air M4', sum: '139 900 ₽', status: 'В пункте выдачи', color: 'text-green-600 bg-green-50' },
+                          { id: '#1844', item: 'AirPods Pro 2', sum: '24 990 ₽', status: 'Выдан', color: 'text-green-600 bg-green-50' },
                         ].map((o, i) => (
                           <div key={i} className="flex items-center px-3 py-1.5 border-b border-gray-50/80 last:border-0">
                             <span className="text-[10px] font-mono text-gray-400 w-[40px]">{o.id}</span>
@@ -286,13 +242,9 @@ export default function HomePage() {
 
         {/* ===== FEATURES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="features">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ПРЕИМУЩЕСТВА</div>
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Всё для вашего бизнеса
+          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+            Кто продаёт, кто платит, кто выдаёт
           </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Прозрачная комиссия, легальная схема и&nbsp;быстрая доставка
-          </p>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             {features.map((f) => (
@@ -309,13 +261,9 @@ export default function HomePage() {
 
         {/* ===== HOW IT WORKS ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="how">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ПРОЦЕСС</div>
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
+          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
             Как это работает
           </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Четыре простых шага от заказа до товара на вашей полке
-          </p>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
             {steps.map((s, i) => (
@@ -333,129 +281,49 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ===== CALCULATOR ===== */}
-        <div className="pt-14 sm:pt-24 pb-4" id="calc">
-          <div className="bg-bg-dark rounded-3xl p-8 sm:p-12 lg:p-16 flex flex-col lg:flex-row gap-12 lg:gap-16 relative overflow-hidden">
-            {/* Glow */}
+        {/* ===== REWARD ===== */}
+        <div className="pt-14 sm:pt-24 pb-4" id="reward">
+          <div className="bg-bg-dark rounded-3xl p-8 sm:p-12 lg:p-16 relative overflow-hidden">
             <div className="absolute -top-24 -right-24 w-80 h-80 bg-primary/20 rounded-full blur-3xl pointer-events-none" />
-
-            <div className="flex-1 relative z-10">
-              <div className="font-mono text-xs font-semibold tracking-widest mb-3" style={{ color: '#8FA9FF' }}>/ КАЛЬКУЛЯТОР</div>
-              <h2 className="text-[28px] sm:text-[36px] font-extrabold text-white tracking-tight leading-tight mb-3">
-                Рассчитайте стоимость за&nbsp;секунду
+            <div className="relative z-10 max-w-2xl">
+              <h2 className="text-[28px] sm:text-[36px] font-extrabold text-white tracking-tight leading-tight mb-4">
+                Вознаграждение партнёра
               </h2>
-              <p className="text-white/50 text-[15px] mb-8 leading-relaxed">
-                Введите цену товара — мы покажем итоговую сумму с&nbsp;комиссией. Просто, как дважды два
+              <p className="text-white/70 text-[16px] leading-relaxed mb-6">
+                ТехЭйджент платит вознаграждение за каждый выданный заказ: {'{{PARTNER_REWARD}}'}.
               </p>
-
-              {/* Timeline */}
-              <div className="flex gap-2">
+              <ul className="flex flex-col gap-3 pl-0 list-none m-0">
                 {[
-                  { label: 'Сегодня', val: formatNum(total) + ' ₽', active: true },
-                  { label: 'Выкуп', val: formatNum(costNum) + ' ₽', active: false },
-                  { label: '5–7 дней', val: 'Доставка', active: false },
-                  { label: 'Готово', val: 'Товар у вас', active: false, green: true },
+                  'Начисляется после выдачи товара покупателю и загрузки подписанного акта приёма-передачи.',
+                  'По итогам месяца в кабинете формируются отчёт агента и акт.',
+                  'Выплата — на банковский счёт, указанный в анкете.',
                 ].map((t, i) => (
-                  <div key={i} className="flex-1 text-center">
-                    <div className={`h-1 rounded-full mb-2 ${t.active ? 'bg-primary-light' : t.green ? 'bg-accent' : 'bg-white/10'}`} />
-                    <div className="text-[10px] text-white/35 mb-0.5">{t.label}</div>
-                    <div className="text-[13px] font-semibold text-white">{t.val}</div>
-                  </div>
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-white/10 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">✓</span>
+                    <span className="text-[14px] text-white/60 leading-relaxed">{t}</span>
+                  </li>
                 ))}
-              </div>
-            </div>
-
-            {/* Calculator widget */}
-            <div className="lg:w-[400px] bg-white/[0.06] border border-white/10 rounded-2xl p-7 relative z-10">
-              <label className="text-[12px] text-white/40 mb-2 block">Стоимость товара</label>
-              <input
-                type="number"
-                value={calcCost}
-                onChange={(e) => handleCalcChange(e.target.value)}
-                className="w-full px-4 py-3.5 rounded-xl bg-white/[0.05] border border-white/10 text-white text-2xl font-bold outline-none focus:border-primary transition-colors mb-6"
-                placeholder="75000"
-              />
-
-              <div className="flex flex-col gap-3">
-                <div className="flex justify-between py-2.5 border-b border-white/[0.06]">
-                  <span className="text-[13px] text-white/50">Товар</span>
-                  <span className="text-[15px] font-semibold text-white">{formatPrice(costNum)}</span>
-                </div>
-                <div className="flex justify-between py-2.5 border-b border-white/[0.06]">
-                  <span className="text-[13px] text-white/50">Комиссия 3%</span>
-                  <span className="text-[15px] font-semibold text-white">{formatPrice(commission)}</span>
-                </div>
-                <div className="flex justify-between pt-3">
-                  <span className="text-[13px] text-white/50">Итого к оплате</span>
-                  <span className="font-display text-2xl font-extrabold text-primary-light">{formatPrice(total)}</span>
-                </div>
-              </div>
+              </ul>
             </div>
           </div>
         </div>
 
-        {/* ===== PROMO CARDS ===== */}
-        <div className="pt-14 sm:pt-24 pb-4" id="plans">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ТАРИФЫ</div>
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Выберите формат работы
-          </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Два варианта сотрудничества — для старта и&nbsp;для объёмов
-          </p>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            {/* Standard */}
-            <div className="bg-bg-hero rounded-3xl p-8 sm:p-10">
-              <span className="inline-flex px-3 py-1 rounded-full text-[12px] font-semibold bg-primary/10 text-primary border border-primary/20 mb-5">
-                Для старта
-              </span>
-              <h3 className="text-2xl font-extrabold text-text-primary tracking-tight mb-2">Стандарт</h3>
-              <p className="text-[14px] text-text-muted mb-6">Для партнёров с небольшим потоком заказов</p>
-
-              <div className="flex flex-col gap-4 mb-8">
-                {standardFeatures.map((f, i) => (
-                  <div key={i} className={`flex items-center gap-3 ${i < standardFeatures.length - 1 ? 'pb-4 border-b border-black/[0.05]' : ''}`}>
-                    <div className="w-10 h-10 rounded-xl bg-primary/8 flex items-center justify-center shrink-0">
-                      {f.icon}
-                    </div>
-                    <div>
-                      <div className="text-[14px] font-semibold text-text-primary">{f.title}</div>
-                      <div className="text-[12px] text-text-muted">{f.sub}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/register" className="btn-primary w-full inline-flex items-center justify-center py-4 text-[15px] font-semibold no-underline rounded-2xl">
-                Начать работу
+        {/* ===== BUYERS ===== */}
+        <div className="pt-14 sm:pt-24 pb-4" id="buyers">
+          <div className="bg-bg-section rounded-3xl p-8 sm:p-12">
+            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight text-text-primary mb-4">
+              Покупателям
+            </h2>
+            <p className="text-[15px] text-text-secondary leading-relaxed max-w-3xl mb-6">
+              Товар продаёт ОсОО «ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
+              напрямую продавцу, товар выдаётся в том же пункте. Деньги за товар в пункте выдачи не принимают.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3">
+              <Link to="/catalog" className="btn-primary inline-flex items-center justify-center gap-2 px-6 py-3 text-[14px] font-semibold no-underline">
+                Каталог и цены <ArrowRight size={14} />
               </Link>
-            </div>
-
-            {/* Pro */}
-            <div className="bg-bg-dark rounded-3xl p-8 sm:p-10 text-white">
-              <span className="inline-flex px-3 py-1 rounded-full text-[12px] font-semibold bg-white/10 text-white/80 border border-white/15 mb-5">
-                Для объёмов
-              </span>
-              <h3 className="text-2xl font-extrabold tracking-tight mb-2">Pro</h3>
-              <p className="text-[14px] text-white/40 mb-6">Для крупных партнёров с высоким оборотом</p>
-
-              <div className="flex flex-col gap-4 mb-8">
-                {proFeatures.map((f, i) => (
-                  <div key={i} className={`flex items-center gap-3 ${i < proFeatures.length - 1 ? 'pb-4 border-b border-white/[0.06]' : ''}`}>
-                    <div className="w-10 h-10 rounded-xl bg-white/[0.06] flex items-center justify-center shrink-0">
-                      {f.icon}
-                    </div>
-                    <div>
-                      <div className="text-[14px] font-semibold">{f.title}</div>
-                      <div className="text-[12px] text-white/40">{f.sub}</div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <Link to="/register" className="btn-blue w-full inline-flex items-center justify-center py-4 text-[15px] font-semibold no-underline rounded-2xl">
-                Подключить Pro
+              <Link to="/legal/sale-offer" className="inline-flex items-center justify-center px-6 py-3 rounded-[0.875rem] text-[14px] font-semibold no-underline border border-border text-text-primary hover:border-primary hover:text-primary transition-colors">
+                Условия покупки
               </Link>
             </div>
           </div>
@@ -463,12 +331,11 @@ export default function HomePage() {
 
         {/* ===== CATEGORIES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="categories">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ КАТАЛОГ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Популярные категории товаров
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-12 text-[16px]">
-            Работаем со всеми топовыми брендами электроники
+            Цены в каталоге — итоговые для покупателя
           </p>
 
           <div className="flex flex-wrap gap-2 justify-center mb-8">
@@ -506,42 +373,8 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* ===== REVIEWS ===== */}
-        <div className="pt-14 sm:pt-24 pb-4">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ОТЗЫВЫ</div>
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
-            Отзывы партнёров
-          </h2>
-          <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Что говорят партнёры, которые работают с&nbsp;нами
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {reviews.map((r, i) => (
-              <div key={i} className="card-glass p-7">
-                <div className="flex items-center gap-1 mb-5">
-                  {Array.from({ length: 5 }).map((_, si) => (
-                    <Star key={si} size={14} className={si < r.rating ? 'text-amber-400 fill-amber-400' : 'text-gray-200'} />
-                  ))}
-                </div>
-                <p className="text-text-secondary text-[14px] leading-relaxed mb-6">«{r.text}»</p>
-                <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-primary/10 text-primary flex items-center justify-center text-xs font-bold shrink-0">
-                    {r.name.split(' ').map(n => n[0]).join('')}
-                  </div>
-                  <div>
-                    <p className="font-medium text-[13px] text-text-primary">{r.name}</p>
-                    <p className="text-text-muted text-[12px]">{r.company}, {r.city}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
         {/* ===== FAQ ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="faq">
-          <div className="text-center font-mono text-xs font-semibold text-primary tracking-widest mb-3">/ ВОПРОСЫ</div>
           <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
             Отвечаем на&nbsp;вопросы
           </h2>
@@ -551,11 +384,11 @@ export default function HomePage() {
         {/* ===== CTA ===== */}
         <div className="pt-14 sm:pt-24 pb-4">
           <div className="bg-primary rounded-3xl py-12 sm:py-16 px-6 sm:px-8 text-center text-white">
-            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Готовы начать?</h2>
-            <p className="text-white/60 text-[15px] mb-8">Зарегистрируйтесь за 2 минуты и создайте первый заказ уже сегодня</p>
+            <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Станьте партнёром TechAgent</h2>
+            <p className="text-white/60 text-[15px] mb-8">Заполните анкету — после проверки сможете оформлять заказы</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
-                Зарегистрироваться <ArrowRight size={16} />
+                Заполнить анкету <ArrowRight size={16} />
               </Link>
               <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" onClick={() => reachGoal('support_click')} className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
                 Написать в поддержку

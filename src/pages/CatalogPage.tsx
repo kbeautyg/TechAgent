@@ -4,7 +4,8 @@ import { products } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
 import { translateColor, translateStorage, translateSpecValue, translateProductName } from '../utils/translate'
 import { categoryLandings } from '../seo/categories'
-import { pluralRu } from '../seo/site'
+import { pluralRu, LEGAL_NAME } from '../seo/site'
+import PurchaseTerms from '../components/catalog/PurchaseTerms'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -330,10 +331,11 @@ export default function CatalogPage() {
       {/* ── SEO-шапка каталога ── */}
       <header className="catalog-header max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-1">
         <h1 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight text-text-primary mb-2">
-          Каталог электроники для бизнеса
+          Каталог электроники
         </h1>
         <p className="text-[14px] text-text-muted max-w-2xl mb-4">
-          {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])} под заказ по агентской схеме: комиссия 3%, доставка 5–7 дней. Цены указаны без комиссии.
+          {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])}, цены итоговые. Продавец — {LEGAL_NAME}, оплата через СБП, получение в пункте выдачи Партнёра TechAgent.{' '}
+          <a href="#kak-kupit" className="text-primary font-semibold no-underline">Как купить</a>
         </p>
         <nav aria-label="Категории каталога" className="flex flex-wrap gap-2 pb-2">
           {categoryLandings.map(c => (
@@ -472,6 +474,19 @@ export default function CatalogPage() {
           )}
         </div>
       </main>
+
+      {/* ── Условия покупки ── */}
+      <section id="kak-kupit" className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16 scroll-mt-24">
+        <div className="max-w-3xl">
+          <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">Как купить</h2>
+          <PurchaseTerms />
+          <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
+            Есть розничная точка?{' '}
+            <Link to="/register" className="text-primary font-semibold">Станьте Партнёром TechAgent</Link>
+            : оформляйте заказы покупателей и выдавайте товар в своей точке. Вознаграждение платит ТехЭйджент.
+          </p>
+        </div>
+      </section>
 
       {/* ═══ Mobile Category Popup (Bottom Sheet) ═══ */}
       {showCatPopup && (

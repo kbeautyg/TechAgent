@@ -7,12 +7,22 @@ export const SITE_URL = 'https://techagent.pro'
 export const SITE_NAME = 'TechAgent'
 export const LEGAL_NAME = 'ОсОО «ТехЭйджент»'
 
-/** Единая цифра комиссии по всему сайту (совпадает с COMMISSION_RATE в utils/calculate.ts) */
-export const COMMISSION_TEXT = '3%'
-
-export const DEFAULT_TITLE = 'TechAgent — агентская закупка электроники для бизнеса'
+/** Позиционирование сайта — одно на title, описание, OG и index.html */
+export const DEFAULT_TITLE = 'TechAgent — электроника с получением в пунктах выдачи партнёров'
 export const DEFAULT_DESCRIPTION =
-  'Агентская закупка электроники для розничных магазинов и ИП: Apple, Samsung, Xiaomi, Dyson и другие бренды. Комиссия 3%, доставка 5–7 дней, полный документооборот.'
+  'Смартфоны, ноутбуки, планшеты и техника Apple, Samsung, Xiaomi, Dyson. Продавец — ОсОО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.'
+
+/** Публичная оферта купли-продажи для покупателей */
+export const SALE_OFFER_PATH = '/legal/sale-offer'
+
+/** Срок доставки — единственная цифра, которая уже была на сайте; других сроков не писать */
+export const DELIVERY_TERM = 'ориентировочно 5–7 рабочих дней с момента выкупа у поставщика'
+
+/**
+ * Где покупателю оформить заказ. Списка пунктов выдачи пока нет —
+ * маркер заменить на адреса или ссылку, когда появятся данные.
+ */
+export const PICKUP_POINTS = '{{PICKUP_POINTS}}'
 
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/og-default.png`
 

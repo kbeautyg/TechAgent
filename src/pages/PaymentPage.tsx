@@ -1,34 +1,24 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Shield, Check, Phone, ChevronDown } from 'lucide-react'
+import { Shield, Check, Phone, ChevronDown, MapPin } from 'lucide-react'
 import { mockOrders, mockUsers, saveOrders } from '../data/mock'
+import { mockDocuments } from '../data/documents'
 import { formatPrice, formatDateTime } from '../utils/calculate'
 
-const PAYMENT_NOTICE = `УВЕДОМЛЕНИЕ ОБ УСЛОВИЯХ ПРИЁМА ОПЛАТЫ
-через платформу techagent.pro
+const SELLER = {
+  name: 'ОсОО «ТехЭйджент»',
+  details: 'ИНН 00403202610304 · рег. № 326302-3301-ООО',
+  address: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8',
+}
 
-Оплачивая заказ через данную страницу, вы подтверждаете, что ознакомлены и согласны со следующим:
-
-1. Продавцом товара, который вы приобретаете, является партнёр платформы TechAgent (далее — «Партнёр»), у которого вы делаете покупку. Именно Партнёр является стороной сделки купли-продажи товара с вами.
-
-2. TechAgent выступает техническим агентом Партнёра: принимает оплату по поручению Партнёра и организует закупку товара за рубежом в интересах Партнёра.
-
-3. TechAgent не является продавцом товара, не устанавливает его цену и не несёт ответственности за качество, комплектность, соответствие заявленным характеристикам, сроки и условия доставки товара.
-
-4. По всем вопросам, связанным с товаром — гарантией, обменом, возвратом, качеством, комплектацией, кассовым чеком, — вы обращаетесь непосредственно к Партнёру, у которого приобрели товар.
-
-5. Оплата, произведённая вами через данную страницу, засчитывается в счёт расчётов по вашей сделке с Партнёром.
-
-6. Обработка ваших персональных данных, указанных при оплате, осуществляется в соответствии с Политикой обработки персональных данных, размещённой на сайте techagent.pro.
-
-Продолжая оплату, вы подтверждаете согласие с условиями настоящего уведомления.`
+const PAYMENT_TERMS = mockDocuments.find(d => d.type === 'PAYMENT')?.content ?? ''
 
 export default function PaymentPage() {
   const { paymentId } = useParams()
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
   const [agreed, setAgreed] = useState(false)
-  const [noticeOpen, setNoticeOpen] = useState(false)
+  const [termsOpen, setTermsOpen] = useState(false)
 
   const order = mockOrders.find((o) => o.paymentId === paymentId)
 
@@ -42,53 +32,82 @@ export default function PaymentPage() {
     )
   }
 
-  const seller = mockUsers.find((u) => u.id === order.userId)
-  const amountToPay = order.isTradeIn ? (order.clientPayment || 0) : order.totalCost
+  const point = mockUsers.find((u) => u.id === order.userId)
   const alreadyPaid = order.paymentStatus === 'PAID'
 
   const handlePay = () => {
     setPaying(true)
     setTimeout(() => {
+      const now = new Date().toISOString()
+      order.saleOfferAcceptedAt = now
       order.paymentStatus = 'PAID'
-      order.paidAt = new Date().toISOString()
+      order.paidAt = now
       order.status = 'PAID'
+      order.updatedAt = now
       saveOrders()
       setPaying(false)
       setPaid(true)
     }, 2000)
   }
 
+  const pointBlock = (
+    <div className="flex flex-col gap-1">
+      <p className="font-medium text-sm text-text-primary">{point?.companyName}</p>
+      {point?.pointAddress && (
+        <p className="text-text-muted text-sm flex items-start gap-1">
+          <MapPin size={14} className="mt-0.5 flex-shrink-0" />
+          {point.pointAddress}
+        </p>
+      )}
+      {point?.phone && (
+        <p className="text-text-muted text-sm flex items-center gap-1">
+          <Phone size={14} />
+          {point.phone}
+        </p>
+      )}
+    </div>
+  )
+
   if (alreadyPaid || paid) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-        <div className="card-glass p-8 text-center max-w-md w-full">
-          <div className="w-16 h-16 bg-success/15 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check size={32} className="text-success" />
-          </div>
-          <h1 className="text-2xl font-bold text-text-primary mb-2">Оплата успешна!</h1>
-          <p className="text-text-muted mb-6">Спасибо за оплату</p>
-
-          <div className="bg-bg-light border border-border rounded-lg p-4 space-y-2 text-sm mb-6">
-            <div className="flex justify-between">
-              <span className="text-text-muted">Сумма</span>
-              <span className="font-bold text-text-primary">{formatPrice(amountToPay)}</span>
+        <div className="card-glass p-8 max-w-md w-full">
+          <div className="text-center">
+            <div className="w-16 h-16 bg-success/15 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Check size={32} className="text-success" />
             </div>
-            <div className="flex justify-between">
+            <h1 className="text-2xl font-bold text-text-primary mb-6">Оплата получена</h1>
+          </div>
+
+          <div className="bg-bg-light border border-border rounded-lg p-4 space-y-2 text-sm mb-4">
+            <div className="flex justify-between gap-4">
+              <span className="text-text-muted">Заказ</span>
+              <span className="text-text-primary">{order.orderNumber}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-text-muted">Товар</span>
+              <span className="text-text-primary text-right">{order.productName}</span>
+            </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-text-muted">Сумма</span>
+              <span className="font-bold text-text-primary">{formatPrice(order.price)}</span>
+            </div>
+            <div className="flex justify-between gap-4">
               <span className="text-text-muted">Дата</span>
               <span className="text-text-secondary">{formatDateTime(order.paidAt || new Date().toISOString())}</span>
             </div>
+            <div className="flex justify-between gap-4">
+              <span className="text-text-muted">Продавец</span>
+              <span className="text-text-secondary">{SELLER.name}</span>
+            </div>
           </div>
 
-          <div className="bg-bg-light border border-border rounded-lg p-4 text-sm text-left">
-            <p className="text-text-muted mb-1">Ваш товар будет готов к выдаче через 5-7 дней.</p>
-            <p className="text-text-muted mb-2">Забрать можно в магазине:</p>
-            <p className="font-medium text-text-primary">{seller?.companyName}</p>
-            {seller?.phone && (
-              <p className="flex items-center gap-1 text-text-muted mt-1">
-                <Phone size={14} />
-                {seller.phone}
-              </p>
-            )}
+          <div className="bg-bg-light border border-border rounded-lg p-4 text-sm">
+            <p className="text-text-muted mb-2">
+              Товар будет доставлен в пункт выдачи — ориентировочно за 5–7 рабочих дней с момента выкупа у поставщика.
+              Когда он прибудет, пункт выдачи сообщит вам. Возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
+            </p>
+            {pointBlock}
           </div>
         </div>
       </div>
@@ -105,60 +124,49 @@ export default function PaymentPage() {
 
         <div className="bg-bg-light border border-border rounded-lg p-5 mb-6">
           <p className="font-bold text-text-primary mb-3">{order.productName}</p>
-          <div className="space-y-2 text-sm">
-            <div className="flex justify-between">
-              <span className="text-text-muted">Товар</span>
-              <span className="text-text-primary">{formatPrice(order.productCost)}</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="text-text-muted">Услуга выкупа</span>
-              <span className="text-text-primary">{formatPrice(order.commission)}</span>
-            </div>
-            {order.isTradeIn && (
-              <div className="flex justify-between">
-                <span className="text-text-muted">Trade-in ({order.oldProduct})</span>
-                <span className="text-emerald-400">-{formatPrice(order.oldValue || 0)}</span>
-              </div>
-            )}
-            <div className="border-t border-border pt-2 flex justify-between font-bold text-lg">
-              <span className="text-text-primary">К оплате</span>
-              <span className="text-primary">{formatPrice(amountToPay)}</span>
-            </div>
+          <div className="border-t border-border pt-3 flex justify-between items-baseline font-bold text-lg">
+            <span className="text-text-primary">К оплате</span>
+            <span className="text-primary">{formatPrice(order.price)}</span>
           </div>
+          <p className="text-xs text-text-muted mt-2">Доставка до пункта выдачи входит в цену.</p>
+        </div>
+
+        <div className="mb-5">
+          <p className="text-sm text-text-muted mb-1">Продавец</p>
+          <p className="font-medium text-sm text-text-primary">{SELLER.name}</p>
+          <p className="text-text-muted text-xs mt-0.5">{SELLER.details}</p>
+          <p className="text-text-muted text-xs">{SELLER.address}</p>
         </div>
 
         <div className="mb-6">
-          <p className="text-sm text-text-muted mb-2">Магазин:</p>
-          <p className="font-medium text-sm text-text-primary">{seller?.companyName}</p>
-          {seller?.phone && (
-            <p className="text-text-muted text-sm flex items-center gap-1 mt-0.5">
-              <Phone size={14} />
-              {seller.phone}
-            </p>
-          )}
+          <p className="text-sm text-text-muted mb-1">Пункт выдачи — агент продавца</p>
+          {pointBlock}
         </div>
 
         <div className="border-t border-border pt-6 mb-6">
-          <p className="text-sm font-medium text-text-primary mb-3">Способ оплаты:</p>
+          <p className="text-sm font-medium text-text-primary mb-3">Способ оплаты</p>
           <label className="flex items-center gap-3 p-3 rounded-lg border border-primary/30 bg-primary/10 cursor-pointer">
             <input type="radio" checked readOnly className="accent-primary" />
             <span className="font-medium text-sm text-text-primary">СБП (Система быстрых платежей)</span>
           </label>
+          <p className="text-xs text-text-muted mt-2">
+            Деньги поступают напрямую {SELLER.name}. Не передавайте деньги за товар в пункте выдачи.
+          </p>
         </div>
 
         <div className="mb-4">
           <button
             type="button"
-            onClick={() => setNoticeOpen(v => !v)}
+            onClick={() => setTermsOpen(v => !v)}
             className="w-full flex items-center justify-between gap-2 text-left bg-transparent border-none cursor-pointer p-0 mb-2"
           >
-            <span className="text-xs font-medium text-text-muted">Уведомление об условиях приёма оплаты</span>
-            <ChevronDown size={14} className={`text-text-muted transition-transform flex-shrink-0 ${noticeOpen ? 'rotate-180' : ''}`} />
+            <span className="text-xs font-medium text-text-muted">Условия оплаты и возврата</span>
+            <ChevronDown size={14} className={`text-text-muted transition-transform flex-shrink-0 ${termsOpen ? 'rotate-180' : ''}`} />
           </button>
-          {noticeOpen && (
+          {termsOpen && (
             <div className="bg-bg-light border border-border rounded-lg p-3 mb-3 max-h-48 overflow-y-auto">
               <pre className="whitespace-pre-wrap font-sans text-xs text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
-                {PAYMENT_NOTICE}
+                {PAYMENT_TERMS}
               </pre>
             </div>
           )}
@@ -170,14 +178,14 @@ export default function PaymentPage() {
               className="accent-primary mt-0.5 flex-shrink-0"
             />
             <span className="text-xs text-text-muted leading-relaxed">
-              Я ознакомлен(а) и согласен(на) с{' '}
-              <Link to="/legal/payment" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                Условиями оплаты и возврата
+              Принимаю условия{' '}
+              <Link to="/legal/sale-offer" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                публичной оферты купли-продажи
               </Link>{' '}
-              и{' '}
+              {SELLER.name} и даю согласие на обработку персональных данных по{' '}
               <Link to="/legal/privacy" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
-                Политикой конфиденциальности
-              </Link>. Продавцом товара является Партнёр, указанный выше; TechAgent принимает оплату как технический агент по его поручению.
+                Политике конфиденциальности
+              </Link>.
             </span>
           </label>
         </div>
@@ -187,12 +195,12 @@ export default function PaymentPage() {
           disabled={paying || !agreed}
           className="w-full bg-success hover:bg-success-dark text-white py-4 rounded-xl font-bold text-lg transition-colors border-none cursor-pointer disabled:opacity-50"
         >
-          {paying ? 'Обработка...' : `Оплатить ${formatPrice(amountToPay)}`}
+          {paying ? 'Обработка...' : `Оплатить ${formatPrice(order.price)}`}
         </button>
 
         <div className="flex items-center justify-center gap-1.5 mt-4 text-text-muted text-xs">
           <Shield size={14} />
-          Безопасная оплата
+          Оплата через СБП в приложении вашего банка
         </div>
       </div>
     </div>
