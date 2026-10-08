@@ -154,8 +154,7 @@ export default function PaymentPage() {
             ) : (
               <p className="text-text-muted mb-2">
                 Товар будет доставлен в пункт выдачи не позднее{' '}
-                <span className="whitespace-nowrap">14&nbsp;дней</span> с даты оплаты (обычно{' '}
-                <span className="whitespace-nowrap">5–7&nbsp;рабочих дней</span> с момента выкупа у поставщика). Когда он
+                <span className="whitespace-nowrap">14&nbsp;дней</span> с даты оплаты. Когда он
                 прибудет, пункт выдачи сообщит вам; товар хранится там 5&nbsp;дней. При получении назовите номер заказа и
                 возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
               </p>

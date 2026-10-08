@@ -214,7 +214,7 @@ export function resolveMeta(pathname: string): PageMeta {
     return baseMeta({
       title: 'О TechAgent — продавец ОсОО «ТехЭйджент» и пункты выдачи партнёров',
       description:
-        'Как устроен TechAgent: ОсОО «ТехЭйджент» покупает товар у поставщика и продаёт его покупателю, партнёры оформляют заказы и выдают товар в своих точках.',
+        'Как устроен TechAgent: ОсОО «ТехЭйджент» продаёт электронику покупателям, партнёры оформляют заказы и выдают товар в своих точках.',
       canonical: `${SITE_URL}/about`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'О платформе' }])],
     })

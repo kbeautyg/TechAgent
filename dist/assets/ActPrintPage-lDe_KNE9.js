@@ -1,4 +1,4 @@
-import{f as j,a1 as f,a as u,u as N,g as w,m as y,r as p,j as e,N as v,b as h,i as g,k}from"./index-YmdybBdu.js";const A="ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО (Кыргызская Республика), ИНН 9909766511, КПП 771387001 (Российская Федерация), адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8",E=["Экземпляр Покупателя","Экземпляр Продавца"],x=`
+import{f as j,a1 as f,a as u,u as N,g as w,m as y,r as p,j as e,N as v,b as h,i as g,k}from"./index-BhV4GaLA.js";const A="ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО (Кыргызская Республика), ИНН 9909766511, КПП 771387001 (Российская Федерация), адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8",E=["Экземпляр Покупателя","Экземпляр Продавца"],x=`
 .act-root { min-height: 100vh; background: #eef0f3; padding: 16px 12px 40px; }
 .act-toolbar { max-width: 210mm; margin: 0 auto 16px; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .act-sheet { background: #fff; color: #111; max-width: 210mm; margin: 0 auto 20px; padding: 18mm 16mm;
