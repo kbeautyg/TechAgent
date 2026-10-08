@@ -97,7 +97,7 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs font-mono">
-            ОсОО&nbsp;«ТехЭйджент» · ИНН&nbsp;00403202610304 · Рег.&nbsp;№&nbsp;326302-3301-ООО
+            ОсОО&nbsp;«ТехЭйджент» · ИНН&nbsp;9909766511 · КПП&nbsp;771387001 · Рег.&nbsp;№&nbsp;326302-3301-ООО
           </p>
         </div>
       </div>
