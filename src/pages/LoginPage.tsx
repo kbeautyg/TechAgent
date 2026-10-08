@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { LogIn } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
-import { DEMO_MODE } from '../data/mock'
+import { startDemo } from '../utils/demo'
 import { PreviewNotice } from '../components/layout/DashboardLayout'
 import type { User } from '../types'
 
@@ -13,12 +13,6 @@ function afterLogin(user: User, from: unknown): string {
   if (typeof from !== 'string' || !from.startsWith('/') || from.startsWith('//')) return home
   return from === home || from.startsWith(`${home}/`) || from.startsWith(`${home}?`) ? from : home
 }
-
-/* Демо-учётки есть только в режиме разработки или в сборке с VITE_DEMO=1 */
-const DEMO_LOGINS = [
-  { email: 'demo@techagent.pro', title: 'Кабинет партнёра', note: 'анкета подтверждена' },
-  { email: 'admin@techagent.pro', title: 'Панель администратора', note: 'сотрудник ТехЭйджент' },
-]
 
 export default function LoginPage() {
   const { login, user } = useAuth()
@@ -126,24 +120,17 @@ export default function LoginPage() {
             </Link>
           </p>
 
-          {DEMO_MODE && (
-            <div className="mt-6 border-t border-border pt-5">
-              <p className="text-sm font-semibold text-text-secondary mb-3">Демо-доступ</p>
-              <div className="space-y-2">
-                {DEMO_LOGINS.map((d) => (
-                  <button
-                    key={d.email}
-                    type="button"
-                    onClick={() => { setEmail(d.email); setPassword('demo') }}
-                    className="w-full px-3 py-2.5 rounded-lg bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-left"
-                  >
-                    <p className="text-sm font-medium text-text-primary">{d.title}</p>
-                    <p className="text-xs text-text-muted">{d.email} · {d.note}</p>
-                  </button>
-                ))}
-              </div>
-            </div>
-          )}
+          {/* Тестовый вход: кабинет партнёра на демо-данных, только в этом браузере (utils/demo.ts) */}
+          <div className="mt-6 border-t border-border pt-5 text-center">
+            <button
+              type="button"
+              onClick={() => startDemo('partner')}
+              className="w-full px-4 py-2.5 rounded-xl bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-sm font-medium text-text-primary"
+            >
+              Тестовый демо-доступ
+            </button>
+            <p className="text-xs text-text-muted mt-2">Кабинет партнёра на демо-данных — без регистрации</p>
+          </div>
         </div>
       </div>
     </div>
