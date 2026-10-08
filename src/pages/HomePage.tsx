@@ -25,8 +25,10 @@ const steps = [
 ]
 
 /** Минимальная цена среди товаров, доступных к заказу: цифра на плитке всегда из каталога */
-function fromPrice(cat: string, brands: string[]): string {
-  const prices = products.filter((p) => p.inStock && p.category === cat && brands.includes(p.brand)).map((p) => p.price)
+function fromPrice(cat: string, brands: string[], exclude?: RegExp): string {
+  const prices = products
+    .filter((p) => p.inStock && p.category === cat && brands.includes(p.brand) && !(exclude && exclude.test(p.name)))
+    .map((p) => p.price)
   return prices.length ? `от ${formatPrice(Math.min(...prices))}` : ''
 }
 
@@ -39,7 +41,7 @@ const categories = [
   { icon: <IconHeadphones size={22} />, name: 'AirPods', price: fromPrice('Наушники', ['Apple']), to: q('Наушники', 'Apple') },
   { icon: <IconWatch size={22} />, name: 'Apple Watch', price: fromPrice('Часы', ['Apple']), to: q('Часы', 'Apple') },
   { icon: <IconSmartphone size={22} />, name: 'Xiaomi / Redmi', price: fromPrice('Смартфоны', ['Xiaomi']), to: q('Смартфоны', 'Xiaomi') },
-  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: fromPrice('Игровые консоли', ['Sony', 'Microsoft']), to: '/catalog/igrovye-konsoli' },
+  { icon: <IconGamepad size={22} />, name: 'PlayStation / Xbox', price: fromPrice('Игровые консоли', ['Sony', 'Microsoft'], /controller|dualsense/i), to: '/catalog/igrovye-konsoli' },
   { icon: <IconCamera size={22} />, name: 'DJI / GoPro', price: fromPrice('Камеры и дроны', ['DJI', 'GoPro']), to: '/catalog/kamery-i-drony' },
   { icon: <IconPlug size={22} />, name: 'Dyson', price: fromPrice('Для дома', ['Dyson']), to: q('Для дома', 'Dyson') },
 ]
@@ -90,7 +92,7 @@ export default function HomePage() {
               </p>
 
               {/* PHONE mockup — MOBILE ONLY, before buttons */}
-              <div className="lg:hidden flex justify-center mb-6">
+              <div className="lg:hidden flex justify-center mb-6" aria-hidden="true">
                 <div className="w-full bg-white rounded-2xl overflow-hidden shadow-xl border border-gray-200/60">
                   {/* Mini header */}
                   <div className="px-4 pt-3 pb-2 flex items-center gap-2 border-b border-gray-50">
@@ -145,7 +147,7 @@ export default function HomePage() {
             </div>
 
             {/* Right: LAPTOP mockup — DESKTOP ONLY */}
-            <div className="hidden lg:flex flex-1 justify-center self-center">
+            <div className="hidden lg:flex flex-1 justify-center self-center" aria-hidden="true">
               <div className="w-full max-w-[540px]">
                 {/* Laptop screen — same border-radius as buttons (0.875rem = 14px) */}
                 <div className="bg-white rounded-2xl overflow-hidden shadow-2xl border border-gray-200/60">

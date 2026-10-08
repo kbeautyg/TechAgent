@@ -63,6 +63,7 @@ export default function Footer() {
               <Link to="/legal" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Документы</Link>
               <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Агентский договор-оферта</Link>
               <Link to="/legal/privacy" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Конфиденциальность</Link>
+              <Link to="/legal/terms" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Пользовательское соглашение</Link>
             </div>
           </div>
 

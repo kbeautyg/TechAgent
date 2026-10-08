@@ -9,7 +9,6 @@
  *   register_submit — отправка формы регистрации
  *   login_submit    — вход в кабинет
  *   order_created   — создание заказа в ЛК
- *   calc_used       — расчёт в калькуляторе
  *   support_click   — клик по контакту поддержки
  */
 

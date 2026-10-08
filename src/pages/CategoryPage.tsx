@@ -87,9 +87,13 @@ export default function CategoryPage({ landing }: Props) {
                   <div className="product-img">
                     <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
                     {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
-                    <img src={imgUrl} alt={translateProductName(p.name)}
-                      width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
-                      className="product-real-img" loading={i < 4 ? 'eager' : 'lazy'} />
+                    {imgUrl ? (
+                      <img src={imgUrl} alt={translateProductName(p.name)}
+                        width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
+                        className="product-real-img" loading={i < 4 ? 'eager' : 'lazy'} />
+                    ) : (
+                      <div className="product-shape"><div className="product-shape-letter">{p.brand[0]}</div></div>
+                    )}
                   </div>
                   <div className="pcard-info">
                     <div className="pcard-brand">{p.brand}</div>

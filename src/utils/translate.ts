@@ -23,13 +23,67 @@ const specKeyRu: Record<string, string> = {
   gps: 'GPS', health: 'Здоровье', size: 'Размер', resolution: 'Разрешение',
   brightness: 'Яркость', speakers: 'Динамики', ports: 'Порты',
   sensor: 'Сенсор', video: 'Видео', stabilization: 'Стабилизация',
-  lens: 'Объектив', megapixels: 'Мегапиксели', max_flight_time: 'Полёт',
+  lens: 'Объектив', megapixels: 'Мегапиксели', max_flight_time: 'Время полёта',
   range: 'Дальность', power: 'Мощность', features: 'Функции',
   noisecancellation: 'Шумоподавление', spatial: 'Пространственный звук',
   charging: 'Зарядка', connector: 'Разъём', material: 'Материал',
   capacity: 'Ёмкость', speed: 'Скорость', interface: 'Интерфейс',
   refresh: 'Обновление', panel: 'Матрица', gpu: 'Видеокарта',
   keyboard: 'Клавиатура', cellular: 'Сотовая связь',
+  band: 'Ремешок', cpu: 'Процессор', coverage: 'Площадь покрытия', standard: 'Стандарт',
+  heat: 'Нагрев', vr: 'VR', transparency: 'Режим прозрачности', switches: 'Переключатели',
+  response: 'Отклик', model: 'Модель', length: 'Длина', gamepass: 'Game Pass', dolby: 'Dolby',
+  codec: 'Кодек', channels: 'Каналы', backlight: 'Подсветка', weight_capacity: 'Нагрузка',
+  water_resistant: 'Влагозащита', vibration: 'Вибрация', technology: 'Технология',
+  straightening: 'Выпрямление', steaming: 'Отпариватель', rotation: 'Поворот', protection: 'Защита',
+  programmable: 'Программируемые клавиши', nodes: 'Модули', mouse: 'Мышь', motor: 'Мотор',
+  macro_keys: 'Макроклавиши', ips: 'IPS', ion: 'Ионизация', impedance: 'Сопротивление',
+  frequency: 'Частотный диапазон', formula: 'Формат', filter: 'Фильтр',
+  energy_efficient: 'Энергоэффективность', duration: 'Время работы', digital: 'Цифровое управление',
+  curvature: 'Изгиб', count: 'Количество', colors: 'Цвета', color_temp: 'Цветовая температура',
+  color_accuracy: 'Цветопередача', brewing_system: 'Система заваривания', bagless: 'Без мешка',
+  attachments: 'Насадки', app_control: 'Управление из приложения', ai: 'ИИ-функции',
+  adjustable: 'Регулировка',
+}
+
+/* Значения характеристик: слова и единицы измерения — по-русски */
+const specWordRu: Record<string, string> = {
+  'Yes': 'Да', 'No': 'Нет', 'Metal': 'Металл', 'Polycarbonate': 'Поликарбонат', 'Premium': 'Премиальный',
+  'Wired': 'Проводное', 'Wireless': 'Беспроводное', 'Cordless': 'Беспроводной', 'Automatic': 'Автоматический',
+  'Adjustable': 'Регулируемый', 'Active': 'Активное', 'Intelligent': 'Интеллектуальное',
+  'Oscillating': 'С поворотом', 'Heavy-duty': 'Усиленный', 'Over-ear': 'Полноразмерные',
+  'Full Frame': 'Полнокадровый', 'FPV Drone': 'FPV-дрон', 'Haptic Feedback': 'Тактильная отдача',
+  'Enhanced GPU': 'Улучшенный графический процессор', 'Sport Band': 'Спортивный ремешок',
+  'Trail Band': 'Ремешок Trail', 'All-in-1': 'Всё в одном', 'Advanced swivel steering': 'Поворотная щётка',
+  'Front-loader compatible': 'Для машин с фронтальной загрузкой', 'Nickel': 'Никель',
+  'USB-C to Lightning': 'USB-C — Lightning', 'USB-C to USB-C': 'USB-C — USB-C',
+}
+
+function translateUnits(value: string): string {
+  return value
+    .replace(/^(\d+(?:\.\d+)?)(\+?)\s*sq\.ft$/i, (_, n: string, plus: string) => `${Math.round(Number(n) * 0.0929)}${plus} м²`)
+    .replace(/(\d)\s*L\/day\b/g, '$1 л/сутки')
+    .replace(/(\d)\+?\s*days?\b/g, (m) => m.replace(/\s*days?/, ' дн.'))
+    .replace(/(\d)\s*year\b/g, '$1 год')
+    .replace(/(\d)\s*capsules\b/g, '$1 капсул')
+    .replace(/(\d)\s*min\b/g, '$1 мин')
+    .replace(/(\d)h\b/g, '$1 ч')
+    .replace(/(\d)\s*Ohm\b/g, '$1 Ом')
+    .replace(/(\d)\s*kHz\b/g, '$1 кГц')
+    .replace(/(\d)\s*Hz\b/g, '$1 Гц')
+    .replace(/(\d)\s*MP\b/g, '$1 Мп')
+    .replace(/(\d)\s*mAh\b/g, '$1 мА·ч')
+    .replace(/(\d)\s*W\b/g, '$1 Вт')
+    .replace(/(\d)\s*ms\b/g, '$1 мс')
+    .replace(/(\d)\s*mm\b/g, '$1 мм')
+    .replace(/(\d)\s*g\b/g, '$1 г')
+    .replace(/(\d)\s*m\b/g, '$1 м')
+    .replace(/(\d)\s*L\b/g, '$1 л')
+    .replace(/(\d),(\d{3})\s*rpm\b/g, '$1 $2 об/мин')
+    .replace(/(\d)\s*rpm\b/g, '$1 об/мин')
+    .replace(/(\d)\s*Mbps\b/g, '$1 Мбит/с')
+    .replace(/(\d)\s*MB\/s\b/g, '$1 МБ/с')
+    .replace(/\bx(\d)\b/g, '× $1')
 }
 
 export function translateColor(color: string): string {
@@ -57,9 +111,10 @@ export function translateStorage(value: string): string {
 }
 
 export function translateSpecValue(key: string, value: string): string {
-  if (key === 'color') return translateColor(value)
+  if (key === 'color') return specWordRu[value] ?? translateColor(value)
   if (key === 'storage' || key === 'ram') return translateStorage(value)
-  return value
+  if (specWordRu[value]) return specWordRu[value]
+  return translateUnits(value)
 }
 
 export function translateProductName(name: string): string {

@@ -119,7 +119,9 @@ function productLd(product: Product): object {
     brand: { '@type': 'Brand', name: product.brand },
     category: product.category,
     description: clampDescription(product.description, 300),
-    image: absoluteUrl(getProductImage(product.id, product.name, product.category)),
+    image: getProductImage(product.id, product.name, product.category)
+      ? absoluteUrl(getProductImage(product.id, product.name, product.category))
+      : DEFAULT_OG_IMAGE,
     offers: {
       '@type': 'Offer',
       url: absoluteUrl(`/catalog/${product.id}`),
@@ -288,7 +290,8 @@ export function resolveMeta(pathname: string): PageMeta {
           `${name}: ${fmtPrice(product.price)} ₽. ${PURCHASE_TERMS_SNIPPET} ${product.description}`,
         ),
         canonical: `${SITE_URL}/catalog/${product.id}`,
-        ogImage: absoluteUrl(getProductImage(product.id, product.name, product.category)),
+        /* Превью в мессенджерах — общая картинка 1200×630: фото товаров квадратные webp, их обрезают */
+        ogImage: DEFAULT_OG_IMAGE,
         ogType: 'product',
         jsonLd: [
           organizationLd(),

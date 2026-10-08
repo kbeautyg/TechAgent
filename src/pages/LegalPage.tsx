@@ -1,5 +1,4 @@
-import { useState, useEffect } from 'react'
-import { useParams, Link } from 'react-router-dom'
+import { useParams, Link, useNavigate } from 'react-router-dom'
 import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
 import { mockDocuments } from '../data/documents'
 
@@ -38,6 +37,9 @@ const docTypeMap: Record<string, string> = {
   payment: 'PAYMENT',
 }
 
+/** Адрес документа: /legal/<slug> */
+const slugByType: Record<string, string> = Object.fromEntries(Object.entries(docTypeMap).map(([slug, type]) => [type, slug]))
+
 function docIdFromParam(docType: string | undefined): string | null {
   if (!docType) return null
   const targetType = docTypeMap[docType.toLowerCase()]
@@ -48,16 +50,12 @@ function docIdFromParam(docType: string | undefined): string | null {
 
 export default function LegalPage() {
   const { docType } = useParams<{ docType?: string }>()
+  const navigate = useNavigate()
   const publicDocs = mockDocuments.filter(d => d.userId === 'public')
-  /* Инициализация из URL сразу при рендере: текст документа попадает в пререндеренный HTML */
-  const [openDoc, setOpenDoc] = useState<string | null>(() => docIdFromParam(docType))
-
-  // Sync when navigating between /legal/:docType links
-  useEffect(() => {
-    setOpenDoc(docIdFromParam(docType))
-  }, [docType])
-
+  /* Открытый документ определяется адресом: текст попадает в пререндеренный HTML, у каждого документа своя ссылка */
+  const openDoc = docIdFromParam(docType)
   const activeDoc = mockDocuments.find(d => d.id === openDoc)
+  const closeDoc = () => navigate('/legal')
 
   return (
     <div className="min-h-[80vh] py-16 px-4">
@@ -66,7 +64,7 @@ export default function LegalPage() {
           <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
             <Shield size={28} className="text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-2">Правовая информация</h1>
+          <h1 className="text-3xl font-bold text-text-primary mb-2">{activeDoc ? activeDoc.title : 'Правовая информация'}</h1>
           <p className="text-text-muted">Продавец товаров на techagent.pro — ОсОО&nbsp;«ТехЭйджент»</p>
         </div>
 
@@ -74,10 +72,10 @@ export default function LegalPage() {
           {publicDocs.map(doc => {
             const Icon = typeIcons[doc.type] || Shield
             return (
-              <div
+              <Link
                 key={doc.id}
-                className="card-glass rounded-xl p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition-all"
-                onClick={() => doc.content && setOpenDoc(doc.id)}
+                to={`/legal/${slugByType[doc.type]}`}
+                className="card-glass rounded-xl p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition-all no-underline"
               >
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
@@ -92,10 +90,8 @@ export default function LegalPage() {
                     </div>
                   </div>
                 </div>
-                <button className="text-primary text-sm font-semibold bg-transparent border-none cursor-pointer hover:underline">
-                  Читать →
-                </button>
-              </div>
+                <span className="text-primary text-sm font-semibold">Читать →</span>
+              </Link>
             )
           })}
         </div>
@@ -111,7 +107,7 @@ export default function LegalPage() {
       {activeDoc && activeDoc.content && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
-          onClick={() => setOpenDoc(null)}
+          onClick={closeDoc}
         >
           <div
             className="bg-white rounded-2xl max-w-2xl w-full shadow-2xl mx-2 flex flex-col"
@@ -127,7 +123,7 @@ export default function LegalPage() {
               </div>
               <button
                 className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors"
-                onClick={() => setOpenDoc(null)}
+                onClick={closeDoc}
               >
                 <X size={16} />
               </button>

@@ -104,7 +104,6 @@ export default function ProductPage() {
               <span className="pp-price-current">{fmt(product.price)}</span>
               <span className="pp-price-currency">₽</span>
             </div>
-            <div className="pp-price-note">Цена окончательная, доставка до пункта выдачи входит в цену</div>
           </div>
 
           {/* Variants */}
