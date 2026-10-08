@@ -303,7 +303,7 @@ export default function HomePage() {
                 {[
                   'Начисляется после выдачи товара покупателю и загрузки подписанного акта приёма-передачи.',
                   'По итогам месяца в кабинете формируются отчёт агента и акт.',
-                  'Выплата — на банковский счёт, указанный в анкете.',
+                  'Выплата — на банковский счёт из анкеты в течение 7 дней после принятия отчёта агента и акта.',
                 ].map((t, i) => (
                   <li key={i} className="flex items-start gap-3">
                     <span className="w-5 h-5 rounded-full bg-white/10 text-white flex items-center justify-center text-[10px] font-bold shrink-0 mt-0.5">✓</span>

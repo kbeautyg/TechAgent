@@ -125,8 +125,9 @@ function productLd(product: Product): object {
       url: absoluteUrl(`/catalog/${product.id}`),
       price: product.price,
       priceCurrency: 'RUB',
+      /* Товар выкупается у поставщика после оплаты — «под заказ», а не «в наличии» */
       availability: product.inStock
-        ? 'https://schema.org/InStock'
+        ? 'https://schema.org/BackOrder'
         : 'https://schema.org/OutOfStock',
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#organization` },
