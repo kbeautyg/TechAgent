@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../../context/AuthContext'
 
 /* Кастомная SVG-иконка логотипа */
 function LogoIcon({ size = 14 }: { size?: number }) {
@@ -10,6 +11,7 @@ function LogoIcon({ size = 14 }: { size?: number }) {
 }
 
 export default function Footer() {
+  const { user } = useAuth()
   return (
     <footer className="bg-bg-dark text-text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
@@ -58,8 +60,14 @@ export default function Footer() {
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Партнёрам</h4>
             <div className="flex flex-col gap-2.5">
-              <Link to="/register" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Стать партнёром</Link>
-              <Link to="/login" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Личный кабинет</Link>
+              {user ? (
+                <Link to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Личный кабинет</Link>
+              ) : (
+                <>
+                  <Link to="/register" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Стать партнёром</Link>
+                  <Link to="/login" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Личный кабинет</Link>
+                </>
+              )}
               <Link to="/legal" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Документы</Link>
               <Link to="/legal/offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Агентский договор-оферта</Link>
               <Link to="/legal/privacy" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Конфиденциальность</Link>
@@ -70,7 +78,7 @@ export default function Footer() {
           {/* Contacts */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-4">Контакты</h4>
-            <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm">
+            <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm min-w-0 [overflow-wrap:anywhere]">
               <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro — общие вопросы</a>
               <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro — партнёрам</a>
               <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — покупателям</a>

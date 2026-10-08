@@ -1,8 +1,9 @@
 import { useEffect } from 'react'
-import { Link, Navigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders } from '../../data/mock'
 import { formatDate, formatPrice } from '../../utils/calculate'
+import { useDataRevision } from '../../utils/store'
 import type { Order, User } from '../../types'
 
 /*
@@ -11,7 +12,7 @@ import type { Order, User } from '../../types'
  * Простая форма для покупателя — физического лица. Страница открывается без меню сайта.
  */
 
-const SELLER = 'ОсОО «ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО, адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8'
+const SELLER = 'ОсОО\u00A0«ТехЭйджент», ИНН 00403202610304, рег. № 326302-3301-ООО, адрес: Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8'
 
 const COPIES = ['Экземпляр Покупателя', 'Экземпляр Продавца']
 
@@ -93,7 +94,15 @@ function ActCopy({ copy, order, partner, date }: { copy: string; order: Order; p
         <span className="act-blank" style={{ width: '100%' }}>&nbsp;</span>
       </p>
       <p>
-        Право собственности и риск переходят к Покупателю с момента подписания акта (оферта купли-продажи, п. 5.3).
+        Право собственности на Товар и риск его случайной гибели или случайного повреждения перешли к Покупателю в момент
+        передачи Товара по настоящему акту (п. 5.3 оферты купли-продажи).
+      </p>
+      <p>
+        Гарантийный срок — 14 (четырнадцать) дней с момента передачи Товара. Товар надлежащего качества Покупатель вправе
+        вернуть в течение 7 (семи) дней после передачи, если сохранены его товарный вид и потребительские свойства; деньги
+        возвращаются тем же способом в течение 10 (десяти) дней с даты требования за вычетом расходов на доставку
+        возвращённого Товара. Товар для обмена или возврата передаётся в этот пункт выдачи. Претензии — help@techagent.pro,
+        ответ в течение 10 (десяти) дней. Полные условия — в оферте купли-продажи: techagent.pro/legal/sale-offer.
       </p>
 
       <div className="act-signs">
@@ -103,7 +112,7 @@ function ActCopy({ copy, order, partner, date }: { copy: string; order: Order; p
           <div className="act-sign-caption"><i>подпись</i><i>ФИО</i></div>
         </div>
         <div>
-          <div className="act-sign-role">Партнёр от имени ОсОО «ТехЭйджент»</div>
+          <div className="act-sign-role">Партнёр от имени ОсОО&nbsp;«ТехЭйджент»</div>
           <div className="act-sign-line"><span /><b>/</b><span /></div>
           <div className="act-sign-caption"><i>подпись</i><i>ФИО</i></div>
         </div>
@@ -115,21 +124,29 @@ function ActCopy({ copy, order, partner, date }: { copy: string; order: Order; p
 export default function ActPrintPage() {
   const { id } = useParams()
   const [params] = useSearchParams()
-  const { user, isLoading } = useAuth()
+  const { pathname, search } = useLocation()
+  const { user } = useAuth()
+  useDataRevision()
 
   const order = user ? mockOrders.find((o) => o.id === id && o.userId === user.id) : undefined
   const printable =
     !!order && order.paymentStatus === 'PAID' && (order.status === 'AT_POINT' || order.status === 'ISSUED')
   const autoPrint = params.get('print') === '1'
+  const number = printable ? order.orderNumber.replace(/^#/, '') : null
+
+  /* Заголовок вкладки — это имя PDF при печати */
+  useEffect(() => {
+    if (number) document.title = `Акт приёма-передачи № ${number} | TechAgent`
+  }, [number])
 
   useEffect(() => {
-    if (isLoading || !printable || !autoPrint) return
+    if (!printable || !autoPrint) return
     const t = window.setTimeout(() => window.print(), 300)
     return () => window.clearTimeout(t)
-  }, [isLoading, printable, autoPrint])
+  }, [printable, autoPrint])
 
-  if (isLoading) return null
-  if (!user || user.role !== 'CLIENT') return <Navigate to="/login" replace />
+  // После входа вернём сюда же
+  if (!user || user.role !== 'CLIENT') return <Navigate to="/login" replace state={{ from: pathname + search }} />
 
   const back = order ? `/dashboard/orders/${order.id}` : '/dashboard/orders'
 

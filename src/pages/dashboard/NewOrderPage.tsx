@@ -4,15 +4,17 @@ import { ArrowLeft, ArrowRight, Check, Copy, Search, X, Lock } from 'lucide-reac
 import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
-import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
-import { formatPrice, formatReward, rewardFor, rewardPercentAt } from '../../utils/calculate'
+import { createOrder } from '../../data/mock'
+import { formatPercent, formatPrice, formatReward, rewardFor, rewardPercentAt } from '../../utils/calculate'
+import { formatPhone, isValidEmail, phoneError } from '../../utils/validate'
+import { copyText, selectText } from '../../utils/clipboard'
 import { reachGoal } from '../../lib/metrika'
 import type { Order } from '../../types'
 
 type Step = 1 | 2 | 3 | 4
 
 const fieldCls =
-  'w-full px-4 py-3 rounded-lg border border-border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm'
+  'w-full px-4 py-3 rounded-lg border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm'
 
 /** Поиск по каталогу ТехЭйджент. Товар можно только выбрать — цену задаёт каталог */
 function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
@@ -47,7 +49,7 @@ function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
           value={query}
           onChange={(e) => { setQuery(e.target.value); setOpen(true) }}
           onFocus={() => setOpen(true)}
-          className={`${fieldCls} pl-10 pr-10`}
+          className={`${fieldCls} border-border pl-10 pr-10`}
           placeholder="Название или бренд"
           autoComplete="off"
         />
@@ -92,16 +94,21 @@ function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
   )
 }
 
+type BuyerErrors = Partial<Record<'name' | 'phone' | 'email', string>>
+
 export default function NewOrderPage() {
   const { user } = useAuth()
   const navigate = useNavigate()
   const [step, setStep] = useState<Step>(1)
   const [copied, setCopied] = useState(false)
+  const [copyFailed, setCopyFailed] = useState(false)
+  const linkRef = useRef<HTMLParagraphElement>(null)
 
   const [product, setProduct] = useState<Product | null>(null)
   const [buyerName, setBuyerName] = useState('')
   const [buyerPhone, setBuyerPhone] = useState('')
   const [buyerEmail, setBuyerEmail] = useState('')
+  const [buyerErrors, setBuyerErrors] = useState<BuyerErrors>({})
   /* Оферта, п. 5.1: заказ — только по просьбе покупателя, продавец и условия покупки названы до оформления */
   const [buyerInformed, setBuyerInformed] = useState(false)
 
@@ -115,11 +122,10 @@ export default function NewOrderPage() {
         <h1 className="text-2xl font-bold mb-4 text-text-primary">Новый заказ</h1>
         <div className="card p-6 flex items-start gap-3">
           <Lock size={20} className="text-text-muted shrink-0 mt-0.5" />
-          <div className="text-sm text-text-secondary">
-            <p>
-              <Link to="/dashboard/profile" className="text-primary font-medium no-underline hover:underline">Данные анкеты</Link>
-            </p>
-          </div>
+          <p className="text-sm text-text-secondary">
+            Оформлять заказы можно после того, как ТехЭйджент подтвердит анкету.{' '}
+            <Link to="/dashboard/profile" className="text-primary font-medium no-underline hover:underline">Данные анкеты</Link>
+          </p>
         </div>
       </div>
     )
@@ -129,13 +135,41 @@ export default function NewOrderPage() {
   /* Процент, действующий сегодня: изменение размера применяется к заказам через 14 дней (оферта, п. 7.1) */
   const percent = rewardPercentAt(user)
 
+  /** Смена шага — с началом страницы: на телефоне следующий шаг иначе оказывается ниже экрана */
+  const goTo = (s: Step) => {
+    setStep(s)
+    window.scrollTo(0, 0)
+  }
+
+  const clearBuyerError = (k: keyof BuyerErrors) => {
+    if (!buyerErrors[k]) return
+    setBuyerErrors((prev) => {
+      const next = { ...prev }
+      delete next[k]
+      return next
+    })
+  }
+
+  /* Телефон и email покупателя — по тем же правилам, что в анкете партнёра; email необязателен */
+  const toCheck = () => {
+    const errs: BuyerErrors = {}
+    if (!buyerName.trim()) errs.name = 'Укажите ФИО покупателя'
+    const pe = phoneError(buyerPhone)
+    if (pe) errs.phone = pe
+    if (buyerEmail.trim() && !isValidEmail(buyerEmail)) errs.email = 'Введите корректный email'
+    setBuyerErrors(errs)
+    if (Object.keys(errs).length > 0) return
+    setBuyerPhone(formatPhone(buyerPhone))
+    goTo(3)
+  }
+
   const handleCreate = () => {
     if (!product || !buyerInformed) return
     const now = new Date().toISOString()
     const paymentId = 'pay_' + crypto.randomUUID().replace(/-/g, '').slice(0, 12)
-    const newOrder: Order = {
+    // Номер выдаётся по свежим данным — две вкладки не получат одинаковый
+    const newOrder = createOrder({
       id: crypto.randomUUID(),
-      orderNumber: getNextOrderNumber(),
       userId: user.id,
       productId: product.id,
       productName: product.name,
@@ -143,7 +177,7 @@ export default function NewOrderPage() {
       partnerReward: rewardFor(product.price, percent),
       rewardPercent: percent,
       buyerName: buyerName.trim(),
-      buyerPhone: buyerPhone.trim(),
+      buyerPhone: formatPhone(buyerPhone),
       buyerEmail: buyerEmail.trim() || undefined,
       paymentId,
       paymentLink: `/pay/${paymentId}`,
@@ -151,30 +185,38 @@ export default function NewOrderPage() {
       status: 'CREATED',
       createdAt: now,
       updatedAt: now,
-    }
-    mockOrders.unshift(newOrder)
-    saveOrders()
+    })
     reachGoal('order_created', { price: newOrder.price })
     setCreatedOrder(newOrder)
-    setStep(4)
+    goTo(4)
   }
 
   const paymentUrl = createdOrder ? `${window.location.origin}/pay/${createdOrder.paymentId}` : ''
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(paymentUrl)
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
+  /* «Скопировано» — только если буфер действительно принял ссылку; иначе ссылка выделяется для ручного копирования */
+  const handleCopy = async () => {
+    if (await copyText(paymentUrl)) {
+      setCopyFailed(false)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2000)
+    } else {
+      setCopied(false)
+      setCopyFailed(true)
+      selectText(linkRef.current)
+    }
   }
 
   const reset = () => {
-    setStep(1)
+    goTo(1)
     setProduct(null)
     setBuyerName('')
     setBuyerPhone('')
     setBuyerEmail('')
+    setBuyerErrors({})
     setBuyerInformed(false)
     setCreatedOrder(null)
+    setCopied(false)
+    setCopyFailed(false)
   }
 
   const nextBtn = 'flex items-center gap-1 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer disabled:opacity-50 disabled:shadow-none'
@@ -236,7 +278,7 @@ export default function NewOrderPage() {
             <Link to="/dashboard/chat" className="text-primary font-medium no-underline hover:underline">Напишите менеджеру</Link>
           </p>
           <div className="flex justify-end mt-6">
-            <button onClick={() => setStep(2)} disabled={!product} className={nextBtn}>
+            <button onClick={() => goTo(2)} disabled={!product} className={nextBtn}>
               Далее <ArrowRight size={16} />
             </button>
           </div>
@@ -254,11 +296,13 @@ export default function NewOrderPage() {
                 id="buyer-name"
                 type="text"
                 value={buyerName}
-                onChange={(e) => setBuyerName(e.target.value)}
-                className={fieldCls}
+                onChange={(e) => { setBuyerName(e.target.value); clearBuyerError('name') }}
+                className={`${fieldCls} ${buyerErrors.name ? 'border-red-500/50' : 'border-border'}`}
                 placeholder="Фамилия Имя Отчество"
                 autoComplete="off"
+                aria-invalid={buyerErrors.name ? true : undefined}
               />
+              {buyerErrors.name && <p className="text-red-500 text-xs mt-1">{buyerErrors.name}</p>}
               <p className="text-xs text-text-muted mt-1">Товар выдаётся только этому человеку — ФИО сверяется при выдаче.</p>
             </div>
             <div>
@@ -267,11 +311,14 @@ export default function NewOrderPage() {
                 id="buyer-phone"
                 type="tel"
                 value={buyerPhone}
-                onChange={(e) => setBuyerPhone(e.target.value)}
-                className={fieldCls}
-                placeholder="+7"
+                onChange={(e) => { setBuyerPhone(e.target.value); clearBuyerError('phone') }}
+                onBlur={() => setBuyerPhone((v) => formatPhone(v))}
+                className={`${fieldCls} ${buyerErrors.phone ? 'border-red-500/50' : 'border-border'}`}
+                placeholder="+7 900 000-00-00"
                 autoComplete="off"
+                aria-invalid={buyerErrors.phone ? true : undefined}
               />
+              {buyerErrors.phone && <p className="text-red-500 text-xs mt-1">{buyerErrors.phone}</p>}
             </div>
             <div>
               <label htmlFor="buyer-email" className="block text-sm font-medium mb-1.5 text-text-secondary">
@@ -281,18 +328,20 @@ export default function NewOrderPage() {
                 id="buyer-email"
                 type="email"
                 value={buyerEmail}
-                onChange={(e) => setBuyerEmail(e.target.value)}
-                className={fieldCls}
+                onChange={(e) => { setBuyerEmail(e.target.value); clearBuyerError('email') }}
+                className={`${fieldCls} ${buyerErrors.email ? 'border-red-500/50' : 'border-border'}`}
                 placeholder="email@example.com"
                 autoComplete="off"
+                aria-invalid={buyerErrors.email ? true : undefined}
               />
+              {buyerErrors.email && <p className="text-red-500 text-xs mt-1">{buyerErrors.email}</p>}
             </div>
           </div>
           <div className="flex justify-between mt-6">
-            <button onClick={() => setStep(1)} className={backBtn}>
+            <button onClick={() => goTo(1)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
-            <button onClick={() => setStep(3)} disabled={!canGoStep3} className={nextBtn}>
+            <button onClick={toCheck} disabled={!canGoStep3} className={nextBtn}>
               Далее <ArrowRight size={16} />
             </button>
           </div>
@@ -315,7 +364,7 @@ export default function NewOrderPage() {
               </div>
               <div className="flex justify-between gap-4">
                 <span className="text-text-secondary">
-                  Ваше вознаграждение{percent ? ` (${percent}%)` : ''}
+                  Ваше вознаграждение{percent ? ` (${formatPercent(percent)})` : ''}
                 </span>
                 <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(product.price, percent))}</span>
               </div>
@@ -352,7 +401,7 @@ export default function NewOrderPage() {
             </span>
           </label>
           <div className="flex justify-between mt-6">
-            <button onClick={() => setStep(2)} className={backBtn}>
+            <button onClick={() => goTo(2)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
             <button
@@ -386,21 +435,25 @@ export default function NewOrderPage() {
           </div>
 
           <div className="card-soft rounded-lg p-4 mb-4">
-            <p className="text-sm font-medium break-all text-text-primary">{paymentUrl}</p>
+            <p ref={linkRef} className="text-sm font-medium break-all text-text-primary">{paymentUrl}</p>
           </div>
 
-          <button
-            onClick={handleCopy}
-            className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer mb-6"
-          >
-            {copied ? <Check size={14} /> : <Copy size={14} />}
-            {copied ? 'Скопировано' : 'Копировать ссылку'}
-          </button>
+          <div className="mb-6">
+            <button
+              onClick={handleCopy}
+              className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-white px-6 py-2.5 rounded-lg font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 text-sm border-none cursor-pointer"
+            >
+              {copied ? <Check size={14} /> : <Copy size={14} />}
+              {copied ? 'Скопировано' : 'Копировать ссылку'}
+            </button>
+            {copyFailed && <p className="text-sm text-text-secondary mt-2" role="status">Скопируйте ссылку вручную</p>}
+          </div>
 
           <div className="text-left rounded-lg border border-amber-300 bg-amber-50 p-4 mb-6 text-sm text-amber-900 space-y-1">
             <p>
-              Оплату принимает только ТехЭйджент — по этой ссылке или QR-коду через СБП. Перед оплатой покупатель принимает{' '}
-              <Link to="/legal/sale-offer" target="_blank" className="text-amber-900 underline">оферту купли-продажи</Link>.
+              Оплату принимает только ТехЭйджент — по этой ссылке или QR-коду через СБП. Перед оплатой покупатель отмечает
+              согласие с{' '}
+              <Link to="/legal/sale-offer" target="_blank" className="text-amber-900 underline">офертой купли-продажи</Link>.
             </p>
             <p className="font-semibold">Принимать деньги от покупателя наличными или на свои реквизиты нельзя.</p>
           </div>

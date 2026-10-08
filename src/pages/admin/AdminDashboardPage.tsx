@@ -2,9 +2,11 @@ import { Link } from 'react-router-dom'
 import { Users, Package, Wallet, PackageOpen, PackageCheck, Award } from 'lucide-react'
 import { mockOrders, mockUsers } from '../../data/mock'
 import { formatPrice, formatReward, accruedReward, paidTotal, storageExpired } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, AT_POINT_FILTER_LABEL } from '../../utils/status'
+import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor } from '../../utils/status'
+import { useDataRevision } from '../../utils/store'
 
 export default function AdminDashboardPage() {
+  useDataRevision()
   const partners = mockUsers.filter((u) => u.role === 'CLIENT')
   const pendingPartners = partners.filter((u) => (u.partnerStatus ?? 'PENDING') === 'PENDING').length
   const orders = mockOrders
@@ -14,7 +16,7 @@ export default function AdminDashboardPage() {
     { label: 'Заказов', value: orders.length.toString(), icon: Package },
     { label: 'Оплачено покупателями', value: formatPrice(paidTotal(orders)), icon: Wallet },
     { label: AT_POINT_FILTER_LABEL, value: orders.filter((o) => o.status === 'AT_POINT').length.toString(), icon: PackageOpen },
-    { label: 'Выдано', value: orders.filter((o) => o.status === 'ISSUED').length.toString(), icon: PackageCheck },
+    { label: 'Выдано', value: orders.filter(isIssued).length.toString(), icon: PackageCheck },
     { label: 'Начислено вознаграждения', value: formatReward(accruedReward(orders)), icon: Award },
   ]
 
@@ -42,12 +44,18 @@ export default function AdminDashboardPage() {
 
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 mb-3">
         {stats.map((s) => (
-          <div key={s.label} className="card p-4">
+          <div key={s.label} className="card p-4 min-w-0" style={{ containerType: 'inline-size' }}>
             <div className="flex items-center gap-2 text-text-muted">
-              <s.icon size={16} />
+              <s.icon size={16} className="shrink-0" />
               <p className="text-xs">{s.label}</p>
             </div>
-            <p className="font-display text-xl font-bold text-text-primary mt-1 break-words">{s.value}</p>
+            {/* Сумма с «₽» не переносится: размер цифр зависит от ширины плитки, миллионы тоже помещаются */}
+            <p
+              className="font-display text-base sm:text-xl font-bold text-text-primary mt-1 whitespace-nowrap"
+              style={{ fontSize: 'clamp(0.75rem, 12.5cqi, 1.25rem)' }}
+            >
+              {s.value}
+            </p>
           </div>
         ))}
       </div>
@@ -84,7 +92,8 @@ export default function AdminDashboardPage() {
                   <td colSpan={5} className="px-4 py-8 text-center text-text-muted">Заказов пока нет</td>
                 </tr>
               )}
-              {orders.slice(0, 10).map((order) => {
+              {/* Последние — по дате оформления, новые сверху */}
+              {[...orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 10).map((order) => {
                 const partner = mockUsers.find((u) => u.id === order.userId)
                 return (
                   <tr key={order.id} className="hover:bg-bg-light transition-colors">
@@ -93,8 +102,8 @@ export default function AdminDashboardPage() {
                     <td className="px-4 py-3 text-text-secondary">{partner?.companyName || '—'}</td>
                     <td className="px-4 py-3 font-medium text-text-primary whitespace-nowrap">{formatPrice(order.price)}</td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${ORDER_STATUS_COLORS[order.status]}`}>
-                        {ORDER_STATUS_LABELS[order.status]}
+                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${orderStatusColor(order)}`}>
+                        {orderStatusLabel(order)}
                       </span>
                     </td>
                   </tr>

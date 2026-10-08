@@ -40,6 +40,11 @@ export function formatReward(reward: number | null): string {
   return reward === null ? REWARD_NOT_SET : formatPrice(reward)
 }
 
+/** Процент по-русски, через запятую: 5,5% */
+export function formatPercent(percent: number): string {
+  return `${percent.toLocaleString('ru-RU', { maximumFractionDigits: 2 })}%`
+}
+
 /** Начисленное вознаграждение: только выданные заказы с загруженным актом.
  *  Если хотя бы у одного размер не назначен — итог тоже не определён (null). */
 export function accruedReward(orders: Order[]): number | null {
@@ -78,8 +83,14 @@ export function storageExpired(order: Pick<Order, 'notifiedAt'>, now: Date = new
   return now >= nextDay
 }
 
-/** Строка о хранении для списка заказов: только для товара в пункте выдачи */
+/** Заказ отменён, когда товар уже был в пункте выдачи: Партнёр хранит товар до указания ТехЭйджент */
+export function cancelledAtPoint(order: Pick<Order, 'status' | 'cancelledFrom'>): boolean {
+  return order.status === 'CANCELLED' && order.cancelledFrom === 'AT_POINT'
+}
+
+/** Строка о хранении для списка заказов: товар в пункте выдачи */
 export function storageNote(order: Order, now: Date = new Date()): { text: string; expired: boolean } | null {
+  if (cancelledAtPoint(order)) return { text: 'Отменён — товар храните до указания ТехЭйджент', expired: false }
   if (order.status !== 'AT_POINT') return null
   if (!order.notifiedAt) return { text: 'Сообщите покупателю о поступлении', expired: false }
   if (storageExpired(order, now)) return { text: 'Срок хранения истёк — сообщите ТехЭйджент', expired: true }
@@ -87,14 +98,50 @@ export function storageNote(order: Order, now: Date = new Date()): { text: strin
   return until ? { text: `Хранится до ${formatDate(until.toISOString())}`, expired: false } : null
 }
 
-/** Дата + n рабочих дней (суббота и воскресенье не считаются) */
+/* ── Рабочие дни ── */
+
+/** Нерабочие праздничные дни в РФ (ст. 112 ТК РФ): [месяц, день] */
+const HOLIDAYS: [number, number][] = [
+  [1, 1], [1, 2], [1, 3], [1, 4], [1, 5], [1, 6], [1, 7], [1, 8],
+  [2, 23], [3, 8], [5, 1], [5, 9], [6, 12], [11, 4],
+]
+
+const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`
+const isWeekend = (d: Date) => d.getDay() === 0 || d.getDay() === 6
+
+const offDaysCache = new Map<number, Set<string>>()
+
+/** Нерабочие дни года, кроме суббот и воскресений: праздники и перенесённые выходные.
+ *  Праздник, совпавший с субботой или воскресеньем, переносится на следующий рабочий день — кроме январских */
+function offDays(year: number): Set<string> {
+  const cached = offDaysCache.get(year)
+  if (cached) return cached
+  const set = new Set<string>()
+  for (const [m, day] of HOLIDAYS) set.add(dayKey(new Date(year, m - 1, day)))
+  for (const [m, day] of HOLIDAYS) {
+    const h = new Date(year, m - 1, day)
+    if (m === 1 || !isWeekend(h)) continue
+    const next = new Date(h)
+    do {
+      next.setDate(next.getDate() + 1)
+    } while (isWeekend(next) || set.has(dayKey(next)))
+    set.add(dayKey(next))
+  }
+  offDaysCache.set(year, set)
+  return set
+}
+
+export function isBusinessDay(d: Date): boolean {
+  return !isWeekend(d) && !offDays(d.getFullYear()).has(dayKey(d))
+}
+
+/** Дата + n рабочих дней: не считаются суббота, воскресенье, праздники РФ и перенесённые выходные */
 export function addBusinessDays(from: Date, days: number): Date {
   const d = new Date(from)
   let left = days
   while (left > 0) {
     d.setDate(d.getDate() + 1)
-    const wd = d.getDay()
-    if (wd !== 0 && wd !== 6) left--
+    if (isBusinessDay(d)) left--
   }
   return d
 }

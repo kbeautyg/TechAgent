@@ -1,9 +1,18 @@
 import { useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { LogIn } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
 import { DEMO_MODE } from '../data/mock'
+import { PreviewNotice } from '../components/layout/DashboardLayout'
+import type { User } from '../types'
+
+/** Куда вести после входа: на страницу, куда человек шёл, если она из его раздела; иначе — в кабинет или админку */
+function afterLogin(user: User, from: unknown): string {
+  const home = user.role === 'ADMIN' ? '/admin' : '/dashboard'
+  if (typeof from !== 'string' || !from.startsWith('/') || from.startsWith('//')) return home
+  return from === home || from.startsWith(`${home}/`) || from.startsWith(`${home}?`) ? from : home
+}
 
 /* Демо-учётки есть только в режиме разработки или в сборке с VITE_DEMO=1 */
 const DEMO_LOGINS = [
@@ -14,6 +23,7 @@ const DEMO_LOGINS = [
 
 export default function LoginPage() {
   const { login, user } = useAuth()
+  const location = useLocation()
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -21,7 +31,7 @@ export default function LoginPage() {
   const [showRecovery, setShowRecovery] = useState(false)
 
   if (user) {
-    return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />
+    return <Navigate to={afterLogin(user, (location.state as { from?: unknown } | null)?.from)} replace />
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -43,6 +53,7 @@ export default function LoginPage() {
     <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
       <div className="absolute top-[-80px] right-[20%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
       <div className="w-full max-w-md relative">
+        <PreviewNotice className="mb-4" />
         <div className="card-glass rounded-2xl p-8">
           <div className="text-center mb-8">
             <div className="icon-box mx-auto mb-4">
@@ -58,8 +69,9 @@ export default function LoginPage() {
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Email</label>
+              <label htmlFor="login-email" className="block text-sm font-medium text-text-secondary mb-1.5">Email</label>
               <input
+                id="login-email"
                 type="email"
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError('') }}
@@ -70,8 +82,9 @@ export default function LoginPage() {
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-secondary mb-1.5">Пароль</label>
+              <label htmlFor="login-password" className="block text-sm font-medium text-text-secondary mb-1.5">Пароль</label>
               <input
+                id="login-password"
                 type="password"
                 value={password}
                 onChange={(e) => { setPassword(e.target.value); setError('') }}

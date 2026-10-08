@@ -1,9 +1,19 @@
 import type { User, Order } from '../types'
 import { products } from './products'
 import { rewardFor, rewardPercentAt } from '../utils/calculate'
+import {
+  storage,
+  readJson,
+  writeJson,
+  mergeById,
+  replaceArray,
+  notifyDataChanged,
+  onOtherTabChange,
+} from '../utils/store'
 
 /*
- * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage.
+ * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage (см. utils/store.ts —
+ * слияние данных из нескольких вкладок).
  *
  * Демо-учётки и демо-заказы попадают в данные только в режиме разработки
  * (npm run dev) или при явном флаге сборки VITE_DEMO=1. В обычной боевой
@@ -17,21 +27,7 @@ const USERS_KEY = 'techagent_users_v2'
 const COUNTER_KEY = 'techagent_order_counter'
 const LEGACY_KEYS = ['techagent_orders']
 
-/* localStorage недоступен при пререндере (Node) — используем безопасный шим */
-const storage: Pick<Storage, 'getItem' | 'setItem' | 'removeItem'> =
-  typeof localStorage !== 'undefined'
-    ? localStorage
-    : { getItem: () => null, setItem: () => undefined, removeItem: () => undefined }
-
 for (const key of LEGACY_KEYS) storage.removeItem(key)
-
-function load<T>(key: string): T | null {
-  try {
-    const raw = storage.getItem(key)
-    if (raw) return JSON.parse(raw) as T
-  } catch { /* ignore */ }
-  return null
-}
 
 /* ── Демо-данные (только DEMO_MODE) ── */
 
@@ -290,21 +286,56 @@ function demoOrders(): Order[] {
   ]
 }
 
-/* ── Пользователи ── */
+/** Демо-учётки: вход по любому непустому паролю (пока им не задан свой) */
+const DEMO_USER_IDS = new Set(['1', '2', '3', '4'])
 
-export const mockUsers: User[] = load<User[]>(USERS_KEY) ?? (DEMO_MODE ? demoUsers() : [])
-
-export function saveUsers(): void {
-  storage.setItem(USERS_KEY, JSON.stringify(mockUsers))
+export function isDemoUser(u: User): boolean {
+  return DEMO_MODE && DEMO_USER_IDS.has(u.id) && !u.passwordHash
 }
 
-/** Изменить данные пользователя (анкета, статус проверки) и сохранить */
-export function updateUser(id: string, patch: Partial<User>): User | null {
+/* ── Пользователи ── */
+
+const userStamp = (u: User) => u.updatedAt ?? u.createdAt
+const byCreatedAsc = (a: { createdAt: string }, b: { createdAt: string }) => a.createdAt.localeCompare(b.createdAt)
+
+export const mockUsers: User[] = readJson<User[]>(USERS_KEY) ?? (DEMO_MODE ? demoUsers() : [])
+
+/** Перечитать учётки из localStorage и слить с памятью (другая вкладка могла их изменить) */
+function syncUsers(): void {
+  const stored = readJson<User[]>(USERS_KEY)
+  if (stored) replaceArray(mockUsers, mergeById(mockUsers, stored, userStamp).sort(byCreatedAsc))
+}
+
+export function saveUsers(): void {
+  syncUsers()
+  writeJson(USERS_KEY, mockUsers)
+  notifyDataChanged()
+}
+
+/** Учётка по email — по актуальным данным */
+export function findUserByEmail(email: string): User | undefined {
+  syncUsers()
+  const e = email.trim().toLowerCase()
+  return mockUsers.find((u) => u.email.toLowerCase() === e)
+}
+
+export function addUser(user: User): void {
+  syncUsers()
+  mockUsers.push({ ...user, updatedAt: user.updatedAt ?? user.createdAt })
+  saveUsers()
+}
+
+/** Изменить данные пользователя (анкета, статус проверки) и сохранить.
+ *  patch может быть функцией от актуальной записи; null — ничего не менять */
+export function updateUser(id: string, patch: Partial<User> | ((fresh: User) => Partial<User> | null)): User | null {
+  syncUsers()
   const idx = mockUsers.findIndex((u) => u.id === id)
   if (idx < 0) return null
-  mockUsers[idx] = { ...mockUsers[idx], ...patch }
+  const data = typeof patch === 'function' ? patch(mockUsers[idx]) : patch
+  if (!data) return null
+  mockUsers[idx] = { ...mockUsers[idx], ...data, updatedAt: new Date().toISOString() }
   saveUsers()
-  return mockUsers[idx]
+  return mockUsers.find((u) => u.id === id) ?? null
 }
 
 /** Изменение процента вознаграждения подтверждённого Партнёра (оферта, п. 7.1):
@@ -312,27 +343,17 @@ export function updateUser(id: string, patch: Partial<User>): User | null {
 export const REWARD_CHANGE_NOTICE_DAYS = 14
 
 export function scheduleRewardChange(id: string, percent: number): User | null {
-  const u = mockUsers.find((x) => x.id === id)
-  if (!u) return null
   const from = new Date()
   from.setDate(from.getDate() + REWARD_CHANGE_NOTICE_DAYS)
-  return updateUser(id, {
+  return updateUser(id, (u) => ({
     // Если прежнее изменение уже вступило в силу — оно становится текущим размером
     rewardPercent: rewardPercentAt(u),
     rewardPercentNext: percent,
     rewardPercentNextFrom: from.toISOString(),
-  })
+  }))
 }
 
 /* ── Заказы ── */
-
-let orderCounter = parseInt(storage.getItem(COUNTER_KEY) || '1245', 10)
-
-export function getNextOrderNumber(): string {
-  orderCounter++
-  storage.setItem(COUNTER_KEY, String(orderCounter))
-  return `#${orderCounter}`
-}
 
 /** Демо-заказы: вознаграждение — процент Партнёра от цены товара, как в новом заказе */
 function demoOrdersWithReward(): Order[] {
@@ -343,11 +364,63 @@ function demoOrdersWithReward(): Order[] {
   })
 }
 
-export const mockOrders: Order[] = load<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrdersWithReward() : [])
+const orderStamp = (o: Order) => o.updatedAt ?? o.createdAt
+const byCreatedDesc = (a: Order, b: Order) => b.createdAt.localeCompare(a.createdAt)
 
-export function saveOrders(): void {
-  storage.setItem(ORDERS_KEY, JSON.stringify(mockOrders))
+/** Все заказы, новые сверху */
+export const mockOrders: Order[] = readJson<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrdersWithReward() : [])
+
+function syncOrders(): void {
+  const stored = readJson<Order[]>(ORDERS_KEY)
+  if (stored) replaceArray(mockOrders, mergeById(mockOrders, stored, orderStamp).sort(byCreatedDesc))
 }
 
-if (!storage.getItem(ORDERS_KEY)) saveOrders()
-if (!storage.getItem(USERS_KEY)) saveUsers()
+export function saveOrders(): void {
+  syncOrders()
+  writeJson(ORDERS_KEY, mockOrders)
+  notifyDataChanged()
+}
+
+const orderNo = (o: Order) => parseInt(o.orderNumber.replace(/\D/g, ''), 10) || 0
+
+/** Новый заказ: номер выдаётся по свежим данным — две вкладки не получат одинаковый */
+export function createOrder(draft: Omit<Order, 'orderNumber'>): Order {
+  syncOrders()
+  const stored = parseInt(storage.getItem(COUNTER_KEY) || '', 10)
+  const last = Math.max(Number.isNaN(stored) ? 1245 : stored, ...mockOrders.map(orderNo))
+  storage.setItem(COUNTER_KEY, String(last + 1))
+  const order: Order = { ...draft, orderNumber: `#${last + 1}` }
+  mockOrders.unshift(order)
+  saveOrders()
+  return order
+}
+
+/** Изменить заказ. Данные перечитываются перед изменением; guard проверяет актуальный заказ —
+ *  статус мог поменяться в другой вкладке. Тогда изменение не применяется (null), а страница перерисовывается */
+export function updateOrder(
+  id: string,
+  patch: Partial<Order> | ((fresh: Order) => Partial<Order>),
+  guard?: (fresh: Order) => boolean,
+): Order | null {
+  syncOrders()
+  const idx = mockOrders.findIndex((o) => o.id === id)
+  if (idx < 0) return null
+  const fresh = mockOrders[idx]
+  if (guard && !guard(fresh)) {
+    notifyDataChanged()
+    return null
+  }
+  const data = typeof patch === 'function' ? patch(fresh) : patch
+  mockOrders[idx] = { ...fresh, ...data, updatedAt: new Date().toISOString() }
+  saveOrders()
+  return mockOrders.find((o) => o.id === id) ?? null
+}
+
+if (!storage.getItem(ORDERS_KEY)) writeJson(ORDERS_KEY, mockOrders)
+if (!storage.getItem(USERS_KEY)) writeJson(USERS_KEY, mockUsers)
+
+/* Заказы и учётки изменили в другой вкладке — перечитать */
+onOtherTabChange([ORDERS_KEY, USERS_KEY], () => {
+  syncOrders()
+  syncUsers()
+})

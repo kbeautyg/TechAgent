@@ -4,8 +4,9 @@ import { PlusCircle, Search } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders } from '../../data/mock'
 import { formatPrice, formatDate, storageNote } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, AT_POINT_FILTER_LABEL } from '../../utils/status'
-import type { OrderStatus } from '../../types'
+import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor } from '../../utils/status'
+import { useDataRevision } from '../../utils/store'
+import type { Order, OrderStatus } from '../../types'
 
 const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: 'Все', value: 'ALL' },
@@ -20,14 +21,17 @@ const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
 
 export default function OrdersPage() {
   const { user } = useAuth()
+  useDataRevision()
   const [filter, setFilter] = useState<OrderStatus | 'ALL'>('ALL')
   const [search, setSearch] = useState('')
   const canOrder = user?.partnerStatus === 'VERIFIED'
 
   const q = search.trim().toLowerCase()
   const own = mockOrders.filter((o) => o.userId === user?.id)
+  // «Выданы» — без заказов, возвращённых после выдачи
+  const matches = (o: Order) => filter === 'ALL' || (filter === 'ISSUED' ? isIssued(o) : o.status === filter)
   const filtered = own
-    .filter((o) => filter === 'ALL' || o.status === filter)
+    .filter(matches)
     .filter((o) =>
       q === '' ||
       o.productName.toLowerCase().includes(q) ||
@@ -95,8 +99,8 @@ export default function OrdersPage() {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-sm text-text-primary">{order.orderNumber}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${ORDER_STATUS_COLORS[order.status]}`}>
-                      {ORDER_STATUS_LABELS[order.status]}
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${orderStatusColor(order)}`}>
+                      {orderStatusLabel(order)}
                     </span>
                   </div>
                   <p className="text-text-secondary text-sm mt-1 truncate">{order.productName}</p>

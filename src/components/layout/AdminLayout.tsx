@@ -1,4 +1,4 @@
-import { NavLink, Outlet, Navigate } from 'react-router-dom'
+import { NavLink, Outlet, Navigate, useLocation } from 'react-router-dom'
 import { LayoutDashboard, Users, Package, FileText } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 
@@ -10,18 +10,12 @@ const navItems = [
 ]
 
 export default function AdminLayout() {
-  const { user, isLoading } = useAuth()
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-bg-light flex items-center justify-center">
-        <div className="text-text-muted">Загрузка…</div>
-      </div>
-    )
-  }
+  const { user } = useAuth()
+  const { pathname, search } = useLocation()
 
   if (!user || user.role !== 'ADMIN') {
-    return <Navigate to="/login" replace />
+    // После входа вернём туда, куда человек шёл
+    return <Navigate to="/login" replace state={{ from: pathname + search }} />
   }
 
   return (

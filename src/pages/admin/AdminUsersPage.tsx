@@ -1,46 +1,64 @@
 import { useState } from 'react'
 import { mockUsers, mockOrders, updateUser, scheduleRewardChange, REWARD_CHANGE_NOTICE_DAYS } from '../../data/mock'
-import { formatDate, formatPrice, paidTotal, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
+import { formatDate, formatPercent, formatPrice, paidTotal, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
-import type { PartnerStatus } from '../../types'
+import { useDataRevision } from '../../utils/store'
+import type { User } from '../../types'
+
+/** Границы размера вознаграждения, % цены товара */
+const MIN_PERCENT = 0.1
+const MAX_PERCENT = 99
 
 export default function AdminUsersPage() {
-  const [, setRefresh] = useState(0)
+  useDataRevision()
   const [percents, setPercents] = useState<Record<string, string>>({})
   const partners = mockUsers.filter((u) => u.role === 'CLIENT')
   const pendingCount = partners.filter((u) => (u.partnerStatus ?? 'PENDING') === 'PENDING').length
 
-  const setStatus = (id: string, status: PartnerStatus) => {
-    updateUser(id, { partnerStatus: status })
-    setRefresh((k) => k + 1)
-  }
+  const nameOf = (u: User) => u.companyName || u.email
 
   const readPercent = (id: string): number | null => {
-    const percent = Number((percents[id] ?? '').replace(',', '.'))
-    if (!(percent > 0 && percent < 100)) {
-      alert('Укажите вознаграждение партнёра в процентах от цены товара')
+    const percent = Number((percents[id] ?? '').trim().replace(',', '.'))
+    if (!Number.isFinite(percent) || percent < MIN_PERCENT || percent > MAX_PERCENT) {
+      alert('Укажите вознаграждение от 0,1 до 99 % цены товара')
       return null
     }
-    return percent
+    return Math.round(percent * 100) / 100
   }
 
   /** Подтверждение анкеты вместе с размером вознаграждения — его видит только сам Партнёр */
-  const verify = (id: string) => {
-    const percent = readPercent(id)
+  const verify = (u: User) => {
+    const percent = readPercent(u.id)
     if (percent === null) return
-    updateUser(id, { partnerStatus: 'VERIFIED', rewardPercent: percent, rewardPercentNext: undefined, rewardPercentNextFrom: undefined })
-    setPercents((p) => ({ ...p, [id]: '' }))
-    setRefresh((k) => k + 1)
+    if (!confirm(`Подтвердить анкету «${nameOf(u)}» с вознаграждением ${formatPercent(percent)} от цены товара? Партнёр сможет оформлять заказы.`)) return
+    updateUser(u.id, {
+      partnerStatus: 'VERIFIED',
+      rewardPercent: percent,
+      rewardPercentNext: undefined,
+      rewardPercentNextFrom: undefined,
+      rejectReason: undefined,
+    })
+    setPercents((p) => ({ ...p, [u.id]: '' }))
+  }
+
+  /** Отклонение — с причиной: её видит Партнёр в профиле */
+  const reject = (u: User) => {
+    const reason = prompt(`Причина отклонения анкеты «${nameOf(u)}» — её увидит партнёр в профиле:`)
+    if (reason === null) return
+    if (!reason.trim()) {
+      alert('Укажите причину отклонения')
+      return
+    }
+    updateUser(u.id, { partnerStatus: 'REJECTED', rejectReason: reason.trim() })
   }
 
   /** Изменение размера у подтверждённого Партнёра: применяется к заказам через 14 дней (оферта, п. 7.1) */
-  const changePercent = (id: string, name: string) => {
-    const percent = readPercent(id)
+  const changePercent = (u: User) => {
+    const percent = readPercent(u.id)
     if (percent === null) return
-    if (!confirm(`Изменить вознаграждение «${name}» на ${percent}%? Новый размер — для заказов через ${REWARD_CHANGE_NOTICE_DAYS} дней после изменения.`)) return
-    scheduleRewardChange(id, percent)
-    setPercents((p) => ({ ...p, [id]: '' }))
-    setRefresh((k) => k + 1)
+    if (!confirm(`Изменить вознаграждение «${nameOf(u)}» на ${formatPercent(percent)}? Новый размер — для заказов через ${REWARD_CHANGE_NOTICE_DAYS} дней после изменения.`)) return
+    scheduleRewardChange(u.id, percent)
+    setPercents((p) => ({ ...p, [u.id]: '' }))
   }
 
   return (
@@ -86,12 +104,15 @@ export default function AdminUsersPage() {
                           {PARTNER_STATUS_LABELS[status]}
                         </span>
                         {currentPercent ? (
-                          <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {currentPercent}%</p>
+                          <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {formatPercent(currentPercent)}</p>
                         ) : null}
                         {pending && (
                           <p className="text-xs text-amber-700 mt-0.5 whitespace-nowrap">
-                            с {formatDate(pending.from)} — {pending.percent}%
+                            с {formatDate(pending.from)} — {formatPercent(pending.percent)}
                           </p>
+                        )}
+                        {status === 'REJECTED' && u.rejectReason && (
+                          <p className="text-xs text-red-700 mt-1.5 w-48 [overflow-wrap:anywhere]">Причина: {u.rejectReason}</p>
                         )}
                         <label className="flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap">
                           <input
@@ -107,7 +128,7 @@ export default function AdminUsersPage() {
                         {status === 'VERIFIED' && (
                           <>
                             <button
-                              onClick={() => changePercent(u.id, u.companyName || u.email)}
+                              onClick={() => changePercent(u)}
                               className="mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20 transition-colors border-none cursor-pointer whitespace-nowrap"
                             >
                               Изменить размер
@@ -120,7 +141,7 @@ export default function AdminUsersPage() {
                         <div className="flex gap-2 mt-2">
                           {status !== 'VERIFIED' && (
                             <button
-                              onClick={() => verify(u.id)}
+                              onClick={() => verify(u)}
                               className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer whitespace-nowrap"
                             >
                               Подтвердить
@@ -128,11 +149,7 @@ export default function AdminUsersPage() {
                           )}
                           {status !== 'REJECTED' && (
                             <button
-                              onClick={() => {
-                                if (confirm(`Отклонить анкету «${u.companyName || u.email}»? Партнёр не сможет оформлять заказы.`)) {
-                                  setStatus(u.id, 'REJECTED')
-                                }
-                              }}
+                              onClick={() => reject(u)}
                               className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded font-medium hover:bg-red-100 transition-colors border-none cursor-pointer whitespace-nowrap"
                             >
                               Отклонить

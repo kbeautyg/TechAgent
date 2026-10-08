@@ -1,30 +1,37 @@
 import { NavLink, Outlet, Navigate, Link, useLocation } from 'react-router-dom'
 import { LayoutDashboard, Package, PlusCircle, User, FileText, MessageCircle, Clock, XCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import { DEMO_MODE } from '../../data/mock'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Обзор', end: true },
   { to: '/dashboard/orders', icon: Package, label: 'Заказы', end: false },
   { to: '/dashboard/orders/new', icon: PlusCircle, label: 'Новый заказ', end: false },
-  { to: '/dashboard/chat', icon: MessageCircle, label: 'Чат', end: false },
+  // В боевой сборке чата нет — там контакты менеджера
+  { to: '/dashboard/chat', icon: MessageCircle, label: DEMO_MODE ? 'Чат' : 'Связь с менеджером', end: false },
   { to: '/dashboard/profile', icon: User, label: 'Профиль', end: false },
   { to: '/dashboard/documents', icon: FileText, label: 'Документы', end: false },
 ]
 
-export default function DashboardLayout() {
-  const { user, isLoading } = useAuth()
-  const { pathname } = useLocation()
+/** Боевая сборка без бэкенда: кабинет честно предупреждает, что данные никуда не уходят. В демо-режиме не показывается */
+export function PreviewNotice({ className = '' }: { className?: string }) {
+  if (DEMO_MODE) return null
+  return (
+    <p className={`rounded-lg border border-border bg-white px-3 py-2 text-xs leading-relaxed text-text-secondary ${className}`}>
+      Кабинет работает в режиме предпросмотра: данные остаются в этом браузере и в ТехЭйджент пока не передаются.
+      Чтобы стать партнёром сейчас, напишите на{' '}
+      <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+    </p>
+  )
+}
 
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-bg-light flex items-center justify-center">
-        <div className="text-text-muted">Загрузка…</div>
-      </div>
-    )
-  }
+export default function DashboardLayout() {
+  const { user } = useAuth()
+  const { pathname, search } = useLocation()
 
   if (!user || user.role !== 'CLIENT') {
-    return <Navigate to="/login" replace />
+    // После входа вернём туда, куда человек шёл
+    return <Navigate to="/login" replace state={{ from: pathname + search }} />
   }
 
   const status = user.partnerStatus ?? 'PENDING'
@@ -32,6 +39,7 @@ export default function DashboardLayout() {
   return (
     <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 lg:py-6">
+        <PreviewNotice className="mb-4 lg:mb-6" />
         {status === 'PENDING' && (
           <div className="mb-4 lg:mb-6 flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900">
             <Clock size={20} className="shrink-0 mt-0.5" />

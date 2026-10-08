@@ -3,6 +3,8 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth, type RegisterData } from '../context/AuthContext'
 import { UserPlus } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
+import { PreviewNotice } from '../components/layout/DashboardLayout'
+import { onlyDigits, formatPhone, partnerErrors } from '../utils/validate'
 
 type Field = keyof RegisterData | 'agreeOffer' | 'agreePrivacy'
 
@@ -22,8 +24,6 @@ const emptyForm: RegisterData & { agreeOffer: boolean; agreePrivacy: boolean } =
   agreePrivacy: false,
 }
 
-const digits = (v: string, max: number) => v.replace(/\D/g, '').slice(0, max)
-
 export default function RegisterPage() {
   const { register, user } = useAuth()
   const navigate = useNavigate()
@@ -36,17 +36,8 @@ export default function RegisterPage() {
   }
 
   const validate = () => {
-    const errs: Partial<Record<Field, string>> = {}
-    if (!form.companyName.trim()) errs.companyName = 'Укажите наименование'
-    if (!/^(\d{10}|\d{12})$/.test(form.inn)) errs.inn = 'ИНН — 10 или 12 цифр'
-    if (!/^(\d{13}|\d{15})$/.test(form.ogrn)) errs.ogrn = 'ОГРН — 13 цифр, ОГРНИП — 15 цифр'
-    if (!form.pointAddress.trim()) errs.pointAddress = 'Укажите адрес пункта выдачи'
-    if (!form.contactName.trim()) errs.contactName = 'Укажите контактное лицо'
-    if (!form.phone.trim()) errs.phone = 'Укажите телефон'
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim())) errs.email = 'Введите корректный email'
-    if (!form.bankName.trim()) errs.bankName = 'Укажите банк'
-    if (!/^\d{9}$/.test(form.bik)) errs.bik = 'БИК — 9 цифр'
-    if (!/^\d{20}$/.test(form.account)) errs.account = 'Расчётный счёт — 20 цифр'
+    // Те же проверки, что в профиле: ИНН и ОГРН с контрольными суммами, БИК, счёт по ключу БИК, телефон, email
+    const errs: Partial<Record<Field, string>> = partnerErrors(form)
     if (form.password.length < 8) errs.password = 'Минимум 8 символов'
     if (!form.agreeOffer) errs.agreeOffer = 'Без принятия оферты регистрация невозможна'
     if (!form.agreePrivacy) errs.agreePrivacy = 'Нужно согласие на обработку персональных данных'
@@ -66,7 +57,7 @@ export default function RegisterPage() {
       ogrn: form.ogrn,
       pointAddress: form.pointAddress,
       contactName: form.contactName,
-      phone: form.phone,
+      phone: formatPhone(form.phone),
       email: form.email,
       bankName: form.bankName,
       bik: form.bik,
@@ -99,10 +90,11 @@ export default function RegisterPage() {
       errors[field] ? 'border-red-500/50' : 'border-border'
     } bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-sm`
 
+  /* У полей с цифрами нет maxLength: при вставке «4070 2810 9000 0000 1234» пробелы отбрасываются, а не обрезают номер */
   const input = (
     field: keyof RegisterData,
     label: string,
-    opts: { type?: string; placeholder?: string; autoComplete?: string; digitsMax?: number } = {},
+    opts: { type?: string; placeholder?: string; autoComplete?: string; digitsMax?: number; onBlur?: () => void } = {},
   ) => (
     <div>
       <label htmlFor={`reg-${field}`} className="block text-sm font-medium text-text-secondary mb-1.5">{label}</label>
@@ -111,11 +103,12 @@ export default function RegisterPage() {
         type={opts.type ?? 'text'}
         inputMode={opts.digitsMax ? 'numeric' : undefined}
         value={form[field]}
-        onChange={(e) => update(field, opts.digitsMax ? digits(e.target.value, opts.digitsMax) : e.target.value)}
+        onChange={(e) => update(field, opts.digitsMax ? onlyDigits(e.target.value, opts.digitsMax) : e.target.value)}
+        onBlur={opts.onBlur}
         className={inputCls(field)}
         placeholder={opts.placeholder}
         autoComplete={opts.autoComplete}
-        maxLength={opts.digitsMax}
+        aria-invalid={errors[field] ? true : undefined}
       />
       {errors[field] && <p className="text-red-400 text-xs mt-1">{errors[field]}</p>}
     </div>
@@ -125,6 +118,7 @@ export default function RegisterPage() {
     <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
       <div className="absolute bottom-[-80px] left-[30%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
       <div className="w-full max-w-xl relative">
+        <PreviewNotice className="mb-4" />
         <div className="card-glass rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <div className="icon-box mx-auto mb-4">
@@ -151,7 +145,12 @@ export default function RegisterPage() {
               <legend className="font-bold text-text-primary mb-3">Контакты</legend>
               {input('contactName', 'Контактное лицо', { placeholder: 'ФИО', autoComplete: 'name' })}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                {input('phone', 'Телефон', { type: 'tel', placeholder: '+7', autoComplete: 'tel' })}
+                {input('phone', 'Телефон', {
+                  type: 'tel',
+                  placeholder: '+7 900 000-00-00',
+                  autoComplete: 'tel',
+                  onBlur: () => setForm((prev) => ({ ...prev, phone: formatPhone(prev.phone) })),
+                })}
                 {input('email', 'Email', { type: 'email', placeholder: 'email@example.com', autoComplete: 'email' })}
               </div>
             </fieldset>
@@ -199,7 +198,7 @@ export default function RegisterPage() {
                   />
                   <label htmlFor="agreePrivacy" className="text-sm text-text-secondary">
                     Даю согласие на обработку персональных данных в соответствии с{' '}
-                    <Link to="/legal/privacy" target="_blank" className="text-primary no-underline hover:underline">политикой конфиденциальности</Link>
+                    <Link to="/legal/privacy" target="_blank" className="text-primary no-underline hover:underline">Политикой конфиденциальности</Link>
                   </label>
                 </div>
                 {errors.agreePrivacy && <p className="text-red-400 text-xs mt-1">{errors.agreePrivacy}</p>}

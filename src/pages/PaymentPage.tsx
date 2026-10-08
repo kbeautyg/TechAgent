@@ -1,21 +1,39 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Shield, Check, Phone, ChevronDown, MapPin } from 'lucide-react'
-import { mockOrders, mockUsers, saveOrders, DEMO_MODE } from '../data/mock'
+import { mockOrders, mockUsers, updateOrder, DEMO_MODE } from '../data/mock'
 import { mockDocuments } from '../data/documents'
 import { formatPrice, formatDateTime, formatDate } from '../utils/calculate'
-import { LEGAL_NAME, DELIVERY_TERM } from '../seo/site'
+import { useDataRevision } from '../utils/store'
+import { LEGAL_NAME, DELIVERY_TERM, SUPPORT_EMAIL } from '../seo/site'
 
 const SELLER = {
   name: LEGAL_NAME,
-  details: 'ИНН 00403202610304 · рег. № 326302-3301-ООО',
+  inn: 'ИНН 00403202610304',
+  reg: 'рег. № 326302-3301-ООО',
   address: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8',
 }
 
 const PAYMENT_TERMS = mockDocuments.find(d => d.type === 'PAYMENT')?.content ?? ''
 
+/** «5–7 рабочих дней» не разрывается по тире */
+function NoBreakTerm({ text }: { text: string }) {
+  const parts = text.split(/(\d+–\d+\u00A0рабочих дней)/)
+  return <>{parts.map((p, i) => (i % 2 ? <span key={i} className="whitespace-nowrap">{p}</span> : p))}</>
+}
+
+/** Вопросы по заказу — покупателю */
+const questions = (
+  <p className="text-text-muted text-sm mt-3">
+    Вопросы по заказу —{' '}
+    <a href={`mailto:${SUPPORT_EMAIL}`} className="text-primary no-underline hover:underline">{SUPPORT_EMAIL}</a>
+  </p>
+)
+
 export default function PaymentPage() {
   const { paymentId } = useParams()
+  // Статус могли изменить в другой вкладке (кабинет, админка) — страница перерисуется
+  useDataRevision()
   const [paying, setPaying] = useState(false)
   const [paid, setPaid] = useState(false)
   /* Две отдельные отметки: согласие на обработку персональных данных — отдельно от оферты */
@@ -30,6 +48,7 @@ export default function PaymentPage() {
       <div className="min-h-[80vh] flex items-center justify-center bg-white">
         <div className="card-glass p-8 text-center max-w-md w-full mx-4">
           <p className="text-text-muted">Заказ не найден или ссылка устарела</p>
+          {questions}
         </div>
       </div>
     )
@@ -43,17 +62,18 @@ export default function PaymentPage() {
   const handlePay = () => {
     if (!DEMO_MODE || !agreedOffer || !agreedPd) return
     setPaying(true)
+    const orderId = order.id
     setTimeout(() => {
       const now = new Date().toISOString()
-      order.saleOfferAcceptedAt = now
-      order.pdConsentAt = now
-      order.paymentStatus = 'PAID'
-      order.paidAt = now
-      order.status = 'PAID'
-      order.updatedAt = now
-      saveOrders()
+      // Оплата проходит, только если заказ всё ещё ждёт оплаты: его могли отменить, пока шла оплата
+      const updated = updateOrder(
+        orderId,
+        { saleOfferAcceptedAt: now, pdConsentAt: now, paymentStatus: 'PAID', paidAt: now, status: 'PAID' },
+        (o) => o.status === 'CREATED' && o.paymentStatus !== 'PAID',
+      )
       setPaying(false)
-      setPaid(true)
+      if (updated) setPaid(true)
+      window.scrollTo(0, 0)
     }, 2000)
   }
 
@@ -84,6 +104,7 @@ export default function PaymentPage() {
           {order.refundedAt && (
             <p className="text-text-muted text-sm mt-3">Возврат оплаты оформлен {formatDate(order.refundedAt)}.</p>
           )}
+          {questions}
         </div>
       </div>
     )
@@ -124,11 +145,20 @@ export default function PaymentPage() {
           </div>
 
           <div className="bg-bg-light border border-border rounded-lg p-4 text-sm">
-            <p className="text-text-muted mb-2">
-              Товар будет доставлен в пункт выдачи ориентировочно за 5–7&nbsp;рабочих дней с момента выкупа у поставщика.
-              Когда он прибудет, пункт выдачи сообщит вам; товар хранится там 5&nbsp;дней. При получении назовите номер заказа
-              и возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
-            </p>
+            {order.returnedAt ? (
+              <p className="text-text-primary font-medium mb-2">
+                Оформлен возврат денег {formatDate(order.refundedAt ?? order.returnedAt)}
+              </p>
+            ) : order.status === 'ISSUED' && order.issuedAt ? (
+              <p className="text-text-primary font-medium mb-2">Товар выдан {formatDate(order.issuedAt)}</p>
+            ) : (
+              <p className="text-text-muted mb-2">
+                Товар будет доставлен в пункт выдачи ориентировочно за{' '}
+                <span className="whitespace-nowrap">5–7&nbsp;рабочих дней</span> с момента выкупа у поставщика. Когда он
+                прибудет, пункт выдачи сообщит вам; товар хранится там 5&nbsp;дней. При получении назовите номер заказа и
+                возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
+              </p>
+            )}
             {pointBlock}
           </div>
         </div>
@@ -151,14 +181,16 @@ export default function PaymentPage() {
             <span className="text-primary">{formatPrice(order.price)}</span>
           </div>
           <p className="text-xs text-text-muted mt-2">
-            Цена окончательная, доставка до пункта выдачи входит в цену. Срок доставки — {DELIVERY_TERM}.
+            Цена окончательная, доставка до пункта выдачи входит в цену. Срок доставки — <NoBreakTerm text={DELIVERY_TERM} />.
           </p>
         </div>
 
         <div className="mb-5">
           <p className="text-sm text-text-muted mb-1">Продавец</p>
           <p className="font-medium text-sm text-text-primary">{SELLER.name}</p>
-          <p className="text-text-muted text-xs mt-0.5">{SELLER.details}</p>
+          <p className="text-text-muted text-xs mt-0.5">
+            {SELLER.inn} · <span className="whitespace-nowrap">{SELLER.reg}</span>
+          </p>
           <p className="text-text-muted text-xs">{SELLER.address}</p>
         </div>
 

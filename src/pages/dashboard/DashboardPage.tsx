@@ -2,12 +2,25 @@ import { Link } from 'react-router-dom'
 import { Package, Wallet, PackageOpen, PackageCheck, Award, PlusCircle, MessageCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders } from '../../data/mock'
-import { formatPrice, formatDate, storageNote, accruedReward, paidTotal, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
-import { ORDER_STATUS_LABELS, ORDER_STATUS_COLORS, AT_POINT_FILTER_LABEL } from '../../utils/status'
+import { waitingPairsCount } from '../../data/partnerDocuments'
+import {
+  formatPrice,
+  formatDate,
+  formatPercent,
+  storageNote,
+  accruedReward,
+  paidTotal,
+  rewardPercentAt,
+  pendingRewardChange,
+} from '../../utils/calculate'
+import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor } from '../../utils/status'
+import { useDataRevision } from '../../utils/store'
 
 export default function DashboardPage() {
   const { user } = useAuth()
+  useDataRevision()
   const orders = mockOrders.filter((o) => o.userId === user?.id)
+  const waiting = user ? waitingPairsCount(user.id) : 0
   const canOrder = user?.partnerStatus === 'VERIFIED'
   const hasPercent = user ? Boolean(rewardPercentAt(user)) : false
   const accrued = accruedReward(orders)
@@ -17,7 +30,7 @@ export default function DashboardPage() {
     { label: 'Заказов', value: orders.length.toString(), icon: Package },
     { label: 'Оплачено покупателями', value: formatPrice(paidTotal(orders)), icon: Wallet },
     { label: AT_POINT_FILTER_LABEL, value: orders.filter((o) => o.status === 'AT_POINT').length.toString(), icon: PackageOpen },
-    { label: 'Выдано', value: orders.filter((o) => o.status === 'ISSUED').length.toString(), icon: PackageCheck },
+    { label: 'Выдано', value: orders.filter(isIssued).length.toString(), icon: PackageCheck },
     { label: 'Начислено вознаграждения', value: hasPercent && accrued !== null ? formatPrice(accrued) : '—', icon: Award },
   ]
 
@@ -48,14 +61,32 @@ export default function DashboardPage() {
         </div>
       </div>
 
+      {waiting > 0 && (
+        <Link
+          to="/dashboard/documents"
+          className="mb-6 flex items-center justify-between gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900 no-underline hover:bg-amber-100 transition-colors"
+        >
+          <span className="text-sm font-semibold">
+            Ждут решения: {waiting} — {waiting === 1 ? 'отчёт агента и акт' : 'отчёты агента и акты'}
+          </span>
+          <span className="text-sm shrink-0">Открыть &rarr;</span>
+        </Link>
+      )}
+
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
         {stats.map((s) => (
-          <div key={s.label} className="card p-4">
+          <div key={s.label} className="card p-4 min-w-0" style={{ containerType: 'inline-size' }}>
             <div className="flex items-center gap-2 text-text-muted">
-              <s.icon size={16} />
+              <s.icon size={16} className="shrink-0" />
               <p className="text-xs">{s.label}</p>
             </div>
-            <p className="font-display text-lg font-bold mt-1 text-text-primary break-words">{s.value}</p>
+            {/* Сумма с «₽» не переносится: размер цифр зависит от ширины плитки, миллионы тоже помещаются */}
+            <p
+              className="font-display text-base sm:text-lg font-bold mt-1 text-text-primary whitespace-nowrap"
+              style={{ fontSize: 'clamp(0.75rem, 12.5cqi, 1.125rem)' }}
+            >
+              {s.value}
+            </p>
           </div>
         ))}
       </div>
@@ -63,7 +94,7 @@ export default function DashboardPage() {
         Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.
         {pending && (
           <span className="block mt-1 text-amber-700">
-            С {formatDate(pending.from)} вознаграждение — {pending.percent}% от цены товара для заказов, оформленных с этой даты.
+            С {formatDate(pending.from)} вознаграждение — {formatPercent(pending.percent)} от цены товара для заказов, оформленных с этой даты.
           </span>
         )}
       </p>
@@ -99,8 +130,8 @@ export default function DashboardPage() {
                 <div className="min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="font-medium text-sm text-text-primary">{order.orderNumber}</span>
-                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${ORDER_STATUS_COLORS[order.status]}`}>
-                      {ORDER_STATUS_LABELS[order.status]}
+                    <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${orderStatusColor(order)}`}>
+                      {orderStatusLabel(order)}
                     </span>
                   </div>
                   <p className="text-text-secondary text-sm mt-0.5 truncate">{order.productName}</p>

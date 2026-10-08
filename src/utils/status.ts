@@ -1,4 +1,4 @@
-import type { OrderStatus, PaymentStatus, PartnerStatus, BuyerClaimType } from '../types'
+import type { Order, OrderStatus, PaymentStatus, PartnerStatus, BuyerClaimType } from '../types'
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, string> = {
   CREATED: 'Создан',
@@ -30,6 +30,28 @@ export const PAYMENT_STATUS_COLORS: Record<PaymentStatus, string> = {
   PENDING: 'bg-amber-50 text-amber-700',
   PAID: 'bg-emerald-50 text-emerald-700',
   FAILED: 'bg-red-50 text-red-700',
+}
+
+/* ── Возврат после выдачи и отмена с возвратом денег ──
+ * Возвращённый заказ остаётся в статусе ISSUED (выдача была), но выглядит и считается как возврат */
+
+/** Товар выдан и не возвращён: такие заказы считаются в «Выдано» и в фильтре «Выданы» */
+export const isIssued = (o: Pick<Order, 'status' | 'returnedAt'>): boolean => o.status === 'ISSUED' && !o.returnedAt
+
+export function orderStatusLabel(o: Pick<Order, 'status' | 'returnedAt'>): string {
+  return o.returnedAt ? 'Возврат после выдачи' : ORDER_STATUS_LABELS[o.status]
+}
+
+export function orderStatusColor(o: Pick<Order, 'status' | 'returnedAt'>): string {
+  return o.returnedAt ? 'bg-orange-50 text-orange-700' : ORDER_STATUS_COLORS[o.status]
+}
+
+export function paymentStatusLabel(o: Pick<Order, 'paymentStatus' | 'refundedAt'>): string {
+  return o.refundedAt ? 'Возврат оформлен' : PAYMENT_STATUS_LABELS[o.paymentStatus]
+}
+
+export function paymentStatusColor(o: Pick<Order, 'paymentStatus' | 'refundedAt'>): string {
+  return o.refundedAt ? 'bg-slate-100 text-slate-700' : PAYMENT_STATUS_COLORS[o.paymentStatus]
 }
 
 /** Шкала заказа: создан → оплачен → выкуплен у поставщика → в пути → прибыл в пункт выдачи → выдан покупателю */
@@ -68,4 +90,10 @@ export const PARTNER_STATUS_COLORS: Record<PartnerStatus, string> = {
   PENDING: 'bg-amber-50 text-amber-700',
   VERIFIED: 'bg-emerald-50 text-emerald-700',
   REJECTED: 'bg-red-50 text-red-700',
+}
+
+/** « (фото: 3)» — сколько фото приложено к отметке о повреждении при приёмке */
+export function photoNote(order: Pick<Order, 'receivedIssuePhotos' | 'receivedIssuePhoto'>): string {
+  if (order.receivedIssuePhotos) return ` (фото: ${order.receivedIssuePhotos})`
+  return order.receivedIssuePhoto ? ' (фото приложено)' : ''
 }

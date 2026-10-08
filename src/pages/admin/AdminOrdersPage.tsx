@@ -1,18 +1,25 @@
 import { useState } from 'react'
-import { mockOrders, mockUsers, saveOrders } from '../../data/mock'
-import { formatPrice, formatDate, formatReward, storageUntil, storageExpired } from '../../utils/calculate'
+import { Search } from 'lucide-react'
+import { mockOrders, mockUsers, updateOrder } from '../../data/mock'
+import { formatPrice, formatDate, formatReward, storageUntil, storageExpired, cancelledAtPoint } from '../../utils/calculate'
 import {
   ORDER_STATUS_LABELS,
-  ORDER_STATUS_COLORS,
-  PAYMENT_STATUS_LABELS,
-  PAYMENT_STATUS_COLORS,
   ADMIN_NEXT_STATUS,
   AT_POINT_FILTER_LABEL,
   BUYER_CLAIM_LABELS,
+  isIssued,
+  orderStatusLabel,
+  orderStatusColor,
+  paymentStatusLabel,
+  paymentStatusColor,
+  photoNote,
 } from '../../utils/status'
+import { useDataRevision } from '../../utils/store'
 import type { Order, OrderStatus } from '../../types'
 
-const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
+type Filter = OrderStatus | 'ALL' | 'CLAIMS'
+
+const filterTabs: { label: string; value: Filter }[] = [
   { label: 'Все', value: 'ALL' },
   { label: 'Ждут оплаты', value: 'CREATED' },
   { label: 'Оплачены', value: 'PAID' },
@@ -21,18 +28,31 @@ const filterTabs: { label: string; value: OrderStatus | 'ALL' }[] = [
   { label: AT_POINT_FILTER_LABEL, value: 'AT_POINT' },
   { label: 'Выданы', value: 'ISSUED' },
   { label: 'Отменены', value: 'CANCELLED' },
+  { label: 'С обращениями', value: 'CLAIMS' },
 ]
 
 const actionBtn = 'text-xs px-2 py-1 rounded font-medium transition-colors border-none cursor-pointer whitespace-nowrap'
+
+/** Отмена с возвратом денег — по оплаченному заказу до выдачи товара (п. 6.1 оферты купли-продажи) */
+const REFUNDABLE: OrderStatus[] = ['PAID', 'PURCHASED', 'IN_TRANSIT', 'AT_POINT']
+const isRefundable = (o: Order) => REFUNDABLE.includes(o.status) && o.paymentStatus === 'PAID' && !o.refundedAt
+
+/** Статус успели изменить в другой вкладке — действие не применено */
+const STALE = 'Заказ уже изменён в другой вкладке — данные на странице обновлены.'
+
+function matchesFilter(o: Order, filter: Filter): boolean {
+  if (filter === 'ALL') return true
+  if (filter === 'CLAIMS') return (o.buyerClaims ?? []).length > 0
+  // «Выданы» — без заказов, возвращённых после выдачи
+  if (filter === 'ISSUED') return isIssued(o)
+  return o.status === filter
+}
 
 /** Отметки о заказе, на которые ТехЭйджент нужно обратить внимание: приёмка, хранение, обращения, возврат */
 function OrderNotes({ order }: { order: Order }) {
   const notes: { text: string; tone: 'muted' | 'warn' | 'alert' }[] = []
   if (order.receivedIssue) {
-    notes.push({
-      text: `При приёмке: ${order.receivedIssue}${order.receivedIssuePhoto ? ' (фото приложено)' : ''}`,
-      tone: 'warn',
-    })
+    notes.push({ text: `При приёмке: ${order.receivedIssue}${photoNote(order)}`, tone: 'warn' })
   }
   if (order.status === 'AT_POINT') {
     const until = storageUntil(order)
@@ -40,74 +60,107 @@ function OrderNotes({ order }: { order: Order }) {
     else if (storageExpired(order)) notes.push({ text: 'Срок хранения истёк', tone: 'alert' })
     else if (until) notes.push({ text: `Хранится до ${formatDate(until.toISOString())}`, tone: 'muted' })
   }
+  if (cancelledAtPoint(order)) {
+    notes.push({ text: 'Товар остался в пункте выдачи — партнёр хранит его до указания ТехЭйджент', tone: 'warn' })
+  }
   for (const c of order.buyerClaims ?? []) {
     notes.push({
       text: `Обращение покупателя (${BUYER_CLAIM_LABELS[c.type].toLowerCase()}), ${formatDate(c.createdAt)}: ${c.text}${c.photoAttached ? ' (фото приложено)' : ''}`,
       tone: 'alert',
     })
   }
-  if (order.refundedAt) notes.push({ text: `Возврат оплаты оформлен ${formatDate(order.refundedAt)}`, tone: 'muted' })
+  if (order.refundedAt && !order.returnedAt) notes.push({ text: `Возврат оплаты оформлен ${formatDate(order.refundedAt)}`, tone: 'muted' })
   if (order.returnedAt) notes.push({ text: `Товар возвращён после выдачи ${formatDate(order.returnedAt)}, вознаграждение аннулировано`, tone: 'muted' })
   if (notes.length === 0) return null
   const tone = { muted: 'text-text-muted', warn: 'text-amber-700', alert: 'text-red-700' }
   return (
-    <div className="mt-1.5 space-y-1 max-w-64">
+    <div className="mt-1.5 space-y-1 w-64 max-w-64">
       {notes.map((n, i) => (
-        <p key={i} className={`text-xs whitespace-normal break-words ${tone[n.tone]}`}>{n.text}</p>
+        // Длинный текст обращения переносится в любом месте и не растягивает строку таблицы
+        <p key={i} className={`text-xs whitespace-pre-line [overflow-wrap:anywhere] ${tone[n.tone]}`}>{n.text}</p>
       ))}
     </div>
   )
 }
 
+/** Вознаграждение в списке: у отменённых не начисляется, у возвращённых аннулировано */
+function rewardText(o: Order): string {
+  if (o.status === 'CANCELLED') return 'не начисляется'
+  if (o.returnedAt) return 'аннулировано'
+  return formatReward(o.partnerReward)
+}
+
 export default function AdminOrdersPage() {
-  const [filter, setFilter] = useState<OrderStatus | 'ALL'>('ALL')
-  const [, setRefreshKey] = useState(0)
+  useDataRevision()
+  const [filter, setFilter] = useState<Filter>('ALL')
+  const [search, setSearch] = useState('')
 
-  const orders = mockOrders.filter((o) => filter === 'ALL' || o.status === filter)
+  const q = search.trim().toLowerCase()
+  const partnerName = (o: Order) => mockUsers.find((u) => u.id === o.userId)?.companyName ?? ''
+  const orders = mockOrders
+    .filter((o) => matchesFilter(o, filter))
+    .filter(
+      (o) =>
+        q === '' ||
+        o.orderNumber.toLowerCase().includes(q) ||
+        o.buyerName.toLowerCase().includes(q) ||
+        o.productName.toLowerCase().includes(q) ||
+        partnerName(o).toLowerCase().includes(q),
+    )
 
-  const patch = (order: Order, data: Partial<Order>) => {
-    Object.assign(order, data, { updatedAt: new Date().toISOString() })
-    saveOrders()
-    setRefreshKey((k) => k + 1)
+  /** Изменение применяется, только если заказ всё ещё в том статусе, который видел сотрудник */
+  const patch = (order: Order, data: Partial<Order>, guard: (fresh: Order) => boolean) => {
+    if (!updateOrder(order.id, data, guard)) alert(STALE)
   }
 
   const markPaid = (order: Order) => {
     if (!confirm(`Отметить заказ ${order.orderNumber} оплаченным? Только если оплата ${formatPrice(order.price)} поступила на счёт ТехЭйджент.`)) return
-    patch(order, { paymentStatus: 'PAID', paidAt: new Date().toISOString(), status: 'PAID' })
+    patch(
+      order,
+      { paymentStatus: 'PAID', paidAt: new Date().toISOString(), status: 'PAID' },
+      (o) => o.status === 'CREATED' && o.paymentStatus !== 'PAID',
+    )
   }
 
   const moveTo = (order: Order, next: OrderStatus) => {
     if (!confirm(`Перевести заказ ${order.orderNumber} в статус «${ORDER_STATUS_LABELS[next]}»?`)) return
-    patch(order, { status: next })
+    patch(order, { status: next }, (o) => o.status === order.status)
   }
 
   const cancel = (order: Order) => {
     if (!confirm(`Отменить заказ ${order.orderNumber}? Оплаты по нему не было.`)) return
-    patch(order, { status: 'CANCELLED' })
+    patch(
+      order,
+      { status: 'CANCELLED', cancelledFrom: order.status },
+      (o) => o.status === 'CREATED' && o.paymentStatus !== 'PAID',
+    )
   }
 
   const cancelWithRefund = (order: Order) => {
-    if (
-      !confirm(
-        `Отменить заказ ${order.orderNumber} и вернуть покупателю ${formatPrice(order.price)}? ` +
-          'Деньги возвращаются тем же способом, которым была произведена оплата.',
-      )
+    const atPoint = order.status === 'AT_POINT'
+    const text =
+      `Отменить заказ ${order.orderNumber} и вернуть покупателю уплаченную сумму ${formatPrice(order.price)}? ` +
+      'Отказ от товара до получения — деньги возвращаются полностью (п. 6.1 оферты купли-продажи).' +
+      (atPoint ? ' Товар находится в пункте выдачи — партнёр хранит его до указания ТехЭйджент.' : '')
+    if (!confirm(text)) return
+    patch(
+      order,
+      { status: 'CANCELLED', cancelledFrom: order.status, refundedAt: new Date().toISOString() },
+      (o) => o.status === order.status && isRefundable(o),
     )
-      return
-    const now = new Date().toISOString()
-    patch(order, { status: 'CANCELLED', refundedAt: now })
   }
 
   const returnAfterIssue = (order: Order) => {
     if (
       !confirm(
-        `Оформить возврат товара по заказу ${order.orderNumber} и вернуть покупателю ${formatPrice(order.price)}? ` +
-          'Вознаграждение партнёра по заказу аннулируется (п. 7.3 оферты).',
+        `Оформить возврат товара по заказу ${order.orderNumber}? Покупателю возвращается уплаченная сумма, при возврате ` +
+          'товара надлежащего качества — за вычетом расходов на доставку возвращённого товара (п. 7.2 оферты ' +
+          'купли-продажи). Вознаграждение партнёра по заказу аннулируется (п. 7.3 агентского договора-оферты).',
       )
     )
       return
     const now = new Date().toISOString()
-    patch(order, { returnedAt: now, refundedAt: now })
+    patch(order, { returnedAt: now, refundedAt: now }, (o) => o.status === 'ISSUED' && !o.returnedAt)
   }
 
   return (
@@ -115,6 +168,18 @@ export default function AdminOrdersPage() {
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-text-primary">Заказы</h1>
         <span className="text-text-muted text-sm">{mockOrders.length} всего</span>
+      </div>
+
+      <div className="relative mb-4">
+        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
+        <input
+          type="search"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          placeholder="Номер, покупатель, товар или партнёр"
+          aria-label="Поиск по заказам"
+          className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
+        />
       </div>
 
       <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
@@ -134,6 +199,7 @@ export default function AdminOrdersPage() {
       </div>
 
       <div className="card overflow-hidden">
+        {/* Таблица прокручивается по горизонтали внутри карточки и не ломает страницу */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
@@ -157,7 +223,6 @@ export default function AdminOrdersPage() {
                 const partner = mockUsers.find((u) => u.id === order.userId)
                 const next = ADMIN_NEXT_STATUS[order.status]
                 const unpaid = order.status === 'CREATED' && order.paymentStatus !== 'PAID'
-                const refundable = (order.status === 'PAID' || order.status === 'PURCHASED') && order.paymentStatus === 'PAID'
                 return (
                   <tr key={order.id} className="hover:bg-bg-light transition-colors align-top">
                     <td className="px-4 py-3 whitespace-nowrap">
@@ -174,18 +239,16 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-4 py-3 whitespace-nowrap">
                       <p className="font-medium text-text-primary">{formatPrice(order.price)}</p>
-                      <p className="text-xs text-text-muted">
-                        вознагр. {order.status === 'CANCELLED' ? 'не начисляется' : formatReward(order.partnerReward)}
-                      </p>
+                      <p className="text-xs text-text-muted">вознагр. {rewardText(order)}</p>
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-col items-start gap-1">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${ORDER_STATUS_COLORS[order.status]}`}>
-                          {ORDER_STATUS_LABELS[order.status]}
+                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${orderStatusColor(order)}`}>
+                          {orderStatusLabel(order)}
                         </span>
                         {(order.status !== 'CANCELLED' || order.paymentStatus === 'PAID') && (
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${PAYMENT_STATUS_COLORS[order.paymentStatus]}`}>
-                            {PAYMENT_STATUS_LABELS[order.paymentStatus]}
+                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${paymentStatusColor(order)}`}>
+                            {paymentStatusLabel(order)}
                           </span>
                         )}
                       </div>
@@ -206,16 +269,16 @@ export default function AdminOrdersPage() {
                             &rarr; {ORDER_STATUS_LABELS[next]}
                           </button>
                         )}
-                        {refundable && (
-                          <button onClick={() => cancelWithRefund(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
-                            Отменить с возвратом
-                          </button>
-                        )}
                         {order.status === 'IN_TRANSIT' && (
                           <span className="text-xs text-text-muted">Приёмку отмечает партнёр</span>
                         )}
                         {order.status === 'AT_POINT' && (
                           <span className="text-xs text-text-muted">Выдачу подтверждает партнёр</span>
+                        )}
+                        {isRefundable(order) && (
+                          <button onClick={() => cancelWithRefund(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+                            Отменить с возвратом
+                          </button>
                         )}
                         {order.status === 'ISSUED' && (
                           <span className={`text-xs ${order.issueActUploaded ? 'text-text-muted' : 'text-red-600'}`}>

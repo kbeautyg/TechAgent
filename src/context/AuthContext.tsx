@@ -1,6 +1,7 @@
-import { createContext, useContext, useState, useEffect, type ReactNode } from 'react'
+import { createContext, useContext, useState, type ReactNode } from 'react'
 import type { User } from '../types'
-import { mockUsers, saveUsers, updateUser } from '../data/mock'
+import { mockUsers, addUser, updateUser, findUserByEmail, isDemoUser } from '../data/mock'
+import { useDataRevision } from '../utils/store'
 
 const SESSION_KEY = 'techagent_user'
 
@@ -10,8 +11,8 @@ interface AuthContextType {
   /** Регистрация Партнёра: анкета уходит на проверку ТехЭйджент (partnerStatus = 'PENDING') */
   register: (data: RegisterData) => Promise<'ok' | 'email_taken'>
   logout: () => void
-  updateProfile: (data: Partial<User>) => void
-  isLoading: boolean
+  /** Изменить данные своей учётки; patch может быть функцией от актуальной записи */
+  updateProfile: (data: Partial<User> | ((fresh: User) => Partial<User> | null)) => User | null
 }
 
 /** Анкета Партнёра */
@@ -32,52 +33,62 @@ export interface RegisterData {
 
 const AuthContext = createContext<AuthContextType | null>(null)
 
+/** В сессии — только id и email: данные учётки всегда берутся из актуальных записей */
 function storeSession(u: User | null) {
   try {
-    if (u) localStorage.setItem(SESSION_KEY, JSON.stringify(u))
+    if (u) localStorage.setItem(SESSION_KEY, JSON.stringify({ id: u.id, email: u.email }))
     else localStorage.removeItem(SESSION_KEY)
   } catch { /* storage недоступен */ }
 }
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+/** Сохранённая сессия. Сессии учёток, которых больше нет (например, демо в боевой сборке), сбрасываем */
+function restoreSession(): string | null {
+  try {
+    const saved = localStorage.getItem(SESSION_KEY)
+    if (!saved) return null
+    const parsed = JSON.parse(saved) as { id?: string; email?: string }
+    const found = mockUsers.find((u) => u.id === parsed.id && u.email === parsed.email)
+    if (found) return found.id
+    localStorage.removeItem(SESSION_KEY)
+  } catch { /* storage недоступен (пререндер) или данные повреждены */ }
+  return null
+}
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(SESSION_KEY)
-      if (saved) {
-        const parsed = JSON.parse(saved) as User
-        // Берём актуальную запись: статус проверки мог поменять ТехЭйджент.
-        // Сессии учёток, которых больше нет (например, демо в боевой сборке), сбрасываем.
-        const fresh = mockUsers.find((u) => u.id === parsed.id && u.email === parsed.email)
-        if (fresh) {
-          setUser(fresh)
-          storeSession(fresh)
-        } else {
-          storeSession(null)
-        }
-      }
-    } catch { /* corrupted data */ }
-    setIsLoading(false)
-  }, [])
+/** SHA-256 от id учётки и пароля: пароль в открытом виде не хранится */
+async function hashPassword(userId: string, password: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`${userId}:${password}`))
+  return Array.from(new Uint8Array(digest), (b) => b.toString(16).padStart(2, '0')).join('')
+}
+
+export function AuthProvider({ children }: { children: ReactNode }) {
+  const [userId, setUserId] = useState<string | null>(restoreSession)
+  // Учётку могли изменить в другой вкладке (например, ТехЭйджент подтвердил анкету) — берём актуальную запись
+  useDataRevision()
+  const user = userId ? (mockUsers.find((u) => u.id === userId) ?? null) : null
 
   const login = async (email: string, password: string): Promise<boolean> => {
     if (!password.trim()) return false
-    const found = mockUsers.find((u) => u.email.toLowerCase() === email.trim().toLowerCase())
-    if (found) {
-      setUser(found)
-      storeSession(found)
-      return true
+    const found = findUserByEmail(email)
+    if (!found) return false
+    if (found.passwordHash) {
+      if ((await hashPassword(found.id, password)) !== found.passwordHash) return false
+    } else if (!isDemoUser(found)) {
+      // Учётка заведена до проверки паролей: первый вход задаёт пароль
+      updateUser(found.id, { passwordHash: await hashPassword(found.id, password) })
     }
-    return false
+    setUserId(found.id)
+    storeSession(found)
+    return true
   }
 
   const register = async (data: RegisterData): Promise<'ok' | 'email_taken'> => {
     const email = data.email.trim()
-    if (mockUsers.find((u) => u.email.toLowerCase() === email.toLowerCase())) return 'email_taken'
+    const id = crypto.randomUUID()
+    const passwordHash = await hashPassword(id, data.password)
+    if (findUserByEmail(email)) return 'email_taken'
+    const now = new Date().toISOString()
     const newUser: User = {
-      id: crypto.randomUUID(),
+      id,
       email,
       role: 'CLIENT',
       companyName: data.companyName.trim(),
@@ -90,29 +101,26 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       bik: data.bik,
       account: data.account,
       partnerStatus: 'PENDING',
-      createdAt: new Date().toISOString(),
+      passwordHash,
+      createdAt: now,
+      updatedAt: now,
     }
-    mockUsers.push(newUser)
-    saveUsers()
-    setUser(newUser)
+    addUser(newUser)
+    setUserId(id)
     storeSession(newUser)
     return 'ok'
   }
 
-  const updateProfile = (data: Partial<User>) => {
-    if (!user) return
-    const updated = updateUser(user.id, data) ?? { ...user, ...data }
-    setUser(updated)
-    storeSession(updated)
-  }
+  const updateProfile = (data: Partial<User> | ((fresh: User) => Partial<User> | null)): User | null =>
+    userId ? updateUser(userId, data) : null
 
   const logout = () => {
-    setUser(null)
+    setUserId(null)
     storeSession(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, updateProfile, isLoading }}>
+    <AuthContext.Provider value={{ user, login, register, logout, updateProfile }}>
       {children}
     </AuthContext.Provider>
   )
