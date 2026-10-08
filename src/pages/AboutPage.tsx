@@ -68,7 +68,7 @@ const contacts: InfoRow[] = [
   { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
   { label: 'Покупателям', value: 'help@techagent.pro', href: 'mailto:help@techagent.pro' },
   { label: 'Юридические вопросы', value: 'compliance@techagent.pro', href: 'mailto:compliance@techagent.pro' },
-  { label: 'Поддержка в Telegram', value: '@techagent_support', href: 'https://t.me/techagent_support' },
+  { label: 'Поддержка в Telegram', value: '@techagent_support_bot', href: 'https://t.me/techagent_support_bot' },
   { label: 'Документы', value: 'Оферты, политика, соглашение', href: '/legal' },
 ]
 

@@ -72,7 +72,7 @@
 ## Контакты
 info@techagent.pro — общие вопросы и персональные данные; partners@techagent.pro — партнёрам;
 help@techagent.pro — покупателям (оплата, возврат, товар); compliance@techagent.pro — юридические вопросы.
-Telegram поддержки: t.me/techagent_support (уже был на сайте).
+Telegram поддержки: бот @techagent_support_bot (с 08.10; код ~/techagent-bot, Railway worthy-magic, сервис techagent-bot).
 
 ## Статусы заказа
 Создан → Оплачен → Выкуплен у поставщика → В пути → Прибыл в пункт выдачи → Выдан покупателю; Отменён.

@@ -33,7 +33,7 @@ interface Message {
 /* ── Контакты и переписка ──
  * Бэкенда у чата нет. Демо-переписка — только в режиме разработки или при VITE_DEMO=1. */
 const PARTNERS_EMAIL = 'partners@techagent.pro'
-const SUPPORT_TG = 't.me/techagent_support'
+const SUPPORT_TG = 't.me/techagent_support_bot'
 
 const managerContact: ChatContact = {
   id: 'manager', name: 'Менеджер TechAgent', initials: 'TA', role: 'Менеджер',

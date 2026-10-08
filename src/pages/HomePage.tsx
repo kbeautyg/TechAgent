@@ -380,7 +380,7 @@ export default function HomePage() {
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
                 Оставить заявку <ArrowRight size={16} />
               </Link>
-              <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" onClick={() => reachGoal('support_click')} className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
+              <a href="https://t.me/techagent_support_bot" target="_blank" rel="noopener noreferrer" onClick={() => reachGoal('support_click')} className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
                 Написать в поддержку
               </a>
             </div>
