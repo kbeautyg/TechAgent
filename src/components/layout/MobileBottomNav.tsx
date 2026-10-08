@@ -31,7 +31,7 @@ const publicNav: NavItem[] = [
   { to: '/', icon: Home, label: 'Главная', end: true },
   { to: '/catalog', icon: ShoppingBag, label: 'Каталог', end: false },
   { to: '/login', icon: LogIn, label: 'Войти', end: false, accent: true },
-  { to: '/about', icon: Info, label: 'О платформе', end: false },
+  { to: '/about', icon: Info, label: 'О нас', end: false },
   { to: '/register', icon: User, label: 'Партнёрам', end: false },
 ]
 

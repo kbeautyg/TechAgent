@@ -56,7 +56,7 @@ export default function HowItWorksPage() {
       <section className="relative overflow-hidden pt-28 pb-12">
         <div className="absolute top-[-80px] right-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-4 text-text-primary tracking-tight leading-[1.08]">
+          <h1 className="text-[32px] sm:text-[48px] [text-wrap:balance] font-extrabold mb-4 text-text-primary tracking-tight leading-[1.08]">
             Как это работает
           </h1>
           <p className="text-lg text-text-secondary max-w-xl mx-auto">

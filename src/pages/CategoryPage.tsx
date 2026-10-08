@@ -42,7 +42,7 @@ export default function CategoryPage({ landing }: Props) {
 
         {/* Header */}
         <header className="mt-6 mb-8 max-w-3xl">
-          <h1 className="text-[30px] sm:text-[38px] font-extrabold tracking-tight text-text-primary mb-4 leading-[1.1]">
+          <h1 className="text-[28px] sm:text-[38px] [text-wrap:balance] font-extrabold tracking-tight text-text-primary mb-4 leading-[1.1]">
             {landing.h1}
           </h1>
           {landing.intro.map((p, i) => (

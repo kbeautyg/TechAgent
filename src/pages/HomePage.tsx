@@ -1,3 +1,4 @@
+import { getProductImage } from '../utils/productImages'
 import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { ArrowRight, ChevronDown } from 'lucide-react'
@@ -84,7 +85,7 @@ export default function HomePage() {
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
             {/* Left — text + buttons */}
             <div className="flex-1 hero-mobile-full text-center lg:text-left">
-              <h1 className="text-[32px] sm:text-[40px] lg:text-[48px] font-extrabold leading-[1.08] tracking-tight text-text-primary mb-4 sm:mb-5">
+              <h1 className="text-[32px] sm:text-[40px] lg:text-[48px] [text-wrap:balance] font-extrabold leading-[1.08] tracking-tight text-text-primary mb-4 sm:mb-5">
                 Станьте пунктом выдачи электроники TechAgent
               </h1>
               <p className="text-[15px] sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl mx-auto lg:mx-0">
@@ -120,12 +121,12 @@ export default function HomePage() {
                   {/* Orders */}
                   <div className="px-3 pb-3">
                     {[
-                      { item: 'iPhone 16 Pro Max', sum: '199 900 ₽', status: 'В пути', sColor: 'text-blue-600' },
-                      { item: 'MacBook Air 13" M3', sum: '99 900 ₽', status: 'Прибыл в пункт выдачи', sColor: 'text-green-600' },
+                      { item: 'iPhone 16 Pro Max', img: getProductImage('iph16promax', '', 'Смартфоны'), sum: '199 900 ₽', status: 'В пути', sColor: 'text-blue-600' },
+                      { item: 'MacBook Air 13" M3', img: getProductImage('macbookairm3256', '', 'Ноутбуки'), sum: '99 900 ₽', status: 'Прибыл в пункт выдачи', sColor: 'text-green-600' },
                     ].map((o, i) => (
                       <div key={i} className="flex items-center gap-2 py-2 border-b border-gray-50 last:border-0">
-                        <div className="w-8 h-8 rounded-lg bg-gray-50 flex items-center justify-center text-[12px] font-bold text-gray-300">{o.item[0]}</div>
-                        <div className="flex-1 min-w-0">
+                        <img src={o.img} alt="" width={32} height={32} loading="lazy" className="w-8 h-8 rounded-lg bg-gray-50 object-contain shrink-0" />
+                        <div className="flex-1 min-w-0 text-left">
                           <div className="text-[11px] font-semibold text-gray-800 truncate">{o.item}</div>
                           <div className="text-[10px] text-gray-400">{o.sum}</div>
                         </div>
@@ -251,7 +252,7 @@ export default function HomePage() {
 
         {/* ===== FEATURES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="features">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-10 sm:mb-16">
             Кто продаёт, кто платит, кто выдаёт
           </h2>
 
@@ -270,7 +271,7 @@ export default function HomePage() {
 
         {/* ===== HOW IT WORKS ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="how">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-10 sm:mb-16">
             Как это работает
           </h2>
 
@@ -340,7 +341,7 @@ export default function HomePage() {
 
         {/* ===== CATEGORIES ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="categories">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Популярные категории товаров
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-12 text-[16px]">
@@ -365,7 +366,7 @@ export default function HomePage() {
 
         {/* ===== FAQ ===== */}
         <div className="pt-14 sm:pt-24 pb-4" id="faq">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-10 sm:mb-16">
             Отвечаем на&nbsp;вопросы
           </h2>
           <FAQ />

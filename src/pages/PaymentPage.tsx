@@ -10,7 +10,8 @@ import { LEGAL_NAME, DELIVERY_TERM, SUPPORT_EMAIL } from '../seo/site'
 const SELLER = {
   name: LEGAL_NAME,
   inn: 'ИНН 9909766511, КПП 771387001',
-  reg: 'рег. № 326302-3301-ООО (Кыргызская Республика)',
+  reg: 'рег. № 326302-3301-ООО',
+  country: 'Кыргызская Республика',
   address: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8',
 }
 
@@ -189,7 +190,7 @@ export default function PaymentPage() {
           <p className="text-sm text-text-muted mb-1">Продавец</p>
           <p className="font-medium text-sm text-text-primary">{SELLER.name}</p>
           <p className="text-text-muted text-xs mt-0.5">
-            {SELLER.inn} · <span className="whitespace-nowrap">{SELLER.reg}</span>
+            {SELLER.inn} · <span className="whitespace-nowrap">{SELLER.reg}</span> ({SELLER.country})
           </p>
           <p className="text-text-muted text-xs">{SELLER.address}</p>
         </div>

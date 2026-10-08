@@ -59,12 +59,12 @@ export default function Header() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-1">
+          <nav className="hidden lg:flex items-center gap-1">
             {navLinks.map((link) => (
               <Link
                 key={link.path}
                 to={link.path}
-                className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 no-underline ${
+                className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-300 no-underline ${
                   location.pathname === link.path
                     ? 'text-primary bg-primary/[0.07] font-semibold'
                     : 'text-text-muted hover:text-primary hover:bg-primary/[0.04]'
@@ -76,7 +76,7 @@ export default function Header() {
           </nav>
 
           {/* Right side */}
-          <div className="hidden md:flex items-center gap-3">
+          <div className="hidden lg:flex items-center gap-3">
             {user ? (
               <>
                 {user.role === 'ADMIN' && !isDashboard && (
@@ -126,7 +126,7 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="md:hidden p-2 rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
+            className="lg:hidden p-2 rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
             aria-label="Меню"
             aria-expanded={mobileOpen}
           >
@@ -135,7 +135,7 @@ export default function Header() {
         </div>
 
         {/* Mobile menu */}
-        <div className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? 'max-h-[500px] opacity-100 pb-4 border-t border-border' : 'max-h-0 opacity-0'}`}>
+        <div className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${mobileOpen ? 'max-h-[500px] opacity-100 pb-4 border-t border-border' : 'max-h-0 opacity-0'}`}>
           <div className="bg-white pt-2">
             <div className="flex flex-col gap-0.5">
               {navLinks.map((link) => (

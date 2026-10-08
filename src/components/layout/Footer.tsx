@@ -15,9 +15,9 @@ export default function Footer() {
   return (
     <footer className="bg-bg-dark text-text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-6 sm:gap-10">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-x-10">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
+          <div className="col-span-2 lg:col-span-1">
             <Link to="/" className="flex items-center gap-2.5 no-underline mb-4">
               <div className="w-8 h-8 rounded-xl bg-primary flex items-center justify-center">
                 <LogoIcon size={14} />
@@ -75,16 +75,30 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Contacts */}
-          <div>
+          {/* Contacts: адрес почты отдельной строкой — на телефоне не рвётся посреди слова */}
+          <div className="col-span-2 lg:col-span-1">
             <h4 className="text-sm font-semibold text-white mb-4">Контакты</h4>
-            <div className="flex flex-col gap-2.5 text-text-dark-secondary text-sm min-w-0 [overflow-wrap:anywhere]">
-              <a href="mailto:info@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">info@techagent.pro — общие вопросы</a>
-              <a href="mailto:partners@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">partners@techagent.pro — партнёрам</a>
-              <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — покупателям</a>
-              <a href="mailto:compliance@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">compliance@techagent.pro — юридические вопросы</a>
-              <a href="https://t.me/techagent_support_bot" target="_blank" rel="noopener noreferrer" className="text-text-dark-secondary hover:text-white transition-colors no-underline">Telegram: @techagent_support_bot</a>
-              <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8</span>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-x-6 gap-y-3 text-sm">
+              {[
+                { href: 'mailto:info@techagent.pro', value: 'info@techagent.pro', note: 'общие вопросы' },
+                { href: 'mailto:partners@techagent.pro', value: 'partners@techagent.pro', note: 'партнёрам' },
+                { href: 'mailto:help@techagent.pro', value: 'help@techagent.pro', note: 'покупателям' },
+                { href: 'mailto:compliance@techagent.pro', value: 'compliance@techagent.pro', note: 'юридические вопросы' },
+                { href: 'https://t.me/techagent_support_bot', value: '@techagent_support_bot', note: 'поддержка в Telegram' },
+              ].map((c) => (
+                <a
+                  key={c.value}
+                  href={c.href}
+                  {...(c.href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className="group no-underline"
+                >
+                  <span className="block text-text-dark-secondary group-hover:text-white transition-colors">{c.value}</span>
+                  <span className="block text-xs text-text-dark-secondary/70">{c.note}</span>
+                </a>
+              ))}
+              <p className="text-text-dark-secondary text-xs leading-relaxed sm:col-span-2 lg:col-span-1">
+                Кыргызская Республика, г.&nbsp;Бишкек, Октябрьский район, 8&nbsp;мкр, д.&nbsp;33, кв.&nbsp;8
+              </p>
             </div>
           </div>
         </div>
@@ -96,8 +110,11 @@ export default function Footer() {
           <p className="text-text-dark-secondary text-xs">
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
-          <p className="text-text-dark-secondary text-xs font-mono">
-            ОсОО&nbsp;«ТехЭйджент» · ИНН&nbsp;9909766511 · КПП&nbsp;771387001 · Рег.&nbsp;№&nbsp;326302-3301-ООО
+          <p className="text-text-dark-secondary text-xs font-mono flex flex-wrap justify-center sm:justify-end gap-x-3 gap-y-1">
+            <span>ОсОО&nbsp;«ТехЭйджент»</span>
+            <span>ИНН&nbsp;9909766511</span>
+            <span>КПП&nbsp;771387001</span>
+            <span>Рег.&nbsp;№&nbsp;326302-3301-ООО</span>
           </p>
         </div>
       </div>

@@ -74,8 +74,9 @@ export default function DashboardPage() {
       )}
 
       <div className="grid grid-cols-2 lg:grid-cols-5 gap-3 mb-3">
-        {stats.map((s) => (
-          <div key={s.label} className="card p-4 min-w-0" style={{ containerType: 'inline-size' }}>
+        {stats.map((s, i) => (
+          // Пятая плитка на телефоне — во всю ширину, чтобы ряд не оставался с пустотой
+          <div key={s.label} className={`card p-4 min-w-0 ${i === stats.length - 1 && stats.length % 2 === 1 ? 'col-span-2 lg:col-span-1' : ''}`} style={{ containerType: 'inline-size' }}>
             <div className="flex items-center gap-2 text-text-muted">
               <s.icon size={16} className="shrink-0" />
               <p className="text-xs">{s.label}</p>

@@ -104,7 +104,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden pt-28 pb-16">
         <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-[40px] sm:text-[48px] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
+          <h1 className="text-[32px] sm:text-[48px] [text-wrap:balance] font-extrabold mb-5 text-text-primary tracking-tight leading-[1.08]">
             TechAgent — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-lg text-text-secondary max-w-2xl mx-auto leading-relaxed">
@@ -117,7 +117,7 @@ export default function AboutPage() {
 
         {/* ===== HOW THE MODEL WORKS ===== */}
         <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-3">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-3">
             Как устроена модель
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
@@ -140,7 +140,7 @@ export default function AboutPage() {
 
         {/* ===== MONEY, GOODS, DOCUMENTS ===== */}
         <div className="mb-20">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-10 sm:mb-16">
             Деньги, товар и документы
           </h2>
 
@@ -164,7 +164,7 @@ export default function AboutPage() {
 
         {/* ===== COMPANY / REQUISITES ===== */}
         <div className="mb-20" id="company">
-          <h2 className="text-[36px] sm:text-[40px] font-extrabold tracking-tight text-center text-text-primary mb-16">
+          <h2 className="text-[28px] sm:text-[40px] [text-wrap:balance] font-extrabold tracking-tight text-center text-text-primary mb-10 sm:mb-16">
             Кто мы юридически
           </h2>
 

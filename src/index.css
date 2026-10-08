@@ -379,7 +379,7 @@ input[type="checkbox"] {
 .pcard-name { font-size: 15px; font-weight: 700; color: var(--color-text-primary); line-height: 1.3; margin-bottom: 8px; letter-spacing: -0.2px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .pcard-specs { font-size: 12px; color: var(--color-text-muted); margin-bottom: 12px; line-height: 1.5; }
 .pcard-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(15,23,42,.06); }
-.pcard-price { font-size: 18px; font-weight: 800; color: var(--color-text-primary); letter-spacing: -0.5px; font-family: var(--font-display); }
+.pcard-price { white-space: nowrap; font-size: 18px; font-weight: 800; color: var(--color-text-primary); letter-spacing: -0.5px; font-family: var(--font-display); }
 .pcard-price span { font-size: 13px; font-weight: 500; color: var(--color-text-muted); }
 .pcard-btn { width: 36px; height: 36px; border-radius: 10px; border: 1px solid var(--color-border); background: white; display: flex; align-items: center; justify-content: center; transition: all .3s; color: var(--color-text-muted); }
 .product-card:hover .pcard-btn { background: var(--color-primary); border-color: var(--color-primary); color: white; }
@@ -439,7 +439,7 @@ input[type="checkbox"] {
 .pp-gallery-bg { position: absolute; inset: 0; opacity: .6; }
 .pp-gallery-shape { width: 260px; height: 260px; border-radius: 52px; background: rgba(255,255,255,.7); backdrop-filter: blur(20px); display: flex; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,.5); box-shadow: 0 20px 60px rgba(0,0,0,.04); z-index: 1; }
 .pp-gallery-img { width: 100%; height: 100%; object-fit: contain; z-index: 1; }
-.pp-description { color: var(--color-text-secondary); font-size: 15px; line-height: 1.6; margin-top: -12px; margin-bottom: 36px; }
+.pp-description { color: var(--color-text-secondary); font-size: 15px; line-height: 1.6; margin-top: 12px; margin-bottom: 28px; }
 .pp-gallery-letter { font-size: 80px; font-weight: 900; color: var(--color-text-primary); opacity: .08; }
 .pp-gbadge { position: absolute; top: 20px; left: 20px; padding: 6px 16px; border-radius: 9999px; font-size: 11px; font-weight: 700; z-index: 2; }
 .pp-gbadge-stock { background: #D1FAE5; color: #065F46; }
@@ -460,7 +460,7 @@ input[type="checkbox"] {
 .pp-badge-orig { background: rgba(27,68,245,0.06); color: var(--color-primary); }
 
 .pp-brand-label { font-size: 12px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--color-text-muted); margin-bottom: 8px; font-family: var(--font-mono); }
-.pp-title { font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 8px; }
+.pp-title { text-wrap: balance; font-size: clamp(28px, 3vw, 40px); font-weight: 800; letter-spacing: -0.8px; line-height: 1.15; margin-bottom: 8px; }
 .pp-subtitle { font-size: 15px; color: var(--color-text-secondary); margin-bottom: 32px; line-height: 1.6; }
 
 .pp-price-block { padding: 28px; border-radius: 16px; background: var(--color-bg-section); border: 1px solid var(--color-border); margin-bottom: 32px; margin-top: 8px; }
@@ -520,6 +520,8 @@ input[type="checkbox"] {
   .products-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
   .pp-hero { grid-template-columns: 1fr; padding: 12px 24px 60px; }
   .pp-gallery { position: static; }
+  /* В одну колонку фото не шире 480 px — цена и описание видны без долгой прокрутки */
+  .pp-gallery-main { max-width: 480px; margin: 0 auto; }
   .pp-specs-grid { grid-template-columns: 1fr; }
   .pp-desc-features { grid-template-columns: 1fr; }
   .pp-breadcrumb, .pp-specs-section, .pp-desc-section, .pp-related-section { padding-left: 24px; padding-right: 24px; }
@@ -689,8 +691,9 @@ input[type="checkbox"] {
   .products-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .product-shape { width: 100px; height: 100px; border-radius: 20px; }
   .pcard-info { padding: 12px; }
-  .pcard-name { font-size: 13px; -webkit-line-clamp: 1; }
-  .pcard-specs { font-size: 11px; margin-bottom: 8px; -webkit-line-clamp: 1; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; }
+  /* Название — до трёх строк (иначе модели не различить), характеристики — до двух; высота одинаковая, цены в ряд */
+  .pcard-name { font-size: 13px; -webkit-line-clamp: 3; min-height: calc(1.3em * 3); }
+  .pcard-specs { font-size: 11px; margin-bottom: 8px; -webkit-line-clamp: 2; display: -webkit-box; -webkit-box-orient: vertical; overflow: hidden; min-height: calc(1.5em * 2); }
   .pcard-brand { font-size: 10px; margin-bottom: 4px; }
   .pcard-bottom { margin-top: 8px; padding-top: 8px; }
   .pcard-price { font-size: 15px; }
@@ -714,10 +717,12 @@ input[type="checkbox"] {
 /* ═══════════════ MOBILE IMPROVEMENTS ═══════════════ */
 @media (max-width: 640px) {
   /* Larger touch targets */
-  .pcard-btn { width: 44px; height: 44px; }
+  .pcard-btn { width: 36px; height: 36px; flex-shrink: 0; }
+  .pcard-bottom { gap: 6px; }
   .cpage-btn { width: 44px; height: 44px; font-size: 15px; }
   .pcard-name { font-size: 14px; }
   .pcard-price { font-size: 16px; }
+  @media (max-width: 360px) { .pcard-price { font-size: 15px; } .pcard-btn { display: none; } }
   .pcard-price span { font-size: 11px; }
 
   /* Product page mobile */
@@ -984,6 +989,7 @@ textarea:focus-visible,
     font-weight: 600;
     letter-spacing: 0.2px;
     line-height: 1;
+    white-space: nowrap;
   }
 
   .mbn-accent {
