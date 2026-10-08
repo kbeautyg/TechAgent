@@ -18,7 +18,7 @@ const features = [
 ]
 
 const steps = [
-  { icon: <IconUserPlus size={28} />, title: 'Анкета и проверка', desc: 'Заполните анкету: ИНН, ОГРН или ОГРНИП, адрес пункта выдачи, банковские реквизиты. ТехЭйджент проверит данные до первого заказа' },
+  { icon: <IconUserPlus size={28} />, title: 'Заявка и проверка', desc: 'Оставьте заявку: ИНН, ОГРН или ОГРНИП, адрес пункта выдачи, банковские реквизиты. ТехЭйджент проверит данные и пришлёт доступ в кабинет' },
   { icon: <IconClipboardEdit size={28} />, title: 'Заказ покупателя', desc: 'Выберите товар в каталоге и оформите заказ на покупателя в личном кабинете. Цена — из каталога' },
   { icon: <IconCreditCard size={28} />, title: 'Оплата продавцу', desc: 'Отправьте покупателю ссылку или QR-код — он оплатит заказ ТехЭйджент через СБП' },
   { icon: <IconPackageCheck size={28} />, title: 'Выдача в точке', desc: 'Товар приходит к вам — сообщите покупателю. При выдаче проверьте, что заказ оплачен, сверьте данные покупателя и загрузите подписанный акт приёма-передачи' },
@@ -299,7 +299,7 @@ export default function HomePage() {
                 Вознаграждение партнёра
               </h2>
               <p className="text-white/70 text-[16px] leading-relaxed mb-6">
-                ТехЭйджент платит вознаграждение за каждый выданный заказ — процент от цены товара. Размер сообщаем после проверки анкеты, он виден в личном кабинете.
+                ТехЭйджент платит вознаграждение за каждый выданный заказ — процент от цены товара. Размер сообщаем после проверки заявки, он виден в личном кабинете.
               </p>
               <ul className="flex flex-col gap-3 pl-0 list-none m-0">
                 {[
@@ -375,10 +375,10 @@ export default function HomePage() {
         <div className="pt-14 sm:pt-24 pb-4">
           <div className="bg-primary rounded-3xl py-12 sm:py-16 px-6 sm:px-8 text-center text-white">
             <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Станьте партнёром TechAgent</h2>
-            <p className="text-white/60 text-[15px] mb-8">Заполните анкету — после проверки сможете оформлять заказы</p>
+            <p className="text-white/60 text-[15px] mb-8">Оставьте заявку — после проверки ТехЭйджент откроет вам доступ в кабинет</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
-                Заполнить анкету <ArrowRight size={16} />
+                Оставить заявку <ArrowRight size={16} />
               </Link>
               <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" onClick={() => reachGoal('support_click')} className="inline-flex items-center justify-center px-8 py-4 rounded-2xl text-[15px] font-semibold no-underline transition-all duration-300 hover:opacity-90 hover:shadow-lg" style={{ background: '#0f172a', color: '#fff' }}>
                 Написать в поддержку

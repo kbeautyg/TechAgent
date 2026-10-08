@@ -1,14 +1,19 @@
 import { useState } from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
-import { useAuth, type RegisterData } from '../context/AuthContext'
-import { UserPlus } from 'lucide-react'
+import { Link, Navigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
+import { UserPlus, CheckCircle2 } from 'lucide-react'
 import { reachGoal } from '../lib/metrika'
-import { PreviewNotice } from '../components/layout/DashboardLayout'
 import { onlyDigits, formatPhone, partnerErrors } from '../utils/validate'
+import { submitApplication, type ApplicationData } from '../data/applications'
 
-type Field = keyof RegisterData | 'agreeOffer' | 'agreePrivacy'
+/*
+ * Заявка партнёра. Самостоятельной регистрации нет: ТехЭйджент проверяет заявку и сам открывает доступ
+ * в кабинет — присылает email для входа и временный пароль (агентский договор-оферта, п. 2.1).
+ */
 
-const emptyForm: RegisterData & { agreeOffer: boolean; agreePrivacy: boolean } = {
+type Field = keyof ApplicationData | 'agreePrivacy'
+
+const emptyForm: ApplicationData & { agreePrivacy: boolean } = {
   companyName: '',
   inn: '',
   ogrn: '',
@@ -19,17 +24,18 @@ const emptyForm: RegisterData & { agreeOffer: boolean; agreePrivacy: boolean } =
   bankName: '',
   bik: '',
   account: '',
-  password: '',
-  agreeOffer: false,
+  comment: '',
   agreePrivacy: false,
 }
 
 export default function RegisterPage() {
-  const { register, user } = useAuth()
-  const navigate = useNavigate()
+  const { user } = useAuth()
   const [form, setForm] = useState(emptyForm)
   const [errors, setErrors] = useState<Partial<Record<Field, string>>>({})
   const [loading, setLoading] = useState(false)
+  /** Куда ТехЭйджент пришлёт данные для входа — показываем после отправки */
+  const [sentTo, setSentTo] = useState<string | null>(null)
+  const [failed, setFailed] = useState(false)
 
   if (user) {
     return <Navigate to={user.role === 'ADMIN' ? '/admin' : '/dashboard'} replace />
@@ -38,8 +44,6 @@ export default function RegisterPage() {
   const validate = () => {
     // Те же проверки, что в профиле: ИНН и ОГРН с контрольными суммами, БИК, счёт по ключу БИК, телефон, email
     const errs: Partial<Record<Field, string>> = partnerErrors(form)
-    if (form.password.length < 8) errs.password = 'Минимум 8 символов'
-    if (!form.agreeOffer) errs.agreeOffer = 'Без принятия оферты регистрация невозможна'
     if (!form.agreePrivacy) errs.agreePrivacy = 'Нужно согласие на обработку персональных данных'
     return errs
   }
@@ -51,27 +55,29 @@ export default function RegisterPage() {
     if (Object.keys(errs).length > 0) return
 
     setLoading(true)
-    const data: RegisterData = {
+    setFailed(false)
+    const data: ApplicationData = {
       companyName: form.companyName,
       inn: form.inn,
       ogrn: form.ogrn,
       pointAddress: form.pointAddress,
       contactName: form.contactName,
       phone: formatPhone(form.phone),
-      email: form.email,
-      bankName: form.bankName,
+      email: form.email.trim(),
+      bankName: form.bankName.trim(),
       bik: form.bik,
       account: form.account,
-      password: form.password,
+      comment: form.comment?.trim() || undefined,
     }
-    const result = await register(data)
+    const ok = await submitApplication(data)
     setLoading(false)
-    if (result === 'email_taken') {
-      setErrors({ email: 'Этот email уже зарегистрирован' })
+    if (!ok) {
+      setFailed(true)
       return
     }
     reachGoal('register_submit')
-    navigate('/dashboard')
+    setSentTo(data.email)
+    window.scrollTo(0, 0)
   }
 
   const update = (field: Field, value: string | boolean) => {
@@ -92,7 +98,7 @@ export default function RegisterPage() {
 
   /* У полей с цифрами нет maxLength: при вставке «4070 2810 9000 0000 1234» пробелы отбрасываются, а не обрезают номер */
   const input = (
-    field: keyof RegisterData,
+    field: Exclude<keyof ApplicationData, 'comment'>,
     label: string,
     opts: { type?: string; placeholder?: string; autoComplete?: string; digitsMax?: number; onBlur?: () => void } = {},
   ) => (
@@ -114,19 +120,41 @@ export default function RegisterPage() {
     </div>
   )
 
+  if (sentTo) {
+    return (
+      <div className="min-h-[80vh] flex items-center justify-center py-12 px-4 bg-white">
+        <div className="w-full max-w-xl card-glass rounded-2xl p-6 sm:p-8 text-center">
+          <div className="icon-box mx-auto mb-4">
+            <CheckCircle2 size={24} className="text-primary" />
+          </div>
+          <h1 className="text-2xl font-bold text-text-primary mb-3">Заявка отправлена</h1>
+          <p className="text-text-secondary text-sm leading-relaxed">
+            ТехЭйджент проверит данные и при необходимости запросит документы. После проверки на{' '}
+            <span className="font-medium text-text-primary break-all">{sentTo}</span> придут адрес входа в кабинет и
+            временный пароль.
+          </p>
+          <p className="text-text-muted text-sm mt-4">
+            Вопросы —{' '}
+            <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+          </p>
+          <Link to="/" className="btn-primary inline-flex mt-6 px-6 py-3 rounded-xl font-semibold no-underline">На главную</Link>
+        </div>
+      </div>
+    )
+  }
+
   return (
     <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
       <div className="absolute bottom-[-80px] left-[30%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
       <div className="w-full max-w-xl relative">
-        <PreviewNotice className="mb-4" />
         <div className="card-glass rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <div className="icon-box mx-auto mb-4">
               <UserPlus size={24} className="text-primary" />
             </div>
-            <h1 className="text-2xl font-bold text-text-primary">Анкета партнёра</h1>
+            <h1 className="text-2xl font-bold text-text-primary">Заявка партнёра</h1>
             <p className="text-text-muted text-sm mt-1">
-              Анкету проверяет ТехЭйджент. Оформлять заказы можно после подтверждения.
+              ТехЭйджент проверит данные и пришлёт доступ в кабинет на ваш email.
             </p>
           </div>
 
@@ -165,28 +193,22 @@ export default function RegisterPage() {
               </div>
             </fieldset>
 
-            <fieldset className="space-y-4">
-              <legend className="font-bold text-text-primary mb-3">Вход в кабинет</legend>
-              {input('password', 'Пароль', { type: 'password', placeholder: 'Минимум 8 символов', autoComplete: 'new-password' })}
-            </fieldset>
+            <div>
+              <label htmlFor="reg-comment" className="block text-sm font-medium text-text-secondary mb-1.5">
+                Комментарий <span className="text-text-muted font-normal">(необязательно)</span>
+              </label>
+              <textarea
+                id="reg-comment"
+                rows={3}
+                value={form.comment}
+                onChange={(e) => update('comment', e.target.value)}
+                maxLength={1000}
+                className={`${inputCls('comment')} resize-y`}
+                placeholder="Например, часы работы точки или удобное время для звонка"
+              />
+            </div>
 
             <div className="space-y-3">
-              <div>
-                <div className="flex items-start gap-2">
-                  <input
-                    type="checkbox"
-                    checked={form.agreeOffer}
-                    onChange={(e) => update('agreeOffer', e.target.checked)}
-                    className="mt-1 accent-primary"
-                    id="agreeOffer"
-                  />
-                  <label htmlFor="agreeOffer" className="text-sm text-text-secondary">
-                    Принимаю условия{' '}
-                    <Link to="/legal/offer" target="_blank" className="text-primary no-underline hover:underline">агентского договора-оферты</Link>
-                  </label>
-                </div>
-                {errors.agreeOffer && <p className="text-red-400 text-xs mt-1">{errors.agreeOffer}</p>}
-              </div>
               <div>
                 <div className="flex items-start gap-2">
                   <input
@@ -206,7 +228,13 @@ export default function RegisterPage() {
             </div>
 
             {Object.keys(errors).length > 0 && (
-              <p className="text-red-400 text-sm">Проверьте поля анкеты, отмеченные выше.</p>
+              <p className="text-red-400 text-sm">Проверьте поля, отмеченные выше.</p>
+            )}
+            {failed && (
+              <p className="text-red-500 text-sm" role="alert">
+                Заявка не отправилась. Попробуйте ещё раз или напишите на{' '}
+                <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>.
+              </p>
             )}
 
             <button
@@ -214,12 +242,12 @@ export default function RegisterPage() {
               disabled={loading}
               className="btn-primary w-full py-3 rounded-xl font-semibold transition-all disabled:opacity-50"
             >
-              {loading ? 'Отправка…' : 'Отправить анкету'}
+              {loading ? 'Отправка…' : 'Отправить заявку'}
             </button>
           </form>
 
           <p className="text-center text-text-muted text-sm mt-6">
-            Уже есть кабинет?{' '}
+            ТехЭйджент уже открыл вам доступ?{' '}
             <Link to="/login" className="text-primary font-semibold no-underline hover:underline">
               Войти
             </Link>

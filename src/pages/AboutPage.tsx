@@ -180,7 +180,7 @@ export default function AboutPage() {
         <div className="mb-20">
           <div className="bg-primary rounded-3xl py-16 px-8 text-center text-white">
             <h2 className="text-[28px] sm:text-[32px] font-extrabold tracking-tight mb-3">Станьте партнёром TechAgent</h2>
-            <p className="text-white/60 text-[15px] mb-8 max-w-xl mx-auto">Заполните анкету — после проверки ТехЭйджент вы&nbsp;сможете оформлять заказы покупателей</p>
+            <p className="text-white/60 text-[15px] mb-8 max-w-xl mx-auto">Оставьте заявку — после проверки ТехЭйджент откроет вам доступ в&nbsp;кабинет для заказов покупателей</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">
                 Стать партнёром <ArrowRight size={16} />

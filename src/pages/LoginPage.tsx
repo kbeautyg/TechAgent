@@ -17,7 +17,6 @@ function afterLogin(user: User, from: unknown): string {
 /* Демо-учётки есть только в режиме разработки или в сборке с VITE_DEMO=1 */
 const DEMO_LOGINS = [
   { email: 'demo@techagent.pro', title: 'Кабинет партнёра', note: 'анкета подтверждена' },
-  { email: 'demo3@techagent.pro', title: 'Кабинет партнёра', note: 'анкета на проверке' },
   { email: 'admin@techagent.pro', title: 'Панель администратора', note: 'сотрудник ТехЭйджент' },
 ]
 
@@ -123,7 +122,7 @@ export default function LoginPage() {
           <p className="text-center text-text-muted text-sm mt-6">
             Ещё не партнёр?{' '}
             <Link to="/register" className="text-primary font-semibold no-underline hover:underline">
-              Заполнить анкету
+              Оставить заявку
             </Link>
           </p>
 

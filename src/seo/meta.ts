@@ -316,10 +316,18 @@ export function resolveMeta(pathname: string): PageMeta {
       robots: NOINDEX,
     })
   }
+  if (path === '/demo') {
+    return baseMeta({
+      title: 'Тестовый доступ | TechAgent',
+      description: 'Тестовый вход в кабинеты TechAgent на демо-данных.',
+      canonical: `${SITE_URL}/demo`,
+      robots: NOINDEX,
+    })
+  }
   if (path === '/register') {
     return baseMeta({
-      title: 'Регистрация партнёра | TechAgent',
-      description: 'Регистрация партнёра TechAgent: анкета компании и пункта выдачи. ОсОО «ТехЭйджент» проверяет данные до первого заказа.',
+      title: 'Заявка партнёра | TechAgent',
+      description: 'Заявка партнёра TechAgent: данные компании и пункта выдачи. ОсОО «ТехЭйджент» проверяет заявку и открывает доступ в кабинет.',
       canonical: `${SITE_URL}/register`,
       robots: NOINDEX,
     })

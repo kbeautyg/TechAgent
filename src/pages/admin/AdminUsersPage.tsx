@@ -4,6 +4,7 @@ import { formatDate, formatPercent, formatPrice, paidTotal, rewardPercentAt, pen
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
 import type { User } from '../../types'
+import PartnerInvite from './PartnerInvite'
 
 /** Границы размера вознаграждения, % цены товара */
 const MIN_PERCENT = 0.1
@@ -69,6 +70,8 @@ export default function AdminUsersPage() {
           {partners.length} всего{pendingCount > 0 && ` · ${pendingCount} на проверке`}
         </span>
       </div>
+
+      <PartnerInvite />
 
       {partners.length === 0 ? (
         <div className="card p-8 text-center text-text-muted">Партнёров пока нет</div>

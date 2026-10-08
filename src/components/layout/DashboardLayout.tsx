@@ -1,6 +1,7 @@
 import { NavLink, Outlet, Navigate, Link, useLocation } from 'react-router-dom'
 import { LayoutDashboard, Package, PlusCircle, User, FileText, MessageCircle, Clock, XCircle } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
+import FirstLogin from '../../pages/dashboard/FirstLogin'
 import { DEMO_MODE } from '../../data/mock'
 
 const navItems = [
@@ -19,8 +20,8 @@ export function PreviewNotice({ className = '' }: { className?: string }) {
   return (
     <p className={`rounded-lg border border-border bg-white px-3 py-2 text-xs leading-relaxed text-text-secondary ${className}`}>
       Кабинет работает в режиме предпросмотра: данные остаются в этом браузере и в ТехЭйджент пока не передаются.
-      Чтобы стать партнёром сейчас, напишите на{' '}
-      <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+      Чтобы стать партнёром,{' '}
+      <Link to="/register" className="text-primary no-underline hover:underline">оставьте заявку</Link>
     </p>
   )
 }
@@ -86,7 +87,8 @@ export default function DashboardLayout() {
 
           {/* Main content */}
           <main className="flex-1 min-w-0">
-            <Outlet />
+            {/* Учётку завёл ТехЭйджент по заявке: сначала свой пароль и акцепт оферты (п. 2.1) */}
+            {user.mustChangePassword || !user.offerAcceptedAt ? <FirstLogin /> : <Outlet />}
           </main>
         </div>
       </div>

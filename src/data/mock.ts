@@ -1,4 +1,6 @@
 import type { User, Order } from '../types'
+import { DEMO_MODE } from '../utils/demo'
+import { hashPassword, tempPassword } from '../utils/password'
 import { products } from './products'
 import { rewardFor, rewardPercentAt } from '../utils/calculate'
 import {
@@ -15,11 +17,11 @@ import {
  * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage (см. utils/store.ts —
  * слияние данных из нескольких вкладок).
  *
- * Демо-учётки и демо-заказы попадают в данные только в режиме разработки
- * (npm run dev) или при явном флаге сборки VITE_DEMO=1. В обычной боевой
- * сборке массивы пустые: входа по демо-учёткам нет, демо-имён в бандле нет.
+ * Демо-учётки и демо-заказы попадают в данные только в демо-режиме (utils/demo.ts): в разработке,
+ * в сборке с VITE_DEMO=1 или в браузере, вошедшем через тестовый вход /demo. Обычный посетитель
+ * боевого сайта демо-данных не видит.
  */
-export const DEMO_MODE: boolean = import.meta.env.DEV || import.meta.env.VITE_DEMO === '1'
+export { DEMO_MODE }
 
 /* Новые ключи: в старых лежат заказы прежнего формата, их поля не совпадают с текущими типами */
 const ORDERS_KEY = 'techagent_orders_v2'
@@ -48,6 +50,7 @@ function demoUsers(): User[] {
       account: '00000000000000000001',
       partnerStatus: 'VERIFIED',
       rewardPercent: 5,
+      offerAcceptedAt: '2026-01-16T10:00:00Z',
       createdAt: '2026-01-15T10:00:00Z',
     },
     {
@@ -72,23 +75,8 @@ function demoUsers(): User[] {
       account: '00000000000000000002',
       partnerStatus: 'VERIFIED',
       rewardPercent: 5,
+      offerAcceptedAt: '2026-01-21T10:00:00Z',
       createdAt: '2026-01-20T10:00:00Z',
-    },
-    {
-      id: '4',
-      email: 'demo3@techagent.pro',
-      role: 'CLIENT',
-      companyName: 'Демо-партнёр 3',
-      inn: '000000000003',
-      ogrn: '000000000000003',
-      phone: '+7 900 000-00-03',
-      contactName: 'Контактное лицо (демо)',
-      pointAddress: 'Адрес пункта выдачи (демо)',
-      bankName: 'Банк (демо)',
-      bik: '000000000',
-      account: '00000000000000000003',
-      partnerStatus: 'PENDING',
-      createdAt: '2026-02-18T10:00:00Z',
     },
   ]
 }
@@ -287,7 +275,7 @@ function demoOrders(): Order[] {
 }
 
 /** Демо-учётки: вход по любому непустому паролю (пока им не задан свой) */
-const DEMO_USER_IDS = new Set(['1', '2', '3', '4'])
+const DEMO_USER_IDS = new Set(['1', '2', '3'])
 
 export function isDemoUser(u: User): boolean {
   return DEMO_MODE && DEMO_USER_IDS.has(u.id) && !u.passwordHash
@@ -336,6 +324,35 @@ export function updateUser(id: string, patch: Partial<User> | ((fresh: User) => 
   mockUsers[idx] = { ...mockUsers[idx], ...data, updatedAt: new Date().toISOString() }
   saveUsers()
   return mockUsers.find((u) => u.id === id) ?? null
+}
+
+/** Данные партнёра, которые ТехЭйджент переносит из заявки при заведении учётки */
+export type PartnerData = Required<
+  Pick<User, 'companyName' | 'inn' | 'ogrn' | 'pointAddress' | 'contactName' | 'phone' | 'email' | 'bankName' | 'bik' | 'account'>
+>
+
+/** Завести партнёра по заявке (приглашение): учётка сразу проверена, с размером вознаграждения и временным паролем.
+ *  Пароль показывается один раз — ТехЭйджент передаёт его партнёру вместе с адресом входа.
+ *  При первом входе партнёр задаёт свой пароль и принимает агентский договор-оферту (п. 2.1). */
+export async function createPartner(data: PartnerData, percent: number): Promise<{ user: User; password: string } | 'email_taken'> {
+  if (findUserByEmail(data.email)) return 'email_taken'
+  const id = crypto.randomUUID()
+  const password = tempPassword()
+  const now = new Date().toISOString()
+  const user: User = {
+    ...data,
+    id,
+    email: data.email.trim(),
+    role: 'CLIENT',
+    partnerStatus: 'VERIFIED',
+    rewardPercent: percent,
+    passwordHash: await hashPassword(id, password),
+    mustChangePassword: true,
+    createdAt: now,
+    updatedAt: now,
+  }
+  addUser(user)
+  return { user, password }
 }
 
 /** Изменение процента вознаграждения подтверждённого Партнёра (оферта, п. 7.1):

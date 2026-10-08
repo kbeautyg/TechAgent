@@ -18,7 +18,9 @@ import LegalPage from './pages/LegalPage'
 
 /* Приватная зона — отдельные чанки: не грузятся на публичных страницах */
 const LoginPage = lazy(() => import('./pages/LoginPage'))
+import DemoNotice from './components/layout/DemoNotice'
 const RegisterPage = lazy(() => import('./pages/RegisterPage'))
+const DemoPage = lazy(() => import('./pages/DemoPage'))
 const PaymentPage = lazy(() => import('./pages/PaymentPage'))
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'))
 const AdminLayout = lazy(() => import('./components/layout/AdminLayout'))
@@ -56,6 +58,7 @@ function App() {
       <ScrollToTop />
       <SeoManager />
       <div className="flex flex-col min-h-screen">
+        <DemoNotice />
         {!bare && <Header />}
         <main className="flex-1">
           <ErrorBoundary>
@@ -68,6 +71,7 @@ function App() {
                 <Route path="/catalog/:id" element={<CatalogChildPage />} />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/register" element={<RegisterPage />} />
+                <Route path="/demo" element={<DemoPage />} />
                 <Route path="/legal" element={<LegalPage />} />
                 <Route path="/legal/:docType" element={<LegalPage />} />
 

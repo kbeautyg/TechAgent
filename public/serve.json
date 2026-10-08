@@ -135,6 +135,10 @@
       "destination": "/spa.html"
     },
     {
+      "source": "/demo",
+      "destination": "/spa.html"
+    },
+    {
       "source": "/pay/:paymentId",
       "destination": "/spa.html"
     },
