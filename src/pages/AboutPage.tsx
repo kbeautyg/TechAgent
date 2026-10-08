@@ -48,6 +48,54 @@ const flows = [
   },
 ]
 
+interface InfoRow {
+  label: string
+  value: string
+  href?: string
+}
+
+const requisites: InfoRow[] = [
+  { label: 'Продавец', value: 'ОсОО\u00A0«ТехЭйджент», директор Аширбеков Н.М.Т.' },
+  { label: 'Регистрация в Кыргызской Республике', value: 'рег. № 326302-3301-ООО, ИНН 00403202610304' },
+  { label: 'ИНН / КПП в РФ', value: '9909766511 / 771387001' },
+  { label: 'Банк', value: 'АО «ТБанк», БИК 044525974' },
+  { label: 'Расчётный счёт', value: '40807810900000001482' },
+  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8' },
+]
+
+const contacts: InfoRow[] = [
+  { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
+  { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
+  { label: 'Покупателям', value: 'help@techagent.pro', href: 'mailto:help@techagent.pro' },
+  { label: 'Юридические вопросы', value: 'compliance@techagent.pro', href: 'mailto:compliance@techagent.pro' },
+  { label: 'Поддержка в Telegram', value: '@techagent_support', href: 'https://t.me/techagent_support' },
+  { label: 'Документы', value: 'Оферты, политика, соглашение', href: '/legal' },
+]
+
+function InfoCard({ title, rows }: { title: string; rows: InfoRow[] }) {
+  return (
+    <div className="bg-bg-section rounded-3xl p-8">
+      <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">{title}</h3>
+      <div className="flex flex-col gap-0">
+        {rows.map((item) => (
+          <div key={item.label} className="py-3 border-b border-black/[0.05] last:border-0">
+            <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono text-text-muted">{item.label}</div>
+            {item.href ? (
+              item.href.startsWith('/') ? (
+                <Link to={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</Link>
+              ) : (
+                <a href={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</a>
+              )
+            ) : (
+              <div className="text-[14px] font-medium text-text-primary">{item.value}</div>
+            )}
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 export default function AboutPage() {
   return (
     <div className="bg-white min-h-screen">
@@ -73,7 +121,7 @@ export default function AboutPage() {
             Как устроена модель
           </h2>
           <p className="text-text-muted text-center max-w-xl mx-auto mb-16 text-[16px]">
-            Поставщик продаёт товар ТехЭйджент по&nbsp;контракту поставки. Дальше работают три участника
+            Три участника: продавец, его партнёр с пунктом выдачи и покупатель
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -121,58 +169,21 @@ export default function AboutPage() {
           </h2>
 
 
+          {/* Реквизиты и контакты — две колонки с одинаковым числом строк, договоры — строкой под ними */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div className="bg-bg-section rounded-3xl p-8">
-              <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">
-                Договоры
-              </h3>
-              <div className="flex flex-col gap-3 text-[14px] text-text-secondary leading-relaxed">
-                <p>
-                  Покупатель заключает договор купли-продажи с ОсОО&nbsp;«ТехЭйджент» и платит ему напрямую.
-                  Партнёр работает по агентскому договору: оформляет заказы и выдаёт товар, а вознаграждение
-                  получает от ТехЭйджент.
-                </p>
-                <p>
-                  Условия — в документах:{' '}
-                  <Link to="/legal/sale-offer" className="text-primary font-semibold">оферта купли-продажи</Link> для покупателей и{' '}
-                  <Link to="/legal/offer" className="text-primary font-semibold">агентский договор-оферта</Link> для партнёров.
-                </p>
-              </div>
-            </div>
+            <InfoCard title="Реквизиты" rows={requisites} />
+            <InfoCard title="Контакты" rows={contacts} />
+          </div>
 
-            <div className="bg-bg-section rounded-3xl p-8">
-              <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-4">
-                Реквизиты и контакты
-              </h3>
-              <div className="flex flex-col gap-0">
-                {[
-                  { label: 'Продавец', value: 'ОсОО\u00A0«ТехЭйджент», рег. № 326302-3301-ООО, ИНН 00403202610304 (Кыргызская Республика)' },
-                  { label: 'ИНН / КПП в РФ', value: '9909766511 / 771387001' },
-                  { label: 'Банк', value: 'АО «ТБанк», р/с 40807810900000001482, БИК 044525974' },
-                  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8' },
-                  { label: 'Директор', value: 'Аширбеков Н.М.Т.' },
-                  { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
-                  { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
-                  { label: 'Покупателям', value: 'help@techagent.pro', href: 'mailto:help@techagent.pro' },
-                  { label: 'Юридические вопросы', value: 'compliance@techagent.pro', href: 'mailto:compliance@techagent.pro' },
-                  { label: 'Поддержка в Telegram', value: '@techagent_support', href: 'https://t.me/techagent_support' },
-                  { label: 'Документы', value: 'Оферты, политика, соглашение', href: '/legal' },
-                ].map((item, i) => (
-                  <div key={i} className="py-3 border-b border-black/[0.05] last:border-0">
-                    <div className="text-[11px] uppercase tracking-wider font-medium mb-1 font-mono text-text-muted">{item.label}</div>
-                    {item.href ? (
-                      item.href.startsWith('/') ? (
-                        <Link to={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</Link>
-                      ) : (
-                        <a href={item.href} className="text-[14px] font-medium text-primary no-underline">{item.value}</a>
-                      )
-                    ) : (
-                      <div className="text-[14px] font-medium text-text-primary">{item.value}</div>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
+          <div className="bg-bg-section rounded-3xl p-8 mt-4">
+            <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-3">Договоры</h3>
+            <p className="text-[14px] text-text-secondary leading-relaxed max-w-3xl">
+              Покупатель заключает договор купли-продажи с ОсОО&nbsp;«ТехЭйджент» и платит ему напрямую — условия в{' '}
+              <Link to="/legal/sale-offer" className="text-primary font-semibold">оферте купли-продажи</Link>. Партнёр работает
+              по <Link to="/legal/offer" className="text-primary font-semibold">агентскому договору-оферте</Link>: оформляет заказы и
+              выдаёт товар, а вознаграждение получает от ТехЭйджент.{' '}
+              <Link to="/legal" className="text-primary font-semibold">Все документы</Link>
+            </p>
           </div>
         </div>
 
