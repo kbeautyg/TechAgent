@@ -936,93 +936,611 @@ textarea:focus-visible,
 .animate-pulse-dot { animation: pulse-dot 2s ease-in-out infinite; }
 
 /* ═══════════════════════════════════════════════════════
-   MOBILE BOTTOM NAVIGATION (Yandex.Pay style)
+   ТЕЛЕФОН КАК ПРИЛОЖЕНИЕ
+   Страница не ездит вбок и не увеличивается при вводе, меню снизу, кабинет в стиле мобильного банка
    ═══════════════════════════════════════════════════════ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  /* Ничто не даёт странице прокручиваться вбок; clip, а не hidden — чтобы не ломать прилипающую шапку */
+  overflow-x: clip;
+}
+body {
+  overflow-x: clip;
+  /* Без двойного касания для увеличения — касания срабатывают сразу, как в приложении. Щипок пальцами работает */
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
 .mobile-bottom-nav {
   display: none;
 }
 
 @media (max-width: 1023px) {
+  html, body {
+    overscroll-behavior-x: none;
+  }
+
+  /* iPhone увеличивает страницу, если у поля шрифт меньше 16px, — отсюда «дёргается вправо-влево» */
+  input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']),
+  select,
+  textarea,
+  .sort-select {
+    font-size: 16px;
+  }
+
   .mobile-bottom-nav {
-    display: flex;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.92);
+    background: rgba(255, 255, 255, 0.94);
     backdrop-filter: blur(20px) saturate(180%);
     -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid rgba(15, 23, 42, 0.06);
-    padding: 6px 8px calc(6px + env(safe-area-inset-bottom, 0px)) 8px;
-    align-items: flex-end;
-    justify-content: space-around;
-    box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 -1px 0 rgba(11, 16, 32, 0.07);
+    padding: 8px max(6px, env(safe-area-inset-right, 0px)) calc(8px + env(safe-area-inset-bottom, 0px)) max(6px, env(safe-area-inset-left, 0px));
   }
 
-  /* Add bottom padding to body so content isn't hidden behind nav */
+  /* Место под меню, чтобы низ страницы не прятался */
   body {
-    padding-bottom: 76px;
+    padding-bottom: calc(68px + env(safe-area-inset-bottom, 0px));
+  }
+  /* Экраны с кнопкой внизу (заказ, новый заказ) — без меню, отступ даёт сама кнопка */
+  html.no-tabbar body {
+    padding-bottom: 0;
   }
 
   .mbn-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    gap: 3px;
-    padding: 6px 4px 4px;
-    min-width: 56px;
+    gap: 4px;
+    min-width: 0;
     color: var(--color-text-muted);
     text-decoration: none;
-    transition: color 0.2s;
     -webkit-tap-highlight-color: transparent;
-    position: relative;
   }
-
+  .mbn-pill {
+    width: 56px;
+    max-width: 100%;
+    height: 32px;
+    border-radius: 16px;
+    display: grid;
+    place-items: center;
+    transition: background-color 0.2s;
+  }
   .mbn-item.mbn-active {
     color: var(--color-primary);
   }
-
+  .mbn-item.mbn-active .mbn-pill {
+    background: rgba(27, 68, 245, 0.1);
+  }
+  .mbn-item:active .mbn-pill {
+    transform: scale(0.94);
+  }
   .mbn-label {
-    font-size: 10px;
+    font-size: 11.5px;
     font-weight: 600;
-    letter-spacing: 0.2px;
-    line-height: 1;
+    line-height: 1.1;
     white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+}
 
-  .mbn-accent {
-    color: white !important;
-  }
+@layer components {
+/* ── Шапка экрана кабинета на телефоне ── */
+.app-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+.app-bar-title {
+  flex: 1;
+  min-width: 0;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.app-round {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--color-bg-white);
+  color: var(--color-text-primary);
+  display: grid;
+  place-items: center;
+  flex: none;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 1px 2px rgba(11, 16, 32, 0.04);
+}
+.app-round:active {
+  transform: scale(0.94);
+}
+.app-round-spacer {
+  width: 44px;
+  height: 44px;
+  flex: none;
+}
 
-  .mbn-accent-circle {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    box-shadow: 0 4px 16px rgba(27, 68, 245, 0.35);
-    margin-top: -18px;
-    transition: transform 0.2s, box-shadow 0.2s;
-  }
+/* ── Лента (список строк, как операции в банке) ── */
+.app-list {
+  background: var(--color-bg-white);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+}
+.app-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 14px;
+  min-height: 68px;
+  text-decoration: none;
+  color: inherit;
+  transition: background-color 0.15s;
+}
+.app-row + .app-row {
+  box-shadow: inset 0 1px 0 var(--color-border);
+}
+.app-row:hover {
+  background: var(--color-bg-card-hover);
+}
+.app-row:active {
+  background: var(--color-bg-light);
+}
+.app-row-tile {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  flex: none;
+}
+.app-row-mid {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.app-row-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.app-row-sub {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.app-row-right {
+  flex: none;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.app-row-sum {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.app-row-status {
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  line-height: 1.3;
+}
 
-  .mbn-accent-circle:active {
-    transform: scale(0.92);
-  }
+/* ── Группа строк «название — значение» ── */
+.app-group {
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.app-kv {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 16px;
+  min-height: 56px;
+}
+.app-kv + .app-kv {
+  box-shadow: inset 0 1px 0 var(--color-border);
+}
+.app-kv-text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.app-kv-label {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+.app-kv-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+.app-group-title {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin: 0 0 8px 6px;
+  letter-spacing: 0;
+}
 
-  .mbn-accent .mbn-label {
-    color: var(--color-primary);
-    font-weight: 700;
-  }
+/* ── Крупные кнопки ── */
+.app-btn {
+  min-height: 54px;
+  border-radius: 16px;
+  border: none;
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 16.5px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 0 18px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s, transform 0.1s;
+  text-align: center;
+  line-height: 1.2;
+}
+.app-btn:active:not(:disabled) {
+  transform: scale(0.985);
+}
+.app-btn:disabled {
+  background: #E4E6EE;
+  color: #9AA1B2;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.app-btn-primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+.app-btn-primary:hover:not(:disabled) {
+  background: var(--color-primary-dark);
+}
+.app-btn-success {
+  background: var(--color-success);
+  color: #fff;
+}
+.app-btn-success:hover:not(:disabled) {
+  background: var(--color-success-dark);
+}
+.app-btn-soft {
+  background: rgba(27, 68, 245, 0.08);
+  color: var(--color-primary);
+}
 
-  /* Hide footer on mobile to avoid clutter with bottom nav */
-  footer {
-    margin-bottom: 0;
+/* ── Кнопка, прилипающая к низу экрана ── */
+.app-sticky {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: 0 -1px 0 rgba(11, 16, 32, 0.07);
+  padding: 12px max(16px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(16px, env(safe-area-inset-left, 0px));
+}
+.app-sticky-spacer {
+  height: calc(92px + env(safe-area-inset-bottom, 0px));
+}
+.app-sticky-hint {
+  text-align: center;
+  font-size: 12.5px;
+  line-height: 1.35;
+  color: var(--color-text-muted);
+  margin: 8px 0 0;
+}
+
+/* ── Выезжающая снизу панель ── */
+.app-sheet-root {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+}
+.app-sheet-dim {
+  position: absolute;
+  inset: 0;
+  background: rgba(11, 16, 32, 0.45);
+  animation: fadeIn 0.2s ease-out;
+}
+.app-sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg-white);
+  border-radius: 28px 28px 0 0;
+  animation: sheetUp 0.28s cubic-bezier(0.2, 0.9, 0.3, 1);
+  transition: transform 0.2s;
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+@keyframes sheetUp {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.app-sheet-head {
+  padding: 10px 18px 6px;
+  flex: none;
+  touch-action: none;
+}
+.app-sheet-grab {
+  width: 40px;
+  height: 5px;
+  border-radius: 3px;
+  background: #D5D8E2;
+  margin: 0 auto 12px;
+}
+.app-sheet-title {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-sans);
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+}
+.app-sheet-close {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: var(--color-bg-light);
+  color: var(--color-text-secondary);
+  display: grid;
+  place-items: center;
+  flex: none;
+  cursor: pointer;
+}
+.app-sheet-body {
+  padding: 8px 18px 20px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ── Главный экран кабинета ── */
+.app-hero {
+  border-radius: 24px;
+  padding: 20px 20px 18px;
+  color: #fff;
+  background: linear-gradient(140deg, #1B44F5 0%, #2A3FD8 55%, #4527B8 100%);
+}
+.app-hero-label {
+  font-size: 14px;
+  opacity: 0.82;
+  line-height: 1.3;
+}
+.app-hero-sum {
+  font-family: var(--font-display);
+  font-size: clamp(28px, 9vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  margin: 6px 0 6px;
+  white-space: nowrap;
+}
+.app-hero-note {
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.4;
+  margin: 0;
+}
+.app-hero-split {
+  display: flex;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+.app-hero-split > div {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.app-hero-split > div + div {
+  border-left: 1px solid rgba(255, 255, 255, 0.18);
+  padding-left: 14px;
+}
+.app-hero-split span {
+  font-size: 12px;
+  opacity: 0.78;
+  line-height: 1.25;
+}
+.app-hero-split b {
+  font-size: 16px;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+.app-actions {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 4px;
+}
+.app-act {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.25;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  position: relative;
+  padding: 2px 0;
+}
+.app-act-circle {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: var(--color-bg-white);
+  border: 1px solid var(--color-border);
+  color: var(--color-primary);
+  display: grid;
+  place-items: center;
+  transition: transform 0.1s;
+}
+.app-act:active .app-act-circle {
+  transform: scale(0.94);
+}
+.app-act-main .app-act-circle {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(27, 68, 245, 0.28);
+}
+.app-act-off {
+  color: var(--color-text-muted);
+  pointer-events: none;
+}
+.app-act-off .app-act-circle {
+  background: var(--color-bg-light);
+  border-color: var(--color-border);
+  color: var(--color-text-light);
+  box-shadow: none;
+}
+.app-badge {
+  position: absolute;
+  top: -2px;
+  left: calc(50% + 14px);
+  min-width: 22px;
+  height: 22px;
+  border-radius: 11px;
+  background: #FB2C36;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  padding: 0 6px;
+  border: 2px solid var(--color-bg-light);
+}
+.app-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin: 0 4px 10px;
+}
+.app-section-head h2 {
+  font-family: var(--font-sans);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  margin: 0;
+}
+.app-section-head a {
+  color: var(--color-primary);
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* ── Шаги с подписями (новый заказ) ── */
+.app-steps {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 6px;
+}
+.app-steps > div {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  line-height: 1.25;
+}
+.app-steps > div::before {
+  content: '';
+  display: block;
+  height: 5px;
+  border-radius: 3px;
+  background: #E4E6EE;
+  margin-bottom: 8px;
+}
+.app-steps > .done { color: var(--color-success-dark); }
+.app-steps > .done::before { background: var(--color-success); }
+.app-steps > .now { color: var(--color-primary); }
+.app-steps > .now::before { background: var(--color-primary); }
+
+/* ── Полоска этапов заказа ── */
+.app-progress {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 4px;
+}
+.app-progress > i {
+  height: 6px;
+  border-radius: 3px;
+  background: #E4E6EE;
+  display: block;
+}
+.app-progress > i.done { background: var(--color-success); }
+.app-progress > i.now { background: var(--color-primary); }
+}
+
+/* Заголовки кабинета на телефоне — обычным шрифтом (общее правило h1–h3 ставит Unbounded) */
+.app-bar-title, .app-sheet-title, .app-section-head h2, .app-group-title, .app-group h2 {
+  font-family: var(--font-sans);
+}
+
+/* На телефоне нет наведения мышью: карточки и кнопки не должны подпрыгивать от касания */
+@media (hover: none) {
+  .card:hover, .card-glass:hover, .btn-primary:hover, .btn-blue:hover, .product-card:hover,
+  .pp-cta-primary:hover, .ch-send:hover:not(:disabled) {
+    transform: none;
   }
+  .product-card:hover .product-shape { transform: none; }
 }
 
 /* ═══════════════════════════════════════════════════════
@@ -1078,4 +1596,56 @@ textarea:focus-visible,
     padding-bottom: 4px;
   }
   .dash-mobile-strip::-webkit-scrollbar { display: none; }
+}
+
+/* Имя партнёра на главном экране кабинета: на телефоне обычным шрифтом, как в банковском приложении */
+@media (max-width: 1023px) {
+  .app-name { font-family: var(--font-sans); letter-spacing: -0.01em; }
+}
+
+@layer components {
+  /* Поле загрузки фото или файла: крупная плитка вместо системной кнопки «Выберите файл» */
+  .app-upload {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 56px;
+    padding: 10px 14px;
+    border-radius: 14px;
+    border: 1.5px dashed rgba(27, 68, 245, 0.35);
+    background: rgba(27, 68, 245, 0.04);
+    color: var(--color-primary);
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .app-upload.is-set {
+    border-style: solid;
+    border-color: rgba(18, 185, 129, 0.35);
+    background: rgba(18, 185, 129, 0.08);
+    color: var(--color-success-dark);
+  }
+  .app-step-num {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-weight: 700;
+    font-size: 15px;
+    flex: none;
+    background: rgba(27, 68, 245, 0.1);
+    color: var(--color-primary);
+  }
+  .app-step-num.is-done {
+    background: var(--color-success);
+    color: #fff;
+  }
+}
+
+/* Самые узкие телефоны (320–350px): подписи нижнего меню помещаются целиком */
+@media (max-width: 350px) {
+  .mobile-bottom-nav { padding-left: 2px; padding-right: 2px; }
+  .mbn-label { font-size: 10.5px; }
 }

@@ -39,7 +39,7 @@ export default function DashboardLayout() {
 
   return (
     <div className="min-h-screen bg-bg-light">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 lg:py-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(12px,env(safe-area-inset-top))] pb-6 lg:py-6">
         <PreviewNotice className="mb-4 lg:mb-6" />
         {status === 'PENDING' && (
           <div className="mb-4 lg:mb-6 flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900">

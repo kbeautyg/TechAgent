@@ -10,11 +10,14 @@ import {
   isIssued,
   orderStatusLabel,
   orderStatusColor,
+  orderStatusShort,
+  orderStatusText,
   paymentStatusLabel,
   paymentStatusColor,
   photoNote,
 } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
+import ProductIcon from '../../components/app/ProductIcon'
 import type { Order, OrderStatus } from '../../types'
 
 type Filter = OrderStatus | 'ALL' | 'CLAIMS'
@@ -32,6 +35,7 @@ const filterTabs: { label: string; value: Filter }[] = [
 ]
 
 const actionBtn = 'text-xs px-2 py-1 rounded font-medium transition-colors border-none cursor-pointer whitespace-nowrap'
+const bigBtn = 'min-h-[46px] px-4 rounded-xl text-[15px] font-semibold transition-colors border-none cursor-pointer text-center'
 
 /** Отмена с возвратом денег — по оплаченному заказу до выдачи товара (п. 6.1 оферты купли-продажи) */
 const REFUNDABLE: OrderStatus[] = ['PAID', 'PURCHASED', 'IN_TRANSIT', 'AT_POINT']
@@ -163,34 +167,81 @@ export default function AdminOrdersPage() {
     patch(order, { returnedAt: now, refundedAt: now }, (o) => o.status === 'ISSUED' && !o.returnedAt)
   }
 
+  /** Действия по заказу: в таблице на компьютере — мелкими кнопками, на телефоне — крупными во всю ширину */
+  const orderActions = (order: Order, big: boolean) => {
+    const next = ADMIN_NEXT_STATUS[order.status]
+    const unpaid = order.status === 'CREATED' && order.paymentStatus !== 'PAID'
+    return (
+      <div className={big ? 'grid grid-cols-1 gap-2 mt-3' : 'flex flex-col items-start gap-1.5 mt-2'}>
+        {unpaid && (
+          <>
+            <button onClick={() => markPaid(order)} className={`${big ? bigBtn : actionBtn} bg-emerald-50 text-emerald-700 hover:bg-emerald-100`}>
+              Оплата поступила
+            </button>
+            <button onClick={() => cancel(order)} className={`${big ? bigBtn : actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+              Отменить
+            </button>
+          </>
+        )}
+        {next && (
+          <button onClick={() => moveTo(order, next)} className={`${big ? bigBtn : actionBtn} bg-primary/10 text-primary hover:bg-primary/20`}>
+            &rarr; {ORDER_STATUS_LABELS[next]}
+          </button>
+        )}
+        {order.status === 'IN_TRANSIT' && (
+          <span className={big ? 'text-[13px] text-text-muted' : 'text-xs text-text-muted'}>Приёмку отмечает партнёр</span>
+        )}
+        {order.status === 'AT_POINT' && (
+          <span className={big ? 'text-[13px] text-text-muted' : 'text-xs text-text-muted'}>Выдачу подтверждает партнёр</span>
+        )}
+        {isRefundable(order) && (
+          <button onClick={() => cancelWithRefund(order)} className={`${big ? bigBtn : actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+            Отменить с возвратом
+          </button>
+        )}
+        {order.status === 'ISSUED' && (
+          <span className={`text-xs ${order.issueActUploaded ? 'text-text-muted' : 'text-red-600'}`}>
+            {order.issuedToName ? `${order.issuedToName}, ` : ''}
+            {order.issueActUploaded ? 'акт загружен' : 'акт не загружен'}
+          </span>
+        )}
+        {order.status === 'ISSUED' && !order.returnedAt && (
+          <button onClick={() => returnAfterIssue(order)} className={`${big ? bigBtn : actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
+            Возврат после выдачи
+          </button>
+        )}
+      </div>
+    )
+  }
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-bold text-text-primary">Заказы</h1>
+      <div className="flex items-center justify-between gap-3 mb-4 lg:mb-6">
+        <h1 className="app-name text-[22px] lg:text-2xl font-bold text-text-primary leading-tight">Заказы</h1>
         <span className="text-text-muted text-sm">{mockOrders.length} всего</span>
       </div>
 
       <div className="relative mb-4">
-        <Search size={18} className="absolute left-3 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
+        <Search size={20} className="absolute left-4 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none" />
         <input
           type="search"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          placeholder="Номер, покупатель, товар или партнёр"
+          placeholder="Поиск по заказам"
           aria-label="Поиск по заказам"
-          className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm"
+          className="w-full h-12 pl-12 pr-4 rounded-2xl border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-[15px]"
         />
       </div>
 
-      <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+      <div className="flex gap-2 mb-4 lg:mb-6 overflow-x-auto scrollbar-hide -mx-4 px-4 lg:mx-0 lg:px-0 pb-1">
         {filterTabs.map((t) => (
           <button
             key={t.value}
             onClick={() => setFilter(t.value)}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-colors border-none cursor-pointer ${
+            className={`h-10 px-4 rounded-full text-sm font-semibold whitespace-nowrap transition-colors border cursor-pointer shrink-0 ${
               filter === t.value
-                ? 'bg-primary text-white'
-                : 'bg-bg-light text-text-secondary hover:bg-bg-light hover:text-text-primary'
+                ? 'bg-text-primary text-white border-text-primary'
+                : 'bg-white text-text-secondary border-border hover:text-text-primary'
             }`}
           >
             {t.label}
@@ -198,7 +249,50 @@ export default function AdminOrdersPage() {
         ))}
       </div>
 
-      <div className="card overflow-hidden">
+      {/* На телефоне вместо таблицы — карточки заказов */}
+      <div className="lg:hidden space-y-3">
+        {orders.length === 0 && (
+          <div className="app-group p-8 text-center text-text-muted">
+            {mockOrders.length === 0 ? 'Заказов пока нет' : 'Ничего не найдено'}
+          </div>
+        )}
+        {orders.map((order) => {
+          const partner = mockUsers.find((u) => u.id === order.userId)
+          return (
+            <div key={order.id} className="app-group p-4">
+              <div className="flex items-start gap-3">
+                <span className={`app-row-tile ${orderStatusColor(order)}`}>
+                  <ProductIcon productId={order.productId} size={22} />
+                </span>
+                <div className="flex-1 min-w-0">
+                  <p className="font-semibold text-[15px] leading-snug text-text-primary break-words">{order.productName}</p>
+                  <p className="text-[13px] text-text-muted mt-0.5">{order.orderNumber} · {formatDate(order.createdAt)}</p>
+                </div>
+                <div className="text-right shrink-0">
+                  <p className="font-bold text-[15px] text-text-primary whitespace-nowrap">{formatPrice(order.price)}</p>
+                  <p className={`text-[12.5px] font-semibold mt-0.5 whitespace-nowrap ${orderStatusText(order)}`}>{orderStatusShort(order)}</p>
+                </div>
+              </div>
+              <dl className="mt-3 pt-3 border-t border-border grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[14px] leading-snug m-0">
+                <dt className="text-text-muted">Партнёр</dt>
+                <dd className="m-0 text-text-primary text-right break-words">{partner?.companyName || '—'}</dd>
+                <dt className="text-text-muted">Покупатель</dt>
+                <dd className="m-0 text-text-primary text-right break-words">{order.buyerName}</dd>
+                <dt className="text-text-muted">Телефон</dt>
+                <dd className="m-0 text-right"><a href={`tel:${order.buyerPhone.replace(/[^\d+]/g, '')}`} className="text-primary no-underline whitespace-nowrap">{order.buyerPhone}</a></dd>
+                <dt className="text-text-muted">Оплата</dt>
+                <dd className="m-0 text-text-primary text-right">{paymentStatusLabel(order)}</dd>
+                <dt className="text-text-muted">Вознаграждение</dt>
+                <dd className="m-0 text-text-primary text-right">{rewardText(order)}</dd>
+              </dl>
+              <OrderNotes order={order} />
+              {orderActions(order, true)}
+            </div>
+          )
+        })}
+      </div>
+
+      <div className="card overflow-hidden hidden lg:block">
         {/* Таблица прокручивается по горизонтали внутри карточки и не ломает страницу */}
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
@@ -221,8 +315,6 @@ export default function AdminOrdersPage() {
               )}
               {orders.map((order) => {
                 const partner = mockUsers.find((u) => u.id === order.userId)
-                const next = ADMIN_NEXT_STATUS[order.status]
-                const unpaid = order.status === 'CREATED' && order.paymentStatus !== 'PAID'
                 return (
                   <tr key={order.id} className="hover:bg-bg-light transition-colors align-top">
                     <td className="px-4 py-3 whitespace-nowrap">
@@ -253,45 +345,7 @@ export default function AdminOrdersPage() {
                         )}
                       </div>
                       <OrderNotes order={order} />
-                      <div className="flex flex-col items-start gap-1.5 mt-2">
-                        {unpaid && (
-                          <>
-                            <button onClick={() => markPaid(order)} className={`${actionBtn} bg-emerald-50 text-emerald-700 hover:bg-emerald-100`}>
-                              Оплата поступила
-                            </button>
-                            <button onClick={() => cancel(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
-                              Отменить
-                            </button>
-                          </>
-                        )}
-                        {next && (
-                          <button onClick={() => moveTo(order, next)} className={`${actionBtn} bg-primary/10 text-primary hover:bg-primary/20`}>
-                            &rarr; {ORDER_STATUS_LABELS[next]}
-                          </button>
-                        )}
-                        {order.status === 'IN_TRANSIT' && (
-                          <span className="text-xs text-text-muted">Приёмку отмечает партнёр</span>
-                        )}
-                        {order.status === 'AT_POINT' && (
-                          <span className="text-xs text-text-muted">Выдачу подтверждает партнёр</span>
-                        )}
-                        {isRefundable(order) && (
-                          <button onClick={() => cancelWithRefund(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
-                            Отменить с возвратом
-                          </button>
-                        )}
-                        {order.status === 'ISSUED' && (
-                          <span className={`text-xs ${order.issueActUploaded ? 'text-text-muted' : 'text-red-600'}`}>
-                            {order.issuedToName ? `${order.issuedToName}, ` : ''}
-                            {order.issueActUploaded ? 'акт загружен' : 'акт не загружен'}
-                          </span>
-                        )}
-                        {order.status === 'ISSUED' && !order.returnedAt && (
-                          <button onClick={() => returnAfterIssue(order)} className={`${actionBtn} bg-red-50 text-red-700 hover:bg-red-100`}>
-                            Возврат после выдачи
-                          </button>
-                        )}
-                      </div>
+                      {orderActions(order, false)}
                     </td>
                   </tr>
                 )

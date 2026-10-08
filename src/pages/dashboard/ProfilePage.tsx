@@ -1,12 +1,14 @@
 import { useState } from 'react'
-import { Save, Check, User, Building2, Landmark, ShieldCheck } from 'lucide-react'
+import { Link } from 'react-router-dom'
+import { Save, Check, User, Building2, Landmark, ShieldCheck, Globe, LogOut, ChevronRight } from 'lucide-react'
+import { PageBar } from '../../components/app/ui'
 import { useAuth } from '../../context/AuthContext'
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
 import { formatDate, formatPercent, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import { onlyDigits, formatPhone, partnerErrors, type PartnerErrors, type PartnerFields } from '../../utils/validate'
 
 const fieldCls =
-  'w-full px-4 py-3 rounded-lg border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm disabled:text-text-muted disabled:cursor-not-allowed'
+  'w-full h-[52px] lg:h-12 px-4 rounded-2xl lg:rounded-xl border bg-white lg:bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm disabled:text-text-muted disabled:cursor-not-allowed'
 
 type FormKey = 'companyName' | 'inn' | 'ogrn' | 'pointAddress' | 'contactName' | 'phone' | 'bankName' | 'bik' | 'account'
 
@@ -15,7 +17,7 @@ const CONTACT_KEYS: FormKey[] = ['contactName', 'phone']
 const ALL_KEYS: FormKey[] = ['companyName', 'inn', 'ogrn', 'pointAddress', 'contactName', 'phone', 'bankName', 'bik', 'account']
 
 export default function ProfilePage() {
-  const { user, updateProfile } = useAuth()
+  const { user, updateProfile, logout } = useAuth()
   const [saved, setSaved] = useState(false)
   const [errors, setErrors] = useState<PartnerErrors>({})
   const [form, setForm] = useState<Record<FormKey, string>>({
@@ -91,9 +93,15 @@ export default function ProfilePage() {
     label: string,
     locked: boolean,
     opts: { placeholder?: string; digitsMax?: number; type?: string; onBlur?: () => void } = {},
-  ) => (
+  ) => locked ? (
+    // Подтверждённые данные не редактируются — показываем строкой, а не серым полем
+    <div className="flex flex-col gap-0.5 py-1">
+      <span className="text-[13px] text-text-muted">{label}</span>
+      <span className="text-[15px] lg:text-sm font-semibold text-text-primary break-words">{form[k] || '—'}</span>
+    </div>
+  ) : (
     <div>
-      <label htmlFor={`pf-${k}`} className="block text-sm font-medium mb-1.5 text-text-secondary">{label}</label>
+      <label htmlFor={`pf-${k}`} className="block text-sm font-semibold mb-2 ml-1 text-text-secondary">{label}</label>
       <input
         id={`pf-${k}`}
         type={opts.type ?? 'text'}
@@ -106,28 +114,28 @@ export default function ProfilePage() {
         placeholder={opts.placeholder}
         aria-invalid={errors[k] ? true : undefined}
       />
-      {errors[k] && <p className="text-red-500 text-xs mt-1">{errors[k]}</p>}
+      {errors[k] && <p className="text-red-600 text-[13px] mt-1.5 ml-1">{errors[k]}</p>}
     </div>
   )
 
   return (
     <div className="max-w-2xl">
-      <h1 className="text-2xl font-bold mb-6 text-text-primary">Профиль</h1>
+      <PageBar title="Профиль" />
 
       {/* Статус проверки */}
-      <div className="card p-6 mb-6">
-        <h2 className="font-bold mb-3 text-text-primary flex items-center gap-2">
+      <div className="app-group p-4 lg:p-6 mb-4 lg:mb-6">
+        <h2 className="font-bold mb-3 text-text-primary text-base flex items-center gap-2">
           <ShieldCheck size={18} className="text-primary" />
           Проверка анкеты
         </h2>
-        <div className="flex items-center gap-3 flex-wrap text-sm">
+        <div className="flex items-center gap-x-3 gap-y-2 flex-wrap text-sm">
           <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${PARTNER_STATUS_COLORS[status]}`}>
             {PARTNER_STATUS_LABELS[status]}
           </span>
           <span className="text-text-muted">Анкета от {formatDate(user.createdAt)}</span>
         </div>
         {verified && percent ? (
-          <div className="text-sm text-text-secondary mt-3 space-y-1">
+          <div className="text-[15px] lg:text-sm leading-relaxed text-text-secondary mt-3 space-y-2">
             <p>Ваше вознаграждение — {formatPercent(percent)} от цены товара.</p>
             {pending && (
               <p className="text-amber-700">
@@ -142,7 +150,7 @@ export default function ProfilePage() {
           </div>
         ) : null}
         {verified && (
-          <p className="text-sm text-text-secondary mt-3">
+          <p className="text-[15px] lg:text-sm leading-relaxed text-text-secondary mt-3">
             Чтобы изменить наименование, адрес пункта выдачи или реквизиты, напишите на{' '}
             <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>.
           </p>
@@ -160,8 +168,8 @@ export default function ProfilePage() {
       </div>
 
       {/* Партнёр и пункт выдачи */}
-      <div className="card p-6 mb-6">
-        <h2 className="font-bold mb-4 text-text-primary flex items-center gap-2">
+      <div className="app-group p-4 lg:p-6 mb-4 lg:mb-6">
+        <h2 className="font-bold mb-4 text-text-primary text-base flex items-center gap-2">
           <Building2 size={18} className="text-primary" />
           Партнёр и пункт выдачи
         </h2>
@@ -176,8 +184,8 @@ export default function ProfilePage() {
       </div>
 
       {/* Контакты */}
-      <div className="card p-6 mb-6">
-        <h2 className="font-bold mb-4 text-text-primary flex items-center gap-2">
+      <div className="app-group p-4 lg:p-6 mb-4 lg:mb-6">
+        <h2 className="font-bold mb-4 text-text-primary text-base flex items-center gap-2">
           <User size={18} className="text-primary" />
           Контакты
         </h2>
@@ -188,17 +196,16 @@ export default function ProfilePage() {
             placeholder: '+7 900 000-00-00',
             onBlur: () => setForm((f) => ({ ...f, phone: formatPhone(f.phone) })),
           })}
-          <div>
-            <label htmlFor="pf-email" className="block text-sm font-medium mb-1.5 text-text-secondary">Email</label>
-            <input id="pf-email" type="email" value={user.email} disabled className={`${fieldCls} border-border`} />
-            <p className="text-xs text-text-muted mt-1">Email — логин в кабинет, изменить его нельзя</p>
+          <div className="flex flex-col gap-0.5 py-1">
+            <span className="text-[13px] text-text-muted">Email — логин в кабинет, изменить его нельзя</span>
+            <span className="text-[15px] lg:text-sm font-semibold text-text-primary break-all">{user.email}</span>
           </div>
         </div>
       </div>
 
       {/* Реквизиты */}
-      <div className="card p-6 mb-6">
-        <h2 className="font-bold mb-4 text-text-primary flex items-center gap-2">
+      <div className="app-group p-4 lg:p-6 mb-4 lg:mb-6">
+        <h2 className="font-bold mb-4 text-text-primary text-base flex items-center gap-2">
           <Landmark size={18} className="text-primary" />
           Реквизиты для выплаты вознаграждения
         </h2>
@@ -212,15 +219,28 @@ export default function ProfilePage() {
       </div>
 
       {Object.keys(errors).length > 0 && (
-        <p className="text-red-500 text-sm mb-3">Проверьте поля, отмеченные выше, — с ошибками данные не сохраняются.</p>
+        <p className="text-red-600 text-sm leading-snug mb-3">Проверьте поля, отмеченные выше, — с ошибками данные не сохраняются.</p>
       )}
       <button
         onClick={handleSave}
-        className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-dark text-white px-6 py-3 rounded-xl text-sm font-semibold transition-all hover:shadow-lg hover:shadow-primary/25 border-none cursor-pointer"
+        className="app-btn app-btn-primary lg:inline-flex lg:w-auto lg:min-h-[46px] lg:text-sm lg:rounded-xl lg:px-6 lg:gap-1.5"
       >
-        {saved ? <Check size={16} /> : <Save size={16} />}
+        {saved ? <Check size={18} /> : <Save size={18} />}
         {saved ? 'Сохранено' : anketaLocked ? 'Сохранить контакты' : 'Сохранить анкету'}
       </button>
+
+      {/* На телефоне шапки сайта в кабинете нет: переход на сайт и выход — здесь */}
+      <div className="app-list mt-6 lg:hidden">
+        <Link to="/" className="app-row">
+          <span className="app-row-tile bg-primary/10 text-primary"><Globe size={22} /></span>
+          <span className="app-row-mid"><span className="app-row-title">Сайт и каталог</span></span>
+          <ChevronRight size={20} className="text-text-muted shrink-0" />
+        </Link>
+        <button type="button" onClick={logout} className="app-row w-full bg-transparent border-none cursor-pointer text-left">
+          <span className="app-row-tile bg-red-50 text-red-600"><LogOut size={22} /></span>
+          <span className="app-row-mid"><span className="app-row-title !text-red-600">Выйти</span></span>
+        </button>
+      </div>
     </div>
   )
 }

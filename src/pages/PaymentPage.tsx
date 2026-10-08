@@ -47,7 +47,7 @@ export default function PaymentPage() {
   if (!order) {
     return (
       <div className="min-h-[80vh] flex items-center justify-center bg-white">
-        <div className="card-glass p-8 text-center max-w-md w-full mx-4">
+        <div className="card-glass p-5 sm:p-8 text-center max-w-md w-full mx-4">
           <p className="text-text-muted">Заказ не найден или ссылка устарела</p>
           {questions}
         </div>
@@ -98,8 +98,8 @@ export default function PaymentPage() {
 
   if (order.status === 'CANCELLED') {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-        <div className="card-glass p-8 max-w-md w-full text-center">
+      <div className="min-h-[80vh] flex items-center justify-center bg-white py-6 sm:py-12 px-4">
+        <div className="card-glass p-5 sm:p-8 max-w-md w-full text-center">
           <h1 className="text-2xl font-bold text-text-primary mb-2">Заказ {order.orderNumber}</h1>
           <p className="text-text-secondary">Заказ отменён, оплата невозможна.</p>
           {order.refundedAt && (
@@ -113,8 +113,8 @@ export default function PaymentPage() {
 
   if (alreadyPaid || paid) {
     return (
-      <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-        <div className="card-glass p-8 max-w-md w-full">
+      <div className="min-h-[80vh] flex items-center justify-center bg-white py-6 sm:py-12 px-4">
+        <div className="card-glass p-5 sm:p-8 max-w-md w-full">
           <div className="text-center">
             <div className="w-16 h-16 bg-success/15 rounded-full flex items-center justify-center mx-auto mb-4">
               <Check size={32} className="text-success" />
@@ -168,8 +168,8 @@ export default function PaymentPage() {
   }
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-white py-12 px-4">
-      <div className="card-glass p-8 max-w-md w-full">
+    <div className="min-h-[80vh] flex items-center justify-center bg-white py-6 sm:py-12 px-4">
+      <div className="card-glass p-5 sm:p-8 max-w-md w-full">
         <div className="text-center mb-6">
           <h1 className="text-2xl font-bold text-text-primary mb-1">Оплата заказа</h1>
           <p className="text-text-muted text-sm">{order.orderNumber}</p>

@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react'
+import { PageBar, Sheet } from '../../components/app/ui'
+import { useIsDesktop } from '../../components/app/useIsDesktop'
 import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/documents'
@@ -63,33 +65,39 @@ function download(doc: Document) {
 
 const textBtn = 'text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline p-0'
 
-/** Строка документа: название, тип или дата, «Читать» и «Скачать» */
+/** Строка документа: название, тип или дата, «Читать» и «Скачать». На телефоне вся строка открывает документ */
 function DocRow({ doc, onOpen, showDate = true }: { doc: Document; onOpen: (id: string) => void; showDate?: boolean }) {
   const Icon = typeIcons[doc.type]
   const meta = [typeHint(doc), showDate ? formatDate(doc.createdAt) : null].filter(Boolean).join(' · ')
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-      <div
-        className={`flex items-center gap-3 min-w-0 ${doc.content ? 'cursor-pointer' : ''}`}
+    <div className="flex items-center gap-3 min-h-[56px]">
+      <button
+        type="button"
+        className={`flex items-center gap-3 min-w-0 flex-1 text-left bg-transparent border-none p-0 ${doc.content ? 'cursor-pointer' : 'cursor-default'}`}
         onClick={() => { if (doc.content) onOpen(doc.id) }}
+        disabled={!doc.content}
       >
-        <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center shrink-0">
-          <Icon size={18} className="text-primary" />
-        </div>
-        <div className="min-w-0">
-          <span className="font-medium text-sm text-text-primary break-words">{doc.title}</span>
-          {meta && <p className="text-text-muted text-xs mt-0.5">{meta}</p>}
-        </div>
-      </div>
-      <div className="flex items-center gap-4 shrink-0 pl-13 sm:pl-0">
+        <span className="w-11 h-11 bg-primary/10 rounded-[14px] flex items-center justify-center shrink-0">
+          <Icon size={20} className="text-primary" />
+        </span>
+        <span className="min-w-0 flex flex-col gap-0.5">
+          <span className="font-semibold text-[15px] lg:text-sm leading-snug text-text-primary break-words">{doc.title}</span>
+          {meta && <span className="text-text-muted text-[13px] lg:text-xs leading-snug">{meta}</span>}
+        </span>
+      </button>
+      <div className="flex items-center gap-4 shrink-0">
         {doc.content && (
-          <button className={textBtn} onClick={() => onOpen(doc.id)}>
+          <button className={`hidden lg:inline ${textBtn}`} onClick={() => onOpen(doc.id)}>
             Читать
           </button>
         )}
-        <button className={`flex items-center gap-1.5 ${textBtn}`} onClick={() => download(doc)}>
-          <Download size={16} />
-          Скачать
+        <button
+          className="w-11 h-11 lg:w-auto lg:h-auto grid place-items-center lg:flex lg:items-center lg:gap-1.5 rounded-full bg-bg-light lg:bg-transparent text-primary text-sm font-medium border-none cursor-pointer lg:hover:underline p-0"
+          onClick={() => download(doc)}
+          aria-label={`Скачать: ${doc.title}`}
+        >
+          <Download size={18} />
+          <span className="hidden lg:inline">Скачать</span>
         </button>
       </div>
     </div>
@@ -107,18 +115,18 @@ function PairReview({ pair }: { pair: AgentPair }) {
   const what = pairTitle(pair)
 
   if (state.kind === 'ACCEPTED') {
-    return <p className="text-xs text-emerald-700">{both ? 'Приняты' : 'Принят'} {formatDate(state.at)}</p>
+    return <p className="text-[13px] lg:text-xs text-emerald-700">{both ? 'Приняты' : 'Принят'} {formatDate(state.at)}</p>
   }
   if (state.kind === 'DEEMED_ACCEPTED') {
     return (
-      <p className="text-xs text-emerald-700">
+      <p className="text-[13px] lg:text-xs leading-snug text-emerald-700">
         {both ? 'Считаются принятыми' : 'Считается принятым'}: возражений до {formatDate(state.deadline.toISOString())} не поступило
       </p>
     )
   }
   if (state.kind === 'OBJECTED') {
     return (
-      <div className="text-xs">
+      <div className="text-[13px] lg:text-xs leading-snug">
         <p className="text-red-700">Возражения направлены {formatDate(state.at)}</p>
         <p className="text-text-secondary mt-1 whitespace-pre-wrap break-words border-l-2 border-red-200 pl-2">{state.text}</p>
       </div>
@@ -139,20 +147,20 @@ function PairReview({ pair }: { pair: AgentPair }) {
 
   return (
     <div className="text-sm space-y-2">
-      <p className="text-xs text-amber-700">
+      <p className="text-[13px] lg:text-xs leading-snug text-amber-700">
         <span className="font-semibold">Ждут вашего решения.</span> Возражения — до {formatDate(state.deadline.toISOString())}
       </p>
       {!objecting ? (
-        <div className="flex items-center gap-2 flex-wrap">
+        <div className="grid grid-cols-1 sm:flex sm:items-center gap-2 sm:flex-wrap">
           <button
             onClick={accept}
-            className="text-xs bg-emerald-50 text-emerald-700 px-3 py-1.5 rounded-lg font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer"
+            className="min-h-[48px] sm:min-h-[36px] text-[15px] sm:text-xs bg-emerald-50 text-emerald-700 px-4 sm:px-3 rounded-xl sm:rounded-lg font-semibold sm:font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer"
           >
             {both ? 'Принять отчёт и акт' : 'Принять'}
           </button>
           <button
             onClick={() => setObjecting(true)}
-            className="text-xs bg-red-50 text-red-700 px-3 py-1.5 rounded-lg font-medium hover:bg-red-100 transition-colors border-none cursor-pointer"
+            className="min-h-[48px] sm:min-h-[36px] text-[15px] sm:text-xs bg-red-50 text-red-700 px-4 sm:px-3 rounded-xl sm:rounded-lg font-semibold sm:font-medium hover:bg-red-100 transition-colors border-none cursor-pointer"
           >
             Направить возражения
           </button>
@@ -167,19 +175,19 @@ function PairReview({ pair }: { pair: AgentPair }) {
             rows={3}
             value={text}
             onChange={(e) => setText(e.target.value)}
-            className="w-full px-3 py-2 rounded-lg border border-border bg-bg-light text-text-primary text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
+            className="w-full px-3 py-2 rounded-xl border border-border bg-bg-light text-text-primary text-sm focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none"
           />
           <div className="flex items-center gap-3">
             <button
               onClick={sendObjection}
               disabled={!text.trim()}
-              className="text-xs bg-primary text-white px-3 py-1.5 rounded-lg font-medium hover:bg-primary-dark transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              className="min-h-[44px] sm:min-h-[36px] text-[15px] sm:text-xs bg-primary text-white px-5 sm:px-3 rounded-xl sm:rounded-lg font-semibold sm:font-medium hover:bg-primary-dark transition-colors border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Отправить
             </button>
             <button
               onClick={() => { setObjecting(false); setText('') }}
-              className="text-xs text-text-secondary bg-transparent border-none cursor-pointer hover:text-text-primary"
+              className="min-h-[44px] text-[15px] sm:text-xs text-text-secondary bg-transparent border-none cursor-pointer hover:text-text-primary px-2"
             >
               Отмена
             </button>
@@ -193,16 +201,19 @@ function PairReview({ pair }: { pair: AgentPair }) {
 /** Отчёт агента и акт за период — одной карточкой с одним решением */
 function PairCard({ pair, onOpen }: { pair: AgentPair; onOpen: (id: string) => void }) {
   return (
-    <div className="card p-4">
-      <p className="font-semibold text-sm text-text-primary mb-3">
-        {pairTitle(pair)} <span className="font-normal text-text-muted">· {formatDate(pair.createdAt)}</span>
+    <div className="app-group p-4">
+      <p className="font-semibold text-[15px] lg:text-sm leading-snug text-text-primary mb-2">
+        {pairTitle(pair)}{' '}
+        <span className="block lg:inline font-normal text-[13px] lg:text-sm text-text-muted mt-0.5 lg:mt-0">
+          <span className="hidden lg:inline">· </span>{formatDate(pair.createdAt)}
+        </span>
       </p>
-      <div className="space-y-3">
+      <div className="divide-y divide-border">
         {pair.docs.map((d) => (
           <DocRow key={d.id} doc={d} onOpen={onOpen} showDate={false} />
         ))}
       </div>
-      <div className="mt-3 pt-3 border-t border-border sm:pl-13">
+      <div className="mt-2 pt-3 border-t border-border lg:pl-14">
         <PairReview key={pair.key} pair={pair} />
       </div>
     </div>
@@ -213,16 +224,17 @@ export default function DocumentsPage() {
   const { user } = useAuth()
   useDataRevision()
   const [openDoc, setOpenDoc] = useState<string | null>(null)
+  const desktop = useIsDesktop()
 
-  /* Окно документа закрывается по Esc */
+  /* Окно документа закрывается по Esc (на телефоне это делает сама панель) */
   useEffect(() => {
-    if (!openDoc) return
+    if (!openDoc || !desktop) return
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') setOpenDoc(null)
     }
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
-  }, [openDoc])
+  }, [openDoc, desktop])
 
   const pairs = user ? agentPairs(user.id) : []
   const waitingPairs = pairs.filter((p) => pairReviewState(p).kind === 'WAITING')
@@ -241,14 +253,14 @@ export default function DocumentsPage() {
   const activePair = activeDoc ? pairs.find((p) => p.docs.some((d) => d.id === activeDoc.id)) : undefined
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold mb-6 text-text-primary">Документы</h1>
+    <div className="max-w-3xl">
+      <PageBar title="Документы" />
 
       {/* Ждут решения — сверху */}
       {waitingPairs.length > 0 && (
-        <div className="mb-8">
-          <h2 className="text-base font-bold text-amber-800 mb-3">Ждут решения: {waitingPairs.length}</h2>
-          <div className="space-y-2">
+        <div className="mb-7">
+          <h2 className="app-group-title !text-amber-800">Ждут решения: {waitingPairs.length}</h2>
+          <div className="space-y-3">
             {waitingPairs.map((p) => (
               <PairCard key={p.key} pair={p} onOpen={setOpenDoc} />
             ))}
@@ -257,22 +269,19 @@ export default function DocumentsPage() {
       )}
 
       {/* Документы партнёра */}
-      <div className="mb-8">
-        <h2 className="text-base font-bold text-text-secondary mb-3 flex items-center gap-2">
-          <FileText size={18} className="text-primary" />
-          Мои документы
-        </h2>
+      <div className="mb-7">
+        <h2 className="app-group-title">Мои документы</h2>
         {myItems.length === 0 ? (
-          <div className="card p-8 text-center text-text-muted">
+          <div className="app-group p-8 text-center text-[15px] lg:text-sm text-text-muted">
             {waitingPairs.length > 0 ? 'Других документов пока нет.' : 'Документов пока нет.'}
           </div>
         ) : (
-          <div className="space-y-2">
+          <div className="space-y-3">
             {myItems.map((it) =>
               it.pair ? (
                 <PairCard key={it.key} pair={it.pair} onOpen={setOpenDoc} />
               ) : it.doc ? (
-                <div key={it.key} className="card p-4">
+                <div key={it.key} className="app-group px-4 py-2">
                   <DocRow doc={it.doc} onOpen={setOpenDoc} />
                 </div>
               ) : null,
@@ -283,21 +292,38 @@ export default function DocumentsPage() {
 
       {/* Документы платформы */}
       <div>
-        <h2 className="text-base font-bold text-text-secondary mb-3 flex items-center gap-2">
-          <Shield size={18} className="text-primary" />
-          Документы платформы
-        </h2>
-        <div className="space-y-2">
+        <h2 className="app-group-title">Документы платформы</h2>
+        <div className="app-group divide-y divide-border">
           {publicDocs.map((doc) => (
-            <div key={doc.id} className="card p-4">
+            <div key={doc.id} className="px-4 py-2">
               <DocRow doc={doc} onOpen={setOpenDoc} showDate={false} />
             </div>
           ))}
         </div>
       </div>
 
-      {/* Окно документа */}
-      {activeDoc && activeDoc.content && (
+      {/* Документ на телефоне — в панели снизу */}
+      {!desktop && (
+        <Sheet open={Boolean(activeDoc?.content)} onClose={() => setOpenDoc(null)} title={activeDoc?.title ?? ''}>
+          {activeDoc && (
+            <>
+              {typeHint(activeDoc) && <p className="text-[13px] text-text-muted -mt-1 mb-3">{typeHint(activeDoc)}</p>}
+              <pre className="whitespace-pre-wrap break-words font-sans text-[15px] text-text-secondary leading-relaxed m-0">
+                {activeDoc.content}
+              </pre>
+              {activePair && activePair.userId === user?.id && (
+                <div className="mt-5 pt-4 border-t border-border">
+                  <p className="text-[13px] text-text-muted mb-2">{pairTitle(activePair)}</p>
+                  <PairReview key={activePair.key} pair={activePair} />
+                </div>
+              )}
+            </>
+          )}
+        </Sheet>
+      )}
+
+      {/* Окно документа на компьютере */}
+      {desktop && activeDoc && activeDoc.content && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[200] flex items-start justify-center pt-12 px-4"
           onClick={() => setOpenDoc(null)}

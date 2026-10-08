@@ -97,3 +97,23 @@ export function photoNote(order: Pick<Order, 'receivedIssuePhotos' | 'receivedIs
   if (order.receivedIssuePhotos) return ` (фото: ${order.receivedIssuePhotos})`
   return order.receivedIssuePhoto ? ' (фото приложено)' : ''
 }
+
+/** Короткий статус для строки списка заказов на телефоне */
+const ORDER_STATUS_SHORT: Record<OrderStatus, string> = {
+  CREATED: 'Ждёт оплаты',
+  PAID: 'Оплачен',
+  PURCHASED: 'Выкуплен',
+  IN_TRANSIT: 'В пути',
+  AT_POINT: 'В пункте',
+  ISSUED: 'Выдан',
+  CANCELLED: 'Отменён',
+}
+
+export function orderStatusShort(o: Pick<Order, 'status' | 'returnedAt'>): string {
+  return o.returnedAt ? 'Возврат' : ORDER_STATUS_SHORT[o.status]
+}
+
+/** Цвет текста статуса (без фона) — для подписи справа в строке заказа */
+export function orderStatusText(o: Pick<Order, 'status' | 'returnedAt'>): string {
+  return orderStatusColor(o).split(' ').find((c) => c.startsWith('text-')) ?? 'text-text-secondary'
+}

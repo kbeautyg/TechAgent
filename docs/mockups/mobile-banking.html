@@ -1,0 +1,409 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Кабинет на телефоне — макеты</title>
+<link rel="stylesheet" href="../../node_modules/@fontsource-variable/onest/index.css">
+<link rel="stylesheet" href="../../node_modules/@fontsource-variable/unbounded/index.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    --primary: #1B44F5; --primary-dark: #0E2FCC; --primary-soft: #E8EDFF;
+    --success: #12B981; --success-dark: #0B7A55; --success-soft: #E3F7EF;
+    --warning: #B86E00; --warning-soft: #FFF3DC;
+    --violet: #6D4BF5; --violet-soft: #EFEBFF;
+    --bg: #F2F3F8; --card: #FFFFFF;
+    --text: #0B1020; --text-2: #3A4256; --muted: #7C8599;
+    --line: rgba(11,16,32,.07);
+    --sans: 'Onest Variable', -apple-system, sans-serif;
+    --display: 'Unbounded Variable', 'Onest Variable', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--sans); color: var(--text); background: #DCDFEA; -webkit-font-smoothing: antialiased; }
+  .page { padding: 32px 24px 48px; max-width: 1760px; margin: 0 auto; }
+  .page h1 { font-family: var(--display); font-size: 22px; letter-spacing: -.02em; margin: 0 0 6px; }
+  .page > p { margin: 0 0 28px; color: var(--text-2); font-size: 15px; max-width: 760px; line-height: 1.5; }
+  .row { display: flex; flex-wrap: wrap; gap: 36px; align-items: flex-start; }
+  .shot { width: 390px; }
+  .shot figcaption { margin-top: 14px; font-size: 14px; line-height: 1.5; color: var(--text-2); }
+  .shot figcaption b { color: var(--text); display: block; font-size: 15px; margin-bottom: 4px; }
+
+  /* Телефон */
+  .phone { width: 390px; height: 844px; background: var(--bg); border-radius: 48px; overflow: hidden; position: relative;
+           box-shadow: 0 0 0 10px #10131C, 0 30px 60px rgba(11,16,32,.25); display: flex; flex-direction: column; }
+  .status { height: 47px; flex: none; display: flex; align-items: center; justify-content: space-between; padding: 0 30px 0 34px; font-weight: 600; font-size: 16px; }
+  .status .island { width: 122px; height: 34px; background: #000; border-radius: 20px; }
+  .status .sig { display: flex; gap: 5px; align-items: center; }
+  .status .sig svg { width: 17px; height: 17px; }
+  .scroll { flex: 1; overflow: hidden; padding: 0 16px; }
+  .home-ind { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); width: 134px; height: 5px; border-radius: 3px; background: #10131C; z-index: 30; }
+
+  i[data-lucide], svg.lucide { display: inline-block; }
+
+  /* Шапка */
+  .top { display: flex; align-items: center; gap: 12px; padding: 8px 0 16px; }
+  .avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; font-weight: 700; font-size: 16px; flex: none; }
+  .top .who { flex: 1; min-width: 0; }
+  .top .who b { display: block; font-size: 17px; }
+  .top .who span { font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; }
+  .icon-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--card); display: grid; place-items: center; flex: none; color: var(--text); }
+  .icon-btn svg { width: 22px; height: 22px; }
+
+  /* Карта вознаграждения */
+  .hero { border-radius: 24px; padding: 20px 20px 18px; color: #fff; background: linear-gradient(140deg, #1B44F5 0%, #2A3FD8 55%, #4527B8 100%); }
+  .hero .lbl { font-size: 14px; opacity: .8; }
+  .hero .sum { font-family: var(--display); font-size: 34px; font-weight: 700; letter-spacing: -.03em; margin: 6px 0 4px; }
+  .hero .sum small { font-size: 22px; opacity: .85; }
+  .hero .note { font-size: 13px; opacity: .78; line-height: 1.4; }
+  .hero .split { display: flex; margin-top: 16px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,.18); }
+  .hero .split div { flex: 1; }
+  .hero .split div + div { border-left: 1px solid rgba(255,255,255,.18); padding-left: 14px; }
+  .hero .split span { display: block; font-size: 12px; opacity: .75; }
+  .hero .split b { font-size: 16px; }
+
+  /* Кнопки-действия */
+  .actions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px; margin: 20px 0 18px; }
+  .act { display: flex; flex-direction: column; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; text-align: center; line-height: 1.2; color: var(--text); position: relative; }
+  .act .c { width: 60px; height: 60px; border-radius: 50%; background: var(--card); display: grid; place-items: center; color: var(--primary); }
+  .act .c svg { width: 27px; height: 27px; }
+  .act.main .c { background: var(--primary); color: #fff; box-shadow: 0 8px 18px rgba(27,68,245,.3); }
+  .badge { position: absolute; top: -2px; left: calc(50% + 14px); min-width: 22px; height: 22px; border-radius: 11px; background: #FB2C36; color: #fff; font-size: 12px; font-weight: 700; display: grid; place-items: center; padding: 0 6px; border: 2px solid var(--bg); }
+
+  /* Плашка «ждут решения» */
+  .todo { display: flex; align-items: center; gap: 12px; background: var(--warning-soft); border-radius: 18px; padding: 12px 14px; margin-bottom: 18px; color: #6B4100; }
+  .todo .ic { width: 40px; height: 40px; border-radius: 12px; background: #FFE4B0; display: grid; place-items: center; flex: none; }
+  .todo .ic svg { width: 22px; height: 22px; }
+  .todo div { flex: 1; font-size: 14px; line-height: 1.35; }
+  .todo div b { display: block; font-size: 15px; }
+  .todo > svg { width: 20px; height: 20px; flex: none; }
+
+  /* Списки */
+  .sec-h { display: flex; justify-content: space-between; align-items: baseline; margin: 4px 4px 10px; }
+  .sec-h h2 { font-family: var(--sans); font-size: 19px; font-weight: 700; margin: 0; letter-spacing: -.01em; }
+  .sec-h a { color: var(--primary); font-size: 15px; font-weight: 600; text-decoration: none; }
+  .list { background: var(--card); border-radius: 20px; overflow: hidden; }
+  .item { display: flex; align-items: center; gap: 12px; padding: 0 14px; min-height: 68px; }
+  .item + .item { box-shadow: inset 0 1px 0 var(--line); }
+  .item .th { width: 44px; height: 44px; border-radius: 14px; display: grid; place-items: center; flex: none; }
+  .item .th svg { width: 22px; height: 22px; }
+  .item .mid { flex: 1; min-width: 0; padding: 12px 0; }
+  .item .mid b { display: block; font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item .mid span { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .item .r { text-align: right; flex: none; }
+  .item .r b { display: block; font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .item .r span { display: block; font-size: 12.5px; font-weight: 600; margin-top: 2px; white-space: nowrap; }
+  .t-blue { background: var(--primary-soft); color: var(--primary); }
+  .t-green { background: var(--success-soft); color: var(--success-dark); }
+  .t-amber { background: var(--warning-soft); color: var(--warning); }
+  .t-violet { background: var(--violet-soft); color: var(--violet); }
+  .c-blue { color: var(--primary); } .c-green { color: var(--success-dark); } .c-amber { color: var(--warning); } .c-violet { color: var(--violet); } .c-muted { color: var(--muted); }
+
+  /* Нижнее меню */
+  .tabbar { flex: none; background: rgba(255,255,255,.94); backdrop-filter: blur(16px); box-shadow: 0 -1px 0 var(--line); display: grid; grid-template-columns: repeat(5, 1fr); padding: 8px 6px 30px; position: relative; z-index: 10; }
+  .tab { display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 600; color: var(--muted); }
+  .tab .pill { width: 60px; height: 34px; border-radius: 17px; display: grid; place-items: center; }
+  .tab svg { width: 26px; height: 26px; stroke-width: 1.9; }
+  .tab.on { color: var(--primary); }
+  .tab.on .pill { background: var(--primary-soft); }
+  .tab.on svg { stroke-width: 2.3; }
+
+  /* Экран заказа */
+  .nav { display: flex; align-items: center; gap: 10px; padding: 6px 0 14px; }
+  .nav .ttl { flex: 1; text-align: center; font-weight: 700; font-size: 17px; }
+  .prod { background: var(--card); border-radius: 24px; padding: 18px; display: flex; gap: 14px; align-items: center; }
+  .prod .ph { width: 76px; height: 76px; border-radius: 18px; background: #F4F5F9; display: grid; place-items: center; color: var(--text-2); flex: none; }
+  .prod .ph svg { width: 34px; height: 34px; }
+  .prod b { display: block; font-size: 16px; line-height: 1.3; }
+  .prod .price { font-family: var(--display); font-weight: 700; font-size: 22px; letter-spacing: -.02em; margin-top: 4px; }
+  .state { margin: 12px 0; background: var(--card); border-radius: 20px; padding: 16px 16px 14px; }
+  .state .head { display: flex; align-items: center; gap: 10px; }
+  .state .head .th { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; flex: none; }
+  .state .head .th svg { width: 22px; height: 22px; }
+  .state .head b { display: block; font-size: 16px; }
+  .state .head span { font-size: 13px; color: var(--muted); }
+  .bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 14px 0 8px; }
+  .bar i { height: 6px; border-radius: 3px; background: #E4E6EE; display: block; }
+  .bar i.done { background: var(--success); }
+  .bar i.now { background: var(--violet); }
+  .bar-l { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); }
+  .grp { background: var(--card); border-radius: 20px; overflow: hidden; margin-bottom: 12px; }
+  .kv { display: flex; align-items: center; gap: 12px; padding: 0 16px; min-height: 56px; }
+  .kv + .kv { box-shadow: inset 0 1px 0 var(--line); }
+  .kv .k { flex: 1; min-width: 0; padding: 10px 0; }
+  .kv .k span { display: block; font-size: 13px; color: var(--muted); }
+  .kv .k b { display: block; font-size: 15px; font-weight: 600; margin-top: 1px; }
+  .kv .round { width: 44px; height: 44px; border-radius: 50%; background: var(--primary-soft); color: var(--primary); display: grid; place-items: center; flex: none; }
+  .kv .round svg { width: 21px; height: 21px; }
+  .kv > svg { width: 20px; height: 20px; color: var(--muted); flex: none; }
+  .sticky { flex: none; background: rgba(255,255,255,.96); backdrop-filter: blur(16px); box-shadow: 0 -1px 0 var(--line); padding: 12px 16px 34px; position: relative; z-index: 10; }
+  .btn { height: 54px; border-radius: 16px; border: 0; width: 100%; font: 700 16.5px var(--sans); display: flex; align-items: center; justify-content: center; gap: 10px; }
+  .btn svg { width: 22px; height: 22px; }
+  .btn.primary { background: var(--primary); color: #fff; }
+  .btn.green { background: var(--success); color: #fff; }
+  .btn.ghost { background: var(--primary-soft); color: var(--primary); }
+  .btn.off { background: #E4E6EE; color: #9AA1B2; }
+  .sticky .hint { text-align: center; font-size: 12.5px; color: var(--muted); margin-top: 8px; }
+
+  /* Выезжающая панель */
+  .dim { position: absolute; inset: 0; background: rgba(11,16,32,.45); z-index: 20; }
+  .sheet { position: absolute; left: 0; right: 0; bottom: 0; background: var(--card); border-radius: 28px 28px 0 0; z-index: 25; padding: 10px 18px 34px; }
+  .grab { width: 40px; height: 5px; border-radius: 3px; background: #D5D8E2; margin: 0 auto 14px; }
+  .sheet h3 { font-family: var(--sans); font-size: 21px; font-weight: 700; margin: 0 0 4px; letter-spacing: -.01em; }
+  .sheet .sub { font-size: 14px; color: var(--text-2); margin: 0 0 16px; line-height: 1.4; }
+  .step { display: flex; gap: 14px; padding: 12px 0; }
+  .step + .step { box-shadow: inset 0 1px 0 var(--line); }
+  .step .n { width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: 15px; flex: none; background: var(--primary-soft); color: var(--primary); }
+  .step .n.ok { background: var(--success); color: #fff; }
+  .step .n.ok svg { width: 18px; height: 18px; }
+  .step .b { flex: 1; min-width: 0; font-size: 14.5px; line-height: 1.4; }
+  .step .b b { display: block; font-size: 15.5px; margin-bottom: 2px; }
+  .step .b .s { color: var(--text-2); }
+  .mini { margin-top: 10px; height: 44px; border-radius: 12px; background: var(--primary-soft); color: var(--primary); font-weight: 600; font-size: 15px; display: inline-flex; align-items: center; gap: 8px; padding: 0 16px; }
+  .mini svg { width: 19px; height: 19px; }
+  .photo { margin-top: 10px; display: flex; align-items: center; gap: 12px; background: var(--success-soft); border-radius: 14px; padding: 8px 12px 8px 8px; }
+  .photo .pv { width: 48px; height: 48px; border-radius: 10px; background: repeating-linear-gradient(0deg, #fff 0 5px, #E6E8EF 5px 6px); border: 1px solid #D5D8E2; flex: none; }
+  .photo div { flex: 1; font-size: 14px; }
+  .photo div b { display: block; font-size: 14.5px; }
+  .photo div span { color: var(--success-dark); font-weight: 600; }
+  .photo > span { font-size: 14px; color: var(--primary); font-weight: 600; }
+
+  /* Новый заказ */
+  .steps3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 18px; }
+  .steps3 div { font-size: 13px; font-weight: 600; color: var(--muted); }
+  .steps3 div::before { content: ''; display: block; height: 5px; border-radius: 3px; background: #E4E6EE; margin-bottom: 8px; }
+  .steps3 .done { color: var(--success-dark); }
+  .steps3 .done::before { background: var(--success); }
+  .steps3 .now { color: var(--primary); }
+  .steps3 .now::before { background: var(--primary); }
+  .chosen { background: var(--card); border-radius: 18px; padding: 12px 14px; display: flex; gap: 12px; align-items: center; margin-bottom: 20px; }
+  .chosen .ph { width: 48px; height: 48px; border-radius: 12px; background: #F4F5F9; display: grid; place-items: center; color: var(--text-2); flex: none; }
+  .chosen .ph svg { width: 24px; height: 24px; }
+  .chosen div { flex: 1; min-width: 0; }
+  .chosen b { display: block; font-size: 15px; }
+  .chosen span { font-size: 14px; color: var(--muted); }
+  .chosen a { color: var(--primary); font-weight: 600; font-size: 15px; }
+  .h-big { font-family: var(--display); font-size: 24px; letter-spacing: -.02em; margin: 0 0 16px; }
+  .field { margin-bottom: 14px; }
+  .field label { display: block; font-size: 14px; font-weight: 600; color: var(--text-2); margin: 0 0 7px 4px; }
+  .field .in { height: 54px; border-radius: 16px; background: var(--card); border: 1.5px solid transparent; display: flex; align-items: center; padding: 0 16px; font-size: 16.5px; }
+  .field .in.focus { border-color: var(--primary); box-shadow: 0 0 0 4px rgba(27,68,245,.12); }
+  .field .in .ph-t { color: #A5ABBB; }
+  .field .in .caret { width: 2px; height: 22px; background: var(--primary); margin-left: 1px; }
+  .kbd-hint { font-size: 13px; color: var(--muted); margin: -6px 4px 0; line-height: 1.4; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Кабинет партнёра на телефоне</h1>
+  <p>Четыре экрана в стиле банковского приложения. Цифры и заказы взяты из демо-кабинета. Если направление нравится, переношу его на все экраны: заказы, документы, профиль, админку и витрину.</p>
+
+  <div class="row">
+
+    <!-- 1. Главный экран -->
+    <figure class="shot" style="margin:0">
+      <div class="phone">
+        <div class="status"><span>9:41</span><span class="island"></span><span class="sig"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+        <div class="scroll">
+          <div class="top">
+            <div class="avatar">ДП</div>
+            <div class="who"><b>Демо-партнёр 1</b><span>Пункт выдачи · Москва, ул. Демонстрационная, 1</span></div>
+            
+          </div>
+
+          <div class="hero">
+            <div class="lbl">Вознаграждение за октябрь</div>
+            <div class="sum">12 490 <small>₽</small></div>
+            <div class="note">5% от цены товара · начисляется после выдачи и акта</div>
+            <div class="split">
+              <div><span>Оплачено покупателями</span><b>574 500 ₽</b></div>
+              <div><span>Выдано</span><b>2 заказа</b></div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <div class="act main"><div class="c"><i data-lucide="plus"></i></div>Новый<br>заказ</div>
+            <div class="act"><div class="c"><i data-lucide="package-check"></i></div><span class="badge">1</span>Выдать<br>товар</div>
+            <div class="act"><div class="c"><i data-lucide="package-open"></i></div><span class="badge">1</span>Принять<br>товар</div>
+            <div class="act"><div class="c"><i data-lucide="link"></i></div>Ссылка<br>на оплату</div>
+          </div>
+
+          <div class="todo">
+            <div class="ic"><i data-lucide="file-signature"></i></div>
+            <div><b>Отчёт и акт за сентябрь</b>Ждут вашего решения</div>
+            <i data-lucide="chevron-right"></i>
+          </div>
+
+          <div class="sec-h"><h2>Заказы</h2><a>Все</a></div>
+          <div class="list">
+            <div class="item">
+              <div class="th t-violet"><i data-lucide="smartphone"></i></div>
+              <div class="mid"><b>Xiaomi 14 512GB</b><span>#1238 · хранится до 19.10</span></div>
+              <div class="r"><b>79 900 ₽</b><span class="c-violet">В пункте</span></div>
+            </div>
+            <div class="item">
+              <div class="th t-amber"><i data-lucide="laptop"></i></div>
+              <div class="mid"><b>MacBook Air 13" M3 512GB</b><span>#1240 · Покупатель 4</span></div>
+              <div class="r"><b>119 900 ₽</b><span class="c-amber">В пути</span></div>
+            </div>
+            <div class="item">
+              <div class="th t-blue"><i data-lucide="smartphone"></i></div>
+              <div class="mid"><b>Samsung Galaxy S24 Ultra</b><span>#1245 · ждёт оплаты</span></div>
+              <div class="r"><b>139 900 ₽</b><span class="c-blue">Создан</span></div>
+            </div>
+            <div class="item">
+              <div class="th t-green"><i data-lucide="laptop"></i></div>
+              <div class="mid"><b>MacBook Air 15" M3 256GB</b><span>#1243 · Покупатель 2</span></div>
+              <div class="r"><b>124 900 ₽</b><span class="c-green">Оплачен</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tabbar">
+          <div class="tab on"><div class="pill"><i data-lucide="house"></i></div>Главная</div>
+          <div class="tab"><div class="pill"><i data-lucide="package"></i></div>Заказы</div>
+          <div class="tab"><div class="pill"><i data-lucide="message-circle"></i></div>Связь</div>
+          <div class="tab"><div class="pill"><i data-lucide="file-text"></i></div>Документы</div>
+          <div class="tab"><div class="pill"><i data-lucide="user"></i></div>Профиль</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <figcaption><b>1. Главный экран</b>Сверху крупно вознаграждение, как остаток на счёте. Под ним четыре кнопки главных действий, у срочных стоит счётчик. Заказы идут лентой, статус написан цветом справа. В нижнем меню иконки 26 px, подписи 11,5 px, активный пункт выделен заливкой.</figcaption>
+    </figure>
+
+    <!-- 2. Карточка заказа -->
+    <figure class="shot" style="margin:0">
+      <div class="phone">
+        <div class="status"><span>9:41</span><span class="island"></span><span class="sig"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+        <div class="scroll">
+          <div class="nav">
+            <div class="icon-btn"><i data-lucide="chevron-left"></i></div>
+            <div class="ttl">Заказ #1238</div>
+            <div class="icon-btn"><i data-lucide="message-circle"></i></div>
+          </div>
+
+          <div class="prod">
+            <div class="ph"><i data-lucide="smartphone"></i></div>
+            <div><b>Xiaomi 14 512GB Black</b><div class="price">79 900 ₽</div></div>
+          </div>
+
+          <div class="state">
+            <div class="head">
+              <div class="th t-violet"><i data-lucide="package-open"></i></div>
+              <div><b>В пункте выдачи</b><span>Покупатель уведомлён · хранится до 19.10</span></div>
+            </div>
+            <div class="bar"><i class="done"></i><i class="done"></i><i class="done"></i><i class="done"></i><i class="now"></i><i></i></div>
+            <div class="bar-l"><span>Этап 5 из 6</span><span>Дальше: выдача покупателю</span></div>
+          </div>
+
+          <div class="grp">
+            <div class="kv">
+              <div class="k"><span>Покупатель</span><b>Покупатель 5 (демо)</b></div>
+            </div>
+            <div class="kv">
+              <div class="k"><span>Телефон</span><b>+7 900 000-00-15</b></div>
+              <div class="round"><i data-lucide="phone"></i></div>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="kv">
+              <div class="k"><span>Оплата</span><b class="c-green">Получена 05.10 в 16:00</b></div>
+              <i data-lucide="circle-check" style="color:var(--success)"></i>
+            </div>
+            <div class="kv">
+              <div class="k"><span>Ваше вознаграждение · 5%</span><b>3 995 ₽ после выдачи и акта</b></div>
+            </div>
+          </div>
+
+          <div class="grp">
+            <div class="kv"><div class="k"><b>Этапы и даты</b></div><i data-lucide="chevron-right"></i></div>
+            <div class="kv"><div class="k"><b>Документы по заказу</b></div><i data-lucide="chevron-right"></i></div>
+          </div>
+        </div>
+        <div class="sticky">
+          <div class="btn primary"><i data-lucide="package-check"></i>Выдать товар</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <figcaption><b>2. Карточка заказа</b>Сначала идёт товар с ценой, под ним статус и полоска этапов. Телефон покупателя набирается одним касанием. Главное действие закреплено внизу экрана, и его не надо искать прокруткой. Даты и документы спрятаны в отдельные строки, чтобы экран не превращался в простыню.</figcaption>
+    </figure>
+
+    <!-- 3. Выдача — выезжающая панель -->
+    <figure class="shot" style="margin:0">
+      <div class="phone">
+        <div class="status"><span>9:41</span><span class="island"></span><span class="sig"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+        <div class="scroll">
+          <div class="nav">
+            <div class="icon-btn"><i data-lucide="chevron-left"></i></div>
+            <div class="ttl">Заказ #1238</div>
+            <div class="icon-btn"><i data-lucide="message-circle"></i></div>
+          </div>
+          <div class="prod">
+            <div class="ph"><i data-lucide="smartphone"></i></div>
+            <div><b>Xiaomi 14 512GB Black</b><div class="price">79 900 ₽</div></div>
+          </div>
+        </div>
+        <div class="dim"></div>
+        <div class="sheet">
+          <div class="grab"></div>
+          <h3>Выдача товара</h3>
+          <p class="sub">Покупатель называет номер заказа, вы сверяете ФИО: <b>Покупатель 5 (демо)</b></p>
+
+          <div class="step">
+            <div class="n ok"><i data-lucide="check"></i></div>
+            <div class="b"><b>Распечатайте акт</b><span class="s">Два экземпляра</span><br><span class="mini"><i data-lucide="printer"></i>Печать акта</span></div>
+          </div>
+          <div class="step">
+            <div class="n ok"><i data-lucide="check"></i></div>
+            <div class="b"><b>Подпишите вместе с покупателем</b><span class="s">Покупатель проверяет товар. Один экземпляр отдайте ему.</span></div>
+          </div>
+          <div class="step">
+            <div class="n ok"><i data-lucide="check"></i></div>
+            <div class="b"><b>Сфотографируйте подписанный акт</b>
+              <div class="photo"><div class="pv"></div><div><b>Акт #1238.jpg</b><span>Загружен</span></div><span>Заменить</span></div>
+            </div>
+          </div>
+          <div class="btn green" style="margin-top:14px"><i data-lucide="check"></i>Подтвердить выдачу</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <figcaption><b>3. Выдача — панель снизу</b>Кнопка «Выдать товар» открывает панель снизу, а не новую страницу. Три шага видны сразу, каждый отмечается галочкой. Акт фотографируется камерой прямо отсюда. Пока нет фото, зелёная кнопка серая, выдать без акта нельзя. Панель закрывается свайпом вниз.</figcaption>
+    </figure>
+
+    <!-- 4. Новый заказ -->
+    <figure class="shot" style="margin:0">
+      <div class="phone">
+        <div class="status"><span>9:41</span><span class="island"></span><span class="sig"><i data-lucide="signal"></i><i data-lucide="wifi"></i><i data-lucide="battery-full"></i></span></div>
+        <div class="scroll">
+          <div class="nav">
+            <div class="icon-btn"><i data-lucide="chevron-left"></i></div>
+            <div class="ttl">Новый заказ</div>
+            <div class="icon-btn"><i data-lucide="x"></i></div>
+          </div>
+          <div class="steps3"><div class="done">Товар</div><div class="now">Покупатель</div><div>Проверка</div></div>
+
+          <div class="chosen">
+            <div class="ph"><i data-lucide="laptop"></i></div>
+            <div><b>MacBook Air 13" M3 512GB</b><span>119 900 ₽</span></div>
+            <a>Сменить</a>
+          </div>
+
+          
+          <div class="field"><label>ФИО покупателя</label><div class="in">Иванов Пётр Сергеевич</div></div>
+          <div class="field"><label>Телефон</label><div class="in focus">+7 912 345-67<span class="caret"></span></div></div>
+          <div class="field"><label>Email, необязательно</label><div class="in"><span class="ph-t">email@example.com</span></div></div>
+          <p class="kbd-hint">Ссылку на оплату вы отправите покупателю сами после проверки заказа.</p>
+        </div>
+        <div class="sticky">
+          <div class="btn off">Далее</div>
+        </div>
+        <div class="home-ind"></div>
+      </div>
+      <figcaption><b>4. Новый заказ</b>Вместо кружков «1 2 3» шаги подписаны, а пройденные закрашены. Поля и кнопки высотой 54 px удобно нажимать большим пальцем. Кнопка «Далее» всегда внизу и включается, когда всё заполнено.</figcaption>
+    </figure>
+
+  </div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

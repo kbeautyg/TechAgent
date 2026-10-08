@@ -154,7 +154,7 @@ export default function AdminReportsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-text-primary mb-2">Отчёты агентов</h1>
+      <h1 className="app-name text-[22px] lg:text-2xl font-bold text-text-primary leading-tight mb-2">Отчёты агентов</h1>
       <p className="text-sm text-text-secondary mb-6">
         В отчёт агента и акт входят заказы, выданные покупателям в выбранном месяце, по которым загружен подписанный акт
         приёма-передачи, а также удержания по заказам, возвращённым после выдачи (п. 7.3).

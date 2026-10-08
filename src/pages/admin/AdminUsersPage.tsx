@@ -10,6 +10,9 @@ import PartnerInvite from './PartnerInvite'
 const MIN_PERCENT = 0.1
 const MAX_PERCENT = 99
 
+const bigBtn = 'min-h-[46px] px-4 rounded-xl text-[15px] font-semibold transition-colors border-none cursor-pointer'
+const smallBtn = 'text-xs px-2 py-1 rounded font-medium transition-colors border-none cursor-pointer whitespace-nowrap'
+
 export default function AdminUsersPage() {
   useDataRevision()
   const [percents, setPercents] = useState<Record<string, string>>({})
@@ -62,10 +65,61 @@ export default function AdminUsersPage() {
     setPercents((p) => ({ ...p, [u.id]: '' }))
   }
 
+  /** Процент, подтверждение и отклонение: в таблице — мелко, на телефоне — крупными кнопками */
+  const controls = (u: User, big: boolean) => {
+    const status = u.partnerStatus ?? 'PENDING'
+    return (
+      <>
+      <label className={big ? 'flex items-center gap-2 mt-3 text-[14px] text-text-muted' : 'flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap'}>
+        <input
+          type="text"
+          inputMode="decimal"
+          value={percents[u.id] ?? ''}
+          onChange={(e) => setPercents((p) => ({ ...p, [u.id]: e.target.value }))}
+          className={big ? 'w-20 h-11 px-3 rounded-xl border border-border bg-white text-text-primary' : 'w-14 px-2 py-1 rounded border border-border bg-white text-text-primary text-xs'}
+          aria-label="Вознаграждение, %"
+        />
+        % от цены товара
+      </label>
+      {status === 'VERIFIED' && (
+        <>
+          <button
+            onClick={() => changePercent(u)}
+            className={`${big ? bigBtn + ' w-full mt-3' : 'mt-2 text-xs px-2 py-1 rounded font-medium border-none cursor-pointer whitespace-nowrap'} bg-primary/10 text-primary hover:bg-primary/20 transition-colors`}
+          >
+            Изменить размер
+          </button>
+          <p className={big ? 'text-[13px] leading-snug text-text-muted mt-1.5' : 'text-xs text-text-muted mt-1 max-w-48'}>
+            Новый размер — для заказов через {REWARD_CHANGE_NOTICE_DAYS} дней после изменения
+          </p>
+        </>
+      )}
+      <div className={big ? 'flex gap-2 mt-3 [&>button]:flex-1' : 'flex gap-2 mt-2'}>
+        {status !== 'VERIFIED' && (
+          <button
+            onClick={() => verify(u)}
+            className={`${big ? bigBtn : smallBtn} bg-emerald-50 text-emerald-700 hover:bg-emerald-100`}
+          >
+            Подтвердить
+          </button>
+        )}
+        {status !== 'REJECTED' && (
+          <button
+            onClick={() => reject(u)}
+            className={`${big ? bigBtn : smallBtn} bg-red-50 text-red-700 hover:bg-red-100`}
+          >
+            Отклонить
+          </button>
+        )}
+      </div>
+      </>
+    )
+  }
+
   return (
     <div>
-      <div className="flex items-center justify-between mb-6 gap-4 flex-wrap">
-        <h1 className="text-2xl font-bold text-text-primary">Партнёры</h1>
+      <div className="flex items-center justify-between mb-4 lg:mb-6 gap-x-4 gap-y-1 flex-wrap">
+        <h1 className="app-name text-[22px] lg:text-2xl font-bold text-text-primary leading-tight">Партнёры</h1>
         <span className="text-text-muted text-sm">
           {partners.length} всего{pendingCount > 0 && ` · ${pendingCount} на проверке`}
         </span>
@@ -76,7 +130,60 @@ export default function AdminUsersPage() {
       {partners.length === 0 ? (
         <div className="card p-8 text-center text-text-muted">Партнёров пока нет</div>
       ) : (
-        <div className="card overflow-hidden">
+        <>
+        {/* На телефоне вместо таблицы — карточка на партнёра */}
+        <div className="lg:hidden space-y-3">
+          {partners.map((u) => {
+            const orders = mockOrders.filter((o) => o.userId === u.id)
+            const status = u.partnerStatus ?? 'PENDING'
+            const currentPercent = rewardPercentAt(u)
+            const pending = pendingRewardChange(u)
+            const rows: [string, string][] = [
+              ['ИНН', u.inn || '—'],
+              ['ОГРН', u.ogrn || '—'],
+              ['Пункт выдачи', u.pointAddress || '—'],
+              ['Контакт', u.contactName || '—'],
+              ['Телефон', u.phone || '—'],
+              ['Email', u.email],
+              ['Банк', u.bankName || '—'],
+              ['БИК', u.bik || '—'],
+              ['Р/с', u.account || '—'],
+              ['Заказы', `${orders.length} · оплачено ${formatPrice(paidTotal(orders))}`],
+            ]
+            return (
+              <div key={u.id} className="app-group p-4">
+                <div className="flex items-start justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-semibold text-[16px] leading-snug text-text-primary break-words">{u.companyName || '—'}</p>
+                    <p className="text-[13px] text-text-muted mt-0.5">анкета от {formatDate(u.createdAt)}</p>
+                  </div>
+                  <span className={`text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap shrink-0 ${PARTNER_STATUS_COLORS[status]}`}>
+                    {PARTNER_STATUS_LABELS[status]}
+                  </span>
+                </div>
+                {(currentPercent || pending) && (
+                  <p className="text-[14px] text-text-secondary mt-2 leading-snug">
+                    {currentPercent ? `Вознаграждение ${formatPercent(currentPercent)}` : ''}
+                    {pending && <span className="block text-amber-700">с {formatDate(pending.from)} — {formatPercent(pending.percent)}</span>}
+                  </p>
+                )}
+                {status === 'REJECTED' && u.rejectReason && (
+                  <p className="text-[13px] text-red-700 mt-2 [overflow-wrap:anywhere]">Причина: {u.rejectReason}</p>
+                )}
+                <dl className="mt-3 pt-3 border-t border-border grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[14px] leading-snug m-0">
+                  {rows.map(([k, v]) => (
+                    <div key={k} className="contents">
+                      <dt className="text-text-muted">{k}</dt>
+                      <dd className="m-0 text-text-primary text-right [overflow-wrap:anywhere]">{v}</dd>
+                    </div>
+                  ))}
+                </dl>
+                <div className="mt-3 pt-1 border-t border-border">{controls(u, true)}</div>
+              </div>
+            )
+          })}
+        </div>
+        <div className="card overflow-hidden hidden lg:block">
           <div className="overflow-x-auto">
             <table className="w-full text-sm">
               <thead>
@@ -117,48 +224,7 @@ export default function AdminUsersPage() {
                         {status === 'REJECTED' && u.rejectReason && (
                           <p className="text-xs text-red-700 mt-1.5 w-48 [overflow-wrap:anywhere]">Причина: {u.rejectReason}</p>
                         )}
-                        <label className="flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap">
-                          <input
-                            type="text"
-                            inputMode="decimal"
-                            value={percents[u.id] ?? ''}
-                            onChange={(e) => setPercents((p) => ({ ...p, [u.id]: e.target.value }))}
-                            className="w-14 px-2 py-1 rounded border border-border bg-white text-text-primary text-xs"
-                            aria-label="Вознаграждение, %"
-                          />
-                          % от цены товара
-                        </label>
-                        {status === 'VERIFIED' && (
-                          <>
-                            <button
-                              onClick={() => changePercent(u)}
-                              className="mt-2 text-xs bg-primary/10 text-primary px-2 py-1 rounded font-medium hover:bg-primary/20 transition-colors border-none cursor-pointer whitespace-nowrap"
-                            >
-                              Изменить размер
-                            </button>
-                            <p className="text-xs text-text-muted mt-1 max-w-48">
-                              Новый размер — для заказов через {REWARD_CHANGE_NOTICE_DAYS} дней после изменения
-                            </p>
-                          </>
-                        )}
-                        <div className="flex gap-2 mt-2">
-                          {status !== 'VERIFIED' && (
-                            <button
-                              onClick={() => verify(u)}
-                              className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer whitespace-nowrap"
-                            >
-                              Подтвердить
-                            </button>
-                          )}
-                          {status !== 'REJECTED' && (
-                            <button
-                              onClick={() => reject(u)}
-                              className="text-xs bg-red-50 text-red-700 px-2 py-1 rounded font-medium hover:bg-red-100 transition-colors border-none cursor-pointer whitespace-nowrap"
-                            >
-                              Отклонить
-                            </button>
-                          )}
-                        </div>
+                        {controls(u, false)}
                       </td>
                       <td className="px-4 py-3 text-text-secondary font-mono text-xs whitespace-nowrap">
                         <p>{u.inn || '—'}</p>
@@ -186,6 +252,7 @@ export default function AdminUsersPage() {
             </table>
           </div>
         </div>
+        </>
       )}
     </div>
   )

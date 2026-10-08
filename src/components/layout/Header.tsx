@@ -39,7 +39,7 @@ export default function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-500 ${
+      className={`sticky top-0 z-50 transition-all duration-500 ${isDashboard ? 'max-lg:hidden ' : ''}${
         scrolled
           ? 'bg-white/90 backdrop-blur-xl border-b border-border shadow-sm'
           : 'bg-transparent border-b border-transparent'

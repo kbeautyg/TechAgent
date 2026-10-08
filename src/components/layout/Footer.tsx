@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 /* Кастомная SVG-иконка логотипа */
@@ -12,8 +12,11 @@ function LogoIcon({ size = 14 }: { size?: number }) {
 
 export default function Footer() {
   const { user } = useAuth()
+  const { pathname } = useLocation()
+  // В кабинете на телефоне подвала нет — экран как в приложении, документы в разделе «Документы»
+  const cabinet = pathname.startsWith('/dashboard') || pathname.startsWith('/admin')
   return (
-    <footer className="bg-bg-dark text-text-white">
+    <footer className={`bg-bg-dark text-text-white ${cabinet ? 'max-lg:hidden' : ''}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-x-6 gap-y-8 sm:gap-x-10">
           {/* Brand */}

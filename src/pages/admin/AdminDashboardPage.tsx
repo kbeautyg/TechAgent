@@ -1,12 +1,15 @@
 import { Link } from 'react-router-dom'
-import { Users, Package, Wallet, PackageOpen, PackageCheck, Award } from 'lucide-react'
+import { Users, Package, Wallet, PackageOpen, PackageCheck, Award, LogOut, Globe } from 'lucide-react'
+import { useAuth } from '../../context/AuthContext'
+import ProductIcon from '../../components/app/ProductIcon'
 import { mockOrders, mockUsers } from '../../data/mock'
 import { formatPrice, formatReward, accruedReward, paidTotal, storageExpired } from '../../utils/calculate'
-import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor } from '../../utils/status'
+import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor, orderStatusShort, orderStatusText } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
 
 export default function AdminDashboardPage() {
   useDataRevision()
+  const { logout } = useAuth()
   const partners = mockUsers.filter((u) => u.role === 'CLIENT')
   const pendingPartners = partners.filter((u) => (u.partnerStatus ?? 'PENDING') === 'PENDING').length
   const orders = mockOrders
@@ -30,7 +33,16 @@ export default function AdminDashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-text-primary mb-6">Панель администратора</h1>
+      {/* На телефоне шапки сайта нет: переход на сайт и выход — кнопками рядом с заголовком */}
+      <div className="flex items-center gap-2 mb-4 lg:mb-6">
+        <h1 className="app-name flex-1 min-w-0 text-[22px] lg:text-2xl font-bold text-text-primary leading-tight">Панель администратора</h1>
+        <Link to="/" className="app-round lg:hidden" aria-label="Сайт">
+          <Globe size={21} />
+        </Link>
+        <button type="button" onClick={logout} className="app-round lg:hidden !text-red-600" aria-label="Выйти">
+          <LogOut size={21} />
+        </button>
+      </div>
 
       {pendingPartners > 0 && (
         <Link
@@ -59,14 +71,14 @@ export default function AdminDashboardPage() {
           </div>
         ))}
       </div>
-      <p className="text-xs text-text-muted mb-8">
+      <p className="text-[13px] lg:text-xs leading-snug text-text-muted mb-8">
         Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.
       </p>
 
       <h2 className="font-bold text-lg text-text-primary mb-4">В работе у ТехЭйджент</h2>
       <div className="card divide-y divide-border mb-8">
         {work.map((w) => (
-          <div key={w.label} className="flex items-center justify-between px-5 py-3 text-sm">
+          <div key={w.label} className="flex items-center justify-between gap-4 px-4 lg:px-5 min-h-[48px] py-2 text-[15px] lg:text-sm">
             <span className="text-text-secondary">{w.label}</span>
             <span className="font-bold text-text-primary">{w.value}</span>
           </div>
@@ -74,7 +86,27 @@ export default function AdminDashboardPage() {
       </div>
 
       <h2 className="font-bold text-lg text-text-primary mb-4">Последние заказы</h2>
-      <div className="card overflow-hidden">
+      {/* На телефоне — лентой, на компьютере — таблицей */}
+      <div className="app-list lg:hidden">
+        {orders.length === 0 && <p className="p-8 text-center text-text-muted">Заказов пока нет</p>}
+        {[...orders].sort((a, b) => b.createdAt.localeCompare(a.createdAt)).slice(0, 10).map((order) => {
+          const partner = mockUsers.find((u) => u.id === order.userId)
+          return (
+            <div key={order.id} className="app-row">
+              <span className={`app-row-tile ${orderStatusColor(order)}`}><ProductIcon productId={order.productId} size={22} /></span>
+              <span className="app-row-mid">
+                <span className="app-row-title">{order.productName}</span>
+                <span className="app-row-sub">{order.orderNumber} · {partner?.companyName || '—'}</span>
+              </span>
+              <span className="app-row-right">
+                <span className="app-row-sum">{formatPrice(order.price)}</span>
+                <span className={`app-row-status ${orderStatusText(order)}`}>{orderStatusShort(order)}</span>
+              </span>
+            </div>
+          )
+        })}
+      </div>
+      <div className="card overflow-hidden hidden lg:block">
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
