@@ -330,19 +330,20 @@ export default function CatalogPage() {
     <div className="catalog-root">
       {/* ── SEO-шапка каталога ── */}
       <header className="catalog-header max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-1">
-        <h1 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight text-text-primary mb-2">
+        <h1 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight text-text-primary mb-2">
           Каталог электроники
         </h1>
-        <p className="text-[14px] text-text-muted max-w-2xl mb-4">
+        <p className="text-[15px] sm:text-[14px] leading-relaxed text-text-secondary sm:text-text-muted max-w-2xl mb-4">
           {products.length} {pluralRu(products.length, ['товар', 'товара', 'товаров'])}, цены окончательные. Продавец — {LEGAL_NAME}, оплата через СБП, получение в пункте выдачи партнёра TechAgent.{' '}
           <a href="#kak-kupit" className="text-primary font-semibold no-underline">Как купить</a>
         </p>
-        <nav aria-label="Категории каталога" className="flex flex-wrap gap-2 pb-2">
+        {/* На телефоне — одной лентой, листается пальцем вбок (сама страница стоит на месте) */}
+        <nav aria-label="Категории каталога" className="flex flex-nowrap sm:flex-wrap gap-2 pb-2 overflow-x-auto sm:overflow-visible scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
           {categoryLandings.map(c => (
             <Link
               key={c.slug}
               to={`/catalog/${c.slug}`}
-              className="px-3.5 py-1.5 rounded-full border border-border bg-white text-[12.5px] font-medium text-text-secondary hover:border-primary hover:text-primary transition-colors no-underline"
+              className="shrink-0 inline-flex items-center min-h-[40px] sm:min-h-0 px-4 sm:px-3.5 sm:py-1.5 rounded-full border border-border bg-white text-[14px] sm:text-[12.5px] font-medium text-text-secondary hover:border-primary hover:text-primary transition-colors no-underline whitespace-nowrap"
             >
               {c.category}
             </Link>
@@ -390,7 +391,7 @@ export default function CatalogPage() {
           </div>
 
           <div className="products-topbar">
-            <div className="products-count">Найдено <strong>{filtered.length}</strong> {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}</div>
+            <div className="products-count"><span className="products-count-word">Найдено </span><strong>{filtered.length}</strong> {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}</div>
             <div className="products-sort-wrap">
               <span className="sort-label">Сортировка:</span>
               <select className="sort-select" value={sort} onChange={e => patchState({ sort: e.target.value })}>

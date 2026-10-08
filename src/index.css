@@ -1649,3 +1649,42 @@ body {
   .mobile-bottom-nav { padding-left: 2px; padding-right: 2px; }
   .mbn-label { font-size: 10.5px; }
 }
+
+/* Подзаголовок обычным шрифтом там, где общее правило h1–h3 ставит Unbounded */
+.h-sans { font-family: var(--font-sans); }
+
+/* Формы входа и заявки на телефоне — без рамки карточки: поля на всю ширину экрана */
+@media (max-width: 639px) {
+  .form-shell { border: none; box-shadow: none; padding: 8px 0 0; background: transparent; }
+  .form-shell:hover { box-shadow: none; transform: none; }
+  /* Документ открывается на весь экран, поверх нижнего меню */
+  .legal-viewer { height: 100dvh; max-height: 100dvh; }
+}
+@media (min-width: 640px) {
+  .legal-viewer { max-height: calc(100vh - 2rem); }
+}
+
+/* Характеристики товара на телефоне — компактной сеткой в две колонки, подписи обычным регистром */
+@media (max-width: 640px) {
+  .pp-specs-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .pp-spec-card { padding: 14px 16px; border-radius: 18px; }
+  .pp-spec-label { font-size: 13px; letter-spacing: 0; text-transform: none; font-weight: 500; margin-bottom: 4px; }
+  .pp-spec-value { font-size: 15px; overflow-wrap: anywhere; }
+  .pp-specs-title { font-size: 24px; margin-bottom: 16px; }
+}
+@media (max-width: 640px) {
+  .pp-related-header { flex-wrap: wrap; align-items: baseline; column-gap: 12px; row-gap: 4px; }
+  .pp-related-header .pp-specs-title { margin-bottom: 0; }
+}
+/* Каталог на телефоне: «Найдено N» и сортировка в одну строку без подписи «Сортировка:» — список сам говорит, что он сортирует */
+@media (max-width: 640px) {
+  .products-topbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .products-count { font-size: 15px; white-space: nowrap; }
+  .sort-label { display: none; }
+  .products-sort-wrap { min-width: 0; }
+  .sort-select { max-width: 100%; min-height: 44px; border-radius: 12px; }
+}
+@media (max-width: 360px) {
+  .products-count-word { display: none; }
+  .sort-select { padding-left: 10px; padding-right: 28px; background-position: right 8px center; }
+}

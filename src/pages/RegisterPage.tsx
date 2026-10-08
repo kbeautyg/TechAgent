@@ -144,10 +144,10 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-[80vh] relative overflow-hidden flex items-center justify-center py-12 px-4 bg-white">
+    <div className="min-h-[80vh] relative overflow-hidden flex items-start sm:items-center justify-center pt-4 pb-10 sm:py-12 px-4 bg-white">
       <div className="absolute bottom-[-80px] left-[30%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[200px] pointer-events-none" />
       <div className="w-full max-w-xl relative">
-        <div className="card-glass rounded-2xl p-6 sm:p-8">
+        <div className="form-shell card-glass rounded-2xl p-6 sm:p-8">
           <div className="text-center mb-8">
             <div className="icon-box mx-auto mb-4">
               <UserPlus size={24} className="text-primary" />

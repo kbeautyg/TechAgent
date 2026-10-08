@@ -1,5 +1,5 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
-import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag } from 'lucide-react'
+import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag, ChevronRight } from 'lucide-react'
 import { mockDocuments } from '../data/documents'
 
 const typeLabels: Record<string, string> = {
@@ -58,14 +58,14 @@ export default function LegalPage() {
   const closeDoc = () => navigate('/legal')
 
   return (
-    <div className="min-h-[80vh] py-16 px-4">
+    <div className="min-h-[80vh] pt-6 pb-12 sm:py-16 px-4">
       <div className="max-w-3xl mx-auto">
-        <div className="text-center mb-10">
-          <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+        <div className="text-left sm:text-center mb-6 sm:mb-10">
+          <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-primary/10 items-center justify-center mx-auto mb-4">
             <Shield size={28} className="text-primary" />
           </div>
-          <h1 className="text-3xl font-bold text-text-primary mb-2">{activeDoc ? activeDoc.title : 'Правовая информация'}</h1>
-          <p className="text-text-muted">Продавец товаров на techagent.pro — ОсОО&nbsp;«ТехЭйджент»</p>
+          <h1 className="text-[28px] sm:text-3xl font-bold leading-tight text-text-primary mb-2">{activeDoc ? activeDoc.title : 'Правовая информация'}</h1>
+          <p className="text-text-secondary text-base leading-relaxed">Продавец товаров на techagent.pro — ОсОО&nbsp;«ТехЭйджент»</p>
         </div>
 
         <div className="space-y-3">
@@ -75,29 +75,30 @@ export default function LegalPage() {
               <Link
                 key={doc.id}
                 to={`/legal/${slugByType[doc.type]}`}
-                className="card-glass rounded-xl p-5 flex items-center justify-between cursor-pointer hover:shadow-md transition-all no-underline"
+                className="card-glass rounded-[20px] sm:rounded-xl p-4 sm:p-5 flex items-center justify-between gap-3 cursor-pointer hover:shadow-md transition-all no-underline"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-4 min-w-0">
                   <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
                     <Icon size={22} className="text-primary" />
                   </div>
-                  <div>
-                    <div className="font-semibold text-text-primary">{doc.title}</div>
-                    <div className="text-sm text-text-muted mt-0.5">
+                  <div className="min-w-0">
+                    <div className="font-semibold text-base leading-snug text-text-primary">{doc.title}</div>
+                    <div className="text-sm text-text-muted mt-1">
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type] || ''}`}>
                         {typeLabels[doc.type] || doc.type}
                       </span>
                     </div>
                   </div>
                 </div>
-                <span className="text-primary text-sm font-semibold">Читать →</span>
+                <span className="hidden sm:inline text-primary text-sm font-semibold whitespace-nowrap">Читать →</span>
+                <ChevronRight size={22} className="sm:hidden text-text-muted shrink-0" />
               </Link>
             )
           })}
         </div>
 
-        <div className="text-center mt-10">
-          <Link to="/register" className="btn-primary inline-flex items-center gap-2 px-8 py-3 rounded-xl font-semibold">
+        <div className="sm:text-center mt-8 sm:mt-10">
+          <Link to="/register" className="btn-primary flex sm:inline-flex items-center justify-center gap-2 px-8 min-h-[54px] rounded-xl font-semibold">
             Стать партнёром
           </Link>
         </div>
@@ -106,30 +107,30 @@ export default function LegalPage() {
       {/* Document viewer modal */}
       {activeDoc && activeDoc.content && (
         <div
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[150] flex items-stretch sm:items-center justify-center sm:p-4"
           onClick={closeDoc}
         >
           <div
-            className="bg-white rounded-2xl max-w-2xl w-full shadow-2xl mx-2 flex flex-col"
-            style={{ maxHeight: 'calc(100vh - 2rem)' }}
+            className="legal-viewer bg-white sm:rounded-2xl max-w-2xl w-full shadow-2xl sm:mx-2 flex flex-col"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between p-5 border-b border-gray-100 flex-shrink-0">
-              <div>
-                <h3 className="font-bold text-lg text-text-primary">{activeDoc.title}</h3>
+            <div className="flex items-center justify-between gap-3 p-4 sm:p-5 pt-[max(16px,env(safe-area-inset-top))] sm:pt-5 border-b border-gray-100 flex-shrink-0">
+              <div className="min-w-0">
+                <h3 className="h-sans font-bold text-lg leading-snug text-text-primary mb-1">{activeDoc.title}</h3>
                 <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[activeDoc.type] || ''}`}>
                   {typeLabels[activeDoc.type] || activeDoc.type}
                 </span>
               </div>
               <button
-                className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors"
+                className="w-11 h-11 sm:w-8 sm:h-8 rounded-full sm:rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors shrink-0"
                 onClick={closeDoc}
+                aria-label="Закрыть"
               >
-                <X size={16} />
+                <X size={20} />
               </button>
             </div>
-            <div className="p-6 overflow-y-auto flex-1 min-h-0">
-              <pre className="whitespace-pre-wrap font-sans text-sm text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
+            <div className="p-5 sm:p-6 pb-[max(20px,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain flex-1 min-h-0">
+              <pre className="whitespace-pre-wrap font-sans text-[15px] sm:text-sm text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
                 {activeDoc.content}
               </pre>
             </div>

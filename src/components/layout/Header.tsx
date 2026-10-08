@@ -126,11 +126,11 @@ export default function Header() {
           {/* Mobile menu button */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
-            className="lg:hidden p-2 rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
+            className="lg:hidden w-11 h-11 -mr-1.5 grid place-items-center rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
             aria-label="Меню"
             aria-expanded={mobileOpen}
           >
-            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
         </div>
 
