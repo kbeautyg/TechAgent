@@ -84,7 +84,7 @@ export default function Footer() {
               <a href="mailto:help@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">help@techagent.pro — покупателям</a>
               <a href="mailto:compliance@techagent.pro" className="text-text-dark-secondary hover:text-white transition-colors no-underline">compliance@techagent.pro — юридические вопросы</a>
               <a href="https://t.me/techagent_support" target="_blank" rel="noopener noreferrer" className="text-text-dark-secondary hover:text-white transition-colors no-underline">Telegram: @techagent_support</a>
-              <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8</span>
+              <span>Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8</span>
             </div>
           </div>
         </div>

@@ -151,7 +151,7 @@ export default function AboutPage() {
                   { label: 'Продавец', value: 'ОсОО\u00A0«ТехЭйджент», рег. № 326302-3301-ООО, ИНН 00403202610304 (Кыргызская Республика)' },
                   { label: 'ИНН / КПП в РФ', value: '9909766511 / 771387001' },
                   { label: 'Банк', value: 'АО «ТБанк», р/с 40807810900000001482, БИК 044525974' },
-                  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, оф. 8' },
+                  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8' },
                   { label: 'Директор', value: 'Аширбеков Н.М.Т.' },
                   { label: 'Общие вопросы', value: 'info@techagent.pro', href: 'mailto:info@techagent.pro' },
                   { label: 'Партнёрам', value: 'partners@techagent.pro', href: 'mailto:partners@techagent.pro' },
