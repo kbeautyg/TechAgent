@@ -10,22 +10,13 @@ export const PRODUCT_IMAGE_SIZE = 500
 
 /**
  * Фото не соответствуют товару (другая модель, бренд или цвет) либо это чужие рекламные карточки магазинов
- * с надписями. Проверено глазами 08.10.2026. Пока нет правильных фото, вместо них показывается заглушка
- * (фон бренда и буква). Когда фото заменят в public/images/…, убрать id из списка.
+ * с надписями — для них показывается заглушка (фон бренда и буква). 08.10.2026 все 66 таких фото заменены
+ * снимками производителей, список пуст; новое несоответствие — добавить id сюда, пока не будет правильного фото.
  */
-const IMAGE_MISMATCH = new Set<string>([
-  'iph12pm256b', 'iph12p256b', 'sgts25u256b', 'sgts25u512b', 'sgts25u256t', 'sgts25p256b', 'sgts25p512b', 'sgts25256b',
-  'sgts25512b', 'sgts24p256b', 'sgts24256b', 'sgts23u256b', 'sgzflip6256', 'sgzflip5256', 'xmpf5256b', 'macbookpro14m3pro512',
-  'macbookpro16m3max512', 'macbookpro16m3max1tb', 'ipadpro13256', 'ipadpro13512', 'airpods2', 'airpods2c', 'airpods3', 'airpods3c',
-  'sgw7', 'sonywh1000xm5s', 'sonya7rb', 'djimini4b', 'djiair3', 'djiavata', 'ps5pro', 'xboxss',
-  'switcholedred', 'lgtvoled75', 'xiamibanda8', 'sgbudslive', 'bosequc45', 'sgw5pro', 'pixel9pro256', 'pixel9pro512',
-  'pixel9promax256', 'motorola_razr_2024', 'huaweip70pro512', 'nothing2a256', 'asurog9pro512', 'hppaviliondm15', 'razorblade16', 'surfacepro10',
-  'ankerusb', 'otterbox15pm', 'spigeniphone15pm', 'ankerasync', 'ankerpower20000', 'applepower20', 'hisenseqledu7g', 'sonykx80',
-  'sonybravia', 'djimini3pro', 'iph16pro', 'iph16promax', 'iph16256', 'oppofind6pro', 'ztaxon70ultra', 'realme12pro',
-  'tcltab12pro', 'clevop775', 'pixelbookgo', 'asus27pro', 'lgultrawide38', 'samsungq990b', 'jblbar1000pro',
-  'applemag', 'corsairrk', 'xiaomilamp', 'medbottle', 'sharpi3000', 'arellapro', 'nespresso', 'sharkuv',
- 
-])
+const IMAGE_MISMATCH = new Set<string>()
+
+/** Версия фото: меняется при замене файлов — иначе браузеры и кэш прокладки (30 дней) покажут старые картинки */
+const IMAGE_VERSION = '20261008'
 
 // Category mapping (Russian -> folder name)
 const categoryFolders: Record<string, string> = {
@@ -51,9 +42,9 @@ export function getProductImage(productId: string, _productName: string = '', ca
   if (IMAGE_MISMATCH.has(productId)) return '';
   const folder = categoryFolders[category] || '';
   if (folder) {
-    return `/images/${folder}/${productId}.webp`;
+    return `/images/${folder}/${productId}.webp?v=${IMAGE_VERSION}`;
   }
-  return `/images/smartphones/${productId}.webp`;
+  return `/images/smartphones/${productId}.webp?v=${IMAGE_VERSION}`;
 }
 
 /**

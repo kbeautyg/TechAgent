@@ -13,7 +13,12 @@ const colorRu: Record<string, string> = {
   'Ice Blue': 'Ледяной синий', 'Sand': 'Песочный', 'Burgundy': 'Бордовый',
   'Deep Purple': 'Глубокий фиолетовый', 'Alpine Green': 'Альпийский зелёный',
   'Sierra Blue': 'Небесно-голубой',
+  'Titanium Black': 'Чёрный титан', 'Titanium Gray': 'Серый титан', 'Gray Titanium': 'Серый титан',
+  'Blueblack': 'Чёрно-синий', 'Obsidian': 'Обсидиан', 'Midnight Blue': 'Тёмно-синий', 'Piano Black': 'Чёрный глянцевый',
 }
+
+/** Сначала длинные названия: «Space Gray» раньше «Gray», иначе выходит «Space Серый» */
+const colorRuByLength = Object.entries(colorRu).sort((a, b) => b[0].length - a[0].length)
 
 const specKeyRu: Record<string, string> = {
   storage: 'Память', color: 'Цвет', display: 'Дисплей', chip: 'Процессор',
@@ -89,7 +94,7 @@ function translateUnits(value: string): string {
 export function translateColor(color: string): string {
   if (colorRu[color]) return colorRu[color]
   // Try to find partial match
-  for (const [en, ru] of Object.entries(colorRu)) {
+  for (const [en, ru] of colorRuByLength) {
     if (color.includes(en)) return ru
   }
   return color
@@ -124,7 +129,7 @@ export function translateProductName(name: string): string {
     result = result.replace(new RegExp(`\\b${en}\\b`, 'g'), ru)
   }
   // Translate color at end of name
-  for (const [en, ru] of Object.entries(colorRu)) {
+  for (const [en, ru] of colorRuByLength) {
     if (result.endsWith(en)) {
       result = result.slice(0, -en.length) + ru
       break

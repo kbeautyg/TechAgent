@@ -26,6 +26,71 @@
       "source": "/catalog/asusprobook15",
       "destination": "/catalog/noutbuki",
       "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro16m3max512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgw7",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lgtvoled75",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/hppaviliondm15",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonykx80",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ztaxon70ultra",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/realme12pro",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/tcltab12pro",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/clevop775",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/pixelbookgo",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/jblbar1000pro",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/medbottle",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/arellapro",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
     }
   ],
   "rewrites": [

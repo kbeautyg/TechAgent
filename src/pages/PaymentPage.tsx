@@ -153,8 +153,9 @@ export default function PaymentPage() {
               <p className="text-text-primary font-medium mb-2">Товар выдан {formatDate(order.issuedAt)}</p>
             ) : (
               <p className="text-text-muted mb-2">
-                Товар будет доставлен в пункт выдачи ориентировочно за{' '}
-                <span className="whitespace-nowrap">5–7&nbsp;рабочих дней</span> с момента выкупа у поставщика. Когда он
+                Товар будет доставлен в пункт выдачи не позднее{' '}
+                <span className="whitespace-nowrap">14&nbsp;дней</span> с даты оплаты (обычно{' '}
+                <span className="whitespace-nowrap">5–7&nbsp;рабочих дней</span> с момента выкупа у поставщика). Когда он
                 прибудет, пункт выдачи сообщит вам; товар хранится там 5&nbsp;дней. При получении назовите номер заказа и
                 возьмите документ, удостоверяющий личность: пункт выдачи может попросить его, чтобы сверить данные с заказом.
               </p>
