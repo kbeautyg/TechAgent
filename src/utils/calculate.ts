@@ -1,19 +1,24 @@
 import type { Order } from '../types'
 
-/** Маркер вместо суммы вознаграждения, пока его размер не определён */
-export const PARTNER_REWARD_MARKER = '{{PARTNER_REWARD}}'
+/** Подпись вместо суммы, если размер вознаграждения Партнёру не назначен */
+export const REWARD_NOT_SET = 'не назначено'
 
 export function formatPrice(amount: number): string {
   return new Intl.NumberFormat('ru-RU').format(amount) + '₽'
 }
 
-/** Вознаграждение Партнёра: null — размер ещё не определён, показываем маркер */
+/** Вознаграждение Партнёра по заказу: процент Партнёра от цены товара */
+export function rewardFor(price: number, percent?: number): number | null {
+  return percent && percent > 0 ? Math.round((price * percent) / 100) : null
+}
+
+/** Вознаграждение Партнёра: null — размер не назначен */
 export function formatReward(reward: number | null): string {
-  return reward === null ? PARTNER_REWARD_MARKER : formatPrice(reward)
+  return reward === null ? REWARD_NOT_SET : formatPrice(reward)
 }
 
 /** Начисленное вознаграждение: только выданные заказы с загруженным актом.
- *  Если хотя бы у одного размер не определён — итог тоже не определён (null). */
+ *  Если хотя бы у одного размер не назначен — итог тоже не определён (null). */
 export function accruedReward(orders: Order[]): number | null {
   let sum = 0
   for (const o of orders) {

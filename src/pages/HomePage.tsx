@@ -290,7 +290,7 @@ export default function HomePage() {
                 Вознаграждение партнёра
               </h2>
               <p className="text-white/70 text-[16px] leading-relaxed mb-6">
-                ТехЭйджент платит вознаграждение за каждый выданный заказ: {'{{PARTNER_REWARD}}'}.
+                ТехЭйджент платит вознаграждение за каждый выданный заказ — процент от цены товара. Размер сообщаем после проверки анкеты, он виден в личном кабинете.
               </p>
               <ul className="flex flex-col gap-3 pl-0 list-none m-0">
                 {[

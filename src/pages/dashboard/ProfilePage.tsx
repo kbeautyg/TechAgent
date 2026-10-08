@@ -89,6 +89,12 @@ export default function ProfilePage() {
           </span>
           <span className="text-text-muted">Анкета от {formatDate(user.createdAt)}</span>
         </div>
+        {verified && user.rewardPercent ? (
+          <p className="text-sm text-text-secondary mt-3">
+            Ваше вознаграждение — {user.rewardPercent}% от цены товара по каждому выданному заказу. Начисляется после выдачи
+            товара и загрузки подписанного акта приёма-передачи.
+          </p>
+        ) : null}
         {verified && (
           <p className="text-sm text-text-secondary mt-3">
             Чтобы изменить наименование, адрес пункта выдачи или реквизиты, напишите на{' '}

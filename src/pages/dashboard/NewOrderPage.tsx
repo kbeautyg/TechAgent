@@ -5,7 +5,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders, getNextOrderNumber, saveOrders } from '../../data/mock'
-import { formatPrice, formatReward } from '../../utils/calculate'
+import { formatPrice, formatReward, rewardFor } from '../../utils/calculate'
 import { reachGoal } from '../../lib/metrika'
 import type { Order } from '../../types'
 
@@ -139,7 +139,7 @@ export default function NewOrderPage() {
       productId: product.id,
       productName: product.name,
       price: product.price,
-      partnerReward: null,
+      partnerReward: rewardFor(product.price, user.rewardPercent),
       buyerName: buyerName.trim(),
       buyerPhone: buyerPhone.trim(),
       buyerEmail: buyerEmail.trim() || undefined,
@@ -311,8 +311,10 @@ export default function NewOrderPage() {
                 <span className="text-primary whitespace-nowrap">{formatPrice(product.price)}</span>
               </div>
               <div className="flex justify-between gap-4">
-                <span className="text-text-secondary">Ваше вознаграждение</span>
-                <span className="text-text-primary whitespace-nowrap">{formatReward(null)}</span>
+                <span className="text-text-secondary">
+                  Ваше вознаграждение{user.rewardPercent ? ` (${user.rewardPercent}%)` : ''}
+                </span>
+                <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(product.price, user.rewardPercent))}</span>
               </div>
               <p className="text-xs text-text-muted">Вознаграждение платит ТехЭйджент после выдачи товара и загрузки подписанного акта.</p>
             </div>

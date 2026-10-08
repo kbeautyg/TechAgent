@@ -50,6 +50,8 @@ export interface User {
   bik?: string
   account?: string
   partnerStatus?: PartnerStatus
+  /** Вознаграждение Партнёра, % от цены товара. Задаёт ТехЭйджент при подтверждении анкеты; видит только сам Партнёр */
+  rewardPercent?: number
   createdAt: string
 }
 
@@ -62,7 +64,7 @@ export interface Order {
   productName: string
   /** Цена товара для Покупателя, её устанавливает ТехЭйджент. Это и есть сумма к оплате */
   price: number
-  /** Вознаграждение Партнёра от ТехЭйджент; null — размер ещё не определён ({{PARTNER_REWARD}}) */
+  /** Вознаграждение Партнёра от ТехЭйджент, считается по rewardPercent Партнёра; null — размер Партнёру не назначен */
   partnerReward: number | null
   buyerName: string
   buyerPhone: string

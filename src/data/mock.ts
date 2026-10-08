@@ -1,5 +1,6 @@
 import type { User, Order } from '../types'
 import { products } from './products'
+import { rewardFor } from '../utils/calculate'
 
 /*
  * Данные кабинета: бэкенда нет, всё хранится в памяти и localStorage.
@@ -50,6 +51,7 @@ function demoUsers(): User[] {
       bik: '000000000',
       account: '00000000000000000001',
       partnerStatus: 'VERIFIED',
+      rewardPercent: 5,
       createdAt: '2026-01-15T10:00:00Z',
     },
     {
@@ -73,6 +75,7 @@ function demoUsers(): User[] {
       bik: '000000000',
       account: '00000000000000000002',
       partnerStatus: 'VERIFIED',
+      rewardPercent: 5,
       createdAt: '2026-01-20T10:00:00Z',
     },
     {
@@ -141,7 +144,7 @@ function demoOrders(): Order[] {
       orderNumber: '#1241',
       userId: '1',
       ...item('iph15p256b'),
-      partnerReward: 1500,
+      partnerReward: null,
       buyerName: 'Покупатель 3 (демо)',
       buyerPhone: '+7 900 000-00-13',
       paymentId: 'pay_demo03',
@@ -175,7 +178,7 @@ function demoOrders(): Order[] {
       orderNumber: '#1238',
       userId: '1',
       ...item('xm14512b'),
-      partnerReward: 1000,
+      partnerReward: null,
       buyerName: 'Покупатель 5 (демо)',
       buyerPhone: '+7 900 000-00-15',
       buyerEmail: 'buyer5@example.com',
@@ -193,7 +196,7 @@ function demoOrders(): Order[] {
       orderNumber: '#1235',
       userId: '1',
       ...item('sgts24256b'),
-      partnerReward: 1000,
+      partnerReward: null,
       buyerName: 'Покупатель 6 (демо)',
       buyerPhone: '+7 900 000-00-16',
       paymentId: 'pay_demo06',
@@ -307,7 +310,16 @@ export function getNextOrderNumber(): string {
   return `#${orderCounter}`
 }
 
-export const mockOrders: Order[] = load<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrders() : [])
+/** Демо-заказы: вознаграждение — процент Партнёра от цены товара, как в новом заказе */
+function demoOrdersWithReward(): Order[] {
+  const users = demoUsers()
+  return demoOrders().map((o) => ({
+    ...o,
+    partnerReward: rewardFor(o.price, users.find((u) => u.id === o.userId)?.rewardPercent),
+  }))
+}
+
+export const mockOrders: Order[] = load<Order[]>(ORDERS_KEY) ?? (DEMO_MODE ? demoOrdersWithReward() : [])
 
 export function saveOrders(): void {
   storage.setItem(ORDERS_KEY, JSON.stringify(mockOrders))

@@ -262,7 +262,7 @@ export default function HowItWorksPage() {
                 { label: 'Продавец — ОсОО «ТехЭйджент»', sub: 'Собственник товара до выдачи покупателю' },
                 { label: 'Партнёр — агент и пункт выдачи', sub: 'Денег покупателя не принимает' },
                 { label: 'Оплата — через СБП', sub: 'Напрямую продавцу' },
-                { label: 'Вознаграждение партнёру', sub: 'Платит ТехЭйджент: {{PARTNER_REWARD}}' },
+                { label: 'Вознаграждение партнёру', sub: 'Платит ТехЭйджент за выданные заказы' },
               ].map((item, i) => (
                 <div key={i} className="bg-white rounded-2xl p-5 border border-border flex items-start gap-3">
                   <div className="w-7 h-7 rounded-full bg-accent/10 text-accent flex items-center justify-center text-[12px] font-bold shrink-0 mt-0.5">

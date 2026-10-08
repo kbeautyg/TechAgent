@@ -7,7 +7,7 @@ import { LEGAL_NAME, SALE_OFFER_PATH, DELIVERY_TERM, PICKUP_POINTS } from '../..
  */
 const PURCHASE_TERMS: string[] = [
   `Продавец — ${LEGAL_NAME}.`,
-  `Заказ оформляет Партнёр TechAgent в своём пункте выдачи, там же вы получаете товар. Пункты выдачи: ${PICKUP_POINTS}.`,
+  `Заказ оформляет Партнёр TechAgent в своём пункте выдачи, там же вы получаете товар: ${PICKUP_POINTS}.`,
   'Оплата через СБП по ссылке или QR-коду, деньги поступают напрямую продавцу.',
   `Срок доставки — ${DELIVERY_TERM}.`,
 ]

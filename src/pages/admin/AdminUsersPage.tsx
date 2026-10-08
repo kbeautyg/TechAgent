@@ -6,11 +6,23 @@ import type { PartnerStatus } from '../../types'
 
 export default function AdminUsersPage() {
   const [, setRefresh] = useState(0)
+  const [percents, setPercents] = useState<Record<string, string>>({})
   const partners = mockUsers.filter((u) => u.role === 'CLIENT')
   const pendingCount = partners.filter((u) => (u.partnerStatus ?? 'PENDING') === 'PENDING').length
 
   const setStatus = (id: string, status: PartnerStatus) => {
     updateUser(id, { partnerStatus: status })
+    setRefresh((k) => k + 1)
+  }
+
+  /** Подтверждение анкеты вместе с размером вознаграждения — его видит только сам Партнёр */
+  const verify = (id: string) => {
+    const percent = Number((percents[id] ?? '').replace(',', '.'))
+    if (!(percent > 0 && percent < 100)) {
+      alert('Укажите вознаграждение Партнёра в процентах от цены товара')
+      return
+    }
+    updateUser(id, { partnerStatus: 'VERIFIED', rewardPercent: percent })
     setRefresh((k) => k + 1)
   }
 
@@ -32,7 +44,7 @@ export default function AdminUsersPage() {
               <thead>
                 <tr className="border-b border-border bg-bg-light">
                   <th className="text-left px-4 py-3 font-medium text-text-muted">Партнёр</th>
-                  <th className="text-left px-4 py-3 font-medium text-text-muted">Проверка</th>
+                  <th className="text-left px-4 py-3 font-medium text-text-muted">Проверка и вознаграждение</th>
                   <th className="text-left px-4 py-3 font-medium text-text-muted">ИНН / ОГРН</th>
                   <th className="text-left px-4 py-3 font-medium text-text-muted">Пункт выдачи</th>
                   <th className="text-left px-4 py-3 font-medium text-text-muted">Контакты</th>
@@ -54,10 +66,26 @@ export default function AdminUsersPage() {
                         <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${PARTNER_STATUS_COLORS[status]}`}>
                           {PARTNER_STATUS_LABELS[status]}
                         </span>
+                        {u.rewardPercent ? (
+                          <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {u.rewardPercent}%</p>
+                        ) : null}
+                        {status !== 'VERIFIED' && (
+                          <label className="flex items-center gap-1.5 mt-2 text-xs text-text-muted whitespace-nowrap">
+                            <input
+                              type="text"
+                              inputMode="decimal"
+                              value={percents[u.id] ?? ''}
+                              onChange={(e) => setPercents((p) => ({ ...p, [u.id]: e.target.value }))}
+                              className="w-14 px-2 py-1 rounded border border-border bg-white text-text-primary text-xs"
+                              aria-label="Вознаграждение, %"
+                            />
+                            % от цены товара
+                          </label>
+                        )}
                         <div className="flex gap-2 mt-2">
                           {status !== 'VERIFIED' && (
                             <button
-                              onClick={() => setStatus(u.id, 'VERIFIED')}
+                              onClick={() => verify(u.id)}
                               className="text-xs bg-emerald-50 text-emerald-700 px-2 py-1 rounded font-medium hover:bg-emerald-100 transition-colors border-none cursor-pointer whitespace-nowrap"
                             >
                               Подтвердить
