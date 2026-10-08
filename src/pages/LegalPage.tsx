@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard } from 'lucide-react'
-import { mockDocuments } from '../data/mock'
+import { mockDocuments } from '../data/documents'
 
 const typeLabels: Record<string, string> = {
   OFFER: 'Публичная оферта',

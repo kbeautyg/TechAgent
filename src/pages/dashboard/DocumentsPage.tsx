@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditCard } from 'lucide-react'
 import { useAuth } from '../../context/AuthContext'
-import { mockDocuments } from '../../data/mock'
+import { mockDocuments } from '../../data/documents'
 import { formatDate } from '../../utils/calculate'
 import type { DocumentType } from '../../types'
 
