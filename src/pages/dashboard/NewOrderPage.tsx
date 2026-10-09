@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowLeft, ArrowRight, Check, Copy, Search, X, Lock } from 'lucide-react'
+import { ArrowLeft, ArrowRight, Check, Copy, Search, X, Lock, CircleCheck } from 'lucide-react'
 import { PageBar, RoundLink, StickyBar } from '../../components/app/ui'
 import ProductIcon from '../../components/app/ProductIcon'
 import { QRCodeSVG } from 'qrcode.react'
@@ -456,8 +456,8 @@ export default function NewOrderPage() {
       {/* Заказ создан: ссылка и QR для оплаты покупателем */}
       {step === 4 && createdOrder && (
         <div className={`${stepBox} text-center pt-4 lg:pt-6`}>
-          <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Check size={32} className="text-success" />
+          <div className="flex items-center justify-center mx-auto mb-4">
+            <CircleCheck size={52} strokeWidth={1.6} className="text-success" />
           </div>
           <h1 className="text-2xl font-bold mb-2 text-text-primary leading-tight">Заказ {createdOrder.orderNumber} создан</h1>
           <p className="text-[15px] lg:text-base leading-relaxed text-text-secondary mb-5">Отправьте покупателю ссылку на оплату или покажите QR-код</p>

@@ -20,15 +20,6 @@ const typeIcons: Record<string, typeof Shield> = {
   PAYMENT: CreditCard,
 }
 
-const typeColors: Record<string, string> = {
-  OFFER: 'bg-orange-500/10 text-orange-600',
-  SALE_OFFER: 'bg-sky-500/10 text-sky-600',
-  PRIVACY: 'bg-emerald-500/10 text-emerald-600',
-  TERMS: 'bg-indigo-500/10 text-indigo-600',
-  CONTRACT: 'bg-blue-500/10 text-blue-600',
-  PAYMENT: 'bg-sky-500/10 text-sky-600',
-}
-
 const docTypeMap: Record<string, string> = {
   offer: 'OFFER',
   'sale-offer': 'SALE_OFFER',
@@ -61,7 +52,7 @@ export default function LegalPage() {
     <div className="min-h-[80vh] pt-6 pb-12 sm:py-16 px-4">
       <div className="max-w-3xl mx-auto">
         <div className="text-left sm:text-center mb-6 sm:mb-10">
-          <div className="hidden sm:flex w-14 h-14 rounded-2xl bg-primary/10 items-center justify-center mx-auto mb-4">
+          <div className="hidden sm:flex items-center justify-center mx-auto mb-4">
             <Shield size={28} className="text-primary" />
           </div>
           <h1 className="text-[28px] sm:text-3xl font-bold leading-tight text-text-primary mb-2">{activeDoc ? activeDoc.title : 'Правовая информация'}</h1>
@@ -78,13 +69,13 @@ export default function LegalPage() {
                 className="card-glass rounded-[20px] sm:rounded-xl p-4 sm:p-5 flex items-center justify-between gap-3 cursor-pointer hover:shadow-md transition-all no-underline"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center flex-shrink-0">
-                    <Icon size={22} className="text-primary" />
+                  <div className="w-8 flex items-center justify-center flex-shrink-0">
+                    <Icon size={26} className="text-primary" />
                   </div>
                   <div className="min-w-0">
                     <div className="font-semibold text-base leading-snug text-text-primary">{doc.title}</div>
                     <div className="text-sm text-text-muted mt-1">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[doc.type] || ''}`}>
+                      <span className="text-[13px] text-text-muted">
                         {typeLabels[doc.type] || doc.type}
                       </span>
                     </div>
@@ -117,7 +108,7 @@ export default function LegalPage() {
             <div className="flex items-center justify-between gap-3 p-4 sm:p-5 pt-[max(16px,env(safe-area-inset-top))] sm:pt-5 border-b border-gray-100 flex-shrink-0">
               <div className="min-w-0">
                 <h3 className="h-sans font-bold text-lg leading-snug text-text-primary mb-1">{activeDoc.title}</h3>
-                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${typeColors[activeDoc.type] || ''}`}>
+                <span className="text-[13px] text-text-muted">
                   {typeLabels[activeDoc.type] || activeDoc.type}
                 </span>
               </div>

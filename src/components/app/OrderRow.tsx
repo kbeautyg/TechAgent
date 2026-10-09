@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import ProductIcon from './ProductIcon'
 import { formatPrice, formatDate, storageNote } from '../../utils/calculate'
-import { orderStatusColor, orderStatusShort, orderStatusText } from '../../utils/status'
+import { orderStatusBar, orderStatusShort } from '../../utils/status'
+import StatusMark from './StatusMark'
 import type { Order } from '../../types'
 
 /**
@@ -10,10 +11,9 @@ import type { Order } from '../../types'
  */
 export default function OrderRow({ order, sub }: { order: Order; sub?: string }) {
   const note = storageNote(order)
-  const tile = orderStatusColor(order)
   return (
     <Link to={`/dashboard/orders/${order.id}`} className="app-row">
-      <span className={`app-row-tile ${tile}`}>
+      <span className="app-row-tile text-text-secondary">
         <ProductIcon productId={order.productId} size={22} />
       </span>
       <span className="app-row-mid">
@@ -24,7 +24,7 @@ export default function OrderRow({ order, sub }: { order: Order; sub?: string })
       </span>
       <span className="app-row-right">
         <span className="app-row-sum">{formatPrice(order.price)}</span>
-        <span className={`app-row-status ${orderStatusText(order)}`}>{orderStatusShort(order)}</span>
+        <span className="app-row-status"><StatusMark size="sm" color={orderStatusBar(order)}>{orderStatusShort(order)}</StatusMark></span>
       </span>
     </Link>
   )

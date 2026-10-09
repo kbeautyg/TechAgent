@@ -4,7 +4,8 @@ import { useAuth } from '../../context/AuthContext'
 import ProductIcon from '../../components/app/ProductIcon'
 import { mockOrders, mockUsers } from '../../data/mock'
 import { formatPrice, formatReward, accruedReward, paidTotal, storageExpired } from '../../utils/calculate'
-import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusColor, orderStatusShort, orderStatusText } from '../../utils/status'
+import { AT_POINT_FILTER_LABEL, isIssued, orderStatusLabel, orderStatusBar, orderStatusShort } from '../../utils/status'
+import StatusMark from '../../components/app/StatusMark'
 import { useDataRevision } from '../../utils/store'
 
 export default function AdminDashboardPage() {
@@ -93,14 +94,14 @@ export default function AdminDashboardPage() {
           const partner = mockUsers.find((u) => u.id === order.userId)
           return (
             <div key={order.id} className="app-row">
-              <span className={`app-row-tile ${orderStatusColor(order)}`}><ProductIcon productId={order.productId} size={22} /></span>
+              <span className="app-row-tile text-text-secondary"><ProductIcon productId={order.productId} size={22} /></span>
               <span className="app-row-mid">
                 <span className="app-row-title">{order.productName}</span>
                 <span className="app-row-sub">{order.orderNumber} · {partner?.companyName || '—'}</span>
               </span>
               <span className="app-row-right">
                 <span className="app-row-sum">{formatPrice(order.price)}</span>
-                <span className={`app-row-status ${orderStatusText(order)}`}>{orderStatusShort(order)}</span>
+                <span className="app-row-status"><StatusMark size="sm" color={orderStatusBar(order)}>{orderStatusShort(order)}</StatusMark></span>
               </span>
             </div>
           )
@@ -134,9 +135,7 @@ export default function AdminDashboardPage() {
                     <td className="px-4 py-3 text-text-secondary">{partner?.companyName || '—'}</td>
                     <td className="px-4 py-3 font-medium text-text-primary whitespace-nowrap">{formatPrice(order.price)}</td>
                     <td className="px-4 py-3">
-                      <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${orderStatusColor(order)}`}>
-                        {orderStatusLabel(order)}
-                      </span>
+                      <StatusMark size="sm" color={orderStatusBar(order)}>{orderStatusLabel(order)}</StatusMark>
                     </td>
                   </tr>
                 )

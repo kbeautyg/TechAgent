@@ -117,3 +117,35 @@ export function orderStatusShort(o: Pick<Order, 'status' | 'returnedAt'>): strin
 export function orderStatusText(o: Pick<Order, 'status' | 'returnedAt'>): string {
   return orderStatusColor(o).split(' ').find((c) => c.startsWith('text-')) ?? 'text-text-secondary'
 }
+
+/* ── Статус «словом с цветной чертой» (выбор Дениса 09.10, вариант 3): слово тёмным текстом, черта слева — цветом этапа.
+ * Никаких цветных «таблеток» с фоном. */
+const ORDER_STATUS_BAR: Record<OrderStatus, string> = {
+  CREATED: '#1B44F5',
+  PAID: '#12B981',
+  PURCHASED: '#6366F1',
+  IN_TRANSIT: '#F59E0B',
+  AT_POINT: '#8B5CF6',
+  ISSUED: '#14B8A6',
+  CANCELLED: '#EF4444',
+}
+
+export function orderStatusBar(o: Pick<Order, 'status' | 'returnedAt'>): string {
+  return o.returnedAt ? '#F97316' : ORDER_STATUS_BAR[o.status]
+}
+
+const PAYMENT_STATUS_BAR: Record<PaymentStatus, string> = {
+  PENDING: '#F59E0B',
+  PAID: '#12B981',
+  FAILED: '#EF4444',
+}
+
+export function paymentStatusBar(o: Pick<Order, 'paymentStatus' | 'refundedAt'>): string {
+  return o.refundedAt ? '#94A3B8' : PAYMENT_STATUS_BAR[o.paymentStatus]
+}
+
+export const PARTNER_STATUS_BAR: Record<PartnerStatus, string> = {
+  PENDING: '#F59E0B',
+  VERIFIED: '#12B981',
+  REJECTED: '#EF4444',
+}

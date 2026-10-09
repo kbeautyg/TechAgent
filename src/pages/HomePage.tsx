@@ -257,8 +257,8 @@ export default function HomePage() {
             {scheme.map((n, i) => (
               <li key={n.role} className="flex gap-4 sm:gap-5">
                 <div className="flex flex-col items-center shrink-0">
-                  <span className="w-14 h-14 rounded-2xl bg-primary/10 text-primary grid place-items-center">
-                    <n.icon size={28} strokeWidth={1.9} />
+                  <span className="w-14 h-12 text-primary grid place-items-center">
+                    <n.icon size={32} strokeWidth={1.8} />
                   </span>
                   {i < scheme.length - 1 && <span className="w-0.5 flex-1 bg-primary/20 my-2 rounded-full" />}
                 </div>

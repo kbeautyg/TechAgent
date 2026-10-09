@@ -1,7 +1,8 @@
 import { useState } from 'react'
 import { mockUsers, mockOrders, updateUser, scheduleRewardChange, REWARD_CHANGE_NOTICE_DAYS } from '../../data/mock'
 import { formatDate, formatPercent, formatPrice, paidTotal, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
-import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
+import { PARTNER_STATUS_LABELS, PARTNER_STATUS_BAR } from '../../utils/status'
+import StatusMark from '../../components/app/StatusMark'
 import { useDataRevision } from '../../utils/store'
 import type { User } from '../../types'
 import PartnerInvite from './PartnerInvite'
@@ -157,9 +158,7 @@ export default function AdminUsersPage() {
                     <p className="font-semibold text-[16px] leading-snug text-text-primary break-words">{u.companyName || '—'}</p>
                     <p className="text-[13px] text-text-muted mt-0.5">анкета от {formatDate(u.createdAt)}</p>
                   </div>
-                  <span className={`text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap shrink-0 ${PARTNER_STATUS_COLORS[status]}`}>
-                    {PARTNER_STATUS_LABELS[status]}
-                  </span>
+                  <span className="shrink-0 mt-0.5"><StatusMark size="sm" color={PARTNER_STATUS_BAR[status]}>{PARTNER_STATUS_LABELS[status]}</StatusMark></span>
                 </div>
                 {(currentPercent || pending) && (
                   <p className="text-[14px] text-text-secondary mt-2 leading-snug">
@@ -210,9 +209,7 @@ export default function AdminUsersPage() {
                         <p className="text-xs text-text-muted mt-0.5">анкета от {formatDate(u.createdAt)}</p>
                       </td>
                       <td className="px-4 py-3">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${PARTNER_STATUS_COLORS[status]}`}>
-                          {PARTNER_STATUS_LABELS[status]}
-                        </span>
+                        <StatusMark size="sm" color={PARTNER_STATUS_BAR[status]}>{PARTNER_STATUS_LABELS[status]}</StatusMark>
                         {currentPercent ? (
                           <p className="text-xs text-text-secondary mt-1.5 whitespace-nowrap">вознаграждение {formatPercent(currentPercent)}</p>
                         ) : null}

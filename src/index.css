@@ -249,8 +249,7 @@ input[type="checkbox"] {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(27, 68, 245, 0.08);
-  border: 1px solid rgba(27, 68, 245, 0.06);
+  /* Значок без подложки (решение 09.10: цветные «дымки» под иконками выглядят шаблонно) */
 }
 
 /* ========== DIVIDERS ========== */
@@ -1635,10 +1634,11 @@ body {
     font-weight: 700;
     font-size: 15px;
     flex: none;
-    background: rgba(27, 68, 245, 0.1);
+    border: 2px solid var(--color-primary);
     color: var(--color-primary);
   }
   .app-step-num.is-done {
+    border-color: var(--color-success);
     background: var(--color-success);
     color: #fff;
   }
@@ -1688,3 +1688,26 @@ body {
   .products-count-word { display: none; }
   .sort-select { padding-left: 10px; padding-right: 28px; background-position: right 8px center; }
 }
+
+@layer components {
+  /* Статус словом с цветной чертой слева — вместо цветных «таблеток» */
+  .status-mark {
+    display: inline-block;
+    padding-left: 9px;
+    border-left: 3px solid;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--color-text-primary);
+    white-space: nowrap;
+  }
+  .status-mark-sm {
+    font-size: 12.5px;
+    padding-left: 7px;
+    border-left-width: 2px;
+  }
+}
+
+/* «Доступен к заказу» на фото товара: белая подпись с зелёной чертой вместо зелёной таблетки */
+.cbadge, .pp-gbadge { border-radius: 6px; letter-spacing: 0; }
+.cbadge-stock, .pp-gbadge-stock { background: rgba(255,255,255,.94); color: var(--color-text-primary); border-left: 3px solid #12B981; font-weight: 600; }

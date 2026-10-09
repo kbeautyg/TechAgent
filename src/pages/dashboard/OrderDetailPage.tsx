@@ -23,7 +23,8 @@ import {
   ORDER_STEPS,
   BUYER_CLAIM_LABELS,
   orderStatusLabel,
-  orderStatusColor,
+  orderStatusBar,
+  orderStatusText,
   paymentStatusLabel,
   photoNote,
 } from '../../utils/status'
@@ -33,6 +34,9 @@ import type { Order, OrderStatus, BuyerClaimType } from '../../types'
 import { ActionPanel, PageBar, RoundLink, StickyBar } from '../../components/app/ui'
 import { useIsDesktop } from '../../components/app/useIsDesktop'
 import ProductIcon from '../../components/app/ProductIcon'
+import { products } from '../../data/products'
+import { getProductImage } from '../../utils/productImages'
+import StatusMark from '../../components/app/StatusMark'
 
 const REWARD_RULE = 'Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.'
 const PARTNERS_EMAIL = 'partners@techagent.pro'
@@ -227,6 +231,8 @@ export default function OrderDetailPage() {
   else if (!statusSub && order.status === 'ISSUED' && order.issuedAt) statusSub = `Выдан ${formatDateTime(order.issuedAt)}`
   const nextStep = !returned ? NEXT_STEP[order.status] : undefined
   const telHref = `tel:${order.buyerPhone.replace(/[^\d+]/g, '')}`
+  const catalogProduct = products.find((p) => p.id === order.productId)
+  const photo = catalogProduct ? getProductImage(catalogProduct.id, catalogProduct.name, catalogProduct.category) : ''
 
   /* Главная кнопка внизу экрана на телефоне */
   let sticky: React.ReactNode = null
@@ -265,9 +271,7 @@ export default function OrderDetailPage() {
           </RoundLink>
         }
         extra={
-          <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${orderStatusColor(order)}`}>
-            {orderStatusLabel(order)}
-          </span>
+          <StatusMark color={orderStatusBar(order)}>{orderStatusLabel(order)}</StatusMark>
         }
       />
 
@@ -275,8 +279,13 @@ export default function OrderDetailPage() {
         <div className="lg:col-span-2 space-y-3 lg:space-y-6 min-w-0">
           {/* Товар и цена — первым, как сумма операции в банке */}
           <div className="app-group p-4 flex items-center gap-4">
-            <span className="w-[68px] h-[68px] rounded-2xl bg-bg-light grid place-items-center text-text-secondary shrink-0">
-              <ProductIcon productId={order.productId} size={32} strokeWidth={1.6} />
+            {/* Фото товара из каталога; если фото нет — значок категории */}
+            <span className="w-[72px] h-[72px] grid place-items-center text-text-secondary shrink-0">
+              {photo ? (
+                <img src={photo} alt="" width={72} height={72} className="w-[72px] h-[72px] object-contain" />
+              ) : (
+                <ProductIcon productId={order.productId} size={36} strokeWidth={1.6} />
+              )}
             </span>
             <div className="min-w-0">
               <p className="font-semibold text-base leading-snug text-text-primary break-words">{order.productName}</p>
@@ -290,8 +299,8 @@ export default function OrderDetailPage() {
           {/* Статус и полоска этапов */}
           <div className="app-group p-4">
             <div className="flex items-center gap-3">
-              <span className={`w-10 h-10 rounded-xl grid place-items-center shrink-0 ${orderStatusColor(order)}`}>
-                {order.status === 'CANCELLED' ? <Ban size={21} /> : returned ? <ArrowLeft size={21} /> : order.status === 'ISSUED' ? <PackageCheck size={21} /> : <PackageOpen size={21} />}
+              <span className={`w-8 grid place-items-center shrink-0 ${orderStatusText(order)}`}>
+                {order.status === 'CANCELLED' ? <Ban size={26} /> : returned ? <ArrowLeft size={26} /> : order.status === 'ISSUED' ? <PackageCheck size={26} /> : <PackageOpen size={26} />}
               </span>
               <div className="min-w-0">
                 <p className="font-bold text-base leading-snug text-text-primary">{orderStatusLabel(order)}</p>

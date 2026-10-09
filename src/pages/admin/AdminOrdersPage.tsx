@@ -9,15 +9,15 @@ import {
   BUYER_CLAIM_LABELS,
   isIssued,
   orderStatusLabel,
-  orderStatusColor,
+  orderStatusBar,
   orderStatusShort,
-  orderStatusText,
   paymentStatusLabel,
-  paymentStatusColor,
+  paymentStatusBar,
   photoNote,
 } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
 import ProductIcon from '../../components/app/ProductIcon'
+import StatusMark from '../../components/app/StatusMark'
 import type { Order, OrderStatus } from '../../types'
 
 type Filter = OrderStatus | 'ALL' | 'CLAIMS'
@@ -261,7 +261,7 @@ export default function AdminOrdersPage() {
           return (
             <div key={order.id} className="app-group p-4">
               <div className="flex items-start gap-3">
-                <span className={`app-row-tile ${orderStatusColor(order)}`}>
+                <span className="app-row-tile text-text-secondary">
                   <ProductIcon productId={order.productId} size={22} />
                 </span>
                 <div className="flex-1 min-w-0">
@@ -270,7 +270,7 @@ export default function AdminOrdersPage() {
                 </div>
                 <div className="text-right shrink-0">
                   <p className="font-bold text-[15px] text-text-primary whitespace-nowrap">{formatPrice(order.price)}</p>
-                  <p className={`text-[12.5px] font-semibold mt-0.5 whitespace-nowrap ${orderStatusText(order)}`}>{orderStatusShort(order)}</p>
+                  <p className="mt-1"><StatusMark size="sm" color={orderStatusBar(order)}>{orderStatusShort(order)}</StatusMark></p>
                 </div>
               </div>
               <dl className="mt-3 pt-3 border-t border-border grid grid-cols-[auto_1fr] gap-x-4 gap-y-1.5 text-[14px] leading-snug m-0">
@@ -335,13 +335,9 @@ export default function AdminOrdersPage() {
                     </td>
                     <td className="px-4 py-3">
                       <div className="flex flex-col items-start gap-1">
-                        <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${orderStatusColor(order)}`}>
-                          {orderStatusLabel(order)}
-                        </span>
+                        <StatusMark size="sm" color={orderStatusBar(order)}>{orderStatusLabel(order)}</StatusMark>
                         {(order.status !== 'CANCELLED' || order.paymentStatus === 'PAID') && (
-                          <span className={`text-xs px-2 py-0.5 rounded-full font-medium whitespace-nowrap ${paymentStatusColor(order)}`}>
-                            {paymentStatusLabel(order)}
-                          </span>
+                          <StatusMark size="sm" color={paymentStatusBar(order)}>{paymentStatusLabel(order)}</StatusMark>
                         )}
                       </div>
                       <OrderNotes order={order} />

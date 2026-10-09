@@ -126,8 +126,8 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-3 sm:gap-4">
             {roles.map((r) => (
               <div key={r.title} className="bg-bg-section rounded-[24px] sm:rounded-3xl p-5 sm:p-8 flex lg:block gap-4">
-                <span className="w-14 h-14 rounded-2xl bg-primary/10 text-primary grid place-items-center shrink-0 lg:mb-5">
-                  <r.icon size={28} strokeWidth={1.9} />
+                <span className="w-9 lg:w-auto text-primary flex lg:block shrink-0 pt-0.5 lg:pt-0 lg:mb-4">
+                  <r.icon size={32} strokeWidth={1.8} />
                 </span>
                 <div className="min-w-0">
                   <h3 className="text-xl font-extrabold text-text-primary tracking-tight leading-snug">{r.title}</h3>

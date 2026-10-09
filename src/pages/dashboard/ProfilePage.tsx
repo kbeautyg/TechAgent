@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { Save, Check, User, Building2, Landmark, ShieldCheck, Globe, LogOut, ChevronRight } from 'lucide-react'
 import { PageBar } from '../../components/app/ui'
 import { useAuth } from '../../context/AuthContext'
-import { PARTNER_STATUS_LABELS, PARTNER_STATUS_COLORS } from '../../utils/status'
+import { PARTNER_STATUS_LABELS, PARTNER_STATUS_BAR } from '../../utils/status'
+import StatusMark from '../../components/app/StatusMark'
 import { formatDate, formatPercent, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import { onlyDigits, formatPhone, partnerErrors, type PartnerErrors, type PartnerFields } from '../../utils/validate'
 
@@ -129,9 +130,7 @@ export default function ProfilePage() {
           Проверка анкеты
         </h2>
         <div className="flex items-center gap-x-3 gap-y-2 flex-wrap text-sm">
-          <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${PARTNER_STATUS_COLORS[status]}`}>
-            {PARTNER_STATUS_LABELS[status]}
-          </span>
+          <StatusMark color={PARTNER_STATUS_BAR[status]}>{PARTNER_STATUS_LABELS[status]}</StatusMark>
           <span className="text-text-muted">Анкета от {formatDate(user.createdAt)}</span>
         </div>
         {verified && percent ? (
@@ -232,12 +231,12 @@ export default function ProfilePage() {
       {/* На телефоне шапки сайта в кабинете нет: переход на сайт и выход — здесь */}
       <div className="app-list mt-6 lg:hidden">
         <Link to="/" className="app-row">
-          <span className="app-row-tile bg-primary/10 text-primary"><Globe size={22} /></span>
+          <span className="app-row-tile text-primary"><Globe size={24} /></span>
           <span className="app-row-mid"><span className="app-row-title">Сайт и каталог</span></span>
           <ChevronRight size={20} className="text-text-muted shrink-0" />
         </Link>
         <button type="button" onClick={logout} className="app-row w-full bg-transparent border-none cursor-pointer text-left">
-          <span className="app-row-tile bg-red-50 text-red-600"><LogOut size={22} /></span>
+          <span className="app-row-tile text-red-600"><LogOut size={24} /></span>
           <span className="app-row-mid"><span className="app-row-title !text-red-600">Выйти</span></span>
         </button>
       </div>

@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Статус заказа — варианты</title>
+<link rel="stylesheet" href="../../node_modules/@fontsource-variable/onest/index.css">
+<link rel="stylesheet" href="../../node_modules/@fontsource-variable/unbounded/index.css">
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
+<style>
+  :root {
+    --primary: #1B44F5; --green: #0B7A55; --green-l: #12B981; --amber: #B86E00; --violet: #6D4BF5;
+    --bg: #F3F4F9; --card: #fff; --text: #0B1020; --text-2: #3A4256; --muted: #7C8599; --line: rgba(11,16,32,.08);
+    --sans: 'Onest Variable', -apple-system, sans-serif; --display: 'Unbounded Variable', 'Onest Variable', sans-serif;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: var(--sans); color: var(--text); background: #E4E6EE; -webkit-font-smoothing: antialiased; }
+  .page { max-width: 1240px; margin: 0 auto; padding: 32px 24px 56px; }
+  .page > h1 { font-family: var(--display); font-size: 22px; margin: 0 0 6px; letter-spacing: -.02em; }
+  .page > p { margin: 0 0 28px; color: var(--text-2); font-size: 15px; line-height: 1.5; }
+  .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .variant { background: var(--bg); border-radius: 24px; padding: 22px; border: 1px solid var(--line); }
+  .vname { font-weight: 700; font-size: 17px; margin: 0 0 4px; }
+  .vdesc { color: var(--text-2); font-size: 14px; line-height: 1.45; margin: 0 0 18px; }
+  .vname b { display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; background: var(--text); color: #fff; font-size: 13px; margin-right: 8px; }
+
+  /* Шапка заказа */
+  .head { background: #fff; border-radius: 18px; padding: 18px 20px; border: 1px solid var(--line); margin-bottom: 12px; }
+  .back { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 4px; margin-bottom: 10px; }
+  .back svg { width: 15px; height: 15px; }
+  .t { font-family: var(--display); font-weight: 800; font-size: 26px; letter-spacing: -.02em; margin: 0; }
+  .row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+
+  /* Блок статуса */
+  .state { background: #fff; border-radius: 18px; padding: 16px 18px; border: 1px solid var(--line); }
+  .st-top { display: flex; align-items: center; gap: 12px; }
+  .st-top svg { width: 26px; height: 26px; flex: none; }
+  .st-top b { font-size: 16px; display: block; }
+  .st-top span { font-size: 13px; color: var(--muted); }
+  .bar { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 14px 0 8px; }
+  .bar i { height: 5px; border-radius: 3px; background: #E4E6EE; }
+  .bar i.d { background: var(--green-l); } .bar i.n { background: var(--primary); }
+  .bar-l { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--muted); }
+
+  /* Строка списка */
+  .list { background: #fff; border-radius: 18px; border: 1px solid var(--line); margin-top: 12px; }
+  .li { display: flex; align-items: center; gap: 12px; padding: 12px 16px; }
+  .li + .li { border-top: 1px solid var(--line); }
+  .li > svg { width: 24px; height: 24px; color: var(--text-2); flex: none; }
+  .li .m { flex: 1; min-width: 0; }
+  .li .m b { display: block; font-size: 15px; font-weight: 600; }
+  .li .m span { font-size: 13px; color: var(--muted); }
+  .li .r { text-align: right; }
+  .li .r b { display: block; font-size: 15px; }
+
+  /* ── Вариант 1: подпись строкой под номером ── */
+  .v1-sub { margin-top: 6px; font-size: 15px; color: var(--text-2); }
+  .v1-sub strong { color: var(--text); font-weight: 600; }
+  .v1-r { font-size: 13px; color: var(--muted); }
+
+  /* ── Вариант 2: шкала рядом с номером ── */
+  .v2 { display: inline-flex; align-items: center; gap: 10px; }
+  .v2 .mini { display: grid; grid-template-columns: repeat(6, 10px); gap: 3px; }
+  .v2 .mini i { height: 4px; border-radius: 2px; background: #DADDE6; }
+  .v2 .mini i.d { background: var(--green-l); } .v2 .mini i.n { background: var(--primary); }
+  .v2 span { font-size: 14px; font-weight: 600; color: var(--text); }
+  .v2-r .mini { display: grid; grid-template-columns: repeat(6, 8px); gap: 3px; justify-content: end; margin-top: 7px; }
+  .v2-r .mini i { height: 4px; border-radius: 2px; background: #DADDE6; display: block; }
+  .v2-r .mini i.d { background: var(--green-l); } .v2-r .mini i.n { background: var(--primary); }
+
+  /* ── Вариант 3: цветная черта слева ── */
+  .v3 { font-size: 14px; font-weight: 600; color: var(--text); padding-left: 10px; border-left: 3px solid var(--green-l); line-height: 1.2; }
+  .v3-r { display: inline-block; font-size: 13px; font-weight: 600; padding-left: 8px; border-left: 2px solid; line-height: 1.15; margin-top: 3px; }
+
+  /* ── Вариант 4: цвет самого слова ── */
+  .v4 { font-size: 15px; font-weight: 700; color: var(--green); }
+  .v4-r { font-size: 13px; font-weight: 700; margin-top: 2px; display: block; }
+
+  .c-green { color: var(--green); border-color: var(--green-l) !important; }
+  .c-amber { color: var(--amber); border-color: #E3A33A !important; }
+  .c-violet { color: var(--violet); border-color: var(--violet) !important; }
+  .c-blue { color: var(--primary); border-color: var(--primary) !important; }
+  .ic-green { color: var(--green); } .ic-violet { color: var(--violet); } .ic-amber { color: var(--amber); }
+  .now { font-size: 12px; font-weight: 600; color: var(--muted); margin-left: 6px; }
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Статус заказа без «таблеток»</h1>
+  <p>Иконки везде без цветной подложки, просто значок. Ниже четыре варианта, как показать сам статус. В каждом: шапка заказа, блок статуса и строка в списке заказов. Выберите номер, и я переложу его на весь сайт: кабинет, админку и списки.</p>
+
+  <div class="grid">
+
+    <!-- 1 -->
+    <section class="variant">
+      <p class="vname"><b>1</b>Строка под номером</p>
+      <p class="vdesc">Статус не отдельной плашкой, а первой фразой под номером заказа, вместе с датой. Без цвета, читается как обычный текст.</p>
+      <div class="head">
+        <div class="back"><i data-lucide="chevron-left"></i>Назад к списку</div>
+        <h2 class="t">Заказ #1246</h2>
+        <div class="v1-sub"><strong>Оплачен</strong> 05.10 в 19:00 · дальше выкуп у поставщика</div>
+      </div>
+      <div class="state">
+        <div class="st-top"><i data-lucide="package-check" class="ic-green"></i><div><b>Оплачен</b><span>Оплата получена 05.10 в 19:00</span></div></div>
+        <div class="bar"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar-l"><span>Этап 2 из 6</span><span>Дальше: выкуп у поставщика</span></div>
+      </div>
+      <div class="list">
+        <div class="li"><i data-lucide="smartphone"></i><div class="m"><b>iPhone 15 Pro Max</b><span>#1246 · Покупатель 1</span></div><div class="r"><b>159 900 ₽</b><span class="v1-r">Оплачен</span></div></div>
+        <div class="li"><i data-lucide="laptop"></i><div class="m"><b>MacBook Air 13" M3</b><span>#1240 · Покупатель 4</span></div><div class="r"><b>119 900 ₽</b><span class="v1-r">В пути</span></div></div>
+      </div>
+    </section>
+
+    <!-- 2 -->
+    <section class="variant">
+      <p class="vname"><b>2</b>Мини-шкала рядом с номером</p>
+      <p class="vdesc">Вместо плашки шесть коротких делений и слово. Сразу видно, на каком этапе заказ, и это узнаваемо как наш знак: та же шкала, что в блоке статуса.</p>
+      <div class="head">
+        <div class="back"><i data-lucide="chevron-left"></i>Назад к списку</div>
+        <div class="row"><h2 class="t">Заказ #1246</h2><span class="v2"><span class="mini"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></span><span>Оплачен</span></span></div>
+      </div>
+      <div class="state">
+        <div class="st-top"><i data-lucide="package-check" class="ic-green"></i><div><b>Оплачен</b><span>Оплата получена 05.10 в 19:00</span></div></div>
+        <div class="bar"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar-l"><span>Этап 2 из 6</span><span>Дальше: выкуп у поставщика</span></div>
+      </div>
+      <div class="list">
+        <div class="li"><i data-lucide="smartphone"></i><div class="m"><b>iPhone 15 Pro Max</b><span>#1246 · Оплачен</span></div><div class="r v2-r"><b>159 900 ₽</b><span class="mini"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></span></div></div>
+        <div class="li"><i data-lucide="laptop"></i><div class="m"><b>MacBook Air 13" M3</b><span>#1240 · В пути</span></div><div class="r v2-r"><b>119 900 ₽</b><span class="mini"><i class="d"></i><i class="d"></i><i class="d"></i><i class="n"></i><i></i><i></i></span></div></div>
+      </div>
+    </section>
+
+    <!-- 3 -->
+    <section class="variant">
+      <p class="vname"><b>3</b>Цветная черта</p>
+      <p class="vdesc">Слово статуса тёмным текстом, слева тонкая вертикальная черта цвета этапа. Строго, по-деловому, как пометка на полях.</p>
+      <div class="head">
+        <div class="back"><i data-lucide="chevron-left"></i>Назад к списку</div>
+        <div class="row"><h2 class="t">Заказ #1246</h2><span class="v3">Оплачен</span></div>
+      </div>
+      <div class="state">
+        <div class="st-top"><i data-lucide="package-check" class="ic-green"></i><div><b>Оплачен</b><span>Оплата получена 05.10 в 19:00</span></div></div>
+        <div class="bar"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar-l"><span>Этап 2 из 6</span><span>Дальше: выкуп у поставщика</span></div>
+      </div>
+      <div class="list">
+        <div class="li"><i data-lucide="smartphone"></i><div class="m"><b>iPhone 15 Pro Max</b><span>#1246 · Покупатель 1</span></div><div class="r"><b>159 900 ₽</b><span class="v3-r c-green" style="color:var(--text)">Оплачен</span></div></div>
+        <div class="li"><i data-lucide="laptop"></i><div class="m"><b>MacBook Air 13" M3</b><span>#1240 · Покупатель 4</span></div><div class="r"><b>119 900 ₽</b><span class="v3-r c-amber" style="color:var(--text)">В пути</span></div></div>
+      </div>
+    </section>
+
+    <!-- 4 -->
+    <section class="variant">
+      <p class="vname"><b>4</b>Цвет самого слова</p>
+      <p class="vdesc">Самый простой: слово статуса полужирным в цвете этапа, без фона и рамок. Так статусы уже стоят в списках заказов.</p>
+      <div class="head">
+        <div class="back"><i data-lucide="chevron-left"></i>Назад к списку</div>
+        <div class="row"><h2 class="t">Заказ #1246</h2><span class="v4">Оплачен</span></div>
+      </div>
+      <div class="state">
+        <div class="st-top"><i data-lucide="package-check" class="ic-green"></i><div><b>Оплачен</b><span>Оплата получена 05.10 в 19:00</span></div></div>
+        <div class="bar"><i class="d"></i><i class="n"></i><i></i><i></i><i></i><i></i></div>
+        <div class="bar-l"><span>Этап 2 из 6</span><span>Дальше: выкуп у поставщика</span></div>
+      </div>
+      <div class="list">
+        <div class="li"><i data-lucide="smartphone"></i><div class="m"><b>iPhone 15 Pro Max</b><span>#1246 · Покупатель 1</span></div><div class="r"><b>159 900 ₽</b><span class="v4-r c-green">Оплачен</span></div></div>
+        <div class="li"><i data-lucide="laptop"></i><div class="m"><b>MacBook Air 13" M3</b><span>#1240 · Покупатель 4</span></div><div class="r"><b>119 900 ₽</b><span class="v4-r c-amber">В пути</span></div></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+<script>lucide.createIcons();</script>
+</body>
+</html>

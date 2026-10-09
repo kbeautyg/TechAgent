@@ -149,7 +149,7 @@ export default function DashboardPage() {
           to="/dashboard/documents"
           className="mb-5 flex items-center gap-3 rounded-[18px] bg-amber-50 border border-amber-200 px-3.5 py-3 text-amber-900 no-underline hover:bg-amber-100 transition-colors"
         >
-          <span className="w-10 h-10 rounded-xl bg-amber-100 grid place-items-center shrink-0">
+          <span className="w-8 grid place-items-center shrink-0">
             <FileSignature size={22} />
           </span>
           <span className="flex-1 min-w-0 leading-snug">

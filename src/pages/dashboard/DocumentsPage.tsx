@@ -77,8 +77,8 @@ function DocRow({ doc, onOpen, showDate = true }: { doc: Document; onOpen: (id: 
         onClick={() => { if (doc.content) onOpen(doc.id) }}
         disabled={!doc.content}
       >
-        <span className="w-11 h-11 bg-primary/10 rounded-[14px] flex items-center justify-center shrink-0">
-          <Icon size={20} className="text-primary" />
+        <span className="w-8 flex items-center justify-center shrink-0">
+          <Icon size={24} className="text-primary" />
         </span>
         <span className="min-w-0 flex flex-col gap-0.5">
           <span className="font-semibold text-[15px] lg:text-sm leading-snug text-text-primary break-words">{doc.title}</span>

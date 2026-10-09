@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { Shield, Check, Phone, ChevronDown, MapPin } from 'lucide-react'
+import { Shield, Phone, ChevronDown, MapPin, CircleCheck } from 'lucide-react'
 import { mockOrders, mockUsers, updateOrder, DEMO_MODE } from '../data/mock'
 import { mockDocuments } from '../data/documents'
 import { formatPrice, formatDateTime, formatDate } from '../utils/calculate'
@@ -113,8 +113,8 @@ export default function PaymentPage() {
       <div className="min-h-[80vh] flex items-center justify-center bg-white py-6 sm:py-12 px-4">
         <div className="card-glass p-5 sm:p-8 max-w-md w-full">
           <div className="text-center">
-            <div className="w-16 h-16 bg-success/15 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Check size={32} className="text-success" />
+            <div className="flex items-center justify-center mx-auto mb-4">
+              <CircleCheck size={52} strokeWidth={1.6} className="text-success" />
             </div>
             <h1 className="text-2xl font-bold text-text-primary mb-6">Оплата получена</h1>
           </div>
