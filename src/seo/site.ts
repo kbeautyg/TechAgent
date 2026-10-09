@@ -5,12 +5,12 @@
 
 export const SITE_URL = 'https://techagent.pro'
 export const SITE_NAME = 'TechAgent'
-export const LEGAL_NAME = 'ОсОО\u00A0«ТехЭйджент»'
+export const LEGAL_NAME = 'ООО\u00A0«ТехЭйджент»'
 
 /** Позиционирование сайта — одно на title, описание, OG и index.html */
 export const DEFAULT_TITLE = 'TechAgent — электроника с получением в пунктах выдачи партнёров'
 export const DEFAULT_DESCRIPTION =
-  'Смартфоны, ноутбуки, планшеты и техника Apple, Samsung, Xiaomi, Dyson. Продавец — ОсОО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.'
+  'Смартфоны, ноутбуки, планшеты и техника Apple, Samsung, Xiaomi, Dyson. Продавец — ООО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.'
 
 /** Публичная оферта купли-продажи для покупателей */
 export const SALE_OFFER_PATH = '/legal/sale-offer'

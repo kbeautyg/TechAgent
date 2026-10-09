@@ -17,7 +17,7 @@ import { isIssued } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
 import OrderRow from '../../components/app/OrderRow'
 
-const LEGAL_FORMS = new Set(['ООО', 'ОсОО', 'ИП', 'АО', 'ПАО', 'ОАО', 'ЗАО'])
+const LEGAL_FORMS = new Set(['ООО', 'ООО', 'ИП', 'АО', 'ПАО', 'ОАО', 'ЗАО'])
 
 /** Буквы для кружка с аватаром: «Демо-партнёр 1» → «ДП», «ООО „Ромашка“» → «Р» */
 function initials(name: string): string {

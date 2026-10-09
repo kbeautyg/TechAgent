@@ -37,11 +37,6 @@ function organizationLd(): object {
     url: SITE_URL,
     logo: `${SITE_URL}/icons/icon-512.png`,
     email: CONTACT_EMAIL,
-    address: {
-      '@type': 'PostalAddress',
-      addressLocality: 'Бишкек',
-      addressCountry: 'KG',
-    },
     contactPoint: [
       {
         '@type': 'ContactPoint',
@@ -169,15 +164,15 @@ function baseMeta(overrides: Partial<PageMeta> & { title: string; description: s
 const legalDocMeta: Record<string, { title: string; description: string }> = {
   'sale-offer': {
     title: 'Публичная оферта купли-продажи | TechAgent',
-    description: 'Условия покупки у продавца ОсОО «ТехЭйджент»: оплата через СБП, получение товара в пункте выдачи партнёра, отказ от заказа и возврат денежных средств.',
+    description: 'Условия покупки у продавца ООО «ТехЭйджент»: оплата через СБП, получение товара в пункте выдачи партнёра, отказ от заказа и возврат денежных средств.',
   },
   offer: {
     title: 'Агентский договор-оферта для партнёров | TechAgent',
-    description: 'Агентский договор-оферта для партнёров ОсОО «ТехЭйджент»: оформление заказов покупателей, выдача товара в точке, вознаграждение, отчёт агента и акт.',
+    description: 'Агентский договор-оферта для партнёров ООО «ТехЭйджент»: оформление заказов покупателей, выдача товара в точке, вознаграждение, отчёт агента и акт.',
   },
   privacy: {
     title: 'Политика конфиденциальности | TechAgent',
-    description: 'Политика конфиденциальности TechAgent: какие данные партнёров и покупателей обрабатывает ОсОО «ТехЭйджент», зачем, кому передаёт и как отозвать согласие.',
+    description: 'Политика конфиденциальности TechAgent: какие данные партнёров и покупателей обрабатывает ООО «ТехЭйджент», зачем, кому передаёт и как отозвать согласие.',
   },
   terms: {
     title: 'Пользовательское соглашение | TechAgent',
@@ -185,7 +180,7 @@ const legalDocMeta: Record<string, { title: string; description: string }> = {
   },
   payment: {
     title: 'Условия оплаты и возврата | TechAgent',
-    description: 'Условия оплаты и возврата для покупателей: продавец — ОсОО «ТехЭйджент», оплата через СБП по ссылке или QR-коду, порядок возврата денежных средств.',
+    description: 'Условия оплаты и возврата для покупателей: продавец — ООО «ТехЭйджент», оплата через СБП по ссылке или QR-коду, порядок возврата денежных средств.',
   },
 }
 
@@ -204,7 +199,7 @@ export function resolveMeta(pathname: string): PageMeta {
     return baseMeta({
       title: DEFAULT_TITLE,
       description:
-        'Станьте пунктом выдачи электроники TechAgent: оформляйте заказы покупателей и выдавайте товар в своей точке. Продавец — ОсОО «ТехЭйджент», оплата через СБП.',
+        'Станьте пунктом выдачи электроники TechAgent: оформляйте заказы покупателей и выдавайте товар в своей точке. Продавец — ООО «ТехЭйджент», оплата через СБП.',
       canonical: SITE_URL + '/',
       jsonLd: [organizationLd(), websiteLd(), faqLd()],
     })
@@ -212,9 +207,9 @@ export function resolveMeta(pathname: string): PageMeta {
 
   if (path === '/about') {
     return baseMeta({
-      title: 'О TechAgent — продавец ОсОО «ТехЭйджент» и пункты выдачи партнёров',
+      title: 'О TechAgent — продавец ООО «ТехЭйджент» и пункты выдачи партнёров',
       description:
-        'Как устроен TechAgent: ОсОО «ТехЭйджент» продаёт электронику покупателям, партнёры оформляют заказы и выдают товар в своих точках.',
+        'Как устроен TechAgent: ООО «ТехЭйджент» продаёт электронику покупателям, партнёры оформляют заказы и выдают товар в своих точках.',
       canonical: `${SITE_URL}/about`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'О платформе' }])],
     })
@@ -224,7 +219,7 @@ export function resolveMeta(pathname: string): PageMeta {
     return baseMeta({
       title: 'Как это работает — заказ, оплата через СБП и получение товара | TechAgent',
       description:
-        'Партнёр оформляет заказ, покупатель платит ОсОО «ТехЭйджент» через СБП, товар приходит в пункт выдачи не позднее 14 дней с даты оплаты.',
+        'Партнёр оформляет заказ, покупатель платит ООО «ТехЭйджент» через СБП, товар приходит в пункт выдачи не позднее 14 дней с даты оплаты.',
       canonical: `${SITE_URL}/how-it-works`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Как это работает' }])],
     })
@@ -234,7 +229,7 @@ export function resolveMeta(pathname: string): PageMeta {
     return baseMeta({
       title: `Каталог электроники — ${products.length} ${pluralRu(products.length, ['товар', 'товара', 'товаров'])} с ценами | TechAgent`,
       description:
-        'Цены на смартфоны, ноутбуки, планшеты, наушники и технику для дома. Продавец — ОсОО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.',
+        'Цены на смартфоны, ноутбуки, планшеты, наушники и технику для дома. Продавец — ООО «ТехЭйджент», оплата через СБП, получение в пункте выдачи партнёра.',
       canonical: `${SITE_URL}/catalog`,
       jsonLd: [organizationLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Каталог' }])],
     })
@@ -327,7 +322,7 @@ export function resolveMeta(pathname: string): PageMeta {
   if (path === '/register') {
     return baseMeta({
       title: 'Заявка партнёра | TechAgent',
-      description: 'Заявка партнёра TechAgent: данные компании и пункта выдачи. ОсОО «ТехЭйджент» проверяет заявку и открывает доступ в кабинет.',
+      description: 'Заявка партнёра TechAgent: данные компании и пункта выдачи. ООО «ТехЭйджент» проверяет заявку и открывает доступ в кабинет.',
       canonical: `${SITE_URL}/register`,
       robots: NOINDEX,
     })

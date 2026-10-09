@@ -65,7 +65,7 @@ export default function LegalPage() {
             <Shield size={28} className="text-primary" />
           </div>
           <h1 className="text-[28px] sm:text-3xl font-bold leading-tight text-text-primary mb-2">{activeDoc ? activeDoc.title : 'Правовая информация'}</h1>
-          <p className="text-text-secondary text-base leading-relaxed">Продавец товаров на techagent.pro — ОсОО&nbsp;«ТехЭйджент»</p>
+          <p className="text-text-secondary text-base leading-relaxed">Продавец товаров на techagent.pro — ООО&nbsp;«ТехЭйджент»</p>
         </div>
 
         <div className="space-y-3">

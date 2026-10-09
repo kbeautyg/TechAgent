@@ -10,9 +10,6 @@ import { LEGAL_NAME, DELIVERY_TERM, SUPPORT_EMAIL } from '../seo/site'
 const SELLER = {
   name: LEGAL_NAME,
   inn: 'ИНН 9909766511, КПП 771387001',
-  reg: 'рег. № 326302-3301-ООО',
-  country: 'Кыргызская Республика',
-  address: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8',
 }
 
 const PAYMENT_TERMS = mockDocuments.find(d => d.type === 'PAYMENT')?.content ?? ''
@@ -189,10 +186,12 @@ export default function PaymentPage() {
         <div className="mb-5">
           <p className="text-sm text-text-muted mb-1">Продавец</p>
           <p className="font-medium text-sm text-text-primary">{SELLER.name}</p>
-          <p className="text-text-muted text-xs mt-0.5">
-            {SELLER.inn} · <span className="whitespace-nowrap">{SELLER.reg}</span> ({SELLER.country})
+          <p className="text-text-muted text-xs mt-0.5">{SELLER.inn}</p>
+          {/* Адрес продавца покупатель видит в оферте, которую принимает перед оплатой (ст. 9 ЗоЗПП) */}
+          <p className="text-text-muted text-xs">
+            Адрес и полные реквизиты — в{' '}
+            <Link to="/legal/sale-offer" target="_blank" className="text-primary no-underline hover:underline">оферте купли-продажи</Link>
           </p>
-          <p className="text-text-muted text-xs">{SELLER.address}</p>
         </div>
 
         <div className="mb-6">

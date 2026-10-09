@@ -429,7 +429,7 @@ export default function NewOrderPage() {
               className="accent-primary mt-1 shrink-0 w-5 h-5"
             />
             <span>
-              Покупатель просил оформить заказ и знает, что продавец — ОсОО&nbsp;«ТехЭйджент», а условия покупки — в{' '}
+              Покупатель просил оформить заказ и знает, что продавец — ООО&nbsp;«ТехЭйджент», а условия покупки — в{' '}
               <Link to="/legal/sale-offer" target="_blank" className="text-primary no-underline hover:underline">оферте купли-продажи</Link>
             </span>
           </label>

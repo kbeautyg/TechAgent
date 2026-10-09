@@ -30,7 +30,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">
-              Электроника с получением в пунктах выдачи партнёров. Продавец — ОсОО&nbsp;«ТехЭйджент».
+              Электроника с получением в пунктах выдачи партнёров. Продавец — ООО&nbsp;«ТехЭйджент».
             </p>
           </div>
 
@@ -99,9 +99,6 @@ export default function Footer() {
                   <span className="block text-xs text-text-dark-secondary/70">{c.note}</span>
                 </a>
               ))}
-              <p className="text-text-dark-secondary text-xs leading-relaxed sm:col-span-2 lg:col-span-1">
-                Кыргызская Республика, г.&nbsp;Бишкек, Октябрьский район, 8&nbsp;мкр, д.&nbsp;33, кв.&nbsp;8
-              </p>
             </div>
           </div>
         </div>
@@ -114,10 +111,9 @@ export default function Footer() {
             &copy; {new Date().getFullYear()} TechAgent. Все права защищены.
           </p>
           <p className="text-text-dark-secondary text-xs font-mono flex flex-wrap justify-center sm:justify-end gap-x-3 gap-y-1">
-            <span>ОсОО&nbsp;«ТехЭйджент»</span>
+            <span>ООО&nbsp;«ТехЭйджент»</span>
             <span>ИНН&nbsp;9909766511</span>
             <span>КПП&nbsp;771387001</span>
-            <span>Рег.&nbsp;№&nbsp;326302-3301-ООО</span>
           </p>
         </div>
       </div>

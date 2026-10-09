@@ -55,12 +55,11 @@ interface InfoRow {
 }
 
 const requisites: InfoRow[] = [
-  { label: 'Продавец', value: 'ОсОО\u00A0«ТехЭйджент», директор Аширбеков Н.М.Т.' },
-  { label: 'Регистрация в Кыргызской Республике', value: 'рег. № 326302-3301-ООО, ИНН 00403202610304' },
-  { label: 'ИНН / КПП в РФ', value: '9909766511 / 771387001' },
+  { label: 'Продавец', value: 'ООО\u00A0«ТехЭйджент», директор Аширбеков Н.М.Т.' },
+  { label: 'ИНН / КПП', value: '9909766511 / 771387001' },
   { label: 'Банк', value: 'АО «ТБанк», БИК 044525974' },
   { label: 'Расчётный счёт', value: '40807810900000001482' },
-  { label: 'Адрес', value: 'Кыргызская Республика, г. Бишкек, Октябрьский район, 8 мкр, д. 33, кв. 8' },
+  { label: 'Корреспондентский счёт', value: '30101810145250000974' },
 ]
 
 const contacts: InfoRow[] = [
@@ -108,7 +107,7 @@ export default function AboutPage() {
             TechAgent — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-base sm:text-lg text-text-secondary max-w-2xl sm:mx-auto leading-relaxed">
-            Продавец — ОсОО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
+            Продавец — ООО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
           </p>
         </div>
       </section>
@@ -180,7 +179,7 @@ export default function AboutPage() {
           <div className="bg-bg-section rounded-[24px] sm:rounded-3xl p-5 sm:p-8 mt-3 sm:mt-4">
             <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-3">Договоры</h3>
             <p className="text-[15px] text-text-secondary leading-relaxed max-w-3xl">
-              Покупатель заключает договор купли-продажи с ОсОО&nbsp;«ТехЭйджент» и платит ему напрямую — условия в{' '}
+              Покупатель заключает договор купли-продажи с ООО&nbsp;«ТехЭйджент» и платит ему напрямую — условия в{' '}
               <Link to="/legal/sale-offer" className="text-primary font-semibold">оферте купли-продажи</Link>. Партнёр работает
               по <Link to="/legal/offer" className="text-primary font-semibold">агентскому договору-оферте</Link>: оформляет заказы и
               выдаёт товар, а вознаграждение получает от ТехЭйджент.{' '}

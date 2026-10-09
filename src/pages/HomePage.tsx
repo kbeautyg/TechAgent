@@ -22,7 +22,7 @@ const scheme: { icon: LucideIcon; role: string; desc: string; flow?: string }[] 
   },
   {
     icon: BadgeCheck,
-    role: 'ОсОО\u00A0«ТехЭйджент» — продавец',
+    role: 'ООО\u00A0«ТехЭйджент» — продавец',
     desc: 'Продаёт товар покупателю по оферте купли-продажи и отвечает за него: гарантия, обмен, возврат',
     flow: 'Доставляет товар в ваш пункт за свой счёт — не позднее 14\u00A0дней с даты оплаты',
   },
@@ -105,7 +105,7 @@ export default function HomePage() {
                 Станьте пунктом выдачи электроники TechAgent
               </h1>
               <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl sm:mx-auto lg:mx-0">
-                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ОсОО&nbsp;«ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
+                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ООО&nbsp;«ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
@@ -333,7 +333,7 @@ export default function HomePage() {
               Покупателям
             </h2>
             <p className="text-base text-text-secondary leading-relaxed max-w-3xl mb-6">
-              Товар продаёт ОсОО&nbsp;«ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
+              Товар продаёт ООО&nbsp;«ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
               напрямую продавцу, товар выдаётся в том же пункте. Деньги за товар в пункте выдачи не принимают.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
