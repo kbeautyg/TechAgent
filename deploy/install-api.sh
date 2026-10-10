@@ -5,7 +5,7 @@
 set -e
 cd "$(dirname "$0")/.."
 "${NODE:-node}" scripts/export-catalog.mjs
-COPYFILE_DISABLE=1 tar -C api -czf - server.mjs mail.mjs letters.mjs backup.mjs set-staff-password.mjs catalog.json techagent-api.env.example \
+COPYFILE_DISABLE=1 tar -C api -czf - server.mjs mail.mjs letters.mjs backup.mjs set-staff-password.mjs set-mail.sh catalog.json techagent-api.env.example \
   | ssh srv91 'set -e
     id techagent >/dev/null 2>&1 || useradd --system --home /nonexistent --shell /usr/sbin/nologin techagent
     mkdir -p /opt/techagent-api/bin /var/lib/techagent-api /var/backups/techagent-api
