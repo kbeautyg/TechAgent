@@ -384,7 +384,7 @@ export default function HomePage() {
         {/* ===== CTA ===== */}
         <div className="pt-12 sm:pt-24 pb-4">
           <div className="bg-primary rounded-[28px] sm:rounded-3xl py-10 sm:py-16 px-6 sm:px-8 text-left sm:text-center text-white">
-            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром TechAgent</h2>
+            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром <span className="text-red-500">Tech</span>Agent</h2>
             <p className="text-white/80 text-base leading-relaxed mb-7 sm:mb-8">Оставьте заявку — после проверки ТехЭйджент откроет вам доступ в кабинет</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 min-h-[54px] bg-white text-text-primary rounded-2xl text-base font-semibold no-underline hover:bg-white/90 transition-colors">
