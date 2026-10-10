@@ -147,9 +147,6 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
                 <div className="sdek-map sdek-map-loading">Загружаем пункты СДЭК…</div>
               ) : mapMode ? (
                 <>
-                {sdek.demo && (
-                  <p className="acc-demo m-0">Демо: синие пункты партнёров пока видны только здесь, заказ из демо-кабинета не оформляется.</p>
-                )}
                 <SdekPicker
                   ymapsKey={sdek.ymapsKey}
                   value={choice}
