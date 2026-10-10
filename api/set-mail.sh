@@ -1,6 +1,6 @@
 #!/bin/sh
 # Почта сервера заказов: ящик на techagent.pro, с которого уходят коды входа и письма о заказах.
-# Запускает владелец, пароль ящика вводится скрыто и попадает только в /etc/techagent-msmtprc (root:techagent 640).
+# Запускает владелец, пароль ящика вводится скрыто и попадает только в /etc/techagent-msmtprc (techagent, 600).
 #   ssh -t srv91 sh /opt/techagent-api/set-mail.sh orders@techagent.pro
 set -e
 BOX="${1:-orders@techagent.pro}"
@@ -25,8 +25,9 @@ from $BOX
 user $BOX
 password "$ESC"
 CONF
-chown root:techagent /etc/techagent-msmtprc
-chmod 640 /etc/techagent-msmtprc
+# msmtp читает файл с паролем, только если он принадлежит тому, от чьего имени запущен, и закрыт от остальных
+chown techagent:techagent /etc/techagent-msmtprc
+chmod 600 /etc/techagent-msmtprc
 sed -i "s|^MAIL_ACCOUNT=.*|MAIL_ACCOUNT=techagent|; s|^MAIL_FROM=.*|MAIL_FROM=$BOX|; s|^ORDERS_EMAIL_TO=.*|ORDERS_EMAIL_TO=$BOX|" /etc/techagent-api.env
 if printf 'Subject: TechAgent: проверка почты\nContent-Type: text/plain; charset=utf-8\n\nПочта сервера заказов настроена: с этого ящика уходят коды входа и письма о заказах.\n' \
   | runuser -u techagent -- msmtp -C /etc/techagent-msmtprc -a techagent "$BOX"; then
