@@ -14,6 +14,9 @@ export interface SiteOrderContacts {
   city: string
   sdekPoint: string
   comment: string
+  /** Пункт, выбранный на карте: сервер сверяет его со списком СДЭК */
+  sdekCityCode?: number
+  sdekPointCode?: string
 }
 
 export interface SiteOrderResult {

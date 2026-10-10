@@ -1758,8 +1758,6 @@ body {
 .co-title { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 700; letter-spacing: -0.01em; color: var(--color-text-primary); margin: 0 0 16px; }
 .co-title span { width: 26px; height: 26px; border-radius: 50%; background: rgba(27,68,245,.1); color: var(--color-primary); font-size: 13px; font-weight: 700; display: grid; place-items: center; flex: none; }
 .co-option { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 16px; border: 1.5px solid var(--color-primary); background: rgba(27,68,245,.035); }
-.co-map-link { display: inline-flex; align-items: center; gap: 6px; margin: 10px 0 0 4px; font-size: 14px; font-weight: 600; color: var(--color-primary); text-decoration: none; min-height: 32px; }
-.co-map-link:hover { text-decoration: underline; }
 .co-check { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; line-height: 1.45; color: var(--color-text-secondary); cursor: pointer; }
 .co-check input { width: 20px; height: 20px; margin: 0; flex: none; }
 .co-check a { text-decoration: none; font-weight: 600; }
@@ -1906,4 +1904,37 @@ body {
 @layer components {
 .acc-demo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; border-left: 3px solid #F59E0B; background: var(--color-bg-white); box-shadow: inset 0 0 0 1px var(--color-border); border-radius: 4px 14px 14px 4px; padding: 10px 14px; margin: 0 0 14px; font-size: 13.5px; line-height: 1.4; color: var(--color-text-secondary); }
 .acc-demo button { background: none; border: none; padding: 4px 0; font: 600 13.5px var(--font-sans); color: var(--color-primary); cursor: pointer; }
+}
+
+/* ========== КАРТА ПУНКТОВ СДЭК НА ОФОРМЛЕНИИ ========== */
+@layer components {
+.sdek-suggest { position: absolute; left: 0; right: 0; top: calc(100% + 6px); z-index: 30; list-style: none; margin: 0; padding: 6px; background: #fff; border-radius: 16px; box-shadow: 0 16px 40px rgba(11,16,32,.16); max-height: 280px; overflow-y: auto; }
+.sdek-suggest button { width: 100%; text-align: left; padding: 11px 12px; border: none; background: none; border-radius: 10px; font: 500 15px var(--font-sans); color: var(--color-text-primary); cursor: pointer; }
+.sdek-suggest button:hover { background: var(--color-bg-light); }
+.sdek-map { height: 300px; border-radius: 18px; overflow: hidden; background: var(--color-bg-light); border: 1px solid var(--color-border); }
+.sdek-map-loading { display: grid; place-items: center; font-size: 14px; color: var(--color-text-muted); }
+.sdek-locate { position: absolute; left: 10px; top: 10px; width: 40px; height: 40px; border-radius: 12px; border: none; background: #fff; box-shadow: 0 2px 8px rgba(11,16,32,.18); display: grid; place-items: center; color: var(--color-primary); cursor: pointer; }
+.sdek-card { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; padding: 14px 16px; border-radius: 16px; border: 1.5px solid var(--color-primary); background: rgba(27,68,245,.035); }
+.sdek-card b { display: block; font-size: 15.5px; color: var(--color-text-primary); line-height: 1.35; }
+.sdek-card span { display: block; font-size: 13px; color: var(--color-text-muted); line-height: 1.4; margin-top: 2px; }
+.sdek-card .sdek-card-type { margin: 0 0 3px; font-weight: 600; }
+.sdek-filter { display: flex; align-items: center; gap: 8px; margin-top: 12px; height: 44px; padding: 0 12px; border-radius: 12px; background: var(--color-bg-light); }
+.sdek-filter input { flex: 1; min-width: 0; border: none !important; background: transparent !important; outline: none; font: 400 16px var(--font-sans); color: var(--color-text-primary); box-shadow: none !important; }
+.sdek-list { list-style: none; margin: 6px 0 0; padding: 0; max-height: 264px; overflow-y: auto; border-radius: 14px; border: 1px solid var(--color-border); }
+.sdek-list li + li { box-shadow: inset 0 1px 0 var(--color-border); }
+.sdek-list button { width: 100%; display: flex; align-items: center; gap: 10px; text-align: left; padding: 10px 12px; border: none; background: #fff; cursor: pointer; border-left: 3px solid transparent; }
+.sdek-list button:hover { background: var(--color-bg-card-hover); }
+.sdek-list button.on { border-left-color: var(--color-brand-red); background: var(--color-bg-light); }
+.sdek-list b { display: block; font-size: 14.5px; font-weight: 600; color: var(--color-text-primary); line-height: 1.3; }
+.sdek-list span span, .sdek-list button > span > span { display: block; font-size: 12.5px; color: var(--color-text-muted); margin-top: 1px; }
+.sdek-empty { padding: 14px; text-align: center; font-size: 14px; color: var(--color-text-muted); }
+.sdek-chosen { display: flex; align-items: flex-start; gap: 12px; padding: 14px 16px; border-radius: 16px; border: 1px solid var(--color-border); background: #fff; }
+.sdek-chosen b { display: block; font-size: 15px; color: var(--color-text-primary); line-height: 1.35; }
+.sdek-chosen span { display: block; font-size: 13px; color: var(--color-text-muted); margin-top: 2px; }
+.sdek-chosen button { flex: none; border: none; background: none; color: var(--color-primary); font: 600 14px var(--font-sans); cursor: pointer; padding: 2px 0; }
+@media (min-width: 1024px) {
+  .sdek-map { height: 360px; }
+  .sdek-card { flex-direction: row; align-items: center; }
+  .sdek-choose { width: auto; flex: none; }
+}
 }

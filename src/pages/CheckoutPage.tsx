@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { CircleCheck, ExternalLink, MapPin, ShieldCheck } from 'lucide-react'
+import { CircleCheck, MapPin, ShieldCheck } from 'lucide-react'
 import { useCart, cartTotal, cartDelivery, clearCart, type CartItem } from '../utils/cart'
 import { formatPrice } from '../utils/calculate'
 import { formatPhone, phoneError, emailError } from '../utils/validate'
@@ -10,7 +10,9 @@ import { submitSiteOrder, type SiteOrderContacts } from '../data/siteOrders'
 import ProductThumb from '../components/catalog/ProductThumb'
 import CartSummary from '../components/catalog/CartSummary'
 import { PageBar, StickyBar } from '../components/app/ui'
-import { DELIVERY_TERM, SDEK_POINTS_MAP, SUPPORT_EMAIL, LEGAL_NAME } from '../seo/site'
+import { DELIVERY_TERM, SUPPORT_EMAIL, LEGAL_NAME } from '../seo/site'
+import SdekPicker, { type SdekChoice } from '../components/catalog/SdekPicker'
+import { useSdekConfig } from '../utils/sdek'
 import { reachGoal } from '../lib/metrika'
 import type { BuyerProfile } from '../lib/api'
 import { useAccount } from '../utils/account'
@@ -24,15 +26,15 @@ const hintCls = 'text-[13px] leading-snug text-text-muted mt-1.5 ml-1'
 type Field = 'buyerName' | 'buyerPhone' | 'buyerEmail' | 'city' | 'sdekPoint' | 'offer' | 'pd'
 type Errors = Partial<Record<Field, string>>
 
-function validate(c: SiteOrderContacts, offer: boolean, pd: boolean): Errors {
+function validate(c: SiteOrderContacts, offer: boolean, pd: boolean, mapMode: boolean): Errors {
   const e: Errors = {}
   if (c.buyerName.trim().split(/\s+/).filter(Boolean).length < 2) e.buyerName = 'Укажите фамилию и имя получателя'
   const ph = phoneError(c.buyerPhone)
   if (ph) e.buyerPhone = ph
   const em = emailError(c.buyerEmail)
   if (em) e.buyerEmail = em
-  if (!c.city.trim()) e.city = 'Укажите город'
-  if (c.sdekPoint.trim().length < 5) e.sdekPoint = 'Укажите адрес пункта СДЭК или постамата'
+  if (!c.city.trim() && !mapMode) e.city = 'Укажите город'
+  if (mapMode ? !c.sdekPointCode : c.sdekPoint.trim().length < 5) e.sdekPoint = mapMode ? 'Выберите пункт СДЭК' : 'Укажите адрес пункта СДЭК или постамата'
   if (!offer) e.offer = 'Нужно принять условия оферты'
   if (!pd) e.pd = 'Нужно согласие на обработку персональных данных'
   return e
@@ -52,6 +54,9 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
     buyerName: buyer?.name ?? '', buyerPhone: buyer?.phone ?? '', buyerEmail: buyer?.email ?? '',
     city: buyer?.city ?? '', sdekPoint: buyer?.sdekPoint ?? '', comment: '',
   })
+  const sdek = useSdekConfig()
+  const mapMode = sdek.loaded && sdek.enabled
+  const [choice, setChoice] = useState<SdekChoice | null>(null)
   const [offer, setOffer] = useState(false)
   const [pd, setPd] = useState(false)
   const [errors, setErrors] = useState<Errors>({})
@@ -62,7 +67,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   if (done) return <Success {...done} />
   if (!items.length) return <Navigate to="/cart" replace />
 
-  const set = (k: keyof SiteOrderContacts) => (v: string) => {
+  const set = (k: Exclude<keyof SiteOrderContacts, 'sdekCityCode' | 'sdekPointCode'>) => (v: string) => {
     setForm((f) => ({ ...f, [k]: v }))
     if (errors[k as Field]) setErrors((e) => ({ ...e, [k]: undefined }))
   }
@@ -70,8 +75,14 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   const submit = async (ev?: FormEvent) => {
     ev?.preventDefault()
     if (sending) return
-    const c = { ...form, buyerPhone: formatPhone(form.buyerPhone) }
-    const e = validate(c, offer, pd)
+    const c: SiteOrderContacts = mapMode
+      ? {
+          ...form, buyerPhone: formatPhone(form.buyerPhone),
+          city: choice?.city ?? '', sdekPoint: choice?.point.address ?? '',
+          sdekCityCode: choice?.cityCode, sdekPointCode: choice?.point.code,
+        }
+      : { ...form, buyerPhone: formatPhone(form.buyerPhone) }
+    const e = validate(c, offer, pd, mapMode)
     setErrors(e)
     const first = Object.keys(e)[0]
     if (first) {
@@ -98,7 +109,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   }
 
   const input = (
-    k: Exclude<keyof SiteOrderContacts, 'comment'>,
+    k: Exclude<keyof SiteOrderContacts, 'comment' | 'sdekCityCode' | 'sdekPointCode'>,
     label: string,
     props: React.InputHTMLAttributes<HTMLInputElement>,
     hint?: string,
@@ -149,23 +160,34 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
               </div>
             </div>
             <div className="space-y-4 mt-4">
-              {input('city', 'Город', { type: 'text', autoComplete: 'address-level2', placeholder: 'Москва' })}
-              <div>
-                <label htmlFor="co-sdekPoint" className={labelCls}>Адрес пункта СДЭК</label>
-                <input
-                  id="co-sdekPoint"
-                  value={form.sdekPoint}
-                  onChange={(e) => set('sdekPoint')(e.target.value)}
-                  className={`${fieldCls} ${errors.sdekPoint ? 'border-red-500/50' : 'border-border'}`}
-                  aria-invalid={errors.sdekPoint ? true : undefined}
-                  placeholder="ул. Ленина, 10 — или код пункта"
-                  type="text"
+              {!sdek.loaded ? (
+                <div className="sdek-map sdek-map-loading">Загружаем пункты СДЭК…</div>
+              ) : mapMode ? (
+                <SdekPicker
+                  ymapsKey={sdek.ymapsKey}
+                  value={choice}
+                  onChange={(v) => { setChoice(v); if (v) setErrors((x) => ({ ...x, sdekPoint: undefined, city: undefined })) }}
+                  invalid={Boolean(errors.sdekPoint)}
+                  initialCity={buyer?.city ?? ''}
                 />
-                {errors.sdekPoint && <p className={errCls}>{errors.sdekPoint}</p>}
-                <a href={SDEK_POINTS_MAP} target="_blank" rel="noopener noreferrer" className="co-map-link">
-                  Выбрать пункт на карте СДЭК <ExternalLink size={14} />
-                </a>
-              </div>
+              ) : (
+                <>
+                  {input('city', 'Город', { type: 'text', autoComplete: 'address-level2', placeholder: 'Москва' })}
+                  <div>
+                    <label htmlFor="co-sdekPoint" className={labelCls}>Адрес пункта СДЭК</label>
+                    <input
+                      id="co-sdekPoint"
+                      value={form.sdekPoint}
+                      onChange={(e) => set('sdekPoint')(e.target.value)}
+                      className={`${fieldCls} ${errors.sdekPoint ? 'border-red-500/50' : 'border-border'}`}
+                      aria-invalid={errors.sdekPoint ? true : undefined}
+                      placeholder="ул. Ленина, 10 — или код пункта"
+                      type="text"
+                    />
+                    {errors.sdekPoint && <p className={errCls}>{errors.sdekPoint}</p>}
+                  </div>
+                </>
+              )}
               <div>
                 <label htmlFor="co-comment" className={labelCls}>Комментарий <span className="font-normal text-text-muted">— необязательно</span></label>
                 <textarea

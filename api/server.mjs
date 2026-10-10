@@ -19,6 +19,7 @@ import { fileURLToPath } from 'node:url'
 import { DatabaseSync } from 'node:sqlite'
 import { sendMail, mailReady } from './mail.mjs'
 import * as letters from './letters.mjs'
+import { cdekReady, suggestCities, cityPoints, findPoint } from './cdek.mjs'
 
 const HERE = path.dirname(fileURLToPath(import.meta.url))
 const env = (k, d = '') => process.env[k] ?? d
@@ -33,6 +34,8 @@ const STAFF_PASSWORD_HASH = env('STAFF_PASSWORD_HASH', '')
 /** Локальная разработка: код входа возвращается в ответе, cookie без Secure */
 const DEV = env('DEV') === '1'
 const PUBLIC_URL = env('PUBLIC_URL', 'https://techagent.pro')
+/** Ключ JavaScript API Яндекс Карт — открытый по природе (ограничивается адресом сайта в кабинете Яндекса) */
+const YMAPS_KEY = env('YMAPS_KEY', '')
 
 fs.mkdirSync(path.dirname(DB_PATH), { recursive: true })
 const db = new DatabaseSync(DB_PATH)
@@ -99,6 +102,11 @@ db.exec(`
     created_at TEXT NOT NULL
   );
 `)
+
+/* Колонки, добавленные позже: выбранный на карте пункт СДЭК */
+for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"]]) {
+  if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === col)) db.exec(`ALTER TABLE orders ADD COLUMN ${col} ${def}`)
+}
 
 /* ── Этапы заказа с сайта ── */
 export const STATUSES = ['NEW', 'AWAITING_PAYMENT', 'PAID', 'SHIPPED', 'READY', 'RECEIVED', 'CANCELLED']
@@ -290,6 +298,7 @@ function viewOrder(o, forStaff = false) {
     email: o.email,
     city: o.city,
     sdekPoint: o.sdek_point,
+    sdekPointCode: o.sdek_point_code ?? '',
     comment: o.comment,
     paymentUrl: o.status === 'AWAITING_PAYMENT' || forStaff ? o.payment_url : '',
     trackNumber: o.track_number,
@@ -342,6 +351,20 @@ async function createOrder(req, res) {
   if (b.offerAccepted !== true) errors.push('offer')
   if (b.pdConsent !== true) errors.push('pd')
 
+  // Пункт выбран на карте: проверяем по списку СДЭК и берём адрес оттуда, а не из браузера
+  const pointCode = clean(b.sdekPointCode, 40)
+  const cityCode = Number(b.sdekCityCode)
+  let point = null
+  if (pointCode) {
+    try {
+      point = Number.isInteger(cityCode) && cityCode > 0 ? await findPoint(cityCode, pointCode) : null
+    } catch (e) {
+      console.error('cdek:', e.message)
+    }
+    if (!point) errors.push('sdekPoint')
+    else d.sdekPoint = `${point.address} (${point.type === 'POSTAMAT' ? 'постамат' : 'пункт'} СДЭК ${point.code})`
+  }
+
   const items = []
   const seen = new Set()
   for (const it of Array.isArray(b.items) ? b.items.slice(0, 30) : []) {
@@ -376,10 +399,10 @@ async function createOrder(req, res) {
 
   const number = newNumber()
   const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
-      city, sdek_point, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
-      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+      city, sdek_point, sdek_city_code, sdek_point_code, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
+      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
     .run(number, buyer.id, JSON.stringify(items), goods, DELIVERY_PRICE, total, d.buyerName, d.phone, d.email,
-      d.city, d.sdekPoint, d.comment, t, t, t, t)
+      d.city, d.sdekPoint, point ? cityCode : null, point ? point.code : '', d.comment, t, t, t, t)
   addEvent(Number(r.lastInsertRowid), 'NEW')
   const order = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
 
@@ -444,6 +467,31 @@ async function staffLogin(req, res) {
   if (!checkStaffPassword(clean(b.password, 200))) fail(400, 'password_wrong')
   openSession(res, 'staff')
   send(res, 200, { ok: true })
+}
+
+/* ── Пункты СДЭК для карты ── */
+function sdekConfig(req, res) {
+  send(res, 200, { enabled: cdekReady(), ymapsKey: YMAPS_KEY })
+}
+async function sdekCities(req, res, query) {
+  if (!cdekReady()) fail(503, 'sdek_off')
+  if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
+  try {
+    send(res, 200, { cities: await suggestCities(query.get('q') || '') }, { 'Cache-Control': 'public, max-age=3600' })
+  } catch (e) {
+    console.error('cdek:', e.message)
+    fail(502, 'sdek_error')
+  }
+}
+async function sdekPoints(req, res, query) {
+  if (!cdekReady()) fail(503, 'sdek_off')
+  if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
+  try {
+    send(res, 200, { points: await cityPoints(query.get('city')) }, { 'Cache-Control': 'public, max-age=3600' })
+  } catch (e) {
+    console.error('cdek:', e.message)
+    fail(502, 'sdek_error')
+  }
 }
 
 /** Демо-кабинет: вход без кода, только просмотр */
@@ -560,8 +608,11 @@ async function staffNote(req, res, number) {
 /* ── Маршрутизация ── */
 const ORDER_NO = '(S-\\d{6}-\\d{4})'
 const routes = [
-  ['GET', /^\/api\/health$/, (req, res) => send(res, 200, { ok: true, mail: mailReady(), products: Object.keys(catalog).length })],
+  ['GET', /^\/api\/health$/, (req, res) => send(res, 200, { ok: true, mail: mailReady(), sdek: cdekReady(), products: Object.keys(catalog).length })],
   ['POST', /^\/api\/orders$/, createOrder],
+  ['GET', /^\/api\/sdek\/config$/, sdekConfig],
+  ['GET', /^\/api\/sdek\/cities$/, sdekCities],
+  ['GET', /^\/api\/sdek\/points$/, sdekPoints],
   ['POST', /^\/api\/auth\/code$/, requestCode],
   ['POST', /^\/api\/auth\/verify$/, verifyCode],
   ['POST', /^\/api\/auth\/staff$/, staffLogin],

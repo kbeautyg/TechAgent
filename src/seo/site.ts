@@ -27,9 +27,6 @@ export const PICKUP_POINTS = 'адрес пункта указан на стра
  */
 export const SDEK_DELIVERY_PRICE: number | null = 350
 
-/** Где покупатель выбирает пункт СДЭК — официальная карта пунктов */
-export const SDEK_POINTS_MAP = 'https://www.cdek.ru/ru/offices/'
-
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/og-default.png`
 
 export const CONTACT_EMAIL = 'info@techagent.pro'
