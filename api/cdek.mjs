@@ -3,7 +3,8 @@
  * браузер спрашивает наш /api/sdek/*, сервер — API СДЭК (OAuth client_credentials), ответы кэшируются.
  * CDEK_CLIENT_ID / CDEK_CLIENT_SECRET — ключи интеграции из личного кабинета СДЭК. Без них карта на сайте
  * не показывается, и покупатель вписывает адрес пункта сам (как раньше).
- * Разработка без ключей (DEV=1) и демо-кабинет покупателя: выдуманные пункты в трёх городах, чтобы посмотреть карту.
+ * Без ключей (разработка DEV=1 или демо-кабинет покупателя) — выдуманные пункты в трёх городах, чтобы посмотреть карту.
+ * С ключами демо-кабинет видит настоящие пункты СДЭК.
  */
 
 const API = process.env.CDEK_API || 'https://api.cdek.ru/v2'
@@ -57,7 +58,7 @@ async function cached(key, ttlMs, load) {
 export async function suggestCities(q, fake = false) {
   const name = q.trim().slice(0, 60)
   if (name.length < 2) return []
-  if (fake || (!ID && DEV)) return DEV_CITIES.filter((c) => c.name.toLowerCase().includes(name.toLowerCase()))
+  if (!ID && (fake || DEV)) return DEV_CITIES.filter((c) => c.name.toLowerCase().includes(name.toLowerCase()))
   return cached(`c:${name.toLowerCase()}`, 3600_000, async () => {
     const list = await cdek('/location/suggest/cities', { name, country_code: 'RU' })
     return (Array.isArray(list) ? list : []).slice(0, 10).map((c) => ({ code: c.code, name: c.full_name || c.city }))
@@ -68,7 +69,7 @@ export async function suggestCities(q, fake = false) {
 export async function cityPoints(cityCode, fake = false) {
   const code = Number(cityCode)
   if (!Number.isInteger(code) || code <= 0) return []
-  if (fake || (!ID && DEV)) return devPoints(code)
+  if (!ID && (fake || DEV)) return devPoints(code)
   return cached(`p:${code}`, 6 * 3600_000, async () => {
     const list = await cdek('/deliverypoints', { city_code: String(code), country_code: 'RU', type: 'ALL' })
     return (Array.isArray(list) ? list : [])
