@@ -26,7 +26,7 @@ export default function Footer() {
                 <LogoIcon size={14} />
               </div>
               <span className="font-display text-base font-bold">
-                <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span>
+                <span className="text-red-400">Tech</span><span className="text-primary-light">Agent</span>
               </span>
             </Link>
             <p className="text-text-dark-secondary text-sm leading-relaxed mb-4">

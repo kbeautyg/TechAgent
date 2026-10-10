@@ -2,7 +2,7 @@
 
 @theme {
   --color-primary: #1B44F5;
-  /* Цвета логотипа: «Tech» — brand-red, «Agent» — primary. Везде одни и те же. */
+  /* Цвета логотипа на светлом фоне: «Tech» — brand-red, «Agent» — primary. В тёмном подвале — светлее (red-400 / primary-light). */
   --color-brand-red: oklch(57.7% 0.245 27.325);
   --color-primary-dark: #0E2FCC;
   --color-primary-light: #4E74FF;
