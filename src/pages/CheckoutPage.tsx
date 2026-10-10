@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import { CircleCheck, MapPin, ShieldCheck } from 'lucide-react'
+import { CircleCheck, ShieldCheck } from 'lucide-react'
 import { useCart, cartTotal, cartDelivery, clearCart, type CartItem } from '../utils/cart'
 import { formatPrice } from '../utils/calculate'
 import { formatPhone, phoneError, emailError } from '../utils/validate'
@@ -134,31 +134,11 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
 
       <form className="cart-layout" onSubmit={submit} noValidate>
         <div className="flex flex-col gap-4 lg:gap-5 min-w-0">
-          <section className="co-card" aria-labelledby="co-h-buyer">
-            <h2 id="co-h-buyer" className="co-title"><span>1</span>Получатель</h2>
-            <div className="space-y-4">
-              {input('buyerName', 'Фамилия и имя', { type: 'text', autoComplete: 'name', autoCapitalize: 'words', placeholder: 'Иванов Иван' },
-                'Как в паспорте — СДЭК выдаёт заказ по документу или коду из СМС.')}
-              <div className="grid gap-4 sm:grid-cols-2">
-                {input('buyerPhone', 'Телефон', {
-                  type: 'tel', inputMode: 'tel', autoComplete: 'tel', placeholder: '+7 900 000-00-00',
-                  onBlur: () => setForm((f) => ({ ...f, buyerPhone: formatPhone(f.buyerPhone) })),
-                })}
-                {input('buyerEmail', 'Email', { type: 'email', inputMode: 'email', autoComplete: 'email', placeholder: 'name@mail.ru' },
-                  'Сюда придёт ссылка на оплату.')}
-              </div>
-            </div>
-          </section>
-
           <section className="co-card" aria-labelledby="co-h-delivery">
-            <h2 id="co-h-delivery" className="co-title"><span>2</span>Доставка</h2>
-            <div className="co-option" aria-hidden="true">
-              <MapPin size={22} className="text-primary flex-none" />
-              <div className="min-w-0">
-                <div className="text-[15px] font-semibold text-text-primary">Пункт выдачи СДЭК или постамат</div>
-                <div className="text-[13px] text-text-muted">Срок — {DELIVERY_TERM}</div>
-              </div>
-            </div>
+            <h2 id="co-h-delivery" className="co-title"><span>1</span>Доставка</h2>
+            <p className="text-[14.5px] leading-relaxed text-text-secondary -mt-2 mb-0">
+              {mapMode ? 'Выберите пункт выдачи СДЭК или постамат на карте.' : 'В пункт выдачи СДЭК или постамат.'} Срок — {DELIVERY_TERM}.
+            </p>
             <div className="space-y-4 mt-4">
               {!sdek.loaded ? (
                 <div className="sdek-map sdek-map-loading">Загружаем пункты СДЭК…</div>
@@ -204,6 +184,22 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
                   className="w-full px-4 py-3 rounded-2xl lg:rounded-xl border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none text-base resize-none"
                   placeholder="Например, удобное время для звонка"
                 />
+              </div>
+            </div>
+          </section>
+
+          <section className="co-card" aria-labelledby="co-h-buyer">
+            <h2 id="co-h-buyer" className="co-title"><span>2</span>Получатель</h2>
+            <div className="space-y-4">
+              {input('buyerName', 'Фамилия и имя', { type: 'text', autoComplete: 'name', autoCapitalize: 'words', placeholder: 'Иванов Иван' },
+                'Как в паспорте — СДЭК выдаёт заказ по документу или коду из СМС.')}
+              <div className="grid gap-4 sm:grid-cols-2">
+                {input('buyerPhone', 'Телефон', {
+                  type: 'tel', inputMode: 'tel', autoComplete: 'tel', placeholder: '+7 900 000-00-00',
+                  onBlur: () => setForm((f) => ({ ...f, buyerPhone: formatPhone(f.buyerPhone) })),
+                })}
+                {input('buyerEmail', 'Email', { type: 'email', inputMode: 'email', autoComplete: 'email', placeholder: 'name@mail.ru' },
+                  'Сюда придёт ссылка на оплату.')}
               </div>
             </div>
           </section>

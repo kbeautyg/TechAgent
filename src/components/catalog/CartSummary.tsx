@@ -29,7 +29,7 @@ export default function CartSummary({ items, children }: { items: CartItem[]; ch
         <span className="whitespace-nowrap">{formatPrice(cartTotal(items))}</span>
       </div>
       <p className="cart-sum-note">
-        Продавец — ООО&nbsp;«ТехЭйджент». Оплата через СБП. Срок доставки — {DELIVERY_TERM}.
+        Пункт СДЭК выберете на карте на следующем шаге. Продавец — ООО&nbsp;«ТехЭйджент», оплата через СБП, срок доставки — {DELIVERY_TERM}.
       </p>
       {children}
     </div>

@@ -471,7 +471,9 @@ async function staffLogin(req, res) {
   send(res, 200, { ok: true })
 }
 
-/* ── Пункты СДЭК для карты ── */
+/* ── Пункты СДЭК для карты ──
+ * Браузеру ответы не кэшируем: у демо-кабинета пункты выдуманные, и кэш браузера показал бы их потом и настоящему покупателю.
+ * Кэш — на сервере (api/cdek.mjs). */
 /** Демо-кабинет покупателя видит карту на выдуманных пунктах, даже пока ключей СДЭК нет */
 function isDemo(req) {
   const s = session(req)
@@ -486,7 +488,7 @@ async function sdekCities(req, res, query) {
   if (!cdekReady() && !demo) fail(503, 'sdek_off')
   if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
   try {
-    send(res, 200, { cities: await suggestCities(query.get('q') || '', demo) }, { 'Cache-Control': 'private, max-age=3600' })
+    send(res, 200, { cities: await suggestCities(query.get('q') || '', demo) })
   } catch (e) {
     console.error('cdek:', e.message)
     fail(502, 'sdek_error')
@@ -497,7 +499,7 @@ async function sdekPoints(req, res, query) {
   if (!cdekReady() && !demo) fail(503, 'sdek_off')
   if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
   try {
-    send(res, 200, { points: await cityPoints(query.get('city'), demo) }, { 'Cache-Control': 'private, max-age=3600' })
+    send(res, 200, { points: await cityPoints(query.get('city'), demo) })
   } catch (e) {
     console.error('cdek:', e.message)
     fail(502, 'sdek_error')
