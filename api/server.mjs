@@ -126,6 +126,53 @@ function loadCatalog() {
 }
 loadCatalog()
 
+/* ── Демо-кабинет покупателя: вход без кода, примеры заказов на разных этапах ──
+ * Адрес demo@techagent.pro зарезервирован: на него нельзя оформить заказ и получить код, профиль не сохраняется.
+ * Заказы демо-покупателя не попадают в раздел сотрудников. При каждом запуске сервера примеры пересоздаются
+ * со свежими датами («вчера», «неделю назад»). */
+const DEMO_EMAIL = 'demo@techagent.pro'
+function seedDemo() {
+  const t = now()
+  db.prepare(`INSERT INTO buyers (email, name, phone, city, sdek_point, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)
+    ON CONFLICT(email) DO UPDATE SET name = excluded.name, phone = excluded.phone, city = excluded.city, sdek_point = excluded.sdek_point`)
+    .run(DEMO_EMAIL, 'Иванов Иван', '+7 900 123-45-67', 'Москва', 'ул. Ленина, 10 (пункт СДЭК MSK123)', t, t)
+  const buyer = db.prepare('SELECT id FROM buyers WHERE email = ?').get(DEMO_EMAIL)
+  const old = db.prepare('SELECT id FROM orders WHERE buyer_id = ?').all(buyer.id)
+  for (const o of old) db.prepare('DELETE FROM order_events WHERE order_id = ?').run(o.id)
+  db.prepare('DELETE FROM orders WHERE buyer_id = ?').run(buyer.id)
+
+  const ago = (days, hours = 0) => new Date(Date.now() - (days * 24 + hours) * 3600_000).toISOString()
+  const day = (iso) => iso.slice(2, 10).replace(/-/g, '')
+  const examples = [
+    { items: [['iph15pm256w', 1], ['airpodspro2', 1]], steps: [['NEW', ago(0, 6)], ['AWAITING_PAYMENT', ago(0, 5)]],
+      paymentUrl: 'https://techagent.pro/legal/payment' },
+    { items: [['sgts24u256b', 1]], steps: [['NEW', ago(4)], ['AWAITING_PAYMENT', ago(4, -1)], ['PAID', ago(3, 20)], ['SHIPPED', ago(2)]],
+      track: '1534672980' },
+    { items: [['macbookairm3256', 1]], steps: [['NEW', ago(18)], ['AWAITING_PAYMENT', ago(18, -1)], ['PAID', ago(17)], ['SHIPPED', ago(15)], ['READY', ago(9)], ['RECEIVED', ago(8)]],
+      track: '1528841207' },
+    { items: [['aw9s45m', 1]], steps: [['NEW', ago(25)], ['CANCELLED', ago(24)]],
+      reason: 'Этого цвета не оказалось у поставщика. Оплата не списывалась.' },
+  ]
+  examples.forEach((ex, i) => {
+    const items = ex.items.filter(([id]) => catalog[id]).map(([id, qty]) => ({ productId: id, name: catalog[id].name, price: catalog[id].price, qty }))
+    if (!items.length) return
+    const goods = items.reduce((s, x) => s + x.price * x.qty, 0)
+    const created = ex.steps[0][1]
+    const last = ex.steps[ex.steps.length - 1]
+    let number = `S-${day(created)}-${9001 + i}`
+    while (db.prepare('SELECT 1 FROM orders WHERE number = ?').get(number)) number = newNumber()
+    const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
+        city, sdek_point, payment_url, track_number, cancel_reason, offer_accepted_at, pd_consent_at, created_at, updated_at)
+        VALUES (?, ?, ?, ?, ?, ?, ?, 'Иванов Иван', '+7 900 123-45-67', ?, 'Москва', 'ул. Ленина, 10 (пункт СДЭК MSK123)', ?, ?, ?, ?, ?, ?, ?)`)
+      .run(number, buyer.id, last[0], JSON.stringify(items), goods, DELIVERY_PRICE, goods + DELIVERY_PRICE, DEMO_EMAIL,
+        ex.paymentUrl ?? '', ex.track ?? '', ex.reason ?? '', created, created, created, last[1])
+    for (const [status, at] of ex.steps) {
+      db.prepare('INSERT INTO order_events (order_id, status, note, at) VALUES (?, ?, ?, ?)')
+        .run(Number(r.lastInsertRowid), status, status === 'SHIPPED' ? ex.track ?? '' : status === 'CANCELLED' ? ex.reason ?? '' : '', at)
+    }
+  })
+}
+
 /* ── Ограничение частоты: по ключу не больше n раз за окно ── */
 const hits = new Map()
 function limited(key, n, windowMs) {
@@ -269,6 +316,9 @@ function newNumber() {
   }
 }
 
+seedDemo()
+const DEMO_BUYER_ID = db.prepare('SELECT id FROM buyers WHERE email = ?').get(DEMO_EMAIL).id
+
 /* ── Обработчики ── */
 
 /** Заказ с сайта. Цены и доступность берём из каталога сервера, а не из браузера */
@@ -286,7 +336,7 @@ async function createOrder(req, res) {
   const errors = []
   if (d.buyerName.split(/\s+/).filter(Boolean).length < 2) errors.push('buyerName')
   if (!d.phone) errors.push('buyerPhone')
-  if (!EMAIL_RE.test(d.email)) errors.push('buyerEmail')
+  if (!EMAIL_RE.test(d.email) || d.email === DEMO_EMAIL) errors.push('buyerEmail')
   if (!d.city) errors.push('city')
   if (d.sdekPoint.length < 5) errors.push('sdekPoint')
   if (b.offerAccepted !== true) errors.push('offer')
@@ -348,7 +398,7 @@ async function requestCode(req, res) {
   const email = clean(b.email, 200).toLowerCase()
   if (!EMAIL_RE.test(email)) fail(422, 'fields', { fields: ['email'] })
   if (limited('code:' + ip(req), 10, 3600_000) || limited('code:' + email, 5, 3600_000)) fail(429, 'rate')
-  const buyer = db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
+  const buyer = email === DEMO_EMAIL ? null : db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
   let devCode
   if (buyer) {
     const code = String(crypto.randomInt(0, 1_000_000)).padStart(6, '0')
@@ -396,6 +446,13 @@ async function staffLogin(req, res) {
   send(res, 200, { ok: true })
 }
 
+/** Демо-кабинет: вход без кода, только просмотр */
+function demoLogin(req, res) {
+  if (limited('demo:' + ip(req), 30, 3600_000)) fail(429, 'rate')
+  openSession(res, 'buyer', DEMO_BUYER_ID)
+  send(res, 200, { ok: true })
+}
+
 function logout(req, res) {
   const token = parseCookies(req)[COOKIE]
   if (token) db.prepare('DELETE FROM sessions WHERE token_hash = ?').run(sha(token))
@@ -410,7 +467,7 @@ function me(req, res) {
   if (!b) return send(res, 200, { role: null })
   send(res, 200, {
     role: 'buyer',
-    buyer: { email: b.email, name: b.name, phone: b.phone, city: b.city, sdekPoint: b.sdek_point },
+    buyer: { email: b.email, name: b.name, phone: b.phone, city: b.city, sdekPoint: b.sdek_point, demo: b.id === DEMO_BUYER_ID },
   })
 }
 
@@ -427,7 +484,7 @@ function needStaff(req) {
 
 function myOrders(req, res) {
   const s = needBuyer(req)
-  const rows = db.prepare('SELECT * FROM orders WHERE buyer_id = ? ORDER BY id DESC').all(s.buyer_id)
+  const rows = db.prepare('SELECT * FROM orders WHERE buyer_id = ? ORDER BY created_at DESC, id DESC').all(s.buyer_id)
   send(res, 200, { orders: rows.map((o) => viewOrder(o)) })
 }
 
@@ -441,6 +498,7 @@ function myOrder(req, res, number) {
 async function updateProfile(req, res) {
   const s = needBuyer(req)
   const b = await readJson(req)
+  if (s.buyer_id === DEMO_BUYER_ID) return send(res, 200, { ok: true, demo: true })
   const phone = b.phone ? normPhone(clean(b.phone, 40)) : ''
   if (b.phone && !phone) fail(422, 'fields', { fields: ['phone'] })
   db.prepare('UPDATE buyers SET name = ?, phone = ?, city = ?, sdek_point = ?, updated_at = ? WHERE id = ?')
@@ -452,15 +510,15 @@ function staffOrders(req, res, query) {
   needStaff(req)
   const status = query.get('status')
   const rows = status && STATUSES.includes(status)
-    ? db.prepare('SELECT * FROM orders WHERE status = ? ORDER BY id DESC LIMIT 500').all(status)
-    : db.prepare('SELECT * FROM orders ORDER BY id DESC LIMIT 500').all()
-  const counts = Object.fromEntries(db.prepare('SELECT status, COUNT(*) AS n FROM orders GROUP BY status').all().map((r) => [r.status, r.n]))
+    ? db.prepare('SELECT * FROM orders WHERE status = ? AND buyer_id <> ? ORDER BY id DESC LIMIT 500').all(status, DEMO_BUYER_ID)
+    : db.prepare('SELECT * FROM orders WHERE buyer_id <> ? ORDER BY id DESC LIMIT 500').all(DEMO_BUYER_ID)
+  const counts = Object.fromEntries(db.prepare('SELECT status, COUNT(*) AS n FROM orders WHERE buyer_id <> ? GROUP BY status').all(DEMO_BUYER_ID).map((r) => [r.status, r.n]))
   send(res, 200, { orders: rows.map((o) => viewOrder(o, true)), counts })
 }
 
 function staffOrder(req, res, number) {
   needStaff(req)
-  const o = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
+  const o = db.prepare('SELECT * FROM orders WHERE number = ? AND buyer_id <> ?').get(number, DEMO_BUYER_ID)
   if (!o) fail(404, 'not_found')
   send(res, 200, { order: viewOrder(o, true), next: NEXT[o.status] })
 }
@@ -469,7 +527,7 @@ function staffOrder(req, res, number) {
 async function staffSetStatus(req, res, number) {
   needStaff(req)
   const b = await readJson(req)
-  const o = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
+  const o = db.prepare('SELECT * FROM orders WHERE number = ? AND buyer_id <> ?').get(number, DEMO_BUYER_ID)
   if (!o) fail(404, 'not_found')
   const to = String(b.status || '')
   if (!NEXT[o.status]?.includes(to)) fail(409, 'bad_transition')
@@ -493,7 +551,7 @@ async function staffSetStatus(req, res, number) {
 async function staffNote(req, res, number) {
   needStaff(req)
   const b = await readJson(req)
-  const o = db.prepare('SELECT id FROM orders WHERE number = ?').get(number)
+  const o = db.prepare('SELECT id FROM orders WHERE number = ? AND buyer_id <> ?').get(number, DEMO_BUYER_ID)
   if (!o) fail(404, 'not_found')
   db.prepare('UPDATE orders SET staff_note = ?, updated_at = ? WHERE id = ?').run(clean(b.staffNote, 2000), now(), o.id)
   send(res, 200, { ok: true })
@@ -507,6 +565,7 @@ const routes = [
   ['POST', /^\/api\/auth\/code$/, requestCode],
   ['POST', /^\/api\/auth\/verify$/, verifyCode],
   ['POST', /^\/api\/auth\/staff$/, staffLogin],
+  ['POST', /^\/api\/auth\/demo$/, demoLogin],
   ['POST', /^\/api\/auth\/logout$/, logout],
   ['GET', /^\/api\/me$/, me],
   ['GET', /^\/api\/my\/orders$/, myOrders],

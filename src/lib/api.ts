@@ -47,6 +47,8 @@ export interface BuyerProfile {
   phone: string
   city: string
   sdekPoint: string
+  /** Демо-кабинет с примерами заказов: только просмотр */
+  demo?: boolean
 }
 
 export class ApiError extends Error {

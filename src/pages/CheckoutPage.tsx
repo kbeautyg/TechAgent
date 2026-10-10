@@ -43,7 +43,7 @@ export default function CheckoutPage() {
   const account = useAccount()
   // Вошедшему покупателю форма заполняется из профиля — ждём ответа сервера, чтобы не мигать пустыми полями
   if (!account.loaded) return <div className="min-h-[50vh]" aria-busy="true" />
-  return <CheckoutForm buyer={account.role === 'buyer' ? account.buyer : null} />
+  return <CheckoutForm buyer={account.role === 'buyer' && !account.buyer?.demo ? account.buyer : null} />
 }
 
 function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {

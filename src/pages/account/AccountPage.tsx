@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import type { ReactNode } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { ChevronRight, QrCode, Settings, ShoppingBag } from 'lucide-react'
 import { api, apiErrorText, type SiteOrder } from '../../lib/api'
-import { useAccount } from '../../utils/account'
+import { useAccount, logoutAccount } from '../../utils/account'
 import { formatPrice, formatDate } from '../../utils/calculate'
 import { products } from '../../data/products'
 import ProductThumb from '../../components/catalog/ProductThumb'
@@ -18,6 +18,19 @@ export function RequireBuyer({ children }: { children: ReactNode }) {
   if (!account.loaded) return <div className="min-h-[50vh]" aria-busy="true" />
   if (account.role !== 'buyer') return <Navigate to="/login/buyer" replace />
   return <>{children}</>
+}
+
+/** Плашка демо-кабинета: это примеры, оплаты нет, можно выйти */
+export function DemoBanner() {
+  const { buyer } = useAccount()
+  const navigate = useNavigate()
+  if (!buyer?.demo) return null
+  return (
+    <div className="acc-demo">
+      <span>Демо-кабинет: примеры заказов, оплата и изменения не работают.</span>
+      <button type="button" onClick={async () => { await logoutAccount(); navigate('/login/buyer', { replace: true }) }}>Выйти из демо</button>
+    </div>
+  )
 }
 
 export function OrderThumb({ order, size }: { order: SiteOrder; size: number }) {
@@ -53,6 +66,7 @@ export function ProgressBar({ order }: { order: SiteOrder }) {
 }
 
 function ActiveOrder({ order }: { order: SiteOrder }) {
+  const demo = Boolean(useAccount().buyer?.demo)
   return (
     <div className="acc-order">
       <Link to={`/account/orders/${order.number}`} className="acc-order-top">
@@ -67,7 +81,11 @@ function ActiveOrder({ order }: { order: SiteOrder }) {
         <StatusMark color={SITE_STATUS_COLOR[order.status]}>{SITE_STATUS_LABEL[order.status]}</StatusMark>
       </div>
       <ProgressBar order={order} />
-      {order.status === 'AWAITING_PAYMENT' && order.paymentUrl ? (
+      {order.status === 'AWAITING_PAYMENT' && order.paymentUrl && demo ? (
+        <button type="button" disabled className="app-btn app-btn-primary mt-4">
+          <QrCode size={20} /> Оплатить {formatPrice(order.total)}
+        </button>
+      ) : order.status === 'AWAITING_PAYMENT' && order.paymentUrl ? (
         <a href={order.paymentUrl} target="_blank" rel="noopener noreferrer" className="app-btn app-btn-primary mt-4">
           <QrCode size={20} /> Оплатить {formatPrice(order.total)}
         </a>
@@ -95,6 +113,7 @@ function AccountHome() {
 
   return (
     <div className="acc-wide">
+      <DemoBanner />
       <div className="acc-hello">
         <span className="acc-avatar">{initials}</span>
         <span className="min-w-0 flex-1">

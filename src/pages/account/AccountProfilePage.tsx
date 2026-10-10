@@ -6,7 +6,7 @@ import { api, apiErrorText } from '../../lib/api'
 import { logoutAccount, refreshAccount, useAccount } from '../../utils/account'
 import { formatPhone, phoneError } from '../../utils/validate'
 import { PageBar } from '../../components/app/ui'
-import { RequireBuyer } from './AccountPage'
+import { RequireBuyer, DemoBanner } from './AccountPage'
 
 const fieldCls =
   'w-full h-[52px] px-4 rounded-2xl border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none text-base'
@@ -57,6 +57,7 @@ function Profile() {
 
   return (
     <div className="acc-narrow">
+      <DemoBanner />
       <PageBar back="/account" backLabel="Мои заказы" title="Профиль" />
       <form onSubmit={save} className="acc-card space-y-4" noValidate>
         <div>

@@ -5,7 +5,8 @@ import { api, apiErrorText, type SiteOrder, type SiteOrderStatus } from '../../l
 import { formatPrice, formatDateTime } from '../../utils/calculate'
 import { PageBar, StickyBar } from '../../components/app/ui'
 import StatusMark from '../../components/app/StatusMark'
-import { RequireBuyer, OrderThumb } from './AccountPage'
+import { RequireBuyer, OrderThumb, DemoBanner } from './AccountPage'
+import { useAccount } from '../../utils/account'
 import { SITE_STATUS_LABEL, SITE_STATUS_COLOR, stepTime } from '../../utils/siteOrderStatus'
 import { products } from '../../data/products'
 import ProductThumb from '../../components/catalog/ProductThumb'
@@ -36,6 +37,7 @@ function OrderScreen() {
   const { number = '' } = useParams()
   const [order, setOrder] = useState<SiteOrder | null>(null)
   const [error, setError] = useState('')
+  const demo = Boolean(useAccount().buyer?.demo)
 
   useEffect(() => {
     api<{ order: SiteOrder }>(`/my/orders/${encodeURIComponent(number)}`)
@@ -55,10 +57,11 @@ function OrderScreen() {
 
   const cancelled = order.status === 'CANCELLED'
   const cur = ORDER.indexOf(order.status)
-  const pay = order.status === 'AWAITING_PAYMENT' && order.paymentUrl
+  const pay = order.status === 'AWAITING_PAYMENT' && order.paymentUrl && !demo
 
   return (
     <div className="acc-wide">
+      <DemoBanner />
       <PageBar
         back="/account"
         backLabel="Мои заказы"

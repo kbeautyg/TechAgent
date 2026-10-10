@@ -1903,3 +1903,7 @@ body {
 .pp-partner-alt { color: var(--color-text-secondary); border: 1px solid var(--color-border); flex: 1 1 auto; }
 .pp-partner-alt:hover { border-color: var(--color-text-muted); color: var(--color-text-primary); }
 }
+@layer components {
+.acc-demo { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: space-between; border-left: 3px solid #F59E0B; background: var(--color-bg-white); box-shadow: inset 0 0 0 1px var(--color-border); border-radius: 4px 14px 14px 4px; padding: 10px 14px; margin: 0 0 14px; font-size: 13.5px; line-height: 1.4; color: var(--color-text-secondary); }
+.acc-demo button { background: none; border: none; padding: 4px 0; font: 600 13.5px var(--font-sans); color: var(--color-primary); cursor: pointer; }
+}

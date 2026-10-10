@@ -11,6 +11,34 @@ const fieldCls =
   'w-full h-[54px] px-4 rounded-2xl border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none text-base'
 const RESEND_SEC = 60
 
+/** Тестовый вход: кабинет покупателя с примерами заказов на разных этапах — как демо-доступ у партнёра */
+function DemoEntry() {
+  const navigate = useNavigate()
+  const [busy, setBusy] = useState(false)
+  return (
+    <div className="mt-8 border-t border-border pt-5 text-center">
+      <button
+        type="button"
+        disabled={busy}
+        onClick={async () => {
+          setBusy(true)
+          try {
+            await api('/auth/demo', {})
+            await refreshAccount()
+            navigate('/account', { replace: true })
+          } catch {
+            setBusy(false)
+          }
+        }}
+        className="w-full px-4 py-3 rounded-xl bg-bg-light hover:bg-primary/10 transition-colors cursor-pointer border border-border text-[15px] font-medium text-text-primary"
+      >
+        {busy ? 'Открываем…' : 'Тестовый демо-доступ'}
+      </button>
+      <p className="text-xs text-text-muted mt-2">Кабинет покупателя с примерами заказов — без регистрации</p>
+    </div>
+  )
+}
+
 /** Вход покупателя по коду на email: пароль не нужен. Кабинет есть у того, кто уже оформлял заказ */
 export default function BuyerLoginPage() {
   const account = useAccount()
@@ -93,6 +121,7 @@ export default function BuyerLoginPage() {
             {busy ? 'Отправляем…' : 'Получить код'}
           </button>
           <p className="acc-note">Кабинет появляется после первого заказа на сайте.</p>
+          <DemoEntry />
         </form>
       ) : (
         <div>
