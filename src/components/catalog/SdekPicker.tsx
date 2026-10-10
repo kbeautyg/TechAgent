@@ -40,10 +40,10 @@ const shortCity = (name: string) => name.split(',')[0].trim()
 
 const PARTNER_COLOR = '#1B44F5'
 const SDEK_COLOR = '#12B981'
-const PICKED = { preset: 'islands#redDotIcon', iconColor: '#E7000B', zIndex: 1000 }
+const PICKED = { preset: 'islands#redDotIcon', iconColor: '#E7000B', zIndex: 4000, zIndexHover: 4000 }
 const isPartner = (p: SdekPoint) => p.type === 'PARTNER'
 const baseOptions = (p: SdekPoint) => isPartner(p)
-  ? { preset: 'islands#blueDotIconWithCaption', iconColor: PARTNER_COLOR, zIndex: 500 }
+  ? { preset: 'islands#blueDotIconWithCaption', iconColor: PARTNER_COLOR, zIndex: 3000, zIndexHover: 3000 }
   : { preset: 'islands#greenCircleDotIcon', iconColor: SDEK_COLOR, zIndex: 0 }
 const pointKind = (p: SdekPoint) => isPartner(p) ? 'Пункт партнёра TechAgent' : p.type === 'POSTAMAT' ? 'Постамат СДЭК' : 'Пункт выдачи СДЭК'
 
@@ -121,7 +121,8 @@ export default function SdekPicker({
         }
         const layer = (list: SdekPoint[], cluster: boolean) => {
           const om = new ymaps.ObjectManager({ clusterize: cluster, gridSize: 64 })
-          if (cluster) om.clusters.options.set({ preset: 'islands#greenClusterIcons', clusterIconColor: SDEK_COLOR })
+          // Группы СДЭК — ниже синих меток партнёров, чтобы рынки не терялись под кругами
+          if (cluster) om.clusters.options.set({ preset: 'islands#greenClusterIcons', clusterIconColor: SDEK_COLOR, zIndex: 100, zIndexHover: 200 })
           om.add({
             type: 'FeatureCollection',
             features: list.map((p) => ({

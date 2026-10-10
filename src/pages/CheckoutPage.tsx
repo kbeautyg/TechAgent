@@ -148,7 +148,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
               ) : mapMode ? (
                 <>
                 {sdek.demo && (
-                  <p className="acc-demo m-0">Демо: пункты на карте выдуманные, заказ из демо-кабинета не оформляется.</p>
+                  <p className="acc-demo m-0">Демо: синие пункты партнёров пока видны только здесь, заказ из демо-кабинета не оформляется.</p>
                 )}
                 <SdekPicker
                   ymapsKey={sdek.ymapsKey}
