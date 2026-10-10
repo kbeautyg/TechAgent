@@ -25,7 +25,7 @@ export const PICKUP_POINTS = 'адрес пункта указан на стра
  * Покупка на сайте: доставка в пункт СДЭК или постамат, одна фиксированная сумма на заказ.
  * null — сумма ещё не назначена: в корзине пишем, что её сообщат при подтверждении заказа.
  */
-export const SDEK_DELIVERY_PRICE: number | null = null
+export const SDEK_DELIVERY_PRICE: number | null = 350
 
 /** Где покупатель выбирает пункт СДЭК — официальная карта пунктов */
 export const SDEK_POINTS_MAP = 'https://www.cdek.ru/ru/offices/'
