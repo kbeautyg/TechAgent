@@ -102,7 +102,7 @@ export default function HomePage() {
             {/* Left — text + buttons */}
             <div className="flex-1 w-full text-left sm:text-center lg:text-left">
               <h1 className="text-[28px] sm:text-[40px] lg:text-[48px] [text-wrap:balance] font-extrabold leading-[1.1] tracking-tight text-text-primary mb-4 sm:mb-5">
-                Станьте пунктом выдачи электроники TechAgent
+                Станьте пунктом выдачи электроники <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span>
               </h1>
               <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl sm:mx-auto lg:mx-0">
                 Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ООО&nbsp;«ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
