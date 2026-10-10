@@ -104,10 +104,10 @@ export default function AboutPage() {
         <div className="absolute top-[-100px] left-[20%] w-[500px] h-[500px] bg-primary/5 rounded-full blur-[200px] pointer-events-none" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-left sm:text-center">
           <h1 className="text-[28px] sm:text-[48px] [text-wrap:balance] font-extrabold mb-4 sm:mb-5 text-text-primary tracking-tight leading-[1.1]">
-            TechAgent — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
+            <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span> — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-base sm:text-lg text-text-secondary max-w-2xl sm:mx-auto leading-relaxed">
-            Продавец — ООО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
+            Продавец — ООО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, а&nbsp;на&nbsp;сайте можно заказать самому с&nbsp;получением в&nbsp;пункте СДЭК. Покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
           </p>
         </div>
       </section>
