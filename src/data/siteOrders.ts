@@ -26,6 +26,8 @@ export interface SiteOrderResult {
   total?: number
   /** Товар, который сервер отклонил как недоступный */
   unavailable?: string[]
+  /** Код ошибки сервера: demo — заказ из демо-кабинета */
+  error?: string
 }
 
 export async function submitSiteOrder(items: CartItem[], c: SiteOrderContacts): Promise<SiteOrderResult> {
@@ -39,6 +41,6 @@ export async function submitSiteOrder(items: CartItem[], c: SiteOrderContacts): 
     return { ok: true, orderNumber: r.orderNumber, total: r.total }
   } catch (e) {
     const unavailable = e instanceof ApiError ? (e.fields ?? []).filter((f) => f.startsWith('unavailable:')).map((f) => f.slice(12)) : []
-    return { ok: false, unavailable }
+    return { ok: false, unavailable, error: e instanceof ApiError ? e.message : undefined }
   }
 }

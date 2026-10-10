@@ -61,7 +61,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   const [pd, setPd] = useState(false)
   const [errors, setErrors] = useState<Errors>({})
   const [sending, setSending] = useState(false)
-  const [failed, setFailed] = useState(false)
+  const [failed, setFailed] = useState<false | 'demo' | true>(false)
   const [done, setDone] = useState<{ number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean } | null>(null)
 
   if (done) return <Success {...done} />
@@ -96,7 +96,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
     const res = await submitSiteOrder(items, c)
     setSending(false)
     if (!res.ok || !res.orderNumber) {
-      setFailed(true)
+      setFailed(res.error === 'demo' ? 'demo' : true)
       return
     }
     reachGoal('site_order_submit')
@@ -163,6 +163,10 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
               {!sdek.loaded ? (
                 <div className="sdek-map sdek-map-loading">Загружаем пункты СДЭК…</div>
               ) : mapMode ? (
+                <>
+                {sdek.demo && (
+                  <p className="acc-demo m-0">Демо: пункты на карте выдуманные, заказ из демо-кабинета не оформляется.</p>
+                )}
                 <SdekPicker
                   ymapsKey={sdek.ymapsKey}
                   value={choice}
@@ -170,6 +174,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
                   invalid={Boolean(errors.sdekPoint)}
                   initialCity={buyer?.city ?? ''}
                 />
+                </>
               ) : (
                 <>
                   {input('city', 'Город', { type: 'text', autoComplete: 'address-level2', placeholder: 'Москва' })}
@@ -250,7 +255,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
             ))}
           </ul>
           <CartSummary items={items}>
-            {failed && <SendError />}
+            {failed && <SendError demo={failed === 'demo'} />}
             <button type="submit" disabled={sending} className="app-btn app-btn-primary mt-5 max-lg:hidden">
               {sending ? 'Отправляем…' : 'Оформить заказ'}
             </button>
@@ -259,7 +264,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
       </form>
 
       <StickyBar hint={failed ? undefined : 'Ссылку на оплату пришлём после проверки наличия'}>
-        {failed && <SendError />}
+        {failed && <SendError demo={failed === 'demo'} />}
         <button type="button" onClick={() => submit()} disabled={sending} className="app-btn app-btn-primary">
           {sending ? 'Отправляем…' : `Оформить заказ · ${formatPrice(cartTotal(items))}`}
         </button>
@@ -268,7 +273,14 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   )
 }
 
-function SendError() {
+function SendError({ demo }: { demo?: boolean }) {
+  if (demo) {
+    return (
+      <p className="text-[13.5px] leading-snug text-red-600 mt-4 mb-0 max-lg:mt-0 max-lg:mb-2.5">
+        Это демо-кабинет: заказ здесь не оформляется. Выйдите из демо, чтобы оформить настоящий заказ.
+      </p>
+    )
+  }
   return (
     <p className="text-[13.5px] leading-snug text-red-600 mt-4 mb-0 max-lg:mt-0 max-lg:mb-2.5">
       Не удалось отправить заказ. Попробуйте ещё раз или напишите нам:{' '}

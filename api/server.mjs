@@ -332,6 +332,8 @@ const DEMO_BUYER_ID = db.prepare('SELECT id FROM buyers WHERE email = ?').get(DE
 
 /** Заказ с сайта. Цены и доступность берём из каталога сервера, а не из браузера */
 async function createOrder(req, res) {
+  // Из демо-кабинета заказ не оформляется: там выдуманные пункты СДЭК
+  if (isDemo(req)) fail(403, 'demo')
   if (limited('order:' + ip(req), 5, 600_000)) fail(429, 'rate')
   const b = await readJson(req)
   const d = {
@@ -470,24 +472,32 @@ async function staffLogin(req, res) {
 }
 
 /* ── Пункты СДЭК для карты ── */
+/** Демо-кабинет покупателя видит карту на выдуманных пунктах, даже пока ключей СДЭК нет */
+function isDemo(req) {
+  const s = session(req)
+  return Boolean(s && s.role === 'buyer' && s.buyer_id === DEMO_BUYER_ID)
+}
 function sdekConfig(req, res) {
-  send(res, 200, { enabled: cdekReady(), ymapsKey: YMAPS_KEY })
+  const demo = isDemo(req)
+  send(res, 200, { enabled: cdekReady() || demo, demo, ymapsKey: YMAPS_KEY })
 }
 async function sdekCities(req, res, query) {
-  if (!cdekReady()) fail(503, 'sdek_off')
+  const demo = isDemo(req)
+  if (!cdekReady() && !demo) fail(503, 'sdek_off')
   if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
   try {
-    send(res, 200, { cities: await suggestCities(query.get('q') || '') }, { 'Cache-Control': 'public, max-age=3600' })
+    send(res, 200, { cities: await suggestCities(query.get('q') || '', demo) }, { 'Cache-Control': 'private, max-age=3600' })
   } catch (e) {
     console.error('cdek:', e.message)
     fail(502, 'sdek_error')
   }
 }
 async function sdekPoints(req, res, query) {
-  if (!cdekReady()) fail(503, 'sdek_off')
+  const demo = isDemo(req)
+  if (!cdekReady() && !demo) fail(503, 'sdek_off')
   if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
   try {
-    send(res, 200, { points: await cityPoints(query.get('city')) }, { 'Cache-Control': 'public, max-age=3600' })
+    send(res, 200, { points: await cityPoints(query.get('city'), demo) }, { 'Cache-Control': 'private, max-age=3600' })
   } catch (e) {
     console.error('cdek:', e.message)
     fail(502, 'sdek_error')
