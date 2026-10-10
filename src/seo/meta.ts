@@ -303,10 +303,34 @@ export function resolveMeta(pathname: string): PageMeta {
   }
 
   /* Служебные страницы: не индексируем */
+  if (path === '/account' || path.startsWith('/account/')) {
+    return baseMeta({
+      title: 'Мои заказы | TechAgent',
+      description: 'Кабинет покупателя TechAgent: заказы, оплата, доставка СДЭК.',
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
+  if (path === '/staff' || path.startsWith('/staff/')) {
+    return baseMeta({
+      title: 'Заказы с сайта | TechAgent',
+      description: 'Раздел сотрудников ТехЭйджент.',
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
+  if (path.startsWith('/login/')) {
+    return baseMeta({
+      title: path === '/login/buyer' ? 'Вход для покупателя | TechAgent' : 'Вход для партнёра | TechAgent',
+      description: 'Вход в кабинет TechAgent.',
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
   if (path === '/login') {
     return baseMeta({
-      title: 'Вход в личный кабинет | TechAgent',
-      description: 'Вход в личный кабинет партнёра TechAgent.',
+      title: 'Вход | TechAgent',
+      description: 'Вход в кабинет покупателя или партнёра TechAgent.',
       canonical: `${SITE_URL}/login`,
       robots: NOINDEX,
     })

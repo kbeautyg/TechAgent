@@ -32,7 +32,7 @@ export default function DashboardLayout() {
 
   if (!user || user.role !== 'CLIENT') {
     // После входа вернём туда, куда человек шёл
-    return <Navigate to="/login" replace state={{ from: pathname + search }} />
+    return <Navigate to="/login/partner" replace state={{ from: pathname + search }} />
   }
 
   const status = user.partnerStatus ?? 'PENDING'

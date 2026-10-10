@@ -8,3 +8,7 @@ node_modules/
 # Логи и локальный мусор
 *.log
 .DS_Store
+
+# База сервера заказов при локальной разработке
+api/data/
+api/catalog.json

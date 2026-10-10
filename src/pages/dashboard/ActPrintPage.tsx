@@ -147,7 +147,7 @@ export default function ActPrintPage() {
   }, [printable, autoPrint])
 
   // После входа вернём сюда же
-  if (!user || user.role !== 'CLIENT') return <Navigate to="/login" replace state={{ from: pathname + search }} />
+  if (!user || user.role !== 'CLIENT') return <Navigate to="/login/partner" replace state={{ from: pathname + search }} />
 
   const back = order ? `/dashboard/orders/${order.id}` : '/dashboard/orders'
 

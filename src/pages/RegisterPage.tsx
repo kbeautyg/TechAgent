@@ -248,7 +248,7 @@ export default function RegisterPage() {
 
           <p className="text-center text-text-muted text-sm mt-6">
             ТехЭйджент уже открыл вам доступ?{' '}
-            <Link to="/login" className="text-primary font-semibold no-underline hover:underline">
+            <Link to="/login/partner" className="text-primary font-semibold no-underline hover:underline">
               Войти
             </Link>
           </p>

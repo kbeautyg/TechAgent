@@ -23,6 +23,14 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'))
 const DemoPage = lazy(() => import('./pages/DemoPage'))
 const PaymentPage = lazy(() => import('./pages/PaymentPage'))
 const CartPage = lazy(() => import('./pages/CartPage'))
+const LoginChooserPage = lazy(() => import('./pages/LoginChooserPage'))
+const BuyerLoginPage = lazy(() => import('./pages/account/BuyerLoginPage'))
+const AccountPage = lazy(() => import('./pages/account/AccountPage'))
+const AccountOrderPage = lazy(() => import('./pages/account/AccountOrderPage'))
+const AccountProfilePage = lazy(() => import('./pages/account/AccountProfilePage'))
+const StaffLoginPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffLoginPage })))
+const StaffOrdersPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrdersPage })))
+const StaffOrderPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrderPage })))
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'))
 const AdminLayout = lazy(() => import('./components/layout/AdminLayout'))
@@ -71,7 +79,15 @@ function App() {
                 <Route path="/how-it-works" element={<HowItWorksPage />} />
                 <Route path="/catalog" element={<CatalogPage />} />
                 <Route path="/catalog/:id" element={<CatalogChildPage />} />
-                <Route path="/login" element={<LoginPage />} />
+                <Route path="/login" element={<LoginChooserPage />} />
+                <Route path="/login/partner" element={<LoginPage />} />
+                <Route path="/login/buyer" element={<BuyerLoginPage />} />
+                <Route path="/account" element={<AccountPage />} />
+                <Route path="/account/orders/:number" element={<AccountOrderPage />} />
+                <Route path="/account/profile" element={<AccountProfilePage />} />
+                <Route path="/staff/login" element={<StaffLoginPage />} />
+                <Route path="/staff" element={<StaffOrdersPage />} />
+                <Route path="/staff/orders/:number" element={<StaffOrderPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/demo" element={<DemoPage />} />
                 <Route path="/legal" element={<LegalPage />} />

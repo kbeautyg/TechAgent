@@ -1,0 +1,9 @@
+[Unit]
+Description=TechAgent — копия базы заказов
+
+[Service]
+Type=oneshot
+User=techagent
+Group=techagent
+EnvironmentFile=/etc/techagent-api.env
+ExecStart=/opt/techagent-api/bin/node --disable-warning=ExperimentalWarning /opt/techagent-api/backup.mjs

@@ -1,0 +1,112 @@
+/*
+ * Тексты писем. Каждая функция возвращает [тема, текст].
+ * Сроки и условия — те же, что в оферте купли-продажи (techagent.pro/legal/sale-offer), других не обещаем.
+ */
+
+const rub = (n) => new Intl.NumberFormat('ru-RU').format(n) + ' ₽'
+const SIGN = '\n\n—\nTechAgent · продавец ООО «ТехЭйджент»\nВопросы по заказу: help@techagent.pro'
+
+function itemsBlock(o) {
+  const lines = o.items.map((i) => `— ${i.name}${i.qty > 1 ? ` × ${i.qty}` : ''}: ${rub(i.price * i.qty)}`)
+  return [...lines, `— Доставка в пункт СДЭК: ${rub(o.delivery)}`, `Итого: ${rub(o.total)}`].join('\n')
+}
+
+export function orderCreated(o, site) {
+  return [
+    `Заказ ${o.number} принят`,
+    `Здравствуйте, ${o.buyerName.split(/\s+/)[1] || o.buyerName}!
+
+Мы получили ваш заказ ${o.number}:
+
+${itemsBlock(o)}
+
+Пункт СДЭК: ${o.city}, ${o.sdekPoint}
+
+Что дальше: проверим наличие и пришлём ссылку на оплату через СБП. После оплаты отправим заказ в пункт СДЭК — не позднее 14 дней с даты оплаты.
+
+Следить за заказом: ${site}/account
+Вход — по коду, который придёт на этот email.${SIGN}`,
+  ]
+}
+
+export function staffNewOrder(o, site) {
+  return [
+    `Новый заказ ${o.number} — ${rub(o.total)}`,
+    `Заказ с сайта ${o.number}
+
+${itemsBlock(o)}
+
+Получатель: ${o.buyerName}
+Телефон: ${o.phone}
+Email: ${o.email}
+Пункт СДЭК: ${o.city}, ${o.sdekPoint}${o.comment ? `\nКомментарий: ${o.comment}` : ''}
+
+Проверить наличие и отправить ссылку на оплату: ${site}/staff/orders/${o.number}`,
+  ]
+}
+
+export function loginCode(code) {
+  return [
+    "Код для входа в кабинет TechAgent",
+    `Ваш код для входа в кабинет покупателя TechAgent: ${code}
+
+Код действует 15 минут. Если вы не запрашивали код, просто проигнорируйте это письмо.${SIGN}`,
+  ]
+}
+
+/** Письмо покупателю о новом этапе заказа. null — об этом этапе не пишем */
+export function statusChanged(o, site) {
+  const link = `\n\nЗаказ в кабинете: ${site}/account/orders/${o.number}`
+  switch (o.status) {
+    case 'AWAITING_PAYMENT':
+      return [
+        `Заказ ${o.number}: можно оплатить`,
+        `Товар в наличии — заказ ${o.number} можно оплатить.
+
+${itemsBlock(o)}
+
+Оплатить через СБП: ${o.paymentUrl}
+
+Деньги поступают напрямую продавцу — ООО «ТехЭйджент». После оплаты отправим заказ в пункт СДЭК не позднее 14 дней.${link}${SIGN}`,
+      ]
+    case 'PAID':
+      return [
+        `Заказ ${o.number}: оплата получена`,
+        `Оплата по заказу ${o.number} получена — ${rub(o.total)}. Готовим отправку в пункт СДЭК: ${o.city}, ${o.sdekPoint}.${link}${SIGN}`,
+      ]
+    case 'SHIPPED':
+      return [
+        `Заказ ${o.number} отправлен`,
+        `Заказ ${o.number} передан в СДЭК.
+
+Трек-номер: ${o.trackNumber}
+Отследить: https://www.cdek.ru/ru/tracking?order_id=${encodeURIComponent(o.trackNumber)}
+Пункт СДЭК: ${o.city}, ${o.sdekPoint}
+
+Когда заказ прибудет, СДЭК пришлёт уведомление.${link}${SIGN}`,
+      ]
+    case 'READY':
+      return [
+        `Заказ ${o.number} можно забирать`,
+        `Заказ ${o.number} ждёт вас в пункте СДЭК: ${o.city}, ${o.sdekPoint}.
+
+Возьмите документ, удостоверяющий личность, или код из СМС от СДЭК. Срок хранения — по правилам СДЭК.${link}${SIGN}`,
+      ]
+    case 'RECEIVED':
+      return [
+        `Заказ ${o.number} получен`,
+        `Спасибо за покупку! Заказ ${o.number} получен.
+
+Гарантия — 14 дней. Исправный товар можно вернуть в течение 7 дней, если нет следов использования и сохранена комплектация; при недостатке — по статье 18 Закона «О защите прав потребителей». Для возврата напишите на help@techagent.pro.${link}${SIGN}`,
+      ]
+    case 'CANCELLED':
+      return [
+        `Заказ ${o.number} отменён`,
+        `Заказ ${o.number} отменён.${o.cancelReason ? `\nПричина: ${o.cancelReason}` : ''}
+
+Если вы уже оплатили заказ, деньги вернутся тем же способом в течение 10 дней.${link}${SIGN}`,
+      ]
+    default:
+      return null
+  }
+}

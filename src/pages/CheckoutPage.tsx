@@ -12,6 +12,8 @@ import CartSummary from '../components/catalog/CartSummary'
 import { PageBar, StickyBar } from '../components/app/ui'
 import { DELIVERY_TERM, SDEK_POINTS_MAP, SUPPORT_EMAIL, LEGAL_NAME } from '../seo/site'
 import { reachGoal } from '../lib/metrika'
+import type { BuyerProfile } from '../lib/api'
+import { useAccount } from '../utils/account'
 
 const fieldCls =
   'w-full h-[52px] px-4 rounded-2xl border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none text-base lg:h-12 lg:rounded-xl'
@@ -38,16 +40,24 @@ function validate(c: SiteOrderContacts, offer: boolean, pd: boolean): Errors {
 
 /** Оформление заказа с сайта: получатель, пункт СДЭК, согласия. Пока банк не подключён — заявка с последующей ссылкой на оплату */
 export default function CheckoutPage() {
+  const account = useAccount()
+  // Вошедшему покупателю форма заполняется из профиля — ждём ответа сервера, чтобы не мигать пустыми полями
+  if (!account.loaded) return <div className="min-h-[50vh]" aria-busy="true" />
+  return <CheckoutForm buyer={account.role === 'buyer' ? account.buyer : null} />
+}
+
+function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   const items = useCart()
   const [form, setForm] = useState<SiteOrderContacts>({
-    buyerName: '', buyerPhone: '', buyerEmail: '', city: '', sdekPoint: '', comment: '',
+    buyerName: buyer?.name ?? '', buyerPhone: buyer?.phone ?? '', buyerEmail: buyer?.email ?? '',
+    city: buyer?.city ?? '', sdekPoint: buyer?.sdekPoint ?? '', comment: '',
   })
   const [offer, setOffer] = useState(false)
   const [pd, setPd] = useState(false)
   const [errors, setErrors] = useState<Errors>({})
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState(false)
-  const [done, setDone] = useState<{ number: string; items: CartItem[]; total: number; email: string; phone: string } | null>(null)
+  const [done, setDone] = useState<{ number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean } | null>(null)
 
   if (done) return <Success {...done} />
   if (!items.length) return <Navigate to="/cart" replace />
@@ -79,7 +89,10 @@ export default function CheckoutPage() {
       return
     }
     reachGoal('site_order_submit')
-    setDone({ number: res.orderNumber, items, total: cartTotal(items), email: c.buyerEmail.trim(), phone: c.buyerPhone })
+    setDone({
+      number: res.orderNumber, items, total: res.total ?? cartTotal(items), email: c.buyerEmail.trim(), phone: c.buyerPhone,
+      loggedIn: Boolean(buyer && buyer.email === c.buyerEmail.trim().toLowerCase()),
+    })
     clearCart()
     window.scrollTo(0, 0)
   }
@@ -242,7 +255,7 @@ function SendError() {
   )
 }
 
-function Success({ number, items, total, email, phone }: { number: string; items: CartItem[]; total: number; email: string; phone: string }) {
+function Success({ number, items, total, email, phone, loggedIn }: { number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean }) {
   const deliveryKnown = cartDelivery(items) !== null
   return (
     <div className="cart-root">
@@ -279,7 +292,13 @@ function Success({ number, items, total, email, phone }: { number: string; items
         <p className="text-text-muted text-sm m-0">
           Вопросы по заказу — <a href={`mailto:${SUPPORT_EMAIL}`} className="text-primary no-underline hover:underline">{SUPPORT_EMAIL}</a>
         </p>
-        <Link to="/catalog" className="app-btn app-btn-soft max-w-[320px]">Вернуться в каталог</Link>
+        <Link
+          to={loggedIn ? `/account/orders/${number}` : `/login/buyer?email=${encodeURIComponent(email)}`}
+          className="app-btn app-btn-primary max-w-[320px]"
+        >
+          Следить за заказом
+        </Link>
+        <Link to="/catalog" className="acc-link-btn">Вернуться в каталог</Link>
       </div>
     </div>
   )

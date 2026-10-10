@@ -147,6 +147,26 @@
       "destination": "/spa.html"
     },
     {
+      "source": "/login/:who",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/account",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/account/**",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/staff",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/staff/**",
+      "destination": "/spa.html"
+    },
+    {
       "source": "/checkout",
       "destination": "/spa.html"
     },

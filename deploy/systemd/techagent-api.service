@@ -1,0 +1,20 @@
+# Сервер заказов TechAgent (api/server.mjs). Установка — deploy/install-api.sh
+[Unit]
+Description=TechAgent — сервер заказов (кабинет покупателя, раздел сотрудников)
+After=network.target
+
+[Service]
+User=techagent
+Group=techagent
+EnvironmentFile=/etc/techagent-api.env
+ExecStart=/opt/techagent-api/bin/node --disable-warning=ExperimentalWarning /opt/techagent-api/server.mjs
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+ReadWritePaths=/var/lib/techagent-api
+
+[Install]
+WantedBy=multi-user.target

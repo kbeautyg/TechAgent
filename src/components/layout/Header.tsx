@@ -1,7 +1,9 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../../context/AuthContext'
-import { Menu, X, LogOut, LayoutDashboard, ShieldCheck, ShoppingCart } from 'lucide-react'
+import { Menu, X, LogOut, LayoutDashboard, ShieldCheck, ShoppingCart, CircleUserRound, ChevronDown, Package } from 'lucide-react'
+import { useAccount } from '../../utils/account'
+import { LoginDoors } from '../../pages/LoginChooserPage'
 import { useCart, cartCount } from '../../utils/cart'
 
 const navLinks = [
@@ -35,8 +37,50 @@ function CartLink({ className = '' }: { className?: string }) {
   )
 }
 
+/** «Войти» на компьютере: меню из двух дверей — покупатель и партнёр */
+function EnterMenu() {
+  const [open, setOpen] = useState(false)
+  const ref = useRef<HTMLDivElement>(null)
+  const { pathname } = useLocation()
+  useEffect(() => {
+    if (!open) return
+    const onDoc = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false) }
+    document.addEventListener('mousedown', onDoc)
+    document.addEventListener('keydown', onKey)
+    return () => {
+      document.removeEventListener('mousedown', onDoc)
+      document.removeEventListener('keydown', onKey)
+    }
+  }, [open])
+  // Переход на другую страницу закрывает меню
+  const [shownAt, setShownAt] = useState(pathname)
+  if (shownAt !== pathname) {
+    setShownAt(pathname)
+    if (open) setOpen(false)
+  }
+  return (
+    <div className="relative" ref={ref}>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        aria-expanded={open}
+        className="flex items-center gap-2 h-[42px] px-4 rounded-xl text-sm font-semibold bg-primary/[0.08] text-primary hover:bg-primary/[0.12] transition-colors cursor-pointer border-none"
+      >
+        <CircleUserRound size={18} /> Войти <ChevronDown size={16} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
+      </button>
+      {open && (
+        <div className="enter-menu">
+          <LoginDoors compact />
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function Header() {
   const { user, logout } = useAuth()
+  const account = useAccount()
   const location = useLocation()
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
@@ -122,27 +166,31 @@ export default function Header() {
                   Выйти
                 </button>
               </>
+            ) : account.role === 'buyer' ? (
+              <Link to="/account" className="flex items-center gap-2 h-[42px] px-4 rounded-xl text-sm font-semibold bg-primary/[0.08] text-primary no-underline hover:bg-primary/[0.12] transition-colors">
+                <Package size={18} /> Мои заказы
+              </Link>
+            ) : account.role === 'staff' ? (
+              <Link to="/staff" className="flex items-center gap-2 h-[42px] px-4 rounded-xl text-sm font-semibold bg-primary/[0.08] text-primary no-underline hover:bg-primary/[0.12] transition-colors">
+                <Package size={18} /> Заказы с сайта
+              </Link>
             ) : (
-              <>
-                <Link
-                  to="/login"
-                  className="px-4 py-2 rounded-xl text-sm font-medium text-text-muted hover:text-primary transition-all no-underline"
-                >
-                  Войти
-                </Link>
-                <Link
-                  to="/register"
-                  className="btn-blue px-5 py-2.5 rounded-xl text-sm no-underline inline-flex items-center"
-                >
-                  Стать партнёром
-                </Link>
-              </>
+              <EnterMenu />
             )}
           </div>
 
           {/* Mobile: корзина и меню */}
-          <div className="lg:hidden flex items-center gap-1">
+          <div className="lg:hidden flex items-center">
           <CartLink />
+          {!user && (
+            <Link
+              to={account.role === 'buyer' ? '/account' : account.role === 'staff' ? '/staff' : '/login'}
+              className="w-11 h-11 grid place-items-center rounded-xl text-text-primary hover:text-primary no-underline"
+              aria-label={account.role === 'buyer' ? 'Мои заказы' : 'Войти'}
+            >
+              <CircleUserRound size={24} strokeWidth={1.9} />
+            </Link>
+          )}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden w-11 h-11 -mr-1.5 grid place-items-center rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
