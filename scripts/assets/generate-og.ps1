@@ -34,7 +34,7 @@ $g.FillPath($glowBrush, $glowPath)
 # Верхняя брендовая полоса (как в шапке сайта): красный -> синий
 $barBrush = New-Object System.Drawing.Drawing2D.LinearGradientBrush(
     (New-Object System.Drawing.Rectangle(0, 0, $w, 10)),
-    [System.Drawing.ColorTranslator]::FromHtml("#FB2C36"),
+    [System.Drawing.ColorTranslator]::FromHtml("#E7000B"),
     [System.Drawing.ColorTranslator]::FromHtml("#1B44F5"),
     [System.Drawing.Drawing2D.LinearGradientMode]::Horizontal)
 $g.FillRectangle($barBrush, 0, 0, $w, 10)
@@ -70,8 +70,8 @@ $g.FillPolygon([System.Drawing.Brushes]::White, $pts)
 
 # Логотип-текст: Tech (красный) + Agent (голубой)
 $fontLogo = New-Object System.Drawing.Font("Segoe UI", 52, [System.Drawing.FontStyle]::Bold)
-$redBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#F87171"))
-$blueBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#4E74FF"))
+$redBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#E7000B"))
+$blueBrush = New-Object System.Drawing.SolidBrush([System.Drawing.ColorTranslator]::FromHtml("#1B44F5"))
 $logoX = $tileX + $tileS + 28
 $logoY = $tileY + 8
 $techSize = $g.MeasureString("Tech", $fontLogo)

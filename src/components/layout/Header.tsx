@@ -54,7 +54,7 @@ export default function Header() {
               <LogoIcon size={16} />
             </div>
             <span className="font-display text-lg font-bold">
-              <span className="text-red-600">Tech</span><span className="text-primary">Agent</span>
+              <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span>
             </span>
           </Link>
 
