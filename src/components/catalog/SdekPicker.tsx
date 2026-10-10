@@ -64,13 +64,13 @@ export default function SdekPicker({
   const activeRef = useRef(active)
   useEffect(() => { activeRef.current = active }, [active])
 
-  /* Подсказки городов */
+  /* Подсказки городов. v=2 — новый адрес: старые ответы, запомненные браузером до 10.10, не используются */
   useEffect(() => {
     if (!editing || (city && shortCity(city.name) === query.trim())) return
     const q = query.trim()
     if (q.length < 2) return
     const t = setTimeout(() => {
-      api<{ cities: City[] }>(`/sdek/cities?q=${encodeURIComponent(q)}`).then((r) => setCities(r.cities)).catch(() => setCities([]))
+      api<{ cities: City[] }>(`/sdek/cities?q=${encodeURIComponent(q)}&v=2`).then((r) => setCities(r.cities)).catch(() => setCities([]))
     }, 250)
     return () => clearTimeout(t)
   }, [query, editing, city])
@@ -79,7 +79,7 @@ export default function SdekPicker({
   useEffect(() => {
     if (!city) return
     let alive = true
-    api<{ points: SdekPoint[] }>(`/sdek/points?city=${city.code}`)
+    api<{ points: SdekPoint[] }>(`/sdek/points?city=${city.code}&v=2`)
       .then((r) => { if (alive) setPoints(r.points) })
       .catch(() => { if (alive) setLoadErr('Не удалось загрузить пункты СДЭК. Попробуйте ещё раз чуть позже.') })
     return () => { alive = false }

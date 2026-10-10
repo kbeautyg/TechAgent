@@ -1,0 +1,1 @@
+import{j as a}from"./index-BmdJCCBn.js";function o({color:s,children:t,size:r="md"}){return a.jsx("span",{className:`status-mark ${r==="sm"?"status-mark-sm":""}`,style:{borderLeftColor:s},children:t})}export{o as S};
