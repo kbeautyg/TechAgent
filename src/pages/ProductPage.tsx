@@ -189,19 +189,22 @@ export default function ProductPage() {
 
           <BuyBox product={product} />
 
+          {/* Для партнёров: заказ покупателю в своём пункте выдачи. Отдельный блок с красной чертой — другой путь покупки */}
+          <div className="pp-partner">
+            <p className="pp-partner-title">Вы партнёр TechAgent?</p>
+            <p className="pp-partner-text">Оформите этот товар для покупателя в своём кабинете — он получит его в вашем пункте выдачи.</p>
+            <div className="pp-partner-btns">
+              <Link to="/dashboard/orders/new" className="pp-partner-main">Оформить в кабинете партнёра</Link>
+              <Link to="/register" className="pp-partner-alt">Стать партнёром</Link>
+            </div>
+          </div>
+
           {/* Условия покупки */}
           <section className="mb-8" aria-labelledby="pp-terms-title">
             <h2 id="pp-terms-title" className="text-[17px] font-extrabold tracking-tight text-text-primary mb-3">Как купить</h2>
             <PurchaseTerms />
           </section>
 
-          {/* Для партнёров: заказ покупателю в своём пункте выдачи */}
-          <p className="pp-partner-line">
-            Вы партнёр TechAgent?{' '}
-            <Link to="/dashboard/orders/new">Оформите заказ в кабинете</Link>
-            <span aria-hidden="true"> · </span>
-            <Link to="/register">Стать партнёром</Link>
-          </p>
         </div>
       </section>
 
