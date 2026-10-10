@@ -22,6 +22,8 @@ import DemoNotice from './components/layout/DemoNotice'
 const RegisterPage = lazy(() => import('./pages/RegisterPage'))
 const DemoPage = lazy(() => import('./pages/DemoPage'))
 const PaymentPage = lazy(() => import('./pages/PaymentPage'))
+const CartPage = lazy(() => import('./pages/CartPage'))
+const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'))
 const AdminLayout = lazy(() => import('./components/layout/AdminLayout'))
 const DashboardPage = lazy(() => import('./pages/dashboard/DashboardPage'))
@@ -76,6 +78,8 @@ function App() {
                 <Route path="/legal/:docType" element={<LegalPage />} />
 
                 <Route path="/pay/:paymentId" element={<PaymentPage />} />
+                <Route path="/cart" element={<CartPage />} />
+                <Route path="/checkout" element={<CheckoutPage />} />
 
                 <Route path="/dashboard/orders/:id/act" element={<ActPrintPage />} />
 

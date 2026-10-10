@@ -21,6 +21,15 @@ export const DELIVERY_TERM = 'не позднее 14\u00A0дней с даты �
 /** Списка пунктов выдачи на сайте нет: у каждого партнёра свой пункт, адрес — на странице оплаты */
 export const PICKUP_POINTS = 'адрес пункта указан на странице оплаты'
 
+/**
+ * Покупка на сайте: доставка в пункт СДЭК или постамат, одна фиксированная сумма на заказ.
+ * null — сумма ещё не назначена: в корзине пишем, что её сообщат при подтверждении заказа.
+ */
+export const SDEK_DELIVERY_PRICE: number | null = null
+
+/** Где покупатель выбирает пункт СДЭК — официальная карта пунктов */
+export const SDEK_POINTS_MAP = 'https://www.cdek.ru/ru/offices/'
+
 export const DEFAULT_OG_IMAGE = `${SITE_URL}/og/og-default.png`
 
 export const CONTACT_EMAIL = 'info@techagent.pro'

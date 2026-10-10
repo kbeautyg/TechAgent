@@ -143,6 +143,14 @@
       "destination": "/spa.html"
     },
     {
+      "source": "/cart",
+      "destination": "/spa.html"
+    },
+    {
+      "source": "/checkout",
+      "destination": "/spa.html"
+    },
+    {
       "source": "/dashboard",
       "destination": "/spa.html"
     },

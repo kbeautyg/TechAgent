@@ -1,7 +1,8 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { useAuth } from '../../context/AuthContext'
-import { Menu, X, LogOut, LayoutDashboard, ShieldCheck } from 'lucide-react'
+import { Menu, X, LogOut, LayoutDashboard, ShieldCheck, ShoppingCart } from 'lucide-react'
+import { useCart, cartCount } from '../../utils/cart'
 
 const navLinks = [
   { label: 'Главная', path: '/' },
@@ -16,6 +17,21 @@ function LogoIcon({ size = 18 }: { size?: number }) {
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none">
       <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="white" />
     </svg>
+  )
+}
+
+/** Корзина в шапке: значок и число товаров */
+function CartLink({ className = '' }: { className?: string }) {
+  const count = cartCount(useCart())
+  return (
+    <Link
+      to="/cart"
+      className={`relative w-11 h-11 grid place-items-center rounded-xl text-text-primary hover:text-primary hover:bg-primary/[0.04] transition-colors no-underline ${className}`}
+      aria-label={count ? `Корзина, товаров: ${count}` : 'Корзина'}
+    >
+      <ShoppingCart size={23} strokeWidth={1.9} />
+      {count > 0 && <span className="header-cart-badge">{count > 9 ? '9+' : count}</span>}
+    </Link>
   )
 }
 
@@ -77,6 +93,7 @@ export default function Header() {
 
           {/* Right side */}
           <div className="hidden lg:flex items-center gap-3">
+            {!isDashboard && <CartLink />}
             {user ? (
               <>
                 {user.role === 'ADMIN' && !isDashboard && (
@@ -123,7 +140,9 @@ export default function Header() {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          {/* Mobile: корзина и меню */}
+          <div className="lg:hidden flex items-center gap-1">
+          <CartLink />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden w-11 h-11 -mr-1.5 grid place-items-center rounded-xl hover:bg-primary/[0.04] transition-colors cursor-pointer bg-transparent border-none text-text-primary"
@@ -132,6 +151,7 @@ export default function Header() {
           >
             {mobileOpen ? <X size={26} /> : <Menu size={26} />}
           </button>
+          </div>
         </div>
 
         {/* Mobile menu */}

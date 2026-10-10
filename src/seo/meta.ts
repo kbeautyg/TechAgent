@@ -327,6 +327,14 @@ export function resolveMeta(pathname: string): PageMeta {
       robots: NOINDEX,
     })
   }
+  if (path === '/cart' || path === '/checkout') {
+    return baseMeta({
+      title: path === '/cart' ? 'Корзина | TechAgent' : 'Оформление заказа | TechAgent',
+      description: `Заказ электроники на сайте TechAgent: доставка в пункт СДЭК, оплата через СБП. Продавец — ${LEGAL_NAME}.`,
+      canonical: SITE_URL + path,
+      robots: NOINDEX,
+    })
+  }
   if (path.startsWith('/pay/')) {
     return baseMeta({
       title: 'Оплата заказа | TechAgent',

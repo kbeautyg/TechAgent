@@ -4,6 +4,50 @@ import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
 import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from '../utils/translate'
 import { getCategoryByName } from '../seo/categories'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
+import { ShoppingCart, Check, Minus, Plus } from 'lucide-react'
+import { useCart, addToCart, setCartQty, MAX_QTY } from '../utils/cart'
+import type { Product } from '../data/products'
+
+/** Покупка на сайте: «В корзину», а когда товар уже там — количество и переход к оформлению */
+function BuyBox({ product }: { product: Product }) {
+  const line = useCart().find((i) => i.product.id === product.id)
+  if (!product.inStock) {
+    return (
+      <div className="pp-buy">
+        <button type="button" disabled className="app-btn app-btn-primary">Сейчас недоступен для заказа</button>
+      </div>
+    )
+  }
+  if (!line) {
+    return (
+      <div className="pp-buy">
+        <button type="button" onClick={() => addToCart(product.id)} className="app-btn app-btn-primary">
+          <ShoppingCart size={20} /> В корзину
+        </button>
+        <p className="pp-buy-note">Доставка в пункт СДЭК или постамат, оплата через СБП</p>
+      </div>
+    )
+  }
+  return (
+    <div className="pp-buy">
+      <div className="pp-buy-row">
+        <div className="cart-qty cart-qty-lg" role="group" aria-label="Количество в корзине">
+          <button type="button" onClick={() => setCartQty(product.id, line.qty - 1)} aria-label="Меньше">
+            <Minus size={18} />
+          </button>
+          <span aria-live="polite">{line.qty}</span>
+          <button type="button" onClick={() => setCartQty(product.id, line.qty + 1)} disabled={line.qty >= MAX_QTY} aria-label="Больше">
+            <Plus size={18} />
+          </button>
+        </div>
+        <Link to="/cart" className="app-btn app-btn-primary flex-1 whitespace-nowrap" aria-label="Товар в корзине — перейти к оформлению">
+          <Check size={20} className="flex-none" /> Оформить
+        </Link>
+      </div>
+      <p className="pp-buy-note">Доставка в пункт СДЭК или постамат, оплата через СБП</p>
+    </div>
+  )
+}
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -143,27 +187,21 @@ export default function ProductPage() {
             </div>
           )}
 
+          <BuyBox product={product} />
+
           {/* Условия покупки */}
           <section className="mb-8" aria-labelledby="pp-terms-title">
             <h2 id="pp-terms-title" className="text-[17px] font-extrabold tracking-tight text-text-primary mb-3">Как купить</h2>
             <PurchaseTerms />
           </section>
 
-          {/* Для партнёров */}
-          <div className="pp-cta-group">
-            <Link to="/dashboard/orders/new" className="pp-cta-primary">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><path d="M9 14h6M12 11v6"/>
-              </svg>
-              Партнёрам: оформить заказ в кабинете
-            </Link>
-            <Link to="/register" className="pp-cta-secondary">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v-2"/><circle cx="8.5" cy="7" r="4"/><path d="M20 8v6m3-3h-6"/>
-              </svg>
-              Стать партнёром
-            </Link>
-          </div>
+          {/* Для партнёров: заказ покупателю в своём пункте выдачи */}
+          <p className="pp-partner-line">
+            Вы партнёр TechAgent?{' '}
+            <Link to="/dashboard/orders/new">Оформите заказ в кабинете</Link>
+            <span aria-hidden="true"> · </span>
+            <Link to="/register">Стать партнёром</Link>
+          </p>
         </div>
       </section>
 

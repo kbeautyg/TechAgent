@@ -44,7 +44,8 @@ export default function MobileBottomNav() {
 
   const nav = user?.role === 'ADMIN' ? adminNav : user ? partnerNav : publicNav
   // Страница оплаты — для покупателя: только заказ и кнопка оплаты, без меню сайта
-  const hidden = (Boolean(user) && NO_TABBAR.test(pathname)) || pathname.startsWith('/pay/')
+  // Корзина и оформление — своя кнопка внизу экрана, меню мешало бы ей
+  const hidden = (Boolean(user) && NO_TABBAR.test(pathname)) || pathname.startsWith('/pay/') || /^\/(cart|checkout)\/?$/.test(pathname)
 
   useEffect(() => {
     document.documentElement.classList.toggle('no-tabbar', hidden)
