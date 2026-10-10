@@ -96,6 +96,12 @@ db.exec(`
     attempts INTEGER NOT NULL DEFAULT 0,
     sent_at INTEGER NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS login_links (
+    token_hash TEXT PRIMARY KEY,
+    buyer_id INTEGER NOT NULL,
+    expires_at INTEGER NOT NULL,
+    created_at TEXT NOT NULL
+  );
   CREATE TABLE IF NOT EXISTS sessions (
     token_hash TEXT PRIMARY KEY,
     role TEXT NOT NULL,
@@ -210,6 +216,7 @@ setInterval(() => {
   for (const [k, arr] of hits) if (!arr.some((x) => x > t - 3600_000)) hits.delete(k)
   db.prepare('DELETE FROM sessions WHERE expires_at < ?').run(t)
   db.prepare('DELETE FROM login_codes WHERE expires_at < ?').run(t - 3600_000)
+  db.prepare('DELETE FROM login_links WHERE expires_at < ?').run(t)
 }, 600_000).unref()
 
 /* ── HTTP-помощники ── */
@@ -277,6 +284,18 @@ function session(req) {
   const s = db.prepare('SELECT * FROM sessions WHERE token_hash = ?').get(sha(token))
   if (!s || s.expires_at < Date.now()) return null
   return s
+}
+
+/**
+ * Ссылка «Открыть заказ в кабинете» для писем: вход без пароля и кода — покупатель нажал и он в кабинете.
+ * Действует 30 дней; доступ к ней — только у владельца почты, значит, и адрес этим подтверждён.
+ */
+const LINK_DAYS = 30
+function loginLink(buyerId, to) {
+  const token = crypto.randomBytes(32).toString('base64url')
+  db.prepare('INSERT INTO login_links (token_hash, buyer_id, expires_at, created_at) VALUES (?, ?, ?, ?)')
+    .run(sha(token), buyerId, Date.now() + LINK_DAYS * 86400_000, now())
+  return `${PUBLIC_URL}/api/auth/link?t=${token}&to=${encodeURIComponent(to)}`
 }
 
 function openSession(res, role, buyerId) {
@@ -440,7 +459,7 @@ async function createOrder(req, res) {
 
   // Письма — после ответа: заказ уже в базе, почта не должна его задерживать
   queueMicrotask(() => {
-    sendMail(order.email, ...letters.orderCreated(viewOrder(order), PUBLIC_URL))
+    sendMail(order.email, ...letters.orderCreated(viewOrder(order), PUBLIC_URL, loginLink(buyer.id, `/account/orders/${number}`)))
     if (ORDERS_EMAIL_TO) sendMail(ORDERS_EMAIL_TO, ...letters.staffNewOrder(viewOrder(order, true), PUBLIC_URL), order.email)
   })
   console.log(`order ${number} ${total}`)
@@ -540,6 +559,22 @@ async function sdekPoints(req, res, query) {
   }
 }
 
+/** Вход по ссылке из письма: ставим cookie и ведём на страницу заказа. Устаревшая ссылка — на вход по коду */
+function linkLogin(req, res, query) {
+  if (limited('link:' + ip(req), 60, 3600_000)) fail(429, 'rate')
+  const token = String(query.get('t') || '')
+  const to = String(query.get('to') || '/account')
+  const safeTo = /^\/account(\/[\w\-/]*)?$/.test(to) ? to : '/account'
+  const row = token ? db.prepare('SELECT * FROM login_links WHERE token_hash = ?').get(sha(token)) : null
+  if (!row || row.expires_at < Date.now() || !db.prepare('SELECT 1 FROM buyers WHERE id = ?').get(row.buyer_id)) {
+    res.writeHead(302, { Location: '/login/buyer?expired=1', 'Cache-Control': 'no-store' })
+    return res.end()
+  }
+  openSession(res, 'buyer', row.buyer_id)
+  res.writeHead(302, { Location: safeTo, 'Cache-Control': 'no-store' })
+  res.end()
+}
+
 /** Демо-кабинет: вход без кода, только просмотр */
 function demoLogin(req, res) {
   if (limited('demo:' + ip(req), 30, 3600_000)) fail(429, 'rate')
@@ -637,7 +672,7 @@ async function staffSetStatus(req, res, number) {
     .run(to, paymentUrl, paymentUrl, track, track, reason, reason, now(), o.id)
   addEvent(o.id, to, to === 'SHIPPED' ? track : to === 'CANCELLED' ? reason : '')
   const fresh = db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)
-  const letter = letters.statusChanged(viewOrder(fresh), PUBLIC_URL)
+  const letter = letters.statusChanged(viewOrder(fresh), PUBLIC_URL, loginLink(fresh.buyer_id, `/account/orders/${fresh.number}`))
   if (letter) queueMicrotask(() => sendMail(fresh.email, ...letter))
   send(res, 200, { order: viewOrder(fresh, true), next: NEXT[fresh.status] })
 }
@@ -663,6 +698,7 @@ const routes = [
   ['POST', /^\/api\/auth\/verify$/, verifyCode],
   ['POST', /^\/api\/auth\/staff$/, staffLogin],
   ['POST', /^\/api\/auth\/demo$/, demoLogin],
+  ['GET', /^\/api\/auth\/link$/, linkLogin],
   ['POST', /^\/api\/auth\/logout$/, logout],
   ['GET', /^\/api\/me$/, me],
   ['GET', /^\/api\/my\/orders$/, myOrders],

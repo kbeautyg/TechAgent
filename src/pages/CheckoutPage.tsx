@@ -319,6 +319,13 @@ function Success({ number, items, total, email, phone, loggedIn, partner }: { nu
           </div>
         </div>
 
+        {!loggedIn && (
+          <p className="co-cabinet-note">
+            Мы создали вам <b>кабинет покупателя</b>: там этапы заказа, ссылка на оплату и трек-номер.
+            Ссылка для входа без пароля — в письме на <b>{email}</b>.
+          </p>
+        )}
+
         <p className="text-text-muted text-sm m-0">
           Вопросы по заказу — <a href={`mailto:${SUPPORT_EMAIL}`} className="text-primary no-underline hover:underline">{SUPPORT_EMAIL}</a>
         </p>

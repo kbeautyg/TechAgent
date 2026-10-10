@@ -12,7 +12,7 @@ function itemsBlock(o) {
   return [...lines, deliv, `Итого: ${rub(o.total)}`].join('\n')
 }
 
-export function orderCreated(o, site) {
+export function orderCreated(o, site, cabinetLink) {
   return [
     `Заказ ${o.number} принят`,
     `Здравствуйте, ${o.buyerName.split(/\s+/)[1] || o.buyerName}!
@@ -25,8 +25,10 @@ ${itemsBlock(o)}
 
 Что дальше: проверим наличие и пришлём ссылку на оплату через СБП. После оплаты отправим заказ в пункт выдачи — не позднее 14 дней с даты оплаты.
 
-Следить за заказом: ${site}/account
-Вход — по коду, который придёт на этот email.${SIGN}`,
+Ваш кабинет покупателя уже создан — там видно, на каком этапе заказ, ссылка на оплату и трек-номер.
+Открыть заказ в кабинете (вход без пароля): ${cabinetLink}
+
+На другом устройстве войдите на ${site}/login/buyer с этим email — пришлём код.${SIGN}`,
   ]
 }
 
@@ -56,8 +58,8 @@ export function loginCode(code) {
 }
 
 /** Письмо покупателю о новом этапе заказа. null — об этом этапе не пишем */
-export function statusChanged(o, site) {
-  const link = `\n\nЗаказ в кабинете: ${site}/account/orders/${o.number}`
+export function statusChanged(o, site, cabinetLink) {
+  const link = `\n\nОткрыть заказ в кабинете (вход без пароля): ${cabinetLink || `${site}/account/orders/${o.number}`}`
   switch (o.status) {
     case 'AWAITING_PAYMENT':
       return [

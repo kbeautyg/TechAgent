@@ -104,6 +104,9 @@ export default function BuyerLoginPage() {
         <form onSubmit={requestCode} noValidate>
           <h2 className="acc-h1">Код на почту</h2>
           <p className="acc-lead">Пароль не нужен: пришлём код на ваш email. Уже заказывали — укажите адрес из заказа.</p>
+          {params.get('expired') && (
+            <p className="acc-warn mt-0 mb-4">Ссылка из письма устарела. Введите email — пришлём код для входа.</p>
+          )}
           <label htmlFor="bl-email" className="block text-sm font-semibold mb-2 ml-1 text-text-secondary">Email</label>
           <input
             id="bl-email"
