@@ -1,23 +1,27 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
-import { Check, LocateFixed, MapPin, Package, Search } from 'lucide-react'
+import { Check, LocateFixed, Search } from 'lucide-react'
 import { api } from '../../lib/api'
 import { loadYmaps } from '../../utils/ymaps'
 
 /*
- * Выбор пункта СДЭК на карте прямо в оформлении: город → карта с пунктами и постаматами → «Выбрать».
- * Пункты отдаёт наш сервер (он ходит в API СДЭК), карта — Яндекс. Сохраняются город, код и адрес пункта.
+ * Выбор пункта выдачи на карте прямо в оформлении: город → карта → «Выбрать».
+ * Два слоя: синие — пункты партнёров TechAgent (радиорынки, магазины электроники; доставка входит в цену),
+ * зелёные — пункты и постаматы СДЭК. Пункты отдаёт наш сервер (он же ходит в API СДЭК), карта — Яндекс.
  * Если на сервере нет ключей СДЭК, родитель показывает обычные поля «Город» и «Адрес пункта».
  */
 
 export interface SdekPoint {
   code: string
-  type: 'PVZ' | 'POSTAMAT'
+  /** PARTNER — пункт выдачи партнёра TechAgent */
+  type: 'PVZ' | 'POSTAMAT' | 'PARTNER'
   name: string
   address: string
   lat: number
   lon: number
   workTime: string
   note: string
+  /** Только у пунктов партнёров: false — партнёра там ещё нет (виден лишь в демо) */
+  active?: boolean
 }
 
 export interface SdekChoice {
@@ -33,6 +37,15 @@ interface City {
 
 /** «Москва, Россия» → «Москва» — для заказа и письма */
 const shortCity = (name: string) => name.split(',')[0].trim()
+
+const PARTNER_COLOR = '#1B44F5'
+const SDEK_COLOR = '#12B981'
+const PICKED = { preset: 'islands#redDotIcon', iconColor: '#E7000B', zIndex: 1000 }
+const isPartner = (p: SdekPoint) => p.type === 'PARTNER'
+const baseOptions = (p: SdekPoint) => isPartner(p)
+  ? { preset: 'islands#blueDotIconWithCaption', iconColor: PARTNER_COLOR, zIndex: 500 }
+  : { preset: 'islands#greenCircleDotIcon', iconColor: SDEK_COLOR, zIndex: 0 }
+const pointKind = (p: SdekPoint) => isPartner(p) ? 'Пункт партнёра TechAgent' : p.type === 'POSTAMAT' ? 'Постамат СДЭК' : 'Пункт выдачи СДЭК'
 
 export default function SdekPicker({
   ymapsKey,
@@ -58,7 +71,8 @@ export default function SdekPicker({
   const [mapFailed, setMapFailed] = useState(false)
   const mapBox = useRef<HTMLDivElement>(null)
   const mapRef = useRef<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
-  const omRef = useRef<any>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
+  /** Два слоя меток: СДЭК (с группировкой) и партнёры (поверх, с подписью) */
+  const omRef = useRef<{ sdek: any; partner: any } | null>(null) // eslint-disable-line @typescript-eslint/no-explicit-any
   const listRef = useRef<HTMLUListElement>(null)
   /** Последний выбранный пункт — карта, загрузившаяся позже выбора, сразу покажет его красным */
   const activeRef = useRef(active)
@@ -79,8 +93,8 @@ export default function SdekPicker({
   useEffect(() => {
     if (!city) return
     let alive = true
-    api<{ points: SdekPoint[] }>(`/sdek/points?city=${city.code}&v=2`)
-      .then((r) => { if (alive) setPoints(r.points) })
+    api<{ points: SdekPoint[]; partners?: SdekPoint[] }>(`/sdek/points?city=${city.code}&v=2`)
+      .then((r) => { if (alive) setPoints([...(r.partners ?? []), ...r.points]) })
       .catch(() => { if (alive) setLoadErr('Не удалось загрузить пункты СДЭК. Попробуйте ещё раз чуть позже.') })
     return () => { alive = false }
   }, [city])
@@ -101,28 +115,36 @@ export default function SdekPicker({
           mapRef.current.behaviors.disable('scrollZoom')
         }
         const map = mapRef.current
-        if (omRef.current) map.geoObjects.remove(omRef.current)
-        const om = new ymaps.ObjectManager({ clusterize: true, gridSize: 64 })
-        om.objects.options.set({ preset: 'islands#blueCircleDotIcon', iconColor: '#1B44F5' })
-        om.clusters.options.set({ preset: 'islands#blueClusterIcons', clusterIconColor: '#1B44F5' })
-        om.add({
-          type: 'FeatureCollection',
-          features: points.map((p) => ({
-            type: 'Feature',
-            id: p.code,
-            geometry: { type: 'Point', coordinates: [p.lat, p.lon] },
-            properties: { hintContent: p.address },
-          })),
-        })
-        om.objects.events.add('click', (e: { get: (k: string) => string }) => setActive(e.get('objectId')))
-        map.geoObjects.add(om)
-        omRef.current = om
+        if (omRef.current) {
+          map.geoObjects.remove(omRef.current.sdek)
+          map.geoObjects.remove(omRef.current.partner)
+        }
+        const layer = (list: SdekPoint[], cluster: boolean) => {
+          const om = new ymaps.ObjectManager({ clusterize: cluster, gridSize: 64 })
+          if (cluster) om.clusters.options.set({ preset: 'islands#greenClusterIcons', clusterIconColor: SDEK_COLOR })
+          om.add({
+            type: 'FeatureCollection',
+            features: list.map((p) => ({
+              type: 'Feature',
+              id: p.code,
+              geometry: { type: 'Point', coordinates: [p.lat, p.lon] },
+              properties: { hintContent: `${p.name ? p.name + ', ' : ''}${p.address}`, iconCaption: isPartner(p) ? p.name : undefined },
+              options: baseOptions(p),
+            })),
+          })
+          om.objects.events.add('click', (ev: { get: (k: string) => string }) => setActive(ev.get('objectId')))
+          map.geoObjects.add(om)
+          return om
+        }
+        const sdek = layer(points.filter((p) => !isPartner(p)), true)
+        const partner = layer(points.filter(isPartner), false)
+        omRef.current = { sdek, partner }
         const picked = points.find((p) => p.code === activeRef.current)
         if (picked) {
-          om.objects.setObjectOptions(picked.code, { preset: 'islands#redDotIcon', iconColor: '#E7000B', zIndex: 1000 })
+          ;(isPartner(picked) ? partner : sdek).objects.setObjectOptions(picked.code, PICKED)
           map.setCenter([picked.lat, picked.lon], 15)
         } else {
-          const bounds = om.getBounds()
+          const bounds = map.geoObjects.getBounds()
           if (bounds) map.setBounds(bounds, { checkZoomRange: true, zoomMargin: 24 })
         }
       })
@@ -132,12 +154,10 @@ export default function SdekPicker({
 
   /* Выделение активной точки на карте и в списке */
   useEffect(() => {
-    const om = omRef.current
-    if (!om || !points) return
+    const layers = omRef.current
+    if (!layers || !points) return
     for (const p of points) {
-      om.objects.setObjectOptions(p.code, p.code === active
-        ? { preset: 'islands#redDotIcon', iconColor: '#E7000B', zIndex: 1000 }
-        : { preset: 'islands#blueCircleDotIcon', iconColor: '#1B44F5', zIndex: 0 })
+      ;(isPartner(p) ? layers.partner : layers.sdek).objects.setObjectOptions(p.code, p.code === active ? PICKED : baseOptions(p))
     }
     if (active) {
       const p = points.find((x) => x.code === active)
@@ -202,8 +222,8 @@ export default function SdekPicker({
       <div className="sdek-chosen" id="co-sdekPoint" tabIndex={-1}>
         <Check size={20} className="text-success flex-none mt-0.5" />
         <div className="min-w-0 flex-1">
-          <b>{value.city}, {value.point.address}</b>
-          <span>{value.point.type === 'POSTAMAT' ? 'Постамат' : 'Пункт выдачи'} СДЭК · {value.point.workTime}</span>
+          <b>{value.city}, {isPartner(value.point) ? `${value.point.name}, ` : ''}{value.point.address}</b>
+          <span>{pointKind(value.point)}{isPartner(value.point) ? ' · доставка входит в цену' : ''}{value.point.workTime ? ` · ${value.point.workTime}` : ''}</span>
         </div>
         <button type="button" onClick={() => setEditing(true)}>Изменить</button>
       </div>
@@ -252,11 +272,22 @@ export default function SdekPicker({
                 </div>
               )}
 
+              {points.some(isPartner) && (
+                <div className="sdek-legend" aria-hidden="true">
+                  <span><i className="sdek-dot sdek-dot-partner" />Пункты партнёров TechAgent — доставка в цене</span>
+                  <span><i className="sdek-dot" />СДЭК</span>
+                </div>
+              )}
+
               {activePoint && (
                 <div className="sdek-card">
                   <div className="min-w-0 flex-1">
-                    <span className="sdek-card-type">{activePoint.type === 'POSTAMAT' ? 'Постамат' : 'Пункт выдачи'} · {activePoint.code}</span>
-                    <b>{activePoint.address}</b>
+                    <span className="sdek-card-type">
+                      <i className={`sdek-dot ${isPartner(activePoint) ? 'sdek-dot-partner' : ''}`} />
+                      {pointKind(activePoint)}{isPartner(activePoint) ? ' · доставка входит в цену' : ` · ${activePoint.code}`}
+                      {isPartner(activePoint) && activePoint.active === false && ' · партнёра пока нет (видно только в демо)'}
+                    </span>
+                    <b>{isPartner(activePoint) ? `${activePoint.name}, ` : ''}{activePoint.address}</b>
                     {activePoint.workTime && <span>{activePoint.workTime}</span>}
                     {activePoint.note && <span>{activePoint.note}</span>}
                   </div>
@@ -268,16 +299,16 @@ export default function SdekPicker({
 
               <div className="sdek-filter">
                 <Search size={16} className="text-text-muted flex-none" />
-                <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder={`Улица или код — пунктов: ${points.length}`} aria-label="Найти пункт по адресу" />
+                <input type="text" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder={`Улица, рынок или код — пунктов: ${points.length}`} aria-label="Найти пункт по адресу" />
               </div>
               <ul className="sdek-list" ref={listRef}>
                 {shown.map((p) => (
                   <li key={p.code} data-code={p.code}>
                     <button type="button" className={p.code === active ? 'on' : ''} onClick={() => setActive(p.code)}>
-                      {p.type === 'POSTAMAT' ? <Package size={18} className="flex-none text-text-muted" /> : <MapPin size={18} className="flex-none text-text-muted" />}
+                      <i className={`sdek-dot ${isPartner(p) ? 'sdek-dot-partner' : ''}`} aria-hidden="true" />
                       <span className="min-w-0 flex-1">
-                        <b>{p.address}</b>
-                        <span>{p.type === 'POSTAMAT' ? 'Постамат' : 'Пункт выдачи'}{p.workTime ? ` · ${p.workTime}` : ''}</span>
+                        <b>{isPartner(p) ? `${p.name}, ` : ''}{p.address}</b>
+                        <span>{pointKind(p)}{isPartner(p) ? ' · доставка входит в цену' : ''}{p.workTime ? ` · ${p.workTime}` : ''}</span>
                       </span>
                     </button>
                   </li>

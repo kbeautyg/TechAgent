@@ -8,7 +8,8 @@ const SIGN = '\n\n—\nTechAgent · продавец ООО «ТехЭйджен
 
 function itemsBlock(o) {
   const lines = o.items.map((i) => `— ${i.name}${i.qty > 1 ? ` × ${i.qty}` : ''}: ${rub(i.price * i.qty)}`)
-  return [...lines, `— Доставка в пункт СДЭК: ${rub(o.delivery)}`, `Итого: ${rub(o.total)}`].join('\n')
+  const deliv = o.pickupType === 'PARTNER' ? '— Доставка в пункт выдачи партнёра: входит в цену' : `— Доставка в пункт СДЭК: ${rub(o.delivery)}`
+  return [...lines, deliv, `Итого: ${rub(o.total)}`].join('\n')
 }
 
 export function orderCreated(o, site) {
@@ -20,9 +21,9 @@ export function orderCreated(o, site) {
 
 ${itemsBlock(o)}
 
-Пункт СДЭК: ${o.city}, ${o.sdekPoint}
+Пункт выдачи: ${o.city}, ${o.sdekPoint}
 
-Что дальше: проверим наличие и пришлём ссылку на оплату через СБП. После оплаты отправим заказ в пункт СДЭК — не позднее 14 дней с даты оплаты.
+Что дальше: проверим наличие и пришлём ссылку на оплату через СБП. После оплаты отправим заказ в пункт выдачи — не позднее 14 дней с даты оплаты.
 
 Следить за заказом: ${site}/account
 Вход — по коду, который придёт на этот email.${SIGN}`,
@@ -39,7 +40,7 @@ ${itemsBlock(o)}
 Получатель: ${o.buyerName}
 Телефон: ${o.phone}
 Email: ${o.email}
-Пункт СДЭК: ${o.city}, ${o.sdekPoint}${o.comment ? `\nКомментарий: ${o.comment}` : ''}
+Пункт выдачи: ${o.city}, ${o.sdekPoint}${o.comment ? `\nКомментарий: ${o.comment}` : ''}
 
 Проверить наличие и отправить ссылку на оплату: ${site}/staff/orders/${o.number}`,
   ]
@@ -67,17 +68,23 @@ ${itemsBlock(o)}
 
 Оплатить через СБП: ${o.paymentUrl}
 
-Деньги поступают напрямую продавцу — ООО «ТехЭйджент». После оплаты отправим заказ в пункт СДЭК не позднее 14 дней.${link}${SIGN}`,
+Деньги поступают напрямую продавцу — ООО «ТехЭйджент». После оплаты отправим заказ в пункт выдачи не позднее 14 дней.${link}${SIGN}`,
       ]
     case 'PAID':
       return [
         `Заказ ${o.number}: оплата получена`,
-        `Оплата по заказу ${o.number} получена — ${rub(o.total)}. Готовим отправку в пункт СДЭК: ${o.city}, ${o.sdekPoint}.${link}${SIGN}`,
+        `Оплата по заказу ${o.number} получена — ${rub(o.total)}. Готовим отправку в пункт выдачи: ${o.city}, ${o.sdekPoint}.${link}${SIGN}`,
       ]
     case 'SHIPPED':
       return [
         `Заказ ${o.number} отправлен`,
-        `Заказ ${o.number} передан в СДЭК.
+        o.pickupType === 'PARTNER'
+          ? `Заказ ${o.number} отправлен в пункт выдачи партнёра TechAgent: ${o.city}, ${o.sdekPoint}.
+
+Трек-номер: ${o.trackNumber}
+
+Когда заказ прибудет, мы напишем вам.${link}${SIGN}`
+          : `Заказ ${o.number} передан в СДЭК.
 
 Трек-номер: ${o.trackNumber}
 Отследить: https://www.cdek.ru/ru/tracking?order_id=${encodeURIComponent(o.trackNumber)}
@@ -88,7 +95,11 @@ ${itemsBlock(o)}
     case 'READY':
       return [
         `Заказ ${o.number} можно забирать`,
-        `Заказ ${o.number} ждёт вас в пункте СДЭК: ${o.city}, ${o.sdekPoint}.
+        o.pickupType === 'PARTNER'
+          ? `Заказ ${o.number} ждёт вас в пункте выдачи партнёра TechAgent: ${o.city}, ${o.sdekPoint}.
+
+Назовите номер заказа и возьмите документ, удостоверяющий личность. При получении проверьте товар и подпишите акт приёма-передачи. Заказ хранится 5 дней.${link}${SIGN}`
+          : `Заказ ${o.number} ждёт вас в пункте СДЭК: ${o.city}, ${o.sdekPoint}.
 
 Возьмите документ, удостоверяющий личность, или код из СМС от СДЭК. Срок хранения — по правилам СДЭК.${link}${SIGN}`,
       ]

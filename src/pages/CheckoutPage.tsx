@@ -34,7 +34,7 @@ function validate(c: SiteOrderContacts, offer: boolean, pd: boolean, mapMode: bo
   const em = emailError(c.buyerEmail)
   if (em) e.buyerEmail = em
   if (!c.city.trim() && !mapMode) e.city = 'Укажите город'
-  if (mapMode ? !c.sdekPointCode : c.sdekPoint.trim().length < 5) e.sdekPoint = mapMode ? 'Выберите пункт СДЭК' : 'Укажите адрес пункта СДЭК или постамата'
+  if (mapMode ? !c.sdekPointCode && !c.partnerPointCode : c.sdekPoint.trim().length < 5) e.sdekPoint = mapMode ? 'Выберите пункт СДЭК' : 'Укажите адрес пункта СДЭК или постамата'
   if (!offer) e.offer = 'Нужно принять условия оферты'
   if (!pd) e.pd = 'Нужно согласие на обработку персональных данных'
   return e
@@ -62,12 +62,12 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   const [errors, setErrors] = useState<Errors>({})
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState<false | 'demo' | true>(false)
-  const [done, setDone] = useState<{ number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean } | null>(null)
+  const [done, setDone] = useState<{ number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean; partner: boolean } | null>(null)
 
   if (done) return <Success {...done} />
   if (!items.length) return <Navigate to="/cart" replace />
 
-  const set = (k: Exclude<keyof SiteOrderContacts, 'sdekCityCode' | 'sdekPointCode'>) => (v: string) => {
+  const set = (k: Exclude<keyof SiteOrderContacts, 'sdekCityCode' | 'sdekPointCode' | 'partnerPointCode'>) => (v: string) => {
     setForm((f) => ({ ...f, [k]: v }))
     if (errors[k as Field]) setErrors((e) => ({ ...e, [k]: undefined }))
   }
@@ -79,7 +79,9 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
       ? {
           ...form, buyerPhone: formatPhone(form.buyerPhone),
           city: choice?.city ?? '', sdekPoint: choice?.point.address ?? '',
-          sdekCityCode: choice?.cityCode, sdekPointCode: choice?.point.code,
+          ...(choice?.point.type === 'PARTNER'
+            ? { partnerPointCode: choice.point.code }
+            : { sdekCityCode: choice?.cityCode, sdekPointCode: choice?.point.code }),
         }
       : { ...form, buyerPhone: formatPhone(form.buyerPhone) }
     const e = validate(c, offer, pd, mapMode)
@@ -102,6 +104,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
     reachGoal('site_order_submit')
     setDone({
       number: res.orderNumber, items, total: res.total ?? cartTotal(items), email: c.buyerEmail.trim(), phone: c.buyerPhone,
+      partner: Boolean(c.partnerPointCode),
       loggedIn: Boolean(buyer && buyer.email === c.buyerEmail.trim().toLowerCase()),
     })
     clearCart()
@@ -109,7 +112,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
   }
 
   const input = (
-    k: Exclude<keyof SiteOrderContacts, 'comment' | 'sdekCityCode' | 'sdekPointCode'>,
+    k: Exclude<keyof SiteOrderContacts, 'comment' | 'sdekCityCode' | 'sdekPointCode' | 'partnerPointCode'>,
     label: string,
     props: React.InputHTMLAttributes<HTMLInputElement>,
     hint?: string,
@@ -137,7 +140,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
           <section className="co-card" aria-labelledby="co-h-delivery">
             <h2 id="co-h-delivery" className="co-title"><span>1</span>Доставка</h2>
             <p className="text-[14.5px] leading-relaxed text-text-secondary -mt-2 mb-0">
-              {mapMode ? 'Выберите пункт выдачи СДЭК или постамат на карте.' : 'В пункт выдачи СДЭК или постамат.'} Срок — {DELIVERY_TERM}.
+              {mapMode ? 'Выберите пункт выдачи на карте: синие — пункты партнёров TechAgent, зелёные — СДЭК.' : 'В пункт выдачи СДЭК или постамат.'} Срок — {DELIVERY_TERM}.
             </p>
             <div className="space-y-4 mt-4">
               {!sdek.loaded ? (
@@ -250,7 +253,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
               </li>
             ))}
           </ul>
-          <CartSummary items={items}>
+          <CartSummary items={items} delivery={choice?.point.type === 'PARTNER' ? 0 : undefined}>
             {failed && <SendError demo={failed === 'demo'} />}
             <button type="submit" disabled={sending} className="app-btn app-btn-primary mt-5 max-lg:hidden">
               {sending ? 'Отправляем…' : 'Оформить заказ'}
@@ -285,7 +288,7 @@ function SendError({ demo }: { demo?: boolean }) {
   )
 }
 
-function Success({ number, items, total, email, phone, loggedIn }: { number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean }) {
+function Success({ number, items, total, email, phone, loggedIn, partner }: { number: string; items: CartItem[]; total: number; email: string; phone: string; loggedIn: boolean; partner: boolean }) {
   const deliveryKnown = cartDelivery(items) !== null
   return (
     <div className="cart-root">
@@ -297,7 +300,7 @@ function Success({ number, items, total, email, phone, loggedIn }: { number: str
         <ol className="co-next">
           <li><b>Проверим наличие</b> и подтвердим заказ.</li>
           <li><b>Пришлём ссылку на оплату</b> через СБП на {email} и {phone}.</li>
-          <li><b>Отправим в пункт СДЭК</b> — {DELIVERY_TERM}. СДЭК сообщит, когда заказ можно забрать.</li>
+          <li><b>{partner ? 'Отправим в пункт выдачи' : 'Отправим в пункт СДЭК'}</b> — {DELIVERY_TERM}. {partner ? 'Напишем, когда заказ можно забрать.' : 'СДЭК сообщит, когда заказ можно забрать.'}</li>
         </ol>
 
         <div className="co-success-sum">
@@ -309,8 +312,8 @@ function Success({ number, items, total, email, phone, loggedIn }: { number: str
           ))}
           {deliveryKnown && (
             <div className="flex justify-between gap-4">
-              <span className="text-text-secondary">Доставка в пункт СДЭК</span>
-              <span className="text-text-primary font-semibold whitespace-nowrap">{cartDelivery(items) ? formatPrice(cartDelivery(items) ?? 0) : 'бесплатно'}</span>
+              <span className="text-text-secondary">{partner ? 'Доставка в пункт партнёра' : 'Доставка в пункт СДЭК'}</span>
+              <span className="text-text-primary font-semibold whitespace-nowrap">{partner ? 'входит в цену' : cartDelivery(items) ? formatPrice(cartDelivery(items) ?? 0) : 'бесплатно'}</span>
             </div>
           )}
           <div className="flex justify-between gap-4 pt-2 mt-1 border-t border-border font-bold text-text-primary">

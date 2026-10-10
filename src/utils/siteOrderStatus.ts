@@ -9,7 +9,7 @@ export const SITE_STATUS_LABEL: Record<SiteOrderStatus, string> = {
   NEW: 'Проверяем наличие',
   AWAITING_PAYMENT: 'Ждёт оплаты',
   PAID: 'Оплачен',
-  SHIPPED: 'Едет в пункт СДЭК',
+  SHIPPED: 'Едет в пункт выдачи',
   READY: 'Можно забирать',
   RECEIVED: 'Получен',
   CANCELLED: 'Отменён',
@@ -19,9 +19,9 @@ export const SITE_STATUS_LABEL: Record<SiteOrderStatus, string> = {
 export const STAFF_TODO: Record<SiteOrderStatus, string> = {
   NEW: 'Проверить наличие и отправить ссылку на оплату',
   AWAITING_PAYMENT: 'Ждём оплату от покупателя',
-  PAID: 'Выкупить и отправить в СДЭК',
+  PAID: 'Выкупить и отправить в пункт выдачи',
   SHIPPED: 'Едет — отметить, когда прибудет в пункт',
-  READY: 'Ждёт покупателя в пункте СДЭК',
+  READY: 'Ждёт покупателя в пункте выдачи',
   RECEIVED: 'Готово',
   CANCELLED: 'Отменён',
 }
@@ -41,7 +41,7 @@ export const PROGRESS_STEPS: { status: SiteOrderStatus; label: string }[] = [
   { status: 'NEW', label: 'Оформлен' },
   { status: 'PAID', label: 'Оплачен' },
   { status: 'SHIPPED', label: 'В пути' },
-  { status: 'READY', label: 'В СДЭК' },
+  { status: 'READY', label: 'В пункте' },
   { status: 'RECEIVED', label: 'Получен' },
 ]
 

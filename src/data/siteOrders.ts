@@ -17,6 +17,8 @@ export interface SiteOrderContacts {
   /** Пункт, выбранный на карте: сервер сверяет его со списком СДЭК */
   sdekCityCode?: number
   sdekPointCode?: string
+  /** Пункт выдачи партнёра TechAgent, выбранный на карте (доставка входит в цену) */
+  partnerPointCode?: string
 }
 
 export interface SiteOrderResult {

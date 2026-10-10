@@ -285,7 +285,7 @@ function StaffOrder() {
                 </li>
               ))}
             </ul>
-            <div className="cart-sum-row"><span>Доставка СДЭК</span><span className="text-text-primary font-semibold">{formatPrice(order.delivery)}</span></div>
+            <div className="cart-sum-row"><span>{order.pickupType === 'PARTNER' ? 'Доставка в пункт партнёра' : 'Доставка СДЭК'}</span><span className="text-text-primary font-semibold">{order.pickupType === 'PARTNER' ? 'в цене' : formatPrice(order.delivery)}</span></div>
             <div className="cart-sum-total"><span>Итого</span><span>{formatPrice(order.total)}</span></div>
           </div>
 
@@ -293,12 +293,12 @@ function StaffOrder() {
             <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Получатель</span><span className="app-kv-value">{order.buyerName}</span></div></div>
             <a href={`tel:${order.phone.replace(/[^\d+]/g, '')}`} className="app-kv no-underline text-inherit"><div className="app-kv-text"><span className="app-kv-label">Телефон</span><span className="app-kv-value">{order.phone}</span></div></a>
             <a href={`mailto:${order.email}?subject=${encodeURIComponent('Заказ ' + order.number)}`} className="app-kv no-underline text-inherit"><div className="app-kv-text"><span className="app-kv-label">Email</span><span className="app-kv-value">{order.email}</span></div></a>
-            <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Пункт СДЭК</span><span className="app-kv-value">{order.city}, {order.sdekPoint}</span></div></div>
+            <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">{order.pickupType === 'PARTNER' ? 'Пункт выдачи партнёра' : 'Пункт СДЭК'}</span><span className="app-kv-value">{order.city}, {order.sdekPoint}</span></div></div>
             {order.comment && <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Комментарий покупателя</span><span className="app-kv-value">{order.comment}</span></div></div>}
           </div>
           <button type="button" className="app-btn app-btn-soft"
             onClick={async () => { if (await copyText(contacts)) { setCopied(true); setTimeout(() => setCopied(false), 1500) } }}>
-            {copied ? 'Скопировано' : 'Скопировать данные для СДЭК'}
+            {copied ? 'Скопировано' : 'Скопировать данные получателя'}
           </button>
 
           <div className="acc-card">

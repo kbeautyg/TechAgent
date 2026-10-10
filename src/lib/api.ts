@@ -30,6 +30,8 @@ export interface SiteOrder {
   email: string
   city: string
   sdekPoint: string
+  /** SDEK — пункт СДЭК, PARTNER — пункт выдачи партнёра TechAgent */
+  pickupType?: 'SDEK' | 'PARTNER'
   comment: string
   paymentUrl: string
   trackNumber: string

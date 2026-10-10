@@ -27,6 +27,8 @@ const env = (k, d = '') => process.env[k] ?? d
 const PORT = Number(env('PORT', '8787'))
 const DB_PATH = env('DB_PATH', path.join(HERE, 'data/techagent.db'))
 const CATALOG_PATH = env('CATALOG_PATH', path.join(HERE, 'catalog.json'))
+/** Пункты выдачи партнёров TechAgent (радиорынки и магазины электроники): синие точки на карте оформления */
+const PARTNER_POINTS_PATH = env('PARTNER_POINTS_PATH', path.join(HERE, 'partner-points.json'))
 const DELIVERY_PRICE = Number(env('DELIVERY_PRICE', '350'))
 const ORDERS_EMAIL_TO = env('ORDERS_EMAIL_TO', '')
 /** Пароль сотрудников: scrypt$соль$хэш (задаётся командой api/set-staff-password.mjs) */
@@ -104,7 +106,7 @@ db.exec(`
 `)
 
 /* Колонки, добавленные позже: выбранный на карте пункт СДЭК */
-for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"]]) {
+for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"], ['pickup_type', "TEXT NOT NULL DEFAULT 'SDEK'"]]) {
   if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === col)) db.exec(`ALTER TABLE orders ADD COLUMN ${col} ${def}`)
 }
 
@@ -133,6 +135,18 @@ function loadCatalog() {
   }
 }
 loadCatalog()
+
+/* Пункты партнёров. active=false — партнёра в этом месте ещё нет: покупатели точку не видят, демо-кабинет видит */
+let partnerPoints = []
+try {
+  partnerPoints = JSON.parse(fs.readFileSync(PARTNER_POINTS_PATH, 'utf8'))
+} catch (e) {
+  console.error('partner-points.json не прочитан:', e.message)
+}
+const partnersOf = (cityCode, withPlanned) =>
+  partnerPoints
+    .filter((p) => p.cityCode === Number(cityCode) && (p.active || withPlanned))
+    .map(({ code, name, address, lat, lon, workTime, note, active }) => ({ code, type: 'PARTNER', name, address, lat, lon, workTime, note, active }))
 
 /* ── Демо-кабинет покупателя: вход без кода, примеры заказов на разных этапах ──
  * Адрес demo@techagent.pro зарезервирован: на него нельзя оформить заказ и получить код, профиль не сохраняется.
@@ -299,6 +313,8 @@ function viewOrder(o, forStaff = false) {
     city: o.city,
     sdekPoint: o.sdek_point,
     sdekPointCode: o.sdek_point_code ?? '',
+    /** SDEK — пункт или постамат СДЭК, PARTNER — пункт выдачи партнёра TechAgent */
+    pickupType: o.pickup_type ?? 'SDEK',
     comment: o.comment,
     paymentUrl: o.status === 'AWAITING_PAYMENT' || forStaff ? o.payment_url : '',
     trackNumber: o.track_number,
@@ -348,8 +364,10 @@ async function createOrder(req, res) {
   if (d.buyerName.split(/\s+/).filter(Boolean).length < 2) errors.push('buyerName')
   if (!d.phone) errors.push('buyerPhone')
   if (!EMAIL_RE.test(d.email) || d.email === DEMO_EMAIL) errors.push('buyerEmail')
-  if (!d.city) errors.push('city')
-  if (d.sdekPoint.length < 5) errors.push('sdekPoint')
+  // Пункт партнёра: город и адрес сервер берёт из своего списка (ниже), из браузера они не нужны
+  const viaPartner = Boolean(clean(b.partnerPointCode, 40))
+  if (!d.city && !viaPartner) errors.push('city')
+  if (d.sdekPoint.length < 5 && !viaPartner) errors.push('sdekPoint')
   if (b.offerAccepted !== true) errors.push('offer')
   if (b.pdConsent !== true) errors.push('pd')
 
@@ -357,7 +375,16 @@ async function createOrder(req, res) {
   const pointCode = clean(b.sdekPointCode, 40)
   const cityCode = Number(b.sdekCityCode)
   let point = null
-  if (pointCode) {
+  const partnerCode = clean(b.partnerPointCode, 40)
+  let partner = null
+  if (partnerCode) {
+    partner = partnerPoints.find((p) => p.code === partnerCode && p.active) || null
+    if (!partner) errors.push('sdekPoint')
+    else {
+      d.city = partner.city
+      d.sdekPoint = `${partner.name}, ${partner.address} (пункт выдачи партнёра TechAgent ${partner.code})`
+    }
+  } else if (pointCode) {
     try {
       point = Number.isInteger(cityCode) && cityCode > 0 ? await findPoint(cityCode, pointCode) : null
     } catch (e) {
@@ -385,7 +412,9 @@ async function createOrder(req, res) {
   if (errors.length) fail(422, 'fields', { fields: errors })
 
   const goods = items.reduce((s, i) => s + i.price * i.qty, 0)
-  const total = goods + DELIVERY_PRICE
+  // В пункт партнёра доставка входит в цену товара (оферта, п. 4.1), в пункт СДЭК — фиксированная сумма
+  const delivery = partner ? 0 : DELIVERY_PRICE
+  const total = goods + delivery
   const t = now()
 
   let buyer = db.prepare('SELECT * FROM buyers WHERE email = ?').get(d.email)
@@ -401,10 +430,11 @@ async function createOrder(req, res) {
 
   const number = newNumber()
   const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
-      city, sdek_point, sdek_city_code, sdek_point_code, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
-      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
-    .run(number, buyer.id, JSON.stringify(items), goods, DELIVERY_PRICE, total, d.buyerName, d.phone, d.email,
-      d.city, d.sdekPoint, point ? cityCode : null, point ? point.code : '', d.comment, t, t, t, t)
+      city, sdek_point, sdek_city_code, sdek_point_code, pickup_type, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
+      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+    .run(number, buyer.id, JSON.stringify(items), goods, delivery, total, d.buyerName, d.phone, d.email,
+      d.city, d.sdekPoint, point ? cityCode : partner ? partner.cityCode : null, point ? point.code : partner ? partner.code : '',
+      partner ? 'PARTNER' : 'SDEK', d.comment, t, t, t, t)
   addEvent(Number(r.lastInsertRowid), 'NEW')
   const order = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
 
@@ -499,7 +529,7 @@ async function sdekPoints(req, res, query) {
   if (!cdekReady() && !demo) fail(503, 'sdek_off')
   if (limited('sdek:' + ip(req), 300, 600_000)) fail(429, 'rate')
   try {
-    send(res, 200, { points: await cityPoints(query.get('city'), demo) })
+    send(res, 200, { points: await cityPoints(query.get('city'), demo), partners: partnersOf(query.get('city'), demo) })
   } catch (e) {
     console.error('cdek:', e.message)
     fail(502, 'sdek_error')

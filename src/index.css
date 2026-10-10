@@ -1938,3 +1938,10 @@ body {
   .sdek-choose { width: auto; flex: none; }
 }
 }
+@layer components {
+.sdek-dot { width: 10px; height: 10px; border-radius: 50%; background: #12B981; flex: none; display: inline-block; box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(18,185,129,.35); }
+.sdek-dot-partner { background: var(--color-primary); box-shadow: 0 0 0 2px #fff, 0 0 0 3px rgba(27,68,245,.35); }
+.sdek-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 10px; font-size: 13px; color: var(--color-text-secondary); }
+.sdek-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.sdek-card .sdek-card-type { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+}

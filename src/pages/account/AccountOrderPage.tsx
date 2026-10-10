@@ -19,8 +19,8 @@ const TIMELINE: { status: SiteOrderStatus; title: string; hint?: string }[] = [
   { status: 'NEW', title: 'Оформлен', hint: 'Проверяем наличие' },
   { status: 'AWAITING_PAYMENT', title: 'Наличие подтверждено', hint: 'Можно оплатить через СБП' },
   { status: 'PAID', title: 'Оплачен' },
-  { status: 'SHIPPED', title: 'Едет в пункт СДЭК', hint: DELIVERY_TERM },
-  { status: 'READY', title: 'Можно забирать', hint: 'Возьмите документ или код из СМС СДЭК' },
+  { status: 'SHIPPED', title: 'Едет в пункт выдачи', hint: DELIVERY_TERM },
+  { status: 'READY', title: 'Можно забирать', hint: 'Возьмите документ, удостоверяющий личность' },
   { status: 'RECEIVED', title: 'Получен' },
 ]
 const ORDER = TIMELINE.map((t) => t.status)
@@ -98,7 +98,7 @@ function OrderScreen() {
             </ol>
           )}
 
-          {order.trackNumber && !cancelled && (
+          {order.trackNumber && !cancelled && order.pickupType !== 'PARTNER' && (
             <a
               href={`https://www.cdek.ru/ru/tracking?order_id=${encodeURIComponent(order.trackNumber)}`}
               target="_blank"
@@ -116,7 +116,7 @@ function OrderScreen() {
           <div className="app-group">
             <div className="app-kv">
               <div className="app-kv-text">
-                <span className="app-kv-label">Пункт СДЭК</span>
+                <span className="app-kv-label">{order.pickupType === 'PARTNER' ? 'Пункт выдачи партнёра TechAgent' : 'Пункт СДЭК'}</span>
                 <span className="app-kv-value">{order.city}, {order.sdekPoint}</span>
               </div>
               <MapPin size={20} className="text-text-muted flex-none" />
@@ -144,7 +144,7 @@ function OrderScreen() {
                 )
               })}
             </ul>
-            <div className="cart-sum-row mt-1"><span>Доставка в пункт СДЭК</span><span className="text-text-primary font-semibold">{formatPrice(order.delivery)}</span></div>
+            <div className="cart-sum-row mt-1"><span>{order.pickupType === 'PARTNER' ? 'Доставка в пункт партнёра' : 'Доставка в пункт СДЭК'}</span><span className="text-text-primary font-semibold">{order.pickupType === 'PARTNER' ? 'входит в цену' : formatPrice(order.delivery)}</span></div>
             <div className="cart-sum-total"><span>Итого</span><span>{formatPrice(order.total)}</span></div>
             {pay && (
               <a href={order.paymentUrl} target="_blank" rel="noopener noreferrer" className="app-btn app-btn-primary mt-4 max-lg:hidden">
