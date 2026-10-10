@@ -103,7 +103,7 @@ export default function BuyerLoginPage() {
       {step === 'email' ? (
         <form onSubmit={requestCode} noValidate>
           <h2 className="acc-h1">Код на почту</h2>
-          <p className="acc-lead">Пароль не нужен: пришлём код на email, который вы указали в заказе.</p>
+          <p className="acc-lead">Пароль не нужен: пришлём код на ваш email. Уже заказывали — укажите адрес из заказа.</p>
           <label htmlFor="bl-email" className="block text-sm font-semibold mb-2 ml-1 text-text-secondary">Email</label>
           <input
             id="bl-email"
@@ -120,14 +120,14 @@ export default function BuyerLoginPage() {
           <button type="submit" disabled={busy} className="app-btn app-btn-primary mt-5">
             {busy ? 'Отправляем…' : 'Получить код'}
           </button>
-          <p className="acc-note">Кабинет появляется после первого заказа на сайте.</p>
+          <p className="acc-note">Впервые у нас? Просто введите email — кабинет создастся после ввода кода.</p>
           <DemoEntry />
         </form>
       ) : (
         <div>
           <h2 className="acc-h1">Введите код</h2>
           <p className="acc-lead">
-            Если адрес <b className="text-text-primary">{email.trim()}</b> есть в заказах, на него пришло письмо с кодом. Код действует 15 минут.
+            Мы отправили письмо с кодом на <b className="text-text-primary">{email.trim()}</b>. Код действует 15 минут. Нет письма — проверьте папку «Спам».
           </p>
           <input
             ref={codeRef}

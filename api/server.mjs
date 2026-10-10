@@ -447,15 +447,14 @@ async function createOrder(req, res) {
   send(res, 200, { ok: true, orderNumber: number, total })
 }
 
-/** Код входа на email. Отвечаем одинаково, есть такой покупатель или нет — чтобы по ответу нельзя было проверять адреса */
+/** Код входа на email. Новый адрес тоже получает код: после ввода кода для него заводится кабинет покупателя */
 async function requestCode(req, res) {
   const b = await readJson(req)
   const email = clean(b.email, 200).toLowerCase()
   if (!EMAIL_RE.test(email)) fail(422, 'fields', { fields: ['email'] })
   if (limited('code:' + ip(req), 10, 3600_000) || limited('code:' + email, 5, 3600_000)) fail(429, 'rate')
-  const buyer = email === DEMO_EMAIL ? null : db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
   let devCode
-  if (buyer) {
+  if (email !== DEMO_EMAIL) {
     const code = String(crypto.randomInt(0, 1_000_000)).padStart(6, '0')
     db.prepare(`INSERT INTO login_codes (email, code_hash, expires_at, attempts, sent_at) VALUES (?, ?, ?, 0, ?)
       ON CONFLICT(email) DO UPDATE SET code_hash = excluded.code_hash, expires_at = excluded.expires_at, attempts = 0, sent_at = excluded.sent_at`)
@@ -478,8 +477,13 @@ async function verifyCode(req, res) {
     fail(400, 'code_wrong')
   }
   db.prepare('DELETE FROM login_codes WHERE email = ?').run(email)
-  const buyer = db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
-  if (!buyer) fail(400, 'code_expired')
+  let buyer = db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
+  if (!buyer) {
+    // Новый покупатель: адрес подтверждён кодом — заводим пустой кабинет, данные он заполнит при заказе
+    const t = now()
+    db.prepare('INSERT INTO buyers (email, created_at, updated_at) VALUES (?, ?, ?)').run(email, t, t)
+    buyer = db.prepare('SELECT id FROM buyers WHERE email = ?').get(email)
+  }
   openSession(res, 'buyer', buyer.id)
   send(res, 200, { ok: true })
 }
