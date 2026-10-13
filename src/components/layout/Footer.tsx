@@ -39,6 +39,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4">Навигация</h4>
             <div className="flex flex-col gap-2.5">
               <Link to="/" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Главная</Link>
+              <Link to="/partners" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Партнёрам</Link>
               <Link to="/about" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">О платформе</Link>
               <Link to="/how-it-works" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Как это работает</Link>
               <Link to="/legal/sale-offer" className="text-text-dark-secondary hover:text-white text-sm transition-colors no-underline">Оферта купли-продажи</Link>

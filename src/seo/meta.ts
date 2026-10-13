@@ -11,7 +11,7 @@ import { translateProductName } from '../utils/translate'
 import { faqData } from '../data/faq'
 import { categoryLandings, getCategoryBySlug, type CategoryLanding } from './categories'
 import {
-  SITE_URL, SITE_NAME, LEGAL_NAME, DEFAULT_TITLE, DEFAULT_DESCRIPTION,
+  SITE_URL, SITE_NAME, LEGAL_NAME, DEFAULT_DESCRIPTION,
   DEFAULT_OG_IMAGE, CONTACT_EMAIL, PARTNERS_EMAIL, SUPPORT_EMAIL, absoluteUrl, clampDescription, pluralRu,
 } from './site'
 
@@ -197,11 +197,21 @@ export function resolveMeta(pathname: string): PageMeta {
 
   if (path === '/') {
     return baseMeta({
-      title: DEFAULT_TITLE,
+      title: 'TechAgent — интернет-магазин электроники: iPhone, Samsung, MacBook, PlayStation',
+      description:
+        'Смартфоны, ноутбуки, планшеты, наушники, консоли и техника для дома. Продавец — ООО «ТехЭйджент», оплата через СБП, получение в пункте выдачи СДЭК.',
+      canonical: SITE_URL + '/',
+      jsonLd: [organizationLd(), websiteLd()],
+    })
+  }
+
+  if (path === '/partners') {
+    return baseMeta({
+      title: 'Станьте пунктом выдачи электроники TechAgent — условия для партнёров',
       description:
         'Станьте пунктом выдачи электроники TechAgent: оформляйте заказы покупателей и выдавайте товар в своей точке. Продавец — ООО «ТехЭйджент», оплата через СБП.',
-      canonical: SITE_URL + '/',
-      jsonLd: [organizationLd(), websiteLd(), faqLd()],
+      canonical: `${SITE_URL}/partners`,
+      jsonLd: [organizationLd(), faqLd(), breadcrumbLd([{ name: 'Главная', path: '/' }, { name: 'Партнёрам' }])],
     })
   }
 
@@ -453,6 +463,7 @@ export function getPublicRoutes(): SitemapEntry[] {
   return [
     { path: '/', changefreq: 'weekly', priority: 1.0 },
     { path: '/catalog', changefreq: 'daily', priority: 0.9 },
+    { path: '/partners', changefreq: 'monthly', priority: 0.8 },
     { path: '/about', changefreq: 'monthly', priority: 0.7 },
     { path: '/how-it-works', changefreq: 'monthly', priority: 0.7 },
     { path: '/legal', changefreq: 'monthly', priority: 0.3 },

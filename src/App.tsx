@@ -8,6 +8,7 @@ import MobileBottomNav from './components/layout/MobileBottomNav'
 import SeoManager from './seo/SeoManager'
 
 /* Публичные страницы — в основном бандле: они пререндерятся и должны открываться мгновенно */
+import StorePage from './pages/StorePage'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import HowItWorksPage from './pages/HowItWorksPage'
@@ -74,7 +75,8 @@ function App() {
           <ErrorBoundary>
             <Suspense fallback={<RouteFallback />}>
               <Routes>
-                <Route path="/" element={<HomePage />} />
+                <Route path="/" element={<StorePage />} />
+                <Route path="/partners" element={<HomePage />} />
                 <Route path="/about" element={<AboutPage />} />
                 <Route path="/how-it-works" element={<HowItWorksPage />} />
                 <Route path="/catalog" element={<CatalogPage />} />

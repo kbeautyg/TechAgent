@@ -9,6 +9,7 @@ import { useCart, cartCount } from '../../utils/cart'
 const navLinks = [
   { label: 'Главная', path: '/' },
   { label: 'Каталог', path: '/catalog' },
+  { label: 'Партнёрам', path: '/partners' },
   { label: 'О платформе', path: '/about' },
   { label: 'Как это работает', path: '/how-it-works' },
 ]
