@@ -1963,6 +1963,7 @@ body {
   gap: 16px;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scroll-padding-inline: 16px;
   scrollbar-width: none;
   margin: 0 -16px;
   padding: 0 16px 4px;
@@ -1970,7 +1971,7 @@ body {
 .store-shelf::-webkit-scrollbar { display: none; }
 .store-shelf-card { scroll-snap-align: start; min-width: 0; }
 @media (min-width: 1024px) {
-  .store-shelf { grid-auto-columns: calc((100% - 4 * 16px) / 5); margin: 0; padding: 0 0 4px; }
+  .store-shelf { grid-auto-columns: calc((100% - 4 * 16px) / 5); margin: 0; padding: 0 0 4px; scroll-padding-inline: 0; }
 }
 @media (max-width: 639px) {
   .store-shelf { grid-auto-columns: 62%; gap: 12px; }
