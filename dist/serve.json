@@ -1,6 +1,7 @@
 {
   "cleanUrls": false,
   "trailingSlash": false,
+  "directoryListing": false,
   "redirects": [
     {
       "source": "/calculator",
@@ -105,6 +106,10 @@
     {
       "source": "/about",
       "destination": "/about/index.html"
+    },
+    {
+      "source": "/partners",
+      "destination": "/partners/index.html"
     },
     {
       "source": "/how-it-works",
