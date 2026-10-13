@@ -198,7 +198,7 @@ function SearchBar() {
       >
         <LayoutGrid size={19} /> Каталог
       </Link>
-      <form onSubmit={submit} className="flex-1 flex items-center h-[52px] rounded-2xl border-2 border-primary/80 bg-white pl-4 pr-1.5 focus-within:border-primary">
+      <form onSubmit={submit} className="flex-1 flex items-center h-[52px] rounded-2xl border-2 border-primary/80 bg-white pl-4 pr-1.5 transition-shadow focus-within:border-primary focus-within:shadow-[0_0_0_4px_rgba(27,68,245,0.12)]">
         <Search size={19} className="text-text-muted shrink-0" />
         <input
           type="search"
@@ -206,7 +206,7 @@ function SearchBar() {
           onChange={(e) => setQ(e.target.value)}
           placeholder="iPhone 16, AirPods, PlayStation…"
           aria-label="Поиск по каталогу"
-          className="flex-1 min-w-0 h-full bg-transparent border-none outline-none px-3 text-[16px] text-text-primary placeholder:text-text-muted"
+          className="store-search-input flex-1 min-w-0 h-full bg-transparent border-none outline-none px-3 text-[16px] text-text-primary placeholder:text-text-muted"
         />
         <button type="submit" className="h-10 px-4 sm:px-5 rounded-xl bg-text-primary text-white text-sm font-semibold border-none cursor-pointer hover:bg-black">
           Найти

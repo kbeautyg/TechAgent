@@ -1970,6 +1970,8 @@ body {
 }
 .store-shelf::-webkit-scrollbar { display: none; }
 .store-shelf-card { scroll-snap-align: start; min-width: 0; }
+/* Поиск на главной: рамку при фокусе рисует сама форма, у поля своей рамки нет */
+.store-search-input:focus, .store-search-input:focus-visible { outline: none; box-shadow: none; border: none; }
 @media (min-width: 1024px) {
   .store-shelf { grid-auto-columns: calc((100% - 4 * 16px) / 5); margin: 0; padding: 0 0 4px; scroll-padding-inline: 0; }
 }
