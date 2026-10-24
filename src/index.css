@@ -465,7 +465,7 @@ input[type="checkbox"] {
 .pp-subtitle { font-size: 15px; color: var(--color-text-secondary); margin-bottom: 32px; line-height: 1.6; }
 
 .pp-price-block { padding: 28px; border-radius: 16px; background: var(--color-bg-section); border: 1px solid var(--color-border); margin-bottom: 32px; margin-top: 8px; }
-.pp-price-row { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+.pp-price-row { display: flex; align-items: baseline; gap: 8px; }
 .pp-price-current { font-size: 36px; font-weight: 900; letter-spacing: -1px; color: var(--color-text-primary); font-family: var(--font-display); }
 .pp-price-currency { font-size: 18px; font-weight: 600; color: var(--color-text-muted); }
 .pp-price-note { font-size: 13px; color: var(--color-text-muted); }
@@ -1992,3 +1992,43 @@ body {
 .pp-color-chip.active img { mix-blend-mode: normal; }
 .pcard-from { font-size: 13px; font-weight: 600; color: var(--color-text-muted); }
 .pp-color-chip-text { padding: 10px 16px; }
+
+/* ── Карточка товара: главное из условий под кнопкой покупки ── */
+.pp-facts { list-style: none; margin: -12px 0 28px; padding: 4px 16px; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg-white); }
+.pp-facts li { display: flex; gap: 12px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--color-border); font-size: 13.5px; line-height: 1.45; color: var(--color-text-muted); }
+.pp-facts li:last-child { border-bottom: 0; }
+.pp-facts b { display: block; font-size: 14.5px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 1px; }
+.pp-fact-icon { flex: none; width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--color-bg-hero); color: var(--color-primary); }
+.pp-facts-more { padding: 12px 0 10px 46px !important; }
+.pp-facts-more a { font-size: 14px; font-weight: 600; color: var(--color-primary); text-decoration: none; }
+.pp-facts-more a::after { content: ' ↓'; }
+
+/* ── Характеристики строками: название слева, значение справа ── */
+.pp-spec-rows { margin: 0; max-width: 880px; border-top: 1px solid var(--color-border); }
+.pp-spec-row { display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); gap: 24px; padding: 14px 0; border-bottom: 1px solid var(--color-border); }
+.pp-spec-row dt { font-size: 14.5px; color: var(--color-text-muted); line-height: 1.45; }
+.pp-spec-row dd { margin: 0; font-size: 15px; font-weight: 600; color: var(--color-text-primary); line-height: 1.45; overflow-wrap: anywhere; }
+
+/* ── Условия покупки по темам (карточка товара, каталог, разделы) ── */
+.pp-terms-section { max-width: 1440px; margin: 0 auto; padding: 0 48px 80px; scroll-margin-top: 96px; }
+.terms-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.terms-group { padding: 20px 22px; border: 1px solid var(--color-border); border-radius: 18px; background: var(--color-bg-white); }
+.terms-title { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-size: 16px; font-weight: 800; color: var(--color-text-primary); }
+.terms-icon { width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center; background: var(--color-bg-hero); color: var(--color-primary); flex: none; }
+.terms-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.terms-list li { position: relative; padding-left: 16px; font-size: 14px; line-height: 1.5; color: var(--color-text-secondary); }
+.terms-list li::before { content: ''; position: absolute; left: 2px; top: 0.62em; width: 5px; height: 5px; border-radius: 50%; background: var(--color-text-muted); }
+.terms-note { margin: 10px 0 0; font-size: 13px; color: var(--color-text-muted); }
+.terms-foot { margin: 16px 0 0; font-size: 14px; line-height: 1.5; color: var(--color-text-secondary); }
+
+@media (max-width: 1023px) {
+  .pp-terms-section { padding: 0 24px 60px; }
+}
+@media (max-width: 767px) {
+  .terms-grid { grid-template-columns: 1fr; gap: 12px; }
+  .terms-group { padding: 16px 16px 18px; }
+  .pp-spec-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 14px; padding: 12px 0; }
+  .pp-spec-row dt { font-size: 14px; }
+  .pp-spec-row dd { font-size: 14.5px; }
+  .pp-terms-section { padding: 0 16px 40px; }
+}

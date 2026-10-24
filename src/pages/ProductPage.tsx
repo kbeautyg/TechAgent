@@ -4,7 +4,9 @@ import { getProductImage, withVersion, PRODUCT_IMAGE_SIZE } from '../utils/produ
 import { translateSpecKey, translateSpecValue, translateProductName } from '../utils/translate'
 import { getCategoryByName } from '../seo/categories'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
-import { ShoppingCart, Check, Minus, Plus } from 'lucide-react'
+import { ShoppingCart, Check, Minus, Plus, Truck, CreditCard, RotateCcw } from 'lucide-react'
+import { SDEK_DELIVERY_PRICE } from '../seo/site'
+import { formatPrice } from '../utils/calculate'
 import { useCart, addToCart, setCartQty, findLine, MAX_QTY } from '../utils/cart'
 import type { Product } from '../data/products'
 
@@ -24,7 +26,6 @@ function BuyBox({ product, color }: { product: Product; color?: string }) {
         <button type="button" onClick={() => addToCart(product.id, color)} className="app-btn app-btn-primary">
           <ShoppingCart size={20} /> В корзину
         </button>
-        <p className="pp-buy-note">Доставка в пункт СДЭК или постамат, оплата через СБП</p>
       </div>
     )
   }
@@ -44,12 +45,19 @@ function BuyBox({ product, color }: { product: Product; color?: string }) {
           <Check size={20} className="flex-none" /> Оформить
         </Link>
       </div>
-      <p className="pp-buy-note">Доставка в пункт СДЭК или постамат, оплата через СБП</p>
     </div>
   )
 }
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
+
+/** Главное из условий — под кнопкой покупки, тремя строками; всё остальное — в разделе «Условия покупки» ниже */
+const deliveryPrice = SDEK_DELIVERY_PRICE === null ? 'стоимость сообщим' : SDEK_DELIVERY_PRICE === 0 ? 'бесплатно' : formatPrice(SDEK_DELIVERY_PRICE)
+const BUY_FACTS = [
+  { icon: Truck, title: `Доставка СДЭК — ${deliveryPrice}`, text: 'В пункт выдачи или постамат, не позднее 14 дней с оплаты' },
+  { icon: CreditCard, title: 'Оплата через СБП', text: 'Ссылку на оплату пришлём после проверки наличия' },
+  { icon: RotateCcw, title: 'Возврат и гарантия', text: 'Исправный — 7 дней, с недостатком — 15 дней, гарантия 14 дней' },
+]
 
 const brandBgClass: Record<string, string> = {
   Apple: 'cbg-apple', Samsung: 'cbg-samsung', Xiaomi: 'cbg-xiaomi',
@@ -202,6 +210,16 @@ export default function ProductPage() {
 
           <BuyBox product={product} color={colorName} />
 
+          <ul className="pp-facts">
+            {BUY_FACTS.map(({ icon: Icon, title, text }) => (
+              <li key={title}>
+                <span className="pp-fact-icon"><Icon size={18} /></span>
+                <span><b>{title}</b>{text}</span>
+              </li>
+            ))}
+            <li className="pp-facts-more"><a href="#usloviya">Все условия покупки</a></li>
+          </ul>
+
           {/* Для партнёров: заказ покупателю в своём пункте выдачи. Отдельный блок с красной чертой — другой путь покупки */}
           <div className="pp-partner">
             <p className="pp-partner-title">Вы партнёр TechAgent?</p>
@@ -211,27 +229,26 @@ export default function ProductPage() {
               <Link to="/register" className="pp-partner-alt">Стать партнёром</Link>
             </div>
           </div>
-
-          {/* Условия покупки */}
-          <section className="mb-8" aria-labelledby="pp-terms-title">
-            <h2 id="pp-terms-title" className="text-[17px] font-extrabold tracking-tight text-text-primary mb-3">Как купить</h2>
-            <PurchaseTerms />
-          </section>
-
         </div>
       </section>
 
       {/* Specs */}
       <section className="pp-specs-section">
         <h2 className="pp-specs-title">Характеристики</h2>
-        <div className="pp-specs-grid">
+        <dl className="pp-spec-rows">
           {specs.map(([label, value]) => (
-            <div key={label} className="pp-spec-card">
-              <div className="pp-spec-label">{translateSpecKey(label)}</div>
-              <div className="pp-spec-value">{translateSpecValue(label, value)}</div>
+            <div key={label} className="pp-spec-row">
+              <dt>{translateSpecKey(label)}</dt>
+              <dd>{translateSpecValue(label, value)}</dd>
             </div>
           ))}
-        </div>
+        </dl>
+      </section>
+
+      {/* Условия покупки — по темам; сюда ведёт «Все условия покупки» под кнопкой */}
+      <section id="usloviya" className="pp-terms-section" aria-labelledby="pp-terms-title">
+        <h2 id="pp-terms-title" className="pp-specs-title">Условия покупки</h2>
+        <PurchaseTerms />
       </section>
 
       {/* Related */}
