@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect, useMemo } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { ArrowLeft, ArrowRight, Check, Copy, Search, X, Lock, CircleCheck } from 'lucide-react'
 import { PageBar, RoundLink, StickyBar } from '../../components/app/ui'
 import ProductIcon from '../../components/app/ProductIcon'
@@ -114,7 +114,16 @@ export default function NewOrderPage() {
   const [copyFailed, setCopyFailed] = useState(false)
   const linkRef = useRef<HTMLParagraphElement>(null)
 
-  const [product, setProduct] = useState<Product | null>(null)
+  // «Оформить в кабинете партнёра» с карточки товара приносит товар и цвет в адресе
+  const [params] = useSearchParams()
+  const [product, setProductState] = useState<Product | null>(() => products.find((p) => p.id === params.get('product')) ?? null)
+  const [color, setColor] = useState(() => {
+    const p = products.find((x) => x.id === params.get('product'))
+    return p?.colors.find((c) => c.name === params.get('color'))?.name ?? p?.colors[0]?.name ?? ''
+  })
+  const setProduct = (p: Product | null) => { setProductState(p); setColor(p?.colors[0]?.name ?? '') }
+  /** Название для заказа и покупателя: с цветом, если у товара есть выбор цвета */
+  const productTitle = product ? (color && product.colors.length > 1 ? `${product.name}, ${color}` : product.name) : ''
   const [buyerName, setBuyerName] = useState('')
   const [buyerPhone, setBuyerPhone] = useState('')
   const [buyerEmail, setBuyerEmail] = useState('')
@@ -182,7 +191,7 @@ export default function NewOrderPage() {
       id: crypto.randomUUID(),
       userId: user.id,
       productId: product.id,
-      productName: product.name,
+      productName: productTitle,
       price: product.price,
       partnerReward: rewardFor(product.price, percent),
       rewardPercent: percent,
@@ -267,7 +276,7 @@ export default function NewOrderPage() {
                   <ProductIcon productId={product.id} size={24} />
                 </span>
                 <div className="flex-1 min-w-0">
-                  <p className="font-semibold text-[15px] leading-snug text-text-primary">{product.name}</p>
+                  <p className="font-semibold text-[15px] leading-snug text-text-primary">{productTitle}</p>
                   <p className="text-[13px] text-text-muted mt-0.5">{product.brand} · {product.category}</p>
                 </div>
                 <button
@@ -278,6 +287,24 @@ export default function NewOrderPage() {
                   Изменить
                 </button>
               </div>
+              {product.colors.length > 1 && (
+                <div className="border-t border-border mt-3 pt-3">
+                  <p className="text-[13px] text-text-secondary mb-2">Цвет</p>
+                  <div className="pp-variant-chips">
+                    {product.colors.map((c) => (
+                      <button
+                        key={c.name}
+                        type="button"
+                        onClick={() => setColor(c.name)}
+                        aria-pressed={c.name === color}
+                        className={`pp-variant-chip pp-color-chip pp-color-chip-text${c.name === color ? ' active' : ''}`}
+                      >
+                        {c.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
               <div className="border-t border-border mt-3 pt-3 flex justify-between gap-4 text-[15px] lg:text-sm">
                 <span className="text-text-secondary">Цена для покупателя</span>
                 <span className="font-bold text-text-primary whitespace-nowrap">{formatPrice(product.price)}</span>
@@ -308,7 +335,7 @@ export default function NewOrderPage() {
           {product && (
             <div className="app-group px-4 py-3 mb-5 flex items-center gap-3">
               <span className="flex-1 min-w-0">
-                <span className="block font-semibold text-[15px] lg:text-sm leading-snug text-text-primary truncate">{product.name}</span>
+                <span className="block font-semibold text-[15px] lg:text-sm leading-snug text-text-primary truncate">{productTitle}</span>
                 <span className="block text-[13px] text-text-muted">{formatPrice(product.price)}</span>
               </span>
               <button type="button" onClick={() => goTo(1)} className="text-[15px] lg:text-sm text-primary font-semibold bg-transparent border-none cursor-pointer min-h-[44px] px-1 shrink-0">
@@ -389,7 +416,7 @@ export default function NewOrderPage() {
             <div className="app-group p-4 space-y-2.5 text-[15px] lg:text-sm">
               <div className={kvRow}>
                 <span className="text-text-secondary">Товар</span>
-                <span className="font-medium text-text-primary text-right">{product.name}</span>
+                <span className="font-medium text-text-primary text-right">{productTitle}</span>
               </div>
               <div className={`border-t border-border pt-2.5 ${kvRow} font-bold`}>
                 <span className="text-text-primary">Цена для покупателя — к оплате ТехЭйджент</span>

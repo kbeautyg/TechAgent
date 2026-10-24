@@ -476,6 +476,8 @@ input[type="checkbox"] {
 .pp-variant-chip { padding: 10px 20px; border-radius: 12px; border: 1px solid var(--color-border); font-size: 13px; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; transition: all .2s; background: white; }
 .pp-variant-chip:hover { border-color: var(--color-primary); color: var(--color-primary); }
 .pp-variant-chip.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.pp-variant-note { font-size: 13px; line-height: 1.45; color: #b45309; margin: 10px 0 0; }
+.pp-variant-note-solo { margin: -14px 0 28px; }
 
 .pp-cta-group { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
 .pp-cta-primary { width: 100%; padding: 18px; border-radius: 14px; border: none; background: var(--color-primary); color: white; font-size: 16px; font-weight: 700; cursor: pointer; transition: all .3s; display: flex; align-items: center; justify-content: center; gap: 10px; font-family: inherit; text-decoration: none; }

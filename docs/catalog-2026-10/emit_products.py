@@ -42,15 +42,19 @@ def pick_specs(fid):
         out[k.replace('Вес (грамм)', 'Вес, г')] = v
     return out
 
+YES_NO = {'да', 'нет', 'есть'}
+
 def summary(p, sp):
     if p['category'] in ('Смартфоны', 'Планшеты'):
-        parts = [sp.get('Экран'), sp.get('Процессор') or sp.get('Система на чипе (SoC)')]
-        cam = sp.get('Основная камера')
+        # У моделей, собранных помощниками, ключи английские: display / chip / camera
+        parts = [sp.get('Экран') or sp.get('display'), sp.get('Процессор') or sp.get('Система на чипе (SoC)') or sp.get('chip')]
+        cam = sp.get('Основная камера') or sp.get('camera')
         if cam:
             m = re.match(r'(\d+)\s*МП', cam)
             parts.append(f'{m.group(1)} Мп' if m else None)
         return ' · '.join(x for x in parts if x)[:70]
-    vals = [v for k, v in sp.items() if len(v) <= 28 and k not in ('Конфигурация', 'Память')][:3]
+    # «да», «есть» без подписи в плитке ничего не говорят; конфигурация уже в названии
+    vals = [v for k, v in sp.items() if len(v) <= 28 and k not in ('Конфигурация', 'Память') and v.lower() not in YES_NO][:3]
     return ' · '.join(vals)
 
 def describe(p, sp):
@@ -69,12 +73,15 @@ def describe(p, sp):
         tail = ', '.join(extra)
         return s1 + (' ' + tail[:1].upper() + tail[1:] + '.' if extra else '')
     if sp:
-        items = [f'{k.lower()} — {v}' for k, v in list(sp.items())[:3]]
+        items = [f'{k[:1].lower() + k[1:]} — {v}' for k, v in sp.items() if k not in ('Конфигурация', 'Память') and v.lower() not in YES_NO][:3]
+        if not items:
+            return m
         return f'{m}: ' + '; '.join(items) + '.'
     return m
 
 def storage_of(v):
-    m = re.match(r'(\d+ (ГБ|ТБ))', v or '')
+    # «256 ГБ», «256 ГБ · Wi‑Fi»; у планшетов память после оперативной: «Wi-Fi 12/256 ГБ», «12/256 ГБ, Wi-Fi»
+    m = re.match(r'(\d+ (ГБ|ТБ))', v or '') or re.search(r'\b\d+/(\d+ (ГБ|ТБ))', v or '')
     return m.group(1) if m else None
 
 COLOR_RU = {'Black': 'Чёрный', 'Grey': 'Серый', 'Gray': 'Серый', 'White': 'Белый', 'Silver': 'Серебристый', 'Blue': 'Синий',
@@ -91,11 +98,21 @@ FIRST = ['iphone-18-pro-max', 'iphone-18-pro', 'iphone-duo', 'galaxy-s26-ultra',
          'playstation-5-pro', 'ps5-pro', 'switch-2', 'dji-mini-5-pro', 'osmo-action-6', 'dyson-airwrap-coanda-2x', 'samsung-s95h', 'lg-g6', 'airtag-2']
 RENAME = {'MacBook Air 13" (M5)': 'MacBook Air 13"', 'MacBook Air 15" (M5)': 'MacBook Air 15"'}
 products, imgmap = [], {}
+# Характеристики собраны по модели, а не по варианту: у часов 42/46 мм, Garmin AMOLED/Solar экран, вес, батарея у вариантов
+# разные. В таких моделях эти строки не показываем, чтобы не написать покупателю чужие цифры
+SIZE_VARIANT = re.compile(r'\d+(?:[.,]\d+)?\s?мм|AMOLED|Solar|\d+(?:[.,]\d+)?(?:"|″)')
+SIZE_SPEC = re.compile(r'Экран|экрана|Диагональ|Разрешение|Время работы|Аккумулятор|Ёмкость|Вес|Размер|Материал корпуса', re.I)
+fam_vars = {}
+for p in cat:
+    fam_vars.setdefault(p['family'], set()).add(p.get('variant') or '')
+size_families = {f for f, vs in fam_vars.items() if len(vs) > 1 and any(SIZE_VARIANT.search(v) for v in vs)}
 for p in cat:
     sp = pick_specs(p['family']) if p.get('source') != 'agent' else {k: v for k, v in (p.get('specs') or {}).items() if isinstance(v, str)}
     var = p.get('variant')
+    if p['family'] in size_families:
+        sp = {k: v for k, v in sp.items() if not SIZE_SPEC.search(k)}
     if var:
-        sp = {('Конфигурация' if not storage_of(var) else 'Память'): var, **{k: v for k, v in sp.items() if k != 'Объем встроенной памяти'}}
+        sp = {('Память' if re.match(r'\d+ (ГБ|ТБ)', var) else 'Конфигурация'): var, **{k: v for k, v in sp.items() if k != 'Объем встроенной памяти'}}
     colors = []
     for c in p['colors']:
         name = (c.get('ru') or '').strip()
@@ -103,6 +120,9 @@ for p in cat:
         if name and c.get('en') and c['en'] != name and not re.search(r'[А-Яа-я]', c['en']):
             name = f'{name}'
         path = f'/images/p/{p["family"]}/{slug(name)}.webp'
+        # У Galaxy Watch8 в выгрузке на месте цвета — связь («Bluetooth/Wi-Fi + 4G LTE»): это не цвет, связь уже в конфигурации
+        if re.match(r'(Bluetooth|Wi-?Fi|LTE)', name):
+            name = ''
         if c.get('img'):
             imgmap[path] = hashlib.sha1(c['img'].encode()).hexdigest()[:16]
         colors.append({'name': name, 'image': path if c.get('img') else ''})

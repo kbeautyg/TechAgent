@@ -55,16 +55,29 @@ const PER_PAGE = 20
 /* ── Значения фильтров из каталога: объёмы памяти и самые частые цвета ── */
 const toGB = (s: string) => parseFloat(s) * (/ТБ|TB/.test(s) ? 1024 : 1)
 
+/* У производителей сотни названий цвета («Серебро», «Чёрный космос», «Сияющая звезда»); в фильтре — основной цвет.
+ * Порядок важен: «серо-голубой» — голубой, «розовое золото» — розовый, «серебристый» проверяем раньше «серого». */
+const BASE_COLORS: [RegExp, string][] = [
+  [/голуб|туманн|ледов/i, 'Голубой'], [/розов|pink|малин|румян/i, 'Розовый'], [/серебр|silver|platinum/i, 'Серебристый'],
+  [/чёрн|черн|black|тёмная ночь|полночь|midnight|обсидиан/i, 'Чёрный'], [/бел|сияющая звезда|starlight|кремов|жемчуг|white/i, 'Белый'],
+  [/сер|gr[ae]y|графит/i, 'Серый'], [/син|морск|navy|blue|ультрамарин|индиго|ночное небо/i, 'Синий'], [/фиолет|лаванд|сирен|purple|plum/i, 'Фиолетовый'],
+  [/зел|олив|мят|фисташ|шалф|green|лайм|жадеит|лес/i, 'Зелёный'], [/золот|песоч|песчан|бронз|gold|бежев|apricot|amber/i, 'Золотой'],
+  [/красн|бургунд|бордо|red/i, 'Красный'], [/оранж|orange|манго|коралл|copper/i, 'Оранжевый'], [/жёлт|желт|yellow|лимон|цитрус/i, 'Жёлтый'],
+  [/коричн|brown/i, 'Коричневый'],
+]
+const baseColor = (name: string) => BASE_COLORS.find(([re]) => re.test(name))?.[1] ?? null
+
 function getFilterOptions() {
   const storages = new Set<string>()
   const colorCount = new Map<string, number>()
   products.forEach(p => {
     if (p.storage) storages.add(p.storage)
-    p.colors.forEach(c => c.name && colorCount.set(c.name, (colorCount.get(c.name) ?? 0) + 1))
+    // Считаем модели, а не карточки: у iPhone четыре объёма памяти, но это один «чёрный»
+    new Set(p.colors.map(c => baseColor(c.name)).filter(Boolean) as string[]).forEach(b => colorCount.set(b, (colorCount.get(b) ?? 0) + 1))
   })
   return {
     storages: [...storages].sort((a, b) => toGB(a) - toGB(b)),
-    colors: [...colorCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([c]) => c),
+    colors: [...colorCount.entries()].sort((a, b) => b[1] - a[1]).map(([c]) => c),
   }
 }
 
@@ -164,7 +177,7 @@ export default function CatalogPage() {
       const mB = brand.length === 0 || brand.includes(p.brand)
       const mK = !stockOnly || p.inStock
       const mSt = selStorage.length === 0 || selStorage.includes(p.storage || '')
-      const mCl = selColor.length === 0 || p.colors.some(c => selColor.includes(c.name))
+      const mCl = selColor.length === 0 || p.colors.some(c => selColor.includes(baseColor(c.name) ?? '') || selColor.includes(c.name))
       const mPr = selPriceRange === null || (p.price >= priceRanges[selPriceRange].min && p.price < priceRanges[selPriceRange].max)
       return mS && mC && mB && mK && mSt && mCl && mPr
     })
@@ -175,7 +188,11 @@ export default function CatalogPage() {
       if (!g) byFamily.set(p.family, { p, n: 1 })
       else byFamily.set(p.family, { p: p.price < g.p.price ? p : g.p, n: g.n + 1 })
     }
-    let tiles = [...byFamily.values()].map(({ p, n }) => ({ ...p, many: n > 1 }))
+    // Выбран цвет — плитка показывает товар в этом цвете и открывает карточку сразу в нём
+    let tiles = [...byFamily.values()].map(({ p, n }) => {
+      const c = selColor.length ? p.colors.find(c => selColor.includes(baseColor(c.name) ?? '') || selColor.includes(c.name)) : undefined
+      return { ...p, many: n > 1, pickedColor: c && c.name !== p.colors[0]?.name ? c : undefined }
+    })
     if (sort === 'price-asc') tiles = tiles.sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') tiles = tiles.sort((a, b) => b.price - a.price)
     return tiles
@@ -403,10 +420,10 @@ export default function CatalogPage() {
           {shown.length > 0 ? (
             <div className="products-grid">
               {shown.map((p, i) => {
-                const imgUrl = getProductImage(p.id, p.name, p.category)
+                const imgUrl = getProductImage(p.id, p.name, p.category, p.pickedColor?.name)
                 return (
                 <div key={p.id} className="product-card-wrap" style={{ animationDelay: `${i * 0.03}s` }}>
-                  <Link to={`/catalog/${p.id}`} className="product-card">
+                  <Link to={`/catalog/${p.id}${p.pickedColor ? `?color=${encodeURIComponent(p.pickedColor.name)}` : ''}`} className="product-card">
                     <div className="product-img">
                       <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
                       {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}

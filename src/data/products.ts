@@ -2373,7 +2373,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп 1\" + перископ 200 Мп (75–100 мм)",
    "battery": "6000 мА·ч, 90 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.9\" OLED (HyperRGB) · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Камерофлагман Xiaomi с основным сенсором формата 1 дюйм и оптикой Leica. Отличается телеобъективом 200 Мп с переменным фокусным расстоянием 75–100 мм."
  },
@@ -2401,7 +2401,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп 1\" + перископ 200 Мп (75–100 мм)",
    "battery": "6000 мА·ч, 90 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.9\" OLED (HyperRGB) · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Камерофлагман Xiaomi с основным сенсором формата 1 дюйм и оптикой Leica. Отличается телеобъективом 200 Мп с переменным фокусным расстоянием 75–100 мм."
  },
@@ -2429,7 +2429,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп (1/1.31\") + теле 60 мм 50 Мп + ширик 50 Мп",
    "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.3\" OLED · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Компактный флагман Xiaomi с экраном 6,3 дюйма и тройной камерой Leica. При небольшом корпусе (191 г) получил батарею 6330 мА·ч."
  },
@@ -2457,7 +2457,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп (1/1.31\") + теле 60 мм 50 Мп + ширик 50 Мп",
    "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.3\" OLED · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Компактный флагман Xiaomi с экраном 6,3 дюйма и тройной камерой Leica. При небольшом корпусе (191 г) получил батарею 6330 мА·ч."
  },
@@ -6375,7 +6375,7 @@ export const products: Product[] = [
    "camera": "50 + 12 + 5 МП",
    "battery": "5000 мАч, 45 Вт"
   },
-  "summary": "",
+  "summary": "6.7\" Super AMOLED+, 120 Гц · Exynos 1680",
   "inStock": true,
   "description": "Старшая модель среднего класса Galaxy A 2026 года: алюминиевая рамка, защита IP68, быстрая зарядка 45 Вт. Самый ходовой Samsung среднего ценового сегмента."
  },
@@ -6403,7 +6403,7 @@ export const products: Product[] = [
    "camera": "50 + 12 + 5 МП",
    "battery": "5000 мАч, 45 Вт"
   },
-  "summary": "",
+  "summary": "6.7\" Super AMOLED+, 120 Гц · Exynos 1680",
   "inStock": true,
   "description": "Старшая модель среднего класса Galaxy A 2026 года: алюминиевая рамка, защита IP68, быстрая зарядка 45 Вт. Самый ходовой Samsung среднего ценового сегмента."
  },
@@ -6431,7 +6431,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп (Light Fusion 950)",
    "battery": "7000 мА·ч, 100 Вт"
   },
-  "summary": "",
+  "summary": "6.83\" AMOLED 144 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Флагман T-серии Xiaomi с крупным экраном 6,83 дюйма и камерами Leica. Стоит заметно дешевле Xiaomi 17 и выделяется батареей 7000 мА·ч."
  },
@@ -6459,7 +6459,7 @@ export const products: Product[] = [
    "camera": "Leica 50 Мп (Light Fusion 950)",
    "battery": "7000 мА·ч, 100 Вт"
   },
-  "summary": "",
+  "summary": "6.83\" AMOLED 144 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Флагман T-серии Xiaomi с крупным экраном 6,83 дюйма и камерами Leica. Стоит заметно дешевле Xiaomi 17 и выделяется батареей 7000 мА·ч."
  },
@@ -6487,7 +6487,7 @@ export const products: Product[] = [
    "camera": "200 Мп + перископ 50 Мп 5x + ширик 50 Мп",
    "battery": "8050 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.9\" AMOLED 185 Гц · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Старший POCO F текущего поколения на топовом Snapdragon 8 Elite Gen 5. Выделяется экраном 185 Гц и батареей 8050 мА·ч."
  },
@@ -6515,7 +6515,7 @@ export const products: Product[] = [
    "camera": "200 Мп + перископ 50 Мп 5x + ширик 50 Мп",
    "battery": "8050 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.9\" AMOLED 185 Гц · Snapdragon 8 Elite Gen 5",
   "inStock": true,
   "description": "Старший POCO F текущего поколения на топовом Snapdragon 8 Elite Gen 5. Выделяется экраном 185 Гц и батареей 8050 мА·ч."
  },
@@ -6543,7 +6543,7 @@ export const products: Product[] = [
    "camera": "200 Мп OIS + теле 2.5x + ширик 8 Мп",
    "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.59\" AMOLED 185 Гц · Snapdragon 8 Elite Gen 5 (V)",
   "inStock": true,
   "description": "Компактный POCO F на урезанной версии Snapdragon 8 Elite Gen 5. Флагманская производительность за цену ниже Xiaomi 17."
  },
@@ -6571,7 +6571,7 @@ export const products: Product[] = [
    "camera": "200 Мп OIS + теле 2.5x + ширик 8 Мп",
    "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
   },
-  "summary": "",
+  "summary": "6.59\" AMOLED 185 Гц · Snapdragon 8 Elite Gen 5 (V)",
   "inStock": true,
   "description": "Компактный POCO F на урезанной версии Snapdragon 8 Elite Gen 5. Флагманская производительность за цену ниже Xiaomi 17."
  },
@@ -6599,7 +6599,7 @@ export const products: Product[] = [
    "battery": "5620 мА·ч, 100 Вт",
    "os": "EMUI 15"
   },
-  "summary": "",
+  "summary": "6.75\" OLED",
   "inStock": true,
   "description": "Флагман Huawei серии Mate на глобальном рынке. Камеры с RYYB-сенсорами и быстрая зарядка 100 Вт."
  },
@@ -8080,7 +8080,7 @@ export const products: Product[] = [
   "name": "Galaxy Tab S12 Ultra Wi-Fi 12/256 ГБ",
   "model": "Galaxy Tab S12 Ultra",
   "variant": "Wi-Fi 12/256 ГБ",
-  "storage": null,
+  "storage": "256 ГБ",
   "family": "galaxy-tab-s12-ultra",
   "brand": "Samsung",
   "category": "Планшеты",
@@ -8099,7 +8099,7 @@ export const products: Product[] = [
    "battery": "11 600 мАч, до 23 ч видео",
    "body": "5.1 мм, IP68, S Pen в комплекте"
   },
-  "summary": "",
+  "summary": "14.6\" Dynamic AMOLED 2X, 120 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Самый большой и самый тонкий планшет Samsung, 14,6 дюйма при толщине 5,1 мм. Перо S Pen в комплекте, защита IP68, двойная основная камера."
  },
@@ -8108,7 +8108,7 @@ export const products: Product[] = [
   "name": "Galaxy Tab S12 Ultra 5G 12/256 ГБ",
   "model": "Galaxy Tab S12 Ultra",
   "variant": "5G 12/256 ГБ",
-  "storage": null,
+  "storage": "256 ГБ",
   "family": "galaxy-tab-s12-ultra",
   "brand": "Samsung",
   "category": "Планшеты",
@@ -8127,7 +8127,7 @@ export const products: Product[] = [
    "battery": "11 600 мАч, до 23 ч видео",
    "body": "5.1 мм, IP68, S Pen в комплекте"
   },
-  "summary": "",
+  "summary": "14.6\" Dynamic AMOLED 2X, 120 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Самый большой и самый тонкий планшет Samsung, 14,6 дюйма при толщине 5,1 мм. Перо S Pen в комплекте, защита IP68, двойная основная камера."
  },
@@ -8136,7 +8136,7 @@ export const products: Product[] = [
   "name": "Galaxy Tab S12 Ultra Wi-Fi 12/512 ГБ",
   "model": "Galaxy Tab S12 Ultra",
   "variant": "Wi-Fi 12/512 ГБ",
-  "storage": null,
+  "storage": "512 ГБ",
   "family": "galaxy-tab-s12-ultra",
   "brand": "Samsung",
   "category": "Планшеты",
@@ -8155,7 +8155,7 @@ export const products: Product[] = [
    "battery": "11 600 мАч, до 23 ч видео",
    "body": "5.1 мм, IP68, S Pen в комплекте"
   },
-  "summary": "",
+  "summary": "14.6\" Dynamic AMOLED 2X, 120 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Самый большой и самый тонкий планшет Samsung, 14,6 дюйма при толщине 5,1 мм. Перо S Pen в комплекте, защита IP68, двойная основная камера."
  },
@@ -8164,7 +8164,7 @@ export const products: Product[] = [
   "name": "Galaxy Tab S12+ Wi-Fi 12/256 ГБ",
   "model": "Galaxy Tab S12+",
   "variant": "Wi-Fi 12/256 ГБ",
-  "storage": null,
+  "storage": "256 ГБ",
   "family": "galaxy-tab-s12-plus",
   "brand": "Samsung",
   "category": "Планшеты",
@@ -8183,7 +8183,7 @@ export const products: Product[] = [
    "battery": "до 21 ч видео",
    "body": "IP68, S Pen в комплекте"
   },
-  "summary": "",
+  "summary": "12.6\" Dynamic AMOLED 2X, 120 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Планшет 12,6 дюйма из новой серии Tab S12: тот же чип, что у Ultra, перо в комплекте, защита IP68. Меньше и дешевле Ultra, одна основная камера и Wi-Fi 6E."
  },
@@ -8192,7 +8192,7 @@ export const products: Product[] = [
   "name": "Galaxy Tab S12+ 5G 12/256 ГБ",
   "model": "Galaxy Tab S12+",
   "variant": "5G 12/256 ГБ",
-  "storage": null,
+  "storage": "256 ГБ",
   "family": "galaxy-tab-s12-plus",
   "brand": "Samsung",
   "category": "Планшеты",
@@ -8211,7 +8211,7 @@ export const products: Product[] = [
    "battery": "до 21 ч видео",
    "body": "IP68, S Pen в комплекте"
   },
-  "summary": "",
+  "summary": "12.6\" Dynamic AMOLED 2X, 120 Гц · MediaTek Dimensity 9500",
   "inStock": true,
   "description": "Планшет 12,6 дюйма из новой серии Tab S12: тот же чип, что у Ultra, перо в комплекте, защита IP68. Меньше и дешевле Ultra, одна основная камера и Wi-Fi 6E."
  },
@@ -10219,7 +10219,7 @@ export const products: Product[] = [
    "battery": "9200 мА·ч, 45 Вт",
    "weight": "485 г"
   },
-  "summary": "",
+  "summary": "11.2\" 3.2K (3200×2136) · Snapdragon 8s Gen 4",
   "inStock": true,
   "description": "Базовый планшет Xiaomi текущего поколения с экраном 11,2 дюйма 3,2K. Производительный Snapdragon 8s Gen 4 при цене ниже Pro-версии."
  },
@@ -10247,7 +10247,7 @@ export const products: Product[] = [
    "battery": "9200 мА·ч, 45 Вт",
    "weight": "485 г"
   },
-  "summary": "",
+  "summary": "11.2\" 3.2K (3200×2136) · Snapdragon 8s Gen 4",
   "inStock": true,
   "description": "Базовый планшет Xiaomi текущего поколения с экраном 11,2 дюйма 3,2K. Производительный Snapdragon 8s Gen 4 при цене ниже Pro-версии."
  },
@@ -10256,7 +10256,7 @@ export const products: Product[] = [
   "name": "Huawei MatePad Pro 13.2\" 12/256 ГБ, Wi-Fi",
   "model": "Huawei MatePad Pro 13.2\"",
   "variant": "12/256 ГБ, Wi-Fi",
-  "storage": null,
+  "storage": "256 ГБ",
   "family": "matepad-pro-13",
   "brand": "Huawei",
   "category": "Планшеты",
@@ -10275,7 +10275,7 @@ export const products: Product[] = [
    "memory": "12 ГБ + 256/512 ГБ",
    "camera": "13 МП + 8 МП"
   },
-  "summary": "",
+  "summary": "13,2\" гибкий OLED, версия PaperMatte · Kirin T92 · 13 Мп",
   "inStock": true,
   "description": "Большой планшет Huawei с OLED-экраном 13,2 дюйма для работы с документами и рисования. Работает с клавиатурой и стилусом и запускает настольную версию WPS Office."
  },
@@ -10319,7 +10319,7 @@ export const products: Product[] = [
   },
   "summary": "16.2″ · Дисплей Liquid Retina XDR · 120 Гц",
   "inStock": true,
-  "description": "MacBook Pro 16\": конфигурация — M5 Pro 18/20 · 24 ГБ · 1 ТБ; экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 16\": экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR; частота обновления экрана — 120 Гц."
  },
  {
   "id": "macbook-pro-16-m5-max-18-32-36-gb-2-tb",
@@ -10361,7 +10361,7 @@ export const products: Product[] = [
   },
   "summary": "16.2″ · Дисплей Liquid Retina XDR · 120 Гц",
   "inStock": true,
-  "description": "MacBook Pro 16\": конфигурация — M5 Max 18/32 · 36 ГБ · 2 ТБ; экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 16\": экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR; частота обновления экрана — 120 Гц."
  },
  {
   "id": "macbook-pro-16-m5-pro-18-20-48-gb-1-tb",
@@ -10403,7 +10403,7 @@ export const products: Product[] = [
   },
   "summary": "16.2″ · Дисплей Liquid Retina XDR · 120 Гц",
   "inStock": true,
-  "description": "MacBook Pro 16\": конфигурация — M5 Pro 18/20 · 48 ГБ · 1 ТБ; экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 16\": экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR; частота обновления экрана — 120 Гц."
  },
  {
   "id": "macbook-pro-16-m5-max-18-40-48-gb-2-tb",
@@ -10445,7 +10445,7 @@ export const products: Product[] = [
   },
   "summary": "16.2″ · Дисплей Liquid Retina XDR · 120 Гц",
   "inStock": true,
-  "description": "MacBook Pro 16\": конфигурация — M5 Max 18/40 · 48 ГБ · 2 ТБ; экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 16\": экран — 16.2″; тип экрана — Дисплей Liquid Retina XDR; частота обновления экрана — 120 Гц."
  },
  {
   "id": "macbook-pro-14-m5-10-10-16-gb-1-tb",
@@ -10487,7 +10487,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 10/10 · 16 ГБ · 1 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-10-10-16-gb-512-gb",
@@ -10529,7 +10529,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 10/10 · 16 ГБ · 512 ГБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-10-10-24-gb-1-tb",
@@ -10571,7 +10571,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 10/10 · 24 ГБ · 1 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-pro-15-16-24-gb-1-tb",
@@ -10613,7 +10613,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 Pro 15/16 · 24 ГБ · 1 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-10-10-32-gb-1-tb",
@@ -10655,7 +10655,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 10/10 · 32 ГБ · 1 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-pro-15-16-24-gb-2-tb",
@@ -10697,7 +10697,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 Pro 15/16 · 24 ГБ · 2 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-pro-18-20-24-gb-2-tb",
@@ -10739,7 +10739,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 Pro 18/20 · 24 ГБ · 2 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-pro-14-m5-max-18-32-36-gb-2-tb",
@@ -10781,7 +10781,7 @@ export const products: Product[] = [
   },
   "summary": "14,2″ · Дисплей Liquid Retina XDR · 3024×1964",
   "inStock": true,
-  "description": "MacBook Pro 14\": конфигурация — M5 Max 18/32 · 36 ГБ · 2 ТБ; экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR."
+  "description": "MacBook Pro 14\": экран — 14,2″; тип экрана — Дисплей Liquid Retina XDR; разрешение экрана — 3024×1964."
  },
  {
   "id": "macbook-air-15-m5-10-10-16-gb-512-gb",
@@ -10831,7 +10831,7 @@ export const products: Product[] = [
   },
   "summary": "15,3″ · 2880 x 1864 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 15\": конфигурация — M5 10/10 · 16 ГБ · 512 ГБ; экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 15\": экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2880 x 1864."
  },
  {
   "id": "macbook-air-15-m5-10-10-16-gb-1-tb",
@@ -10881,7 +10881,7 @@ export const products: Product[] = [
   },
   "summary": "15,3″ · 2880 x 1864 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 15\": конфигурация — M5 10/10 · 16 ГБ · 1 ТБ; экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 15\": экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2880 x 1864."
  },
  {
   "id": "macbook-air-15-m5-10-10-24-gb-1-tb",
@@ -10931,7 +10931,7 @@ export const products: Product[] = [
   },
   "summary": "15,3″ · 2880 x 1864 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 15\": конфигурация — M5 10/10 · 24 ГБ · 1 ТБ; экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 15\": экран — 15,3″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2880 x 1864."
  },
  {
   "id": "macbook-air-13-m5-10-8-16-gb-512-gb",
@@ -10981,7 +10981,7 @@ export const products: Product[] = [
   },
   "summary": "13.6″ · 2560 x 1664 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 13\": конфигурация — M5 10/8 · 16 ГБ · 512 ГБ; экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 13\": экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2560 x 1664."
  },
  {
   "id": "macbook-air-13-m5-10-10-16-gb-1-tb",
@@ -11031,7 +11031,7 @@ export const products: Product[] = [
   },
   "summary": "13.6″ · 2560 x 1664 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 13\": конфигурация — M5 10/10 · 16 ГБ · 1 ТБ; экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 13\": экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2560 x 1664."
  },
  {
   "id": "macbook-air-13-m5-10-10-24-gb-1-tb",
@@ -11081,7 +11081,7 @@ export const products: Product[] = [
   },
   "summary": "13.6″ · 2560 x 1664 · Apple M5",
   "inStock": true,
-  "description": "MacBook Air 13\": конфигурация — M5 10/10 · 24 ГБ · 1 ТБ; экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS."
+  "description": "MacBook Air 13\": экран — 13.6″; тип экрана — Retina с подсветкой LED и технологией IPS; разрешение экрана — 2560 x 1664."
  },
  {
   "id": "macbook-neo-13-a18-pro-6-5-8-gb-256-gb",
@@ -11131,7 +11131,7 @@ export const products: Product[] = [
   },
   "summary": "13″ · LED · 2408x1506",
   "inStock": true,
-  "description": "MacBook Neo 13\": конфигурация — A18 Pro 6/5 · 8 ГБ · 256 ГБ; экран — 13″; тип экрана — LED."
+  "description": "MacBook Neo 13\": экран — 13″; тип экрана — LED; разрешение экрана — 2408x1506."
  },
  {
   "id": "macbook-neo-13-a18-pro-6-5-8-gb-512-gb",
@@ -11181,7 +11181,7 @@ export const products: Product[] = [
   },
   "summary": "13″ · LED · 2408x1506",
   "inStock": true,
-  "description": "MacBook Neo 13\": конфигурация — A18 Pro 6/5 · 8 ГБ · 512 ГБ; экран — 13″; тип экрана — LED."
+  "description": "MacBook Neo 13\": экран — 13″; тип экрана — LED; разрешение экрана — 2408x1506."
  },
  {
   "id": "galaxy-book6-pro-16-intel-core-ultra-7-356h-16-gb-1-tb",
@@ -11219,7 +11219,7 @@ export const products: Product[] = [
   },
   "summary": "16″ · Dynamic AMOLED 2X · 120 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 Pro 16\": конфигурация — Intel Core Ultra 7 356H · 16 ГБ · 1 ТБ; экран — 16″; тип экрана — Dynamic AMOLED 2X."
+  "description": "Galaxy Book6 Pro 16\": экран — 16″; тип экрана — Dynamic AMOLED 2X; частота обновления экрана — 120 Гц."
  },
  {
   "id": "galaxy-book6-pro-16-intel-core-ultra-7-356h-32-gb-1-tb",
@@ -11257,7 +11257,7 @@ export const products: Product[] = [
   },
   "summary": "16″ · Dynamic AMOLED 2X · 120 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 Pro 16\": конфигурация — Intel Core Ultra 7 356H · 32 ГБ · 1 ТБ; экран — 16″; тип экрана — Dynamic AMOLED 2X."
+  "description": "Galaxy Book6 Pro 16\": экран — 16″; тип экрана — Dynamic AMOLED 2X; частота обновления экрана — 120 Гц."
  },
  {
   "id": "galaxy-book6-14-intel-core-ultra-5-325-16-gb-512-gb",
@@ -11299,7 +11299,7 @@ export const products: Product[] = [
   },
   "summary": "14″ · IPS · 60 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 14\": конфигурация — Intel Core Ultra 5 325 · 16 ГБ · 512 ГБ; экран — 14″; тип экрана — IPS."
+  "description": "Galaxy Book6 14\": экран — 14″; тип экрана — IPS; частота обновления экрана — 60 Гц."
  },
  {
   "id": "galaxy-book6-14-intel-core-ultra-7-355-16-gb-512-gb",
@@ -11341,7 +11341,7 @@ export const products: Product[] = [
   },
   "summary": "14″ · IPS · 60 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 14\": конфигурация — Intel Core Ultra 7 355 · 16 ГБ · 512 ГБ; экран — 14″; тип экрана — IPS."
+  "description": "Galaxy Book6 14\": экран — 14″; тип экрана — IPS; частота обновления экрана — 60 Гц."
  },
  {
   "id": "galaxy-book6-pro-14-intel-core-ultra-5-325-16-gb-512-gb",
@@ -11379,7 +11379,7 @@ export const products: Product[] = [
   },
   "summary": "14″ · Dynamic AMOLED 2X · 120 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 Pro 14\": конфигурация — Intel Core Ultra 5 325 · 16 ГБ · 512 ГБ; экран — 14″; тип экрана — Dynamic AMOLED 2X."
+  "description": "Galaxy Book6 Pro 14\": экран — 14″; тип экрана — Dynamic AMOLED 2X; частота обновления экрана — 120 Гц."
  },
  {
   "id": "galaxy-book6-pro-14-intel-core-ultra-7-356h-32-gb-1-tb",
@@ -11417,7 +11417,7 @@ export const products: Product[] = [
   },
   "summary": "14″ · Dynamic AMOLED 2X · 120 Гц",
   "inStock": true,
-  "description": "Galaxy Book6 Pro 14\": конфигурация — Intel Core Ultra 7 356H · 32 ГБ · 1 ТБ; экран — 14″; тип экрана — Dynamic AMOLED 2X."
+  "description": "Galaxy Book6 Pro 14\": экран — 14″; тип экрана — Dynamic AMOLED 2X; частота обновления экрана — 120 Гц."
  },
  {
   "id": "asus-zenbook-14-oled-core-ultra-5-225h-16-gb-512-gb-ux3405ca-st1350",
@@ -11984,9 +11984,9 @@ export const products: Product[] = [
    "Частотный диапазон": "20 - 20000 Гц",
    "Поддержка iPhone": "есть"
   },
-  "summary": "8 ч · да · Пластик",
+  "summary": "8 ч · Пластик · 5,55",
   "inStock": true,
-  "description": "AirPods Pro 3: время работы — 8 ч; беспроводная зарядка — да; материал корпуса — Пластик."
+  "description": "AirPods Pro 3: время работы — 8 ч; материал корпуса — Пластик; вес одного наушника (грамм) — 5,55."
  },
  {
   "id": "airpods-max-2",
@@ -12074,9 +12074,9 @@ export const products: Product[] = [
    "Частотный диапазон": "20 - 20000 Гц",
    "Поддержка iPhone": "есть"
   },
-  "summary": "нет · Пластик · 4,3",
+  "summary": "Пластик · 4,3 · 46,2 x 50,1 x 21,2 мм",
   "inStock": true,
-  "description": "AirPods 5: время работы — 4 ч (с шумоподавлением или прозрачным режимом); 6 ч (без шумоподавления); беспроводная зарядка — нет; материал корпуса — Пластик."
+  "description": "AirPods 5: время работы — 4 ч (с шумоподавлением или прозрачным режимом); 6 ч (без шумоподавления); материал корпуса — Пластик; вес одного наушника (грамм) — 4,3."
  },
  {
   "id": "airpods-5-s-besprovodnym-futlyarom",
@@ -12111,9 +12111,9 @@ export const products: Product[] = [
    "Частотный диапазон": "20 - 20000 Гц",
    "Поддержка iPhone": "есть"
   },
-  "summary": "да · Пластик · 4,3",
+  "summary": "Пластик · 4,3 · 46,2 x 50,1 x 21,2 мм",
   "inStock": true,
-  "description": "AirPods 5 с беспроводным футляром: время работы — 5 ч (с шумоподавлением или прозрачным режимом); 7 ч (без шумоподавления); беспроводная зарядка — да; материал корпуса — Пластик."
+  "description": "AirPods 5 с беспроводным футляром: время работы — 5 ч (с шумоподавлением или прозрачным режимом); 7 ч (без шумоподавления); материал корпуса — Пластик; вес одного наушника (грамм) — 4,3."
  },
  {
   "id": "beats-solo-buds",
@@ -12148,9 +12148,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats Solo Buds: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats Solo Buds: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "beats-solo-4",
@@ -12185,9 +12185,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats Solo 4: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats Solo 4: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "beats-powerbeats-fit",
@@ -12222,9 +12222,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats Powerbeats Fit: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats Powerbeats Fit: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "beats-studio-pro",
@@ -12259,9 +12259,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats Studio Pro: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats Studio Pro: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "beats-powerbeats-pro-2",
@@ -12296,9 +12296,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats Powerbeats Pro 2: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats Powerbeats Pro 2: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "beats-360",
@@ -12333,9 +12333,9 @@ export const products: Product[] = [
    "Защита от воды": "да",
    "Поддержка Bluetooth": "Bluetooth 5.3 Class 1"
   },
-  "summary": "32 ч · нет · Пластик, текстиль",
+  "summary": "32 ч · Пластик, текстиль · 295",
   "inStock": true,
-  "description": "Beats 360: время работы — 32 ч; беспроводная зарядка — нет; материал корпуса — Пластик, текстиль."
+  "description": "Beats 360: время работы — 32 ч; материал корпуса — Пластик, текстиль; вес, г — 295."
  },
  {
   "id": "galaxy-buds3-fe",
@@ -12370,9 +12370,9 @@ export const products: Product[] = [
    "Система активного шумоподавления": "да",
    "Вид": "вставные (внутриканальные)"
   },
-  "summary": "8.5 ч · нет · 52",
+  "summary": "8.5 ч · 52 · 2,11 x 1,8 x 3,38 см",
   "inStock": true,
-  "description": "Galaxy Buds3 FE: время работы — 8.5 ч; беспроводная зарядка — нет; вес, г — 52."
+  "description": "Galaxy Buds3 FE: время работы — 8.5 ч; вес, г — 52; размеры — 2,11 x 1,8 x 3,38 см."
  },
  {
   "id": "galaxy-buds4-pro",
@@ -12407,9 +12407,9 @@ export const products: Product[] = [
    "Система активного шумоподавления": "да",
    "Вид": "вставные (внутриканальные)"
   },
-  "summary": "6 ч · да · 55",
+  "summary": "6 ч · 55 · 3,1 × 1,9 × 1,8 см",
   "inStock": true,
-  "description": "Galaxy Buds4 Pro: время работы — 6 ч; беспроводная зарядка — да; вес, г — 55."
+  "description": "Galaxy Buds4 Pro: время работы — 6 ч; вес, г — 55; размеры — 3,1 × 1,9 × 1,8 см."
  },
  {
   "id": "galaxy-buds4",
@@ -12444,9 +12444,9 @@ export const products: Product[] = [
    "Система активного шумоподавления": "да",
    "Вид": "вкладыши"
   },
-  "summary": "6 ч · да · 54",
+  "summary": "6 ч · 54 · 3 × 1,9 × 1,8 см",
   "inStock": true,
-  "description": "Galaxy Buds4: время работы — 6 ч; беспроводная зарядка — да; вес, г — 54."
+  "description": "Galaxy Buds4: время работы — 6 ч; вес, г — 54; размеры — 3 × 1,9 × 1,8 см."
  },
  {
   "id": "huawei-freeclip-2",
@@ -12481,9 +12481,9 @@ export const products: Product[] = [
    "Вид": "вкладыши",
    "Поддержка iPhone": "да"
   },
-  "summary": "9 ч · да · 49",
+  "summary": "9 ч · 49 · 2,5 x 2,6 x 1,9 см",
   "inStock": true,
-  "description": "Huawei FreeClip 2: время работы — 9 ч; беспроводная зарядка — да; вес, г — 49."
+  "description": "Huawei FreeClip 2: время работы — 9 ч; вес, г — 49; размеры — 2,5 x 2,6 x 1,9 см."
  },
  {
   "id": "marshall-major-v",
@@ -12888,9 +12888,9 @@ export const products: Product[] = [
    "Поддержка iPhone": "да",
    "Материал": "пластик"
   },
-  "summary": "8 ч · да · 60",
+  "summary": "8 ч · 60 · 6,5",
   "inStock": true,
-  "description": "Sony WF-1000XM6: время работы — 8 ч; беспроводная зарядка — да; вес, г — 60."
+  "description": "Sony WF-1000XM6: время работы — 8 ч; вес, г — 60; вес одного наушника (грамм) — 6,5."
  },
  {
   "id": "sony-wh-1000xm6",
@@ -12925,9 +12925,9 @@ export const products: Product[] = [
    "Диаметр мембраны": "30 мм",
    "Тип кабеля": "отсоединяемый"
   },
-  "summary": "40 ч · нет · 254",
+  "summary": "40 ч · 254 · беспроводные наушники",
   "inStock": true,
-  "description": "Sony WH-1000XM6: время работы — 40 ч; беспроводная зарядка — нет; вес, г — 254."
+  "description": "Sony WH-1000XM6: время работы — 40 ч; вес, г — 254; тип — беспроводные наушники."
  },
  {
   "id": "bose-quietcomfort-ultra-headphones-2-qc-ultra-headphones-2",
@@ -13049,7 +13049,7 @@ export const products: Product[] = [
   },
   "summary": "1.98″ · 514 x 422 · Apple S11",
   "inStock": true,
-  "description": "Apple Watch Ultra 4: конфигурация — 49 мм · титан; экран — 1.98″; тип экрана — OLED, сенсорный, с подсветкой."
+  "description": "Apple Watch Ultra 4: экран — 1.98″; тип экрана — OLED, сенсорный, с подсветкой; разрешение экрана — 514 x 422."
  },
  {
   "id": "apple-watch-series-12-42-mm-alyuminiy",
@@ -13094,24 +13094,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "42 мм · алюминий",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "374 x 446",
    "Процессор": "Apple S11",
-   "Время работы": "24 ч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP6X",
-   "Материал корпуса": "Титан",
-   "Вес, г": "36.5",
-   "Размеры": "4,2 x 3,7 x 0,97 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "iOS 27",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "374 x 446 · Apple S11 · 24 ч",
+  "summary": "Apple S11 · IP6X · Watch OS",
   "inStock": true,
-  "description": "Apple Watch Series 12: конфигурация — 42 мм · алюминий; тип экрана — OLED, сенсорный, с подсветкой; разрешение экрана — 374 x 446."
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
  },
  {
   "id": "apple-watch-series-12-46-mm-alyuminiy",
@@ -13152,24 +13146,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "46 мм · алюминий",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "374 x 446",
    "Процессор": "Apple S11",
-   "Время работы": "24 ч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP6X",
-   "Материал корпуса": "Титан",
-   "Вес, г": "36.5",
-   "Размеры": "4,2 x 3,7 x 0,97 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "iOS 27",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "374 x 446 · Apple S11 · 24 ч",
+  "summary": "Apple S11 · IP6X · Watch OS",
   "inStock": true,
-  "description": "Apple Watch Series 12: конфигурация — 46 мм · алюминий; тип экрана — OLED, сенсорный, с подсветкой; разрешение экрана — 374 x 446."
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
  },
  {
   "id": "apple-watch-series-12-42-mm-titan",
@@ -13202,24 +13190,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "42 мм · титан",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "374 x 446",
    "Процессор": "Apple S11",
-   "Время работы": "24 ч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP6X",
-   "Материал корпуса": "Титан",
-   "Вес, г": "36.5",
-   "Размеры": "4,2 x 3,7 x 0,97 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "iOS 27",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "374 x 446 · Apple S11 · 24 ч",
+  "summary": "Apple S11 · IP6X · Watch OS",
   "inStock": true,
-  "description": "Apple Watch Series 12: конфигурация — 42 мм · титан; тип экрана — OLED, сенсорный, с подсветкой; разрешение экрана — 374 x 446."
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
  },
  {
   "id": "apple-watch-series-12-46-mm-titan",
@@ -13252,24 +13234,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "46 мм · титан",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "374 x 446",
    "Процессор": "Apple S11",
-   "Время работы": "24 ч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP6X",
-   "Материал корпуса": "Титан",
-   "Вес, г": "36.5",
-   "Размеры": "4,2 x 3,7 x 0,97 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "iOS 27",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "374 x 446 · Apple S11 · 24 ч",
+  "summary": "Apple S11 · IP6X · Watch OS",
   "inStock": true,
-  "description": "Apple Watch Series 12: конфигурация — 46 мм · титан; тип экрана — OLED, сенсорный, с подсветкой; разрешение экрана — 374 x 446."
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
  },
  {
   "id": "galaxy-watch9-40-mm-bluetooth",
@@ -13386,24 +13362,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "40 мм · алюминий",
-   "Экран": "1.78″",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "448 x 368",
    "Процессор": "Apple S10",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "WR50",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "33",
-   "Размеры": "4,4 x 3,8 x 1,07 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "17",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.78″ · 448 x 368 · Apple S10",
+  "summary": "Apple S10 · WR50 · Watch OS",
   "inStock": true,
-  "description": "Apple Watch SE 3: конфигурация — 40 мм · алюминий; экран — 1.78″; тип экрана — OLED, сенсорный, с подсветкой."
+  "description": "Apple Watch SE 3: процессор — Apple S10; класс водонепроницаемости — WR50; операционная система — Watch OS."
  },
  {
   "id": "apple-watch-se-3-44-mm-alyuminiy",
@@ -13436,24 +13406,18 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "44 мм · алюминий",
-   "Экран": "1.78″",
-   "Тип экрана": "OLED, сенсорный, с подсветкой",
-   "Разрешение экрана": "448 x 368",
    "Процессор": "Apple S10",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "WR50",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "33",
-   "Размеры": "4,4 x 3,8 x 1,07 см",
    "Операционная система": "Watch OS",
    "Совместимость с ОС": "iOS",
    "Минимальная поддерживаемая версия iOS": "17",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.78″ · 448 x 368 · Apple S10",
+  "summary": "Apple S10 · WR50 · Watch OS",
   "inStock": true,
-  "description": "Apple Watch SE 3: конфигурация — 44 мм · алюминий; экран — 1.78″; тип экрана — OLED, сенсорный, с подсветкой."
+  "description": "Apple Watch SE 3: процессор — Apple S10; класс водонепроницаемости — WR50; операционная система — Watch OS."
  },
  {
   "id": "galaxy-watch8-40-mm",
@@ -13468,30 +13432,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8/bluetooth-wi-fi.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi",
+    "name": "",
     "image": "/images/p/galaxy-watch8/bluetooth-wi-fi.webp"
    }
   ],
   "specs": {
    "Конфигурация": "40 мм",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "30",
-   "Размеры": "4,27 x 4,04 x 0,86 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8: конфигурация — 40 мм; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "galaxy-watch8-44-mm",
@@ -13506,30 +13463,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8/bluetooth-wi-fi.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi",
+    "name": "",
     "image": "/images/p/galaxy-watch8/bluetooth-wi-fi.webp"
    }
   ],
   "specs": {
    "Конфигурация": "44 мм",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "30",
-   "Размеры": "4,27 x 4,04 x 0,86 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8: конфигурация — 44 мм; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "galaxy-watch8-40-mm-lte",
@@ -13544,30 +13494,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8/bluetooth-wi-fi-plus-4g-lte.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi + 4G LTE",
+    "name": "",
     "image": "/images/p/galaxy-watch8/bluetooth-wi-fi-plus-4g-lte.webp"
    }
   ],
   "specs": {
    "Конфигурация": "40 мм · LTE",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "30",
-   "Размеры": "4,27 x 4,04 x 0,86 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8: конфигурация — 40 мм · LTE; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "galaxy-watch8-44-mm-lte",
@@ -13582,30 +13525,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8/bluetooth-wi-fi-plus-4g-lte.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi + 4G LTE",
+    "name": "",
     "image": "/images/p/galaxy-watch8/bluetooth-wi-fi-plus-4g-lte.webp"
    }
   ],
   "specs": {
    "Конфигурация": "44 мм · LTE",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Алюминий",
-   "Вес, г": "30",
-   "Размеры": "4,27 x 4,04 x 0,86 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8: конфигурация — 44 мм · LTE; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "galaxy-watch8-classic-46-mm",
@@ -13620,30 +13556,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8-classic/bluetooth-wi-fi.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi",
+    "name": "",
     "image": "/images/p/galaxy-watch8-classic/bluetooth-wi-fi.webp"
    }
   ],
   "specs": {
    "Конфигурация": "46 мм",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Нержавеющая сталь",
-   "Вес, г": "63.5",
-   "Размеры": "4,64 x 4,6 x 1,06 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8 Classic: конфигурация — 46 мм; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8 Classic: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "galaxy-watch8-classic-46-mm-lte",
@@ -13658,30 +13587,23 @@ export const products: Product[] = [
   "image": "/images/p/galaxy-watch8-classic/bluetooth-wi-fi-plus-4g-lte.webp",
   "colors": [
    {
-    "name": "Bluetooth/Wi-Fi + 4G LTE",
+    "name": "",
     "image": "/images/p/galaxy-watch8-classic/bluetooth-wi-fi-plus-4g-lte.webp"
    }
   ],
   "specs": {
    "Конфигурация": "46 мм · LTE",
-   "Экран": "1.34″",
-   "Тип экрана": "AMOLED",
-   "Разрешение экрана": "438 x 438",
-   "Ёмкость аккумулятора": "425 мАч",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP68",
-   "Материал корпуса": "Нержавеющая сталь",
-   "Вес, г": "63.5",
-   "Размеры": "4,64 x 4,6 x 1,06 см",
    "Операционная система": "Android Wear OS 6",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android",
    "Установка сторонних приложений": "есть",
    "Уведомления с просмотром или ответом": "есть"
   },
-  "summary": "1.34″ · AMOLED · 438 x 438",
+  "summary": "IP68 · Android Wear OS 6 · Android",
   "inStock": true,
-  "description": "Galaxy Watch8 Classic: конфигурация — 46 мм · LTE; экран — 1.34″; тип экрана — AMOLED."
+  "description": "Galaxy Watch8 Classic: класс водонепроницаемости — IP68; операционная система — Android Wear OS 6; совместимость с ОС — Android."
  },
  {
   "id": "garmin-fenix-9-pro-43-mm-amoled-inreach",
@@ -13702,14 +13624,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "43 мм · AMOLED · inReach",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13717,9 +13632,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 43 мм · AMOLED · inReach; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-47-mm-amoled",
@@ -13740,14 +13655,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "47 мм · AMOLED",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13755,9 +13663,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 47 мм · AMOLED; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-47-mm-solar-inreach",
@@ -13778,14 +13686,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "47 мм · Solar · inReach",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13793,9 +13694,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 47 мм · Solar · inReach; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-47-mm-amoled-inreach",
@@ -13828,14 +13729,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "47 мм · AMOLED · inReach",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13843,9 +13737,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 47 мм · AMOLED · inReach; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-51-mm-solar-inreach",
@@ -13866,14 +13760,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "51 мм · Solar · inReach",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13881,9 +13768,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 51 мм · Solar · inReach; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-51-mm-amoled",
@@ -13904,14 +13791,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "51 мм · AMOLED",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13919,9 +13799,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 51 мм · AMOLED; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-fenix-9-pro-51-mm-amoled-inreach",
@@ -13950,14 +13830,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "51 мм · AMOLED · inReach",
-   "Экран": "1,4″",
-   "Тип экрана": "Трансфлективный (MIP)",
-   "Разрешение экрана": "280 x 280",
-   "Время работы": "до 57 дней",
    "Класс водонепроницаемости": "10 ATM",
-   "Материал корпуса": "Титан",
-   "Вес, г": "102",
-   "Размеры": "5,1 x 5,1 x 1,66 см",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
    "Способ отображения времени": "цифровой (электронный)",
@@ -13965,9 +13838,9 @@ export const products: Product[] = [
    "Влагозащита": "есть",
    "Сменный браслет/ремешок": "есть"
   },
-  "summary": "1,4″ · Трансфлективный (MIP) · 280 x 280",
+  "summary": "10 ATM · iOS, Android · цифровой (электронный)",
   "inStock": true,
-  "description": "Garmin fenix 9 Pro: конфигурация — 51 мм · AMOLED · inReach; экран — 1,4″; тип экрана — Трансфлективный (MIP)."
+  "description": "Garmin fenix 9 Pro: класс водонепроницаемости — 10 ATM; совместимость с ОС — iOS, Android; способ отображения времени — цифровой (электронный)."
  },
  {
   "id": "garmin-forerunner-570-47-mm",
@@ -13996,10 +13869,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "47 мм",
-   "Экран": "1.2″",
-   "Разрешение экрана": "390 x 390",
    "Класс водонепроницаемости": "5 ATM (50 м)",
-   "Вес, г": "42",
    "Регулировка ремешка": "есть",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
@@ -14011,9 +13881,9 @@ export const products: Product[] = [
    "Офлайн карты": "нет",
    "Открытая местность и спутниковые карты": "да"
   },
-  "summary": "1.2″ · 390 x 390 · 5 ATM (50 м)",
+  "summary": "5 ATM (50 м) · iOS, Android · 20 мм",
   "inStock": true,
-  "description": "Garmin Forerunner 570: конфигурация — 47 мм; экран — 1.2″; разрешение экрана — 390 x 390."
+  "description": "Garmin Forerunner 570: класс водонепроницаемости — 5 ATM (50 м); совместимость с ОС — iOS, Android; ширина ремешка — 20 мм."
  },
  {
   "id": "garmin-forerunner-570-42-mm",
@@ -14042,10 +13912,7 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "42 мм",
-   "Экран": "1.2″",
-   "Разрешение экрана": "390 x 390",
    "Класс водонепроницаемости": "5 ATM (50 м)",
-   "Вес, г": "42",
    "Регулировка ремешка": "есть",
    "Совместимость с ОС": "iOS, Android",
    "Установка сторонних приложений": "есть",
@@ -14057,9 +13924,9 @@ export const products: Product[] = [
    "Офлайн карты": "нет",
    "Открытая местность и спутниковые карты": "да"
   },
-  "summary": "1.2″ · 390 x 390 · 5 ATM (50 м)",
+  "summary": "5 ATM (50 м) · iOS, Android · 20 мм",
   "inStock": true,
-  "description": "Garmin Forerunner 570: конфигурация — 42 мм; экран — 1.2″; разрешение экрана — 390 x 390."
+  "description": "Garmin Forerunner 570: класс водонепроницаемости — 5 ATM (50 м); совместимость с ОС — iOS, Android; ширина ремешка — 20 мм."
  },
  {
   "id": "garmin-forerunner-970",
@@ -14286,24 +14153,16 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "41 мм",
-   "Экран": "1,32″",
-   "Тип экрана": "AMOLED",
-   "Частота обновления экрана": "60 Гц",
-   "Разрешение экрана": "466 x 466",
-   "Время работы": "до 14 дней",
    "Класс водонепроницаемости": "5 ATM",
-   "Материал корпуса": "Нержавеющая сталь",
-   "Вес, г": "37,5",
-   "Размеры": "4,13 × 4,13 × 0,99 см",
    "Операционная система": "HarmonyOS 6.0",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android 9.0 и выше, iOS 13.0 и выше",
    "Материал браслета/ремешка": "кожа",
    "Способ отображения времени": "цифровой (электронный)"
   },
-  "summary": "1,32″ · AMOLED · 60 Гц",
+  "summary": "5 ATM · HarmonyOS 6.0 · кожа",
   "inStock": true,
-  "description": "Huawei Watch GT 6: конфигурация — 41 мм; экран — 1,32″; тип экрана — AMOLED."
+  "description": "Huawei Watch GT 6: класс водонепроницаемости — 5 ATM; операционная система — HarmonyOS 6.0; совместимость с ОС — Android 9.0 и выше, iOS 13.0 и выше."
  },
  {
   "id": "huawei-watch-gt-6-46-mm",
@@ -14332,24 +14191,16 @@ export const products: Product[] = [
   ],
   "specs": {
    "Конфигурация": "46 мм",
-   "Экран": "1,32″",
-   "Тип экрана": "AMOLED",
-   "Частота обновления экрана": "60 Гц",
-   "Разрешение экрана": "466 x 466",
-   "Время работы": "до 14 дней",
    "Класс водонепроницаемости": "5 ATM",
-   "Материал корпуса": "Нержавеющая сталь",
-   "Вес, г": "37,5",
-   "Размеры": "4,13 × 4,13 × 0,99 см",
    "Операционная система": "HarmonyOS 6.0",
    "Бесконтактная оплата": "да",
    "Совместимость с ОС": "Android 9.0 и выше, iOS 13.0 и выше",
    "Материал браслета/ремешка": "кожа",
    "Способ отображения времени": "цифровой (электронный)"
   },
-  "summary": "1,32″ · AMOLED · 60 Гц",
+  "summary": "5 ATM · HarmonyOS 6.0 · кожа",
   "inStock": true,
-  "description": "Huawei Watch GT 6: конфигурация — 46 мм; экран — 1,32″; тип экрана — AMOLED."
+  "description": "Huawei Watch GT 6: класс водонепроницаемости — 5 ATM; операционная система — HarmonyOS 6.0; совместимость с ОС — Android 9.0 и выше, iOS 13.0 и выше."
  },
  {
   "id": "huawei-watch-gt-6-pro",
@@ -14595,7 +14446,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 2600 · 35,8 x 21,6 x 8 см",
   "inStock": true,
-  "description": "PlayStation 5 Slim Digital Edition: память — 825 ГБ; материал корпуса — Пластик; вес, г — 2600."
+  "description": "PlayStation 5 Slim Digital Edition: материал корпуса — Пластик; вес, г — 2600; размеры — 35,8 x 21,6 x 8 см."
  },
  {
   "id": "playstation-5-slim-digital-edition-1-tb",
@@ -14633,7 +14484,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 2600 · 35,8 x 21,6 x 8 см",
   "inStock": true,
-  "description": "PlayStation 5 Slim Digital Edition: память — 1 ТБ; материал корпуса — Пластик; вес, г — 2600."
+  "description": "PlayStation 5 Slim Digital Edition: материал корпуса — Пластик; вес, г — 2600; размеры — 35,8 x 21,6 x 8 см."
  },
  {
   "id": "playstation-5-slim-1-tb",
@@ -14671,7 +14522,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 3200 · 35,8 x 21,6 x 9,6 см",
   "inStock": true,
-  "description": "PlayStation 5 Slim: память — 1 ТБ; материал корпуса — Пластик; вес, г — 3200."
+  "description": "PlayStation 5 Slim: материал корпуса — Пластик; вес, г — 3200; размеры — 35,8 x 21,6 x 9,6 см."
  },
  {
   "id": "xbox-series-x-1-tb",
@@ -14709,7 +14560,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 4500 · 15,1 x 15,1 x 30,1 см",
   "inStock": true,
-  "description": "Xbox Series X: память — 1 ТБ; материал корпуса — Пластик; вес, г — 4500."
+  "description": "Xbox Series X: материал корпуса — Пластик; вес, г — 4500; размеры — 15,1 x 15,1 x 30,1 см."
  },
  {
   "id": "xbox-series-x-2-tb",
@@ -14747,7 +14598,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 4500 · 15,1 x 15,1 x 30,1 см",
   "inStock": true,
-  "description": "Xbox Series X: память — 2 ТБ; материал корпуса — Пластик; вес, г — 4500."
+  "description": "Xbox Series X: материал корпуса — Пластик; вес, г — 4500; размеры — 15,1 x 15,1 x 30,1 см."
  },
  {
   "id": "xbox-series-s-512-gb",
@@ -14785,7 +14636,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 2000 · 6,5 x 15 x 27,5 см",
   "inStock": true,
-  "description": "Xbox Series S: память — 512 ГБ; материал корпуса — Пластик; вес, г — 2000."
+  "description": "Xbox Series S: материал корпуса — Пластик; вес, г — 2000; размеры — 6,5 x 15 x 27,5 см."
  },
  {
   "id": "xbox-series-s-1-tb",
@@ -14823,7 +14674,7 @@ export const products: Product[] = [
   },
   "summary": "Пластик · 2000 · 6,5 x 15 x 27,5 см",
   "inStock": true,
-  "description": "Xbox Series S: память — 1 ТБ; материал корпуса — Пластик; вес, г — 2000."
+  "description": "Xbox Series S: материал корпуса — Пластик; вес, г — 2000; размеры — 6,5 x 15 x 27,5 см."
  },
  {
   "id": "nintendo-switch-oled",
@@ -15166,7 +15017,7 @@ export const products: Product[] = [
   },
   "summary": "1950 мАч · 240 мин · Пластик",
   "inStock": true,
-  "description": "DJI Osmo Action 6: конфигурация — Standard Combo; ёмкость аккумулятора — 1950 мАч; время работы — 240 мин."
+  "description": "DJI Osmo Action 6: ёмкость аккумулятора — 1950 мАч; время работы — 240 мин; материал корпуса — Пластик."
  },
  {
   "id": "dji-osmo-action-6-adventure-combo",
@@ -15204,7 +15055,7 @@ export const products: Product[] = [
   },
   "summary": "1950 мАч · 240 мин · Пластик",
   "inStock": true,
-  "description": "DJI Osmo Action 6: конфигурация — Adventure Combo; ёмкость аккумулятора — 1950 мАч; время работы — 240 мин."
+  "description": "DJI Osmo Action 6: ёмкость аккумулятора — 1950 мАч; время работы — 240 мин; материал корпуса — Пластик."
  },
  {
   "id": "insta360-x6-standard-bundle",
@@ -15242,7 +15093,7 @@ export const products: Product[] = [
   },
   "summary": "Qualcomm · 2600 мАч · 140 мин",
   "inStock": true,
-  "description": "Insta360 X6: конфигурация — Standard Bundle; процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч."
+  "description": "Insta360 X6: процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч; время работы — 140 мин."
  },
  {
   "id": "insta360-x6-essentials-bundle",
@@ -15280,7 +15131,7 @@ export const products: Product[] = [
   },
   "summary": "Qualcomm · 2600 мАч · 140 мин",
   "inStock": true,
-  "description": "Insta360 X6: конфигурация — Essentials Bundle; процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч."
+  "description": "Insta360 X6: процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч; время работы — 140 мин."
  },
  {
   "id": "insta360-x6-motorcycle-multiview-bundle",
@@ -15318,7 +15169,7 @@ export const products: Product[] = [
   },
   "summary": "Qualcomm · 2600 мАч · 140 мин",
   "inStock": true,
-  "description": "Insta360 X6: конфигурация — Motorcycle Multiview Bundle; процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч."
+  "description": "Insta360 X6: процессор — Qualcomm; ёмкость аккумулятора — 2600 мАч; время работы — 140 мин."
  },
  {
   "id": "dji-osmo-360-standard-combo",
@@ -15342,7 +15193,7 @@ export const products: Product[] = [
   },
   "summary": "",
   "inStock": true,
-  "description": "DJI Osmo 360: конфигурация — Standard Combo."
+  "description": "DJI Osmo 360"
  },
  {
   "id": "dji-osmo-360-adventure-combo",
@@ -15366,7 +15217,7 @@ export const products: Product[] = [
   },
   "summary": "",
   "inStock": true,
-  "description": "DJI Osmo 360: конфигурация — Adventure Combo."
+  "description": "DJI Osmo 360"
  },
  {
   "id": "dji-osmo-mobile-8-standard-combo",
@@ -15404,7 +15255,7 @@ export const products: Product[] = [
   },
   "summary": "1,4″ · 60 Гц · 240 × 240",
   "inStock": true,
-  "description": "DJI Osmo Mobile 8: конфигурация — Standard Combo; экран — 1,4″; частота обновления экрана — 60 Гц."
+  "description": "DJI Osmo Mobile 8: экран — 1,4″; частота обновления экрана — 60 Гц; разрешение экрана — 240 × 240."
  },
  {
   "id": "dji-osmo-mobile-8-advanced-tracking-combo",
@@ -15442,7 +15293,7 @@ export const products: Product[] = [
   },
   "summary": "1,4″ · 60 Гц · 240 × 240",
   "inStock": true,
-  "description": "DJI Osmo Mobile 8: конфигурация — Advanced Tracking Combo; экран — 1,4″; частота обновления экрана — 60 Гц."
+  "description": "DJI Osmo Mobile 8: экран — 1,4″; частота обновления экрана — 60 Гц; разрешение экрана — 240 × 240."
  },
  {
   "id": "dji-osmo-mobile-8-creator-combo",
@@ -15480,7 +15331,7 @@ export const products: Product[] = [
   },
   "summary": "1,4″ · 60 Гц · 240 × 240",
   "inStock": true,
-  "description": "DJI Osmo Mobile 8: конфигурация — Creator Combo; экран — 1,4″; частота обновления экрана — 60 Гц."
+  "description": "DJI Osmo Mobile 8: экран — 1,4″; частота обновления экрана — 60 Гц; разрешение экрана — 240 × 240."
  },
  {
   "id": "dji-osmo-pocket-4p-standard-combo",
@@ -15518,7 +15369,7 @@ export const products: Product[] = [
   },
   "summary": "1545 мАч · 210 мин · Пластик",
   "inStock": true,
-  "description": "DJI Osmo Pocket 4P: конфигурация — Standard Combo; ёмкость аккумулятора — 1545 мАч; время работы — 210 мин."
+  "description": "DJI Osmo Pocket 4P: ёмкость аккумулятора — 1545 мАч; время работы — 210 мин; материал корпуса — Пластик."
  },
  {
   "id": "dji-osmo-pocket-4p-vlog-combo",
@@ -15556,7 +15407,7 @@ export const products: Product[] = [
   },
   "summary": "1545 мАч · 210 мин · Пластик",
   "inStock": true,
-  "description": "DJI Osmo Pocket 4P: конфигурация — Vlog Combo; ёмкость аккумулятора — 1545 мАч; время работы — 210 мин."
+  "description": "DJI Osmo Pocket 4P: ёмкость аккумулятора — 1545 мАч; время работы — 210 мин; материал корпуса — Пластик."
  },
  {
   "id": "dji-air-3s-fly-more-combo-rc-n3",
@@ -16205,7 +16056,7 @@ export const products: Product[] = [
   },
   "summary": "3008 · 126,4 x 25.2 x 25 см · 240",
   "inStock": true,
-  "description": "Dyson V15 Detect: вес, г — 3008; размеры — 126,4 x 25.2 x 25 см; мощность всасывания вт — 240."
+  "description": "Dyson V15 Detect: вес, г — 3008; размеры — 126,4 x 25.2 x 25 см; мощность всасывания Вт — 240."
  },
  {
   "id": "dyson-pencilvac",
@@ -16238,7 +16089,7 @@ export const products: Product[] = [
   },
   "summary": "1800 · 116 x 22.6 x 3.8 см · 55",
   "inStock": true,
-  "description": "Dyson PencilVac: вес, г — 1800; размеры — 116 x 22.6 x 3.8 см; мощность всасывания вт — 55."
+  "description": "Dyson PencilVac: вес, г — 1800; размеры — 116 x 22.6 x 3.8 см; мощность всасывания Вт — 55."
  },
  {
   "id": "dyson-tp11-purifier-cool-pc1-de-nox",
@@ -16273,9 +16124,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson TP11 Purifier Cool PC1 De-NOx: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson TP11 Purifier Cool PC1 De-NOx: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-tp10",
@@ -16306,9 +16157,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson TP10: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson TP10: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-tp12-purifier-cool-pc2-de-nox",
@@ -16343,9 +16194,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson TP12 Purifier Cool PC2 De-NOx: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson TP12 Purifier Cool PC2 De-NOx: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-hp11-purifier-hot-plus-cool",
@@ -16376,9 +16227,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson HP11 Purifier Hot + Cool: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson HP11 Purifier Hot + Cool: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-bp03-purifier-big-plus-quiet-formaldehyde",
@@ -16409,9 +16260,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson BP03 Purifier Big+Quiet Formaldehyde: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson BP03 Purifier Big+Quiet Formaldehyde: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-bp04-purifier-big-plus-quiet-formaldehyde",
@@ -16442,9 +16293,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson BP04 Purifier Big + Quiet Formaldehyde: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson BP04 Purifier Big + Quiet Formaldehyde: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dyson-bp06-hepa-big-and-quiet-formaldehyde",
@@ -16475,9 +16326,9 @@ export const products: Product[] = [
    "Индикация": "есть",
    "Источник питания": "От сети"
   },
-  "summary": "Есть · Пластик · 4850",
+  "summary": "Пластик · 4850 · 10",
   "inStock": true,
-  "description": "Dyson BP06 HEPA Big and Quiet Formaldehyde: экран — Есть; материал корпуса — Пластик; вес, г — 4850."
+  "description": "Dyson BP06 HEPA Big and Quiet Formaldehyde: материал корпуса — Пластик; вес, г — 4850; количество скоростей — 10."
  },
  {
   "id": "dreame-l50s-pro-ultra",
@@ -17349,7 +17200,7 @@ export const products: Product[] = [
   },
   "summary": "11 · 3,19 x 3,19 x 0,8 см · IP67",
   "inStock": true,
-  "description": "AirTag (2-го поколения): конфигурация — 1 шт.; вес, г — 11; размеры — 3,19 x 3,19 x 0,8 см."
+  "description": "AirTag (2-го поколения): вес, г — 11; размеры — 3,19 x 3,19 x 0,8 см; рекомендовано — iPhone (iOS 26 или новее), iPad (iPadOS 26 или новее)."
  },
  {
   "id": "airtag-2-go-pokoleniya-4-sht",
@@ -17382,7 +17233,7 @@ export const products: Product[] = [
   },
   "summary": "11 · 3,19 x 3,19 x 0,8 см · IP67",
   "inStock": true,
-  "description": "AirTag (2-го поколения): конфигурация — 4 шт.; вес, г — 11; размеры — 3,19 x 3,19 x 0,8 см."
+  "description": "AirTag (2-го поколения): вес, г — 11; размеры — 3,19 x 3,19 x 0,8 см; рекомендовано — iPhone (iOS 26 или новее), iPad (iPadOS 26 или новее)."
  },
  {
   "id": "zaryadnoe-ustroystvo-magsafe-qi2-2-1-m",
@@ -17418,9 +17269,9 @@ export const products: Product[] = [
    "Разъемы": "встроенный кабель USB-C",
    "Параметры входа": "20 Вт (для выходной мощности до 15 Вт); 30 Вт (для выходной мощности до 25 Вт)"
   },
-  "summary": "Алюминий, пластик · да · 25",
+  "summary": "Алюминий, пластик · 25 · 200",
   "inStock": true,
-  "description": "Зарядное устройство MagSafe (Qi2.2): конфигурация — 1 м; материал корпуса — Алюминий, пластик; поддержка magsafe — да."
+  "description": "Зарядное устройство MagSafe (Qi2.2): материал корпуса — Алюминий, пластик; рекомендовано — для iPhone c поддержкой MagSafe, AirPods с поддержкой беспроводной зарядки; суммарная мощность (Вт) — 25."
  },
  {
   "id": "zaryadnoe-ustroystvo-magsafe-qi2-2-2-m",
@@ -17456,9 +17307,9 @@ export const products: Product[] = [
    "Разъемы": "встроенный кабель USB-C",
    "Параметры входа": "20 Вт (для выходной мощности до 15 Вт); 30 Вт (для выходной мощности до 25 Вт)"
   },
-  "summary": "Алюминий, пластик · да · 25",
+  "summary": "Алюминий, пластик · 25 · 200",
   "inStock": true,
-  "description": "Зарядное устройство MagSafe (Qi2.2): конфигурация — 2 м; материал корпуса — Алюминий, пластик; поддержка magsafe — да."
+  "description": "Зарядное устройство MagSafe (Qi2.2): материал корпуса — Алюминий, пластик; рекомендовано — для iPhone c поддержкой MagSafe, AirPods с поддержкой беспроводной зарядки; суммарная мощность (Вт) — 25."
  },
  {
   "id": "apple-moschnostyu-35-vt-2-usb-c",
@@ -17493,9 +17344,9 @@ export const products: Product[] = [
    "Тип портов": "USB‑C",
    "Разъемы": "2 x USB-C"
   },
-  "summary": "Пластик · нет · 2",
+  "summary": "Пластик · 2 · встроенная US",
   "inStock": true,
-  "description": "Apple мощностью 35 Вт (2 USB-C): материал корпуса — Пластик; кабель в комплекте — нет; количество портов — 2."
+  "description": "Apple мощностью 35 Вт (2 USB-C): материал корпуса — Пластик; количество портов — 2; тип вилки — встроенная US."
  },
  {
   "id": "apple-compact-moschnostyu-35-vt-2-usb-c",
@@ -17530,9 +17381,9 @@ export const products: Product[] = [
    "Тип портов": "USB‑C",
    "Разъемы": "2 x USB-C"
   },
-  "summary": "Пластик · нет · 2",
+  "summary": "Пластик · 2 · встроенная US",
   "inStock": true,
-  "description": "Apple Compact мощностью 35 Вт (2 USB-C): материал корпуса — Пластик; кабель в комплекте — нет; количество портов — 2."
+  "description": "Apple Compact мощностью 35 Вт (2 USB-C): материал корпуса — Пластик; количество портов — 2; тип вилки — встроенная US."
  },
  {
   "id": "setevoe-zaryadnoe-ustroystvo-apple-20-vt-usb-c",
@@ -17567,9 +17418,9 @@ export const products: Product[] = [
    "Защита от перенапряжения": "есть",
    "Тип портов": "USB‑C"
   },
-  "summary": "Пластик · нет · 1",
+  "summary": "Пластик · 1 · встроенная EU",
   "inStock": true,
-  "description": "Сетевое зарядное устройство Apple 20 Вт (USB-C): материал корпуса — Пластик; кабель в комплекте — нет; количество портов — 1."
+  "description": "Сетевое зарядное устройство Apple 20 Вт (USB-C): материал корпуса — Пластик; количество портов — 1; тип вилки — встроенная EU."
  },
  {
   "id": "apple-magic-keyboard-s-touch-id-usb-c",
@@ -17679,7 +17530,7 @@ export const products: Product[] = [
   },
   "summary": "до 45 дней · Алюминий, стекло · 99",
   "inStock": true,
-  "description": "Magic Mouse (USB-C): конфигурация — USB-C; время работы — до 45 дней; материал корпуса — Алюминий, стекло."
+  "description": "Magic Mouse (USB-C): время работы — до 45 дней; материал корпуса — Алюминий, стекло; вес, г — 99."
  },
  {
   "id": "apple-pencil-pro",

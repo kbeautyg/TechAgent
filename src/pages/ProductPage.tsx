@@ -88,6 +88,10 @@ export default function ProductPage() {
   const asked = params.get('color')
   const color = product.colors.find(c => c.name === asked) ?? product.colors[0]
   const colorName = color?.name || undefined
+  // Пришли из другой конфигурации в цвете, которого здесь нет — говорим об этом, а не меняем цвет молча
+  const missingColor = asked && colorName && asked !== colorName ? asked : null
+  // «Память» — только когда конфигурации отличаются одним объёмом; иначе («M5 · 16 ГБ · 1 ТБ», «128 ГБ · 5G») — «Конфигурация»
+  const variantLabel = siblings.every(v => /^\d+\s?(ГБ|ТБ)$/.test(v.variant || '')) ? 'Память' : 'Конфигурация'
   const image = withVersion(color?.image || '') || getProductImage(product.id)
   // У часов Apple одно фото на все цвета — тогда миниатюры в выборе цвета не нужны
   const colorThumbs = new Set(product.colors.map(c => c.image)).size > 1
@@ -96,8 +100,10 @@ export default function ProductPage() {
     if (name === product.colors[0]?.name) next.delete('color'); else next.set('color', name)
     setParams(next, { replace: true, preventScrollReset: true })
   }
-  /** Ссылка на конфигурацию в том же цвете, если он у неё есть */
-  const variantHref = (p: Product) => `/catalog/${p.id}${colorName && p.colors.some(c => c.name === colorName) && p.colors[0]?.name !== colorName ? `?color=${encodeURIComponent(colorName)}` : ''}`
+  /** Ссылка на конфигурацию в выбранном цвете; если у неё такого цвета нет, там покажем подсказку */
+  // Если здесь выбранного цвета не было, дальше ищем всё ещё его, а не подставленный
+  const wantedColor = missingColor ?? colorName
+  const variantHref = (p: Product) => `/catalog/${p.id}${wantedColor && p.colors[0]?.name !== wantedColor ? `?color=${encodeURIComponent(wantedColor)}` : ''}`
 
   return (
     <div className="pp-root">
@@ -150,7 +156,7 @@ export default function ProductPage() {
           {/* Конфигурации: ссылки на соседние карточки модели, цена меняется вместе с выбором */}
           {siblings.length > 1 && (
             <div className="pp-variants">
-              <div className="pp-variant-label">{/\d\s?(ГБ|ТБ)/.test(product.variant || '') ? 'Память' : 'Вариант'}</div>
+              <div className="pp-variant-label">{variantLabel}</div>
               <div className="pp-variant-chips">
                 {siblings.map(v => (
                   <Link
@@ -162,7 +168,7 @@ export default function ProductPage() {
                     className={`pp-variant-chip${v.id === product.id ? ' active' : ''}`}
                   >
                     <span>{v.variant}</span>
-                    {v.id !== product.id && <small>{v.price > product.price ? '+' : '−'}{fmt(Math.abs(v.price - product.price))} ₽</small>}
+                    {v.id !== product.id && <small>{v.price === product.price ? 'та же цена' : `${v.price > product.price ? '+' : '−'}${fmt(Math.abs(v.price - product.price))} ₽`}</small>}
                   </Link>
                 ))}
               </div>
@@ -187,7 +193,11 @@ export default function ProductPage() {
                   </button>
                 ))}
               </div>
+              {missingColor && <p className="pp-variant-note">Цвета «{missingColor}» в {product.variant ?? 'этой конфигурации'} нет — показан {colorName}</p>}
             </div>
+          )}
+          {product.colors.length === 1 && missingColor && (
+            <p className="pp-variant-note pp-variant-note-solo">Цвета «{missingColor}» в {product.variant ?? 'этой конфигурации'} нет — есть только {colorName}</p>
           )}
 
           <BuyBox product={product} color={colorName} />
@@ -197,7 +207,7 @@ export default function ProductPage() {
             <p className="pp-partner-title">Вы партнёр TechAgent?</p>
             <p className="pp-partner-text">Оформите этот товар для покупателя в своём кабинете — он получит его в вашем пункте выдачи.</p>
             <div className="pp-partner-btns">
-              <Link to="/dashboard/orders/new" className="pp-partner-main">Оформить в кабинете партнёра</Link>
+              <Link to={`/dashboard/orders/new?product=${product.id}${colorName ? `&color=${encodeURIComponent(colorName)}` : ''}`} className="pp-partner-main">Оформить в кабинете партнёра</Link>
               <Link to="/register" className="pp-partner-alt">Стать партнёром</Link>
             </div>
           </div>

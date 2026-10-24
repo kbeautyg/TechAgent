@@ -421,7 +421,8 @@ async function createOrder(req, res) {
     const p = catalog[id]
     // Цвет — только из списка цветов товара; если не передан или неизвестен — первый (у товаров без выбора цвета список пуст)
     const colors = Array.isArray(p?.colors) ? p.colors : []
-    const asked = clean(it?.color, 80)
+    // У часов «цвет» — это корпус и ремешок, до ~100 знаков; обрезать нельзя, иначе не узнаем цвет и подставим первый
+    const asked = clean(it?.color, 200)
     const color = colors.includes(asked) ? asked : (colors[0] || '')
     const key = id + '|' + color
     if (!p || seen.has(key) || !Number.isInteger(qty) || qty < 1 || qty > 5) continue
