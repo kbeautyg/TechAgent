@@ -474,8 +474,8 @@ input[type="checkbox"] {
 .pp-variant-label { font-size: 13px; font-weight: 700; color: var(--color-text-primary); margin-bottom: 10px; }
 .pp-variant-chips { display: flex; gap: 8px; flex-wrap: wrap; }
 .pp-variant-chip { padding: 10px 20px; border-radius: 12px; border: 1px solid var(--color-border); font-size: 13px; font-weight: 600; color: var(--color-text-secondary); cursor: pointer; transition: all .2s; background: white; }
-.pp-variant-chip:hover { border-color: var(--color-primary); color: var(--color-primary); }
-.pp-variant-chip.active { background: var(--color-primary); color: white; border-color: var(--color-primary); }
+.pp-variant-chip:hover { border-color: var(--color-text-primary); color: var(--color-text-primary); }
+.pp-variant-chip.active { background: var(--color-text-primary); color: white; border-color: var(--color-text-primary); }
 .pp-variant-note { font-size: 13px; line-height: 1.45; color: #b45309; margin: 10px 0 0; }
 .pp-variant-note-solo { margin: -14px 0 28px; }
 
@@ -1988,7 +1988,7 @@ body {
 .pp-variant-chip:focus-visible { outline: 2px solid var(--color-primary); outline-offset: 2px; }
 .pp-color-chip { flex-direction: row; align-items: center; gap: 8px; padding: 6px 14px 6px 6px; }
 .pp-color-chip img { width: 28px; height: 28px; object-fit: contain; border-radius: 8px; background: #fff; mix-blend-mode: multiply; }
-.pp-color-chip.active { background: var(--color-bg-hero); color: var(--color-primary); border-color: var(--color-primary); box-shadow: inset 0 0 0 1px var(--color-primary); }
+.pp-color-chip.active { background: white; color: var(--color-text-primary); border-color: var(--color-text-primary); box-shadow: inset 0 0 0 1px var(--color-text-primary); }
 .pp-color-chip.active img { mix-blend-mode: normal; }
 .pcard-from { font-size: 13px; font-weight: 600; color: var(--color-text-muted); }
 .pp-color-chip-text { padding: 10px 16px; }
