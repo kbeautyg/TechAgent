@@ -1,0 +1,686 @@
+[
+ {
+  "brand": "Garmin",
+  "category": "Часы",
+  "model": "Garmin fenix 9 Pro",
+  "released": "2026-08",
+  "status": "current",
+  "specs": {
+   "sizes": "43 / 47 / 51 мм",
+   "display": "AMOLED (на 51 мм — 1,5\") или MIP Solar (47/51 мм)",
+   "case": "титан, сапфировое стекло",
+   "connectivity": "версии с inReach (спутник) или LTE"
+  },
+  "description_ru": "Флагманские мультиспортивные часы Garmin 2026 года для походов, бега и путешествий, с картами и титановым корпусом. Версия с inReach позволяет отправлять сообщения и SOS через спутник без телефона.",
+  "configs": [
+   {
+    "variant": "47 мм AMOLED, титан, без inReach",
+    "colors": [
+     "Titanium / Graphite-Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 114990,
+      "url": "https://biggeek.ru/products/casy-garmin-fenix-9-pro-47-mm-amoled-sapphire-crystal-titanium-with-graphiteblack-silicone-band-inreach-no"
+     }
+    ],
+    "market_median": 114990
+   },
+   {
+    "variant": "47 мм AMOLED, титан, с inReach",
+    "colors": [
+     "Titanium / Graphite-Black",
+     "Carbon Gray DLC / Black-Pebble Gray",
+     "Titanium / Autumn Orange"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 129990,
+      "url": "https://biggeek.ru/products/casy-garmin-fenix-9-pro-47-mm-amoled-sapphire-crystal-titanium-with-graphiteblack-silicone-band-inreach-yes"
+     }
+    ],
+    "market_median": 129990
+   },
+   {
+    "variant": "51 мм AMOLED, титан, без inReach",
+    "colors": [
+     "Titanium / Graphite-Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 141990,
+      "url": "https://biggeek.ru/products/casy-garmin-fenix-9-pro-51-mm-amoled-sapphire-crystal-titanium-with-graphiteblack-silicone-band-inreach-no"
+     }
+    ],
+    "market_median": 141990
+   }
+  ],
+  "image_urls": [
+   "https://res.garmin.com/en/products/010-04337-00/v/cf-xl.jpg",
+   "https://res.garmin.com/en/products/010-04337-00/v/pd-01-xl.jpg"
+  ],
+  "note": "Вышли 25.08.2026 вместе с базовым fenix 9 (цены в мире: fenix 9 от $1000, fenix 9 Pro от $1100). Цену нашёл только в одном магазине (biggeek), медиана по одному источнику — перепроверить. Базовый fenix 9 47 мм есть в re-store за 159 990 ₽ (дороже Pro у biggeek, похоже на завышенную цену официального канала); у garmin.ru, по сниппету поиска, fenix 9 47 мм ~152–160 тыс., 9 Pro 47 мм ~168–176 тыс. (сайт garmin.ru отдаёт 403, цены не проверены). Линейки Epix больше нет: её поглотил fenix 8 в 2024 году. Фото 1200×1200 — 51-мм версия с inReach."
+ },
+ {
+  "brand": "Garmin",
+  "category": "Часы",
+  "model": "Garmin Forerunner 970",
+  "released": "2025-05",
+  "status": "current",
+  "specs": {
+   "size": "47 мм",
+   "display": "AMOLED, сапфировое стекло",
+   "case": "титановый безель",
+   "features": "фонарик, ЭКГ, карты, динамик и микрофон"
+  },
+  "description_ru": "Старшие беговые часы Garmin для подготовки к марафонам и триатлону, с картами и подробной аналитикой нагрузки. Отличаются встроенным фонариком и сапфировым стеклом при весе меньше, чем у fenix.",
+  "configs": [
+   {
+    "variant": "47 мм",
+    "colors": [
+     "Carbon Gray / Black",
+     "Whitestone / Amp Yellow",
+     "Soft Gold / French Gray"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 56990,
+      "url": "https://biggeek.ru/products/casy-garmin-forerunner-970-carbon-grey-dlc-titanium-with-black-case-and-blacktranslucent-whitestone-band"
+     },
+     {
+      "source": "price.ru (Gorbushka_moscow)",
+      "price": 60990,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-970-amoled-sapphire-47-mm-titanium-case-silicone-black-translucent-whitestone/"
+     },
+     {
+      "source": "price.ru (Регард)",
+      "price": 70760,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-970-amoled-sapphire-47-mm-titanium-case-silicone-black-translucent-whitestone/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 82190,
+      "url": "https://www.re-store.ru/catalog/010-02969-10G/"
+     }
+    ],
+    "market_median": 65875
+   }
+  ],
+  "image_urls": [
+   "https://res.garmin.com/en/products/010-02969-10/v/cf-xl.jpg",
+   "https://res.garmin.com/en/products/010-02969-00/v/cf-lg.jpg"
+  ],
+  "note": "Это всё ещё актуальная модель: преемника (Forerunner 975) на 24.10.2026 нет, он только в слухах. Разброс цен большой (57–82 тыс.)."
+ },
+ {
+  "brand": "Garmin",
+  "category": "Часы",
+  "model": "Garmin Forerunner 570",
+  "released": "2025-05",
+  "status": "current",
+  "specs": {
+   "sizes": "42 / 47 мм",
+   "display": "AMOLED",
+   "case": "алюминиевый безель",
+   "features": "динамик и микрофон, тренировочные планы"
+  },
+  "description_ru": "Беговые часы среднего уровня с AMOLED-экраном и полным набором тренировочных метрик Garmin. Подходят тем, кому не нужны карты и фонарик старшей модели.",
+  "configs": [
+   {
+    "variant": "47 мм",
+    "colors": [
+     "Slate Gray / Black",
+     "Amp Yellow / Whitestone-Turquoise",
+     "Indigo / Purple"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 43990,
+      "url": "https://biggeek.ru/products/casy-garmin-forerunner-570-47mm-slate-gray-aluminum-with-translucent-blackblack-band"
+     },
+     {
+      "source": "price.ru (MOBILE-ROOMS)",
+      "price": 42500,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-47-mm-silicone-translucent-black-black/"
+     },
+     {
+      "source": "price.ru (Gorbushka_moscow)",
+      "price": 43990,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-47-mm-silicone-translucent-black-black/"
+     },
+     {
+      "source": "price.ru (Gbstore)",
+      "price": 47990,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-47-mm-silicone-translucent-black-black/"
+     }
+    ],
+    "market_median": 43990
+   },
+   {
+    "variant": "42 мм",
+    "colors": [
+     "Slate Gray / Black",
+     "Cloud Blue / Whitestone",
+     "Raspberry / Bone-Mango"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 43990,
+      "url": "https://biggeek.ru/products/casy-garmin-forerunner-570-42mm-slate-gray-aluminum-with-translucent-blackblack-band"
+     },
+     {
+      "source": "price.ru (MOBILE-ROOMS)",
+      "price": 43900,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-42-mm-silicone-translucent-black-black/"
+     },
+     {
+      "source": "price.ru (Gorbushka_moscow)",
+      "price": 43990,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-42-mm-silicone-translucent-black-black/"
+     },
+     {
+      "source": "price.ru (Регард)",
+      "price": 52280,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/garmin-forerunner-570-amoled-42-mm-silicone-translucent-black-black/"
+     }
+    ],
+    "market_median": 43990
+   }
+  ],
+  "image_urls": [
+   "https://res.garmin.com/en/products/010-02971-00/v/cf-xl.jpg",
+   "https://res.garmin.com/en/products/010-02970-00/v/cf-xl.jpg"
+  ],
+  "note": "Актуальна: преемник (Forerunner 575) только в слухах. В мае 2026 вышли бюджетные Forerunner 70 и 170 (Forerunner 70 есть в biggeek за 21 990–22 990 ₽), если нужен недорогой вариант."
+ },
+ {
+  "brand": "Huawei",
+  "category": "Часы",
+  "model": "HUAWEI WATCH GT 7",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "sizes": "46 / 41 мм",
+   "display": "AMOLED 1,47\" (46 мм) / 1,32\" (41 мм)",
+   "battery": "до 21 дня (46 мм), до 14 дней (41 мм)",
+   "case": "нержавеющая сталь"
+  },
+  "description_ru": "Новые умные часы Huawei с круглым AMOLED-экраном, спортивными режимами и мониторингом здоровья. Главный плюс — автономность до трёх недель у 46-мм версии.",
+  "configs": [
+   {
+    "variant": "46 мм",
+    "colors": [
+     "Black",
+     "Blue",
+     "Yellow"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 22990,
+      "url": "https://www.re-store.ru/catalog/55020JUT/"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска)",
+      "price": 22764,
+      "url": "https://market.yandex.ru/search?text=HUAWEI+Watch+GT+7"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска)",
+      "price": 21864,
+      "url": "https://market.yandex.ru/search?text=HUAWEI+Watch+GT+7"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска)",
+      "price": 23385,
+      "url": "https://market.yandex.ru/search?text=HUAWEI+Watch+GT+7"
+     }
+    ],
+    "market_median": 22877
+   },
+   {
+    "variant": "41 мм",
+    "colors": [
+     "Grey",
+     "Pink",
+     "Light Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 22990,
+      "url": "https://www.re-store.ru/catalog/55020JUU/"
+     }
+    ],
+    "market_median": 22990
+   }
+  ],
+  "image_urls": [
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt7/list-46mm-black.png",
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/wearables/watch-gt7/list-41mm-white.png"
+  ],
+  "note": "Официально продаются в России с 7–8.09.2026 (МТС, М.Видео). Есть и GT 7 Pro (титан, керамический безель, ЭКГ): re-store 28 990 ₽, DNS 28 999 ₽. Huawei также продаёт в РФ WATCH 6 / 6 Pro (дороже, сапфир) и прошлогодний GT 6. Фото на официальном сайте маленькие (378×480, прозрачный фон); крупных фото товара отдельно нет, только рекламные баннеры. Цены Маркета взяты из сниппетов поиска (Маркет закрыт капчей)."
+ },
+ {
+  "brand": "Huawei",
+  "category": "Планшеты",
+  "model": "HUAWEI MatePad 11.5 S (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "display": "11,5\" LCD, 144 Гц, версия PaperMatte (антиблик)",
+   "memory": "12 ГБ + 256/512 ГБ",
+   "battery": "8800 мА·ч",
+   "os": "HarmonyOS 4.3"
+  },
+  "description_ru": "Недорогой планшет Huawei для учёбы, чтения и заметок со стилусом. Версия PaperMatte с матовым экраном почти не бликует и похожа на бумагу при письме.",
+  "configs": [
+   {
+    "variant": "12/256 ГБ PaperMatte, Wi-Fi",
+    "colors": [
+     "Space Gray",
+     "Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 34490,
+      "url": "https://biggeek.ru/products/planset-huawei-matepad-115-s-papermatte-wi-fi-12gb-256gb-space-gray-global-2026"
+     },
+     {
+      "source": "biggeek.ru",
+      "price": 33990,
+      "url": "https://biggeek.ru/products/planset-huawei-matepad-115-s-papermatte-wi-fi-12gb-256gb-green-global-2026"
+     }
+    ],
+    "market_median": 34240
+   },
+   {
+    "variant": "12/512 ГБ Standard, Wi-Fi",
+    "colors": [
+     "Space Gray"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 34990,
+      "url": "https://biggeek.ru/products/planset-huawei-matepad-115-s-standard-wi-fi-12gb-512gb-space-gray-global-2026"
+     }
+    ],
+    "market_median": 34990
+   }
+  ],
+  "image_urls": [
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-11-5-s-2026/images/color/huawei-matepad-11-5-s-color-gray-2x.jpg",
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-11-5-s-2026/specs-spacegray.png"
+  ],
+  "note": "Есть на официальном сайте Huawei Россия (страница matepad-11-5-s-2026). Месяц выхода не установлен. Цены только из biggeek; в holodilnik.ru продаются наборы 11.5S с клавиатурой (39 899–41 799 ₽), с голым планшетом не сравнимы. Модели «MatePad T11» из старого каталога не существует. Первое фото — вид сзади в 3/4 на светлом фоне, 1706×1386; второе — 800×700 на прозрачном фоне."
+ },
+ {
+  "brand": "Huawei",
+  "category": "Планшеты",
+  "model": "HUAWEI MatePad Pro 13.2\" (2025)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "display": "13,2\" гибкий OLED, версия PaperMatte",
+   "chip": "Kirin T92",
+   "memory": "12 ГБ + 256/512 ГБ",
+   "camera": "13 МП + 8 МП"
+  },
+  "description_ru": "Большой планшет Huawei с OLED-экраном 13,2 дюйма для работы с документами и рисования. Работает с клавиатурой и стилусом и запускает настольную версию WPS Office.",
+  "configs": [
+   {
+    "variant": "12/256 ГБ, Wi-Fi",
+    "colors": [
+     "Black",
+     "Gold"
+    ],
+    "market_prices": [
+     {
+      "source": "holodilnik.ru",
+      "price": 71399,
+      "url": "https://www.holodilnik.ru/search/?search=MatePad+Pro+13.2"
+     }
+    ],
+    "market_median": 71399
+   }
+  ],
+  "image_urls": [
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/tablets/matepad-pro-13-2-2025/images/kv/huawei-matepad-pro-13-2-inch-kv-2x.png",
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/admin-image/tablets/matepad-pro-13-2-2025/list/list-gold.png"
+  ],
+  "note": "Это актуальный 13,2-дюймовый Pro на сайте Huawei Россия (версия 2025 года на Kirin T92); месяц выхода не проверял. Цена найдена только в одном магазине (holodilnik.ru, 53013XXJ), в комплектах с клавиатурой — 114 999–127 999 ₽. Старше по классу — MatePad Pro Max (biggeek от 92 990 ₽). Первое фото — планшет с клавиатурой (1878×928, прозрачный фон), второе — только планшет (378×480)."
+ },
+ {
+  "brand": "Lenovo",
+  "category": "Планшеты",
+  "model": "Lenovo Idea Tab Pro Gen 2",
+  "released": "2026-03",
+  "status": "current",
+  "specs": {
+   "display": "13\" IPS, 3504×2190, 144 Гц",
+   "chip": "Snapdragon 8s Gen 4",
+   "memory": "8/128, 8/256, 12/256, 12/512 ГБ",
+   "battery": "10 200 мА·ч, 45 Вт"
+  },
+  "description_ru": "13-дюймовый Android-планшет Lenovo среднего класса для учёбы, видео и работы с клавиатурой и стилусом. Выделяется быстрым процессором Snapdragon 8s Gen 4 и экраном 144 Гц за свои деньги.",
+  "configs": [
+   {
+    "variant": "8/256 ГБ",
+    "colors": [
+     "Luna Grey",
+     "Cloud Grey",
+     "Jelly Mint"
+    ],
+    "market_prices": [],
+    "market_median": null
+   },
+   {
+    "variant": "12/256 ГБ",
+    "colors": [
+     "Luna Grey"
+    ],
+    "market_prices": [],
+    "market_median": null
+   }
+  ],
+  "image_urls": [
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab_Pro_Gen_2/Idea_Tab_Pro_Gen_2_CT1_01.png",
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/Lenovo_Tablets/Idea_Tab_Pro_Gen_2/Idea_Tab_Pro_Gen_2_CT1_02.png"
+  ],
+  "note": "Анонс 02.03.2026, продажи с марта (gsmarena, Lenovo PSREF). Цены в России НЕ нашёл: нет в biggeek, re-store, holodilnik, price.ru, а поиск по Ozon/Маркету/DNS дал только зарубежные сайты Lenovo (США: $549.99). Нужна ручная проверка. Серии Tab P больше нет: Lenovo заменила её на Idea Tab Pro, а «Tab P12» из старого каталога (на деле 12,7\") — модель 2023 года. Старше по классу — Yoga Tab Plus Gen 2 (анонс 04.09.2026, 13\" 4K 144 Гц, 849 € в Европе), цен в РФ по ней тоже не искал. Фото 2000×2000 с официального справочника Lenovo PSREF."
+ },
+ {
+  "brand": "Motorola",
+  "category": "Смартфоны",
+  "model": "Motorola razr 70 ultra",
+  "released": "2026-04",
+  "status": "current",
+  "specs": {
+   "display": "6,96\" pOLED 165 Гц + внешний 4\"",
+   "chip": "Snapdragon 8 Elite",
+   "memory": "16/512 ГБ",
+   "battery": "5000 мА·ч, 68 Вт + 30 Вт беспроводная"
+  },
+  "description_ru": "Флагманская раскладушка Motorola с большим внешним экраном 4 дюйма, на котором работают полноценные приложения. Три камеры по 50 МП и защита IP48.",
+  "configs": [
+   {
+    "variant": "16/512 ГБ",
+    "colors": [
+     "Orient Blue",
+     "Cocoa"
+    ],
+    "market_prices": [],
+    "market_median": null
+   }
+  ],
+  "image_urls": [
+   "https://p1-ofp.static.pub/medias/28680610389_PANTONE_Orient_Blue_202606020427511782285157540.png",
+   "https://p1-ofp.static.pub/medias/28681300535_PANTONE_Cocoa_202606020549271782285160567.png"
+  ],
+  "note": "Анонс в конце апреля 2026 (в США — razr ultra 2026, $1499.99; в Европе — razr 70 ultra, 1399 €; в Великобритании £1199). Официально в РФ Motorola не продаёт, по словам dgl.ru, ввозится параллельным импортом. Цену в рублях НЕ нашёл: в выдаче магазинов (Ozon, Маркет, DNS, re-store, holodilnik) только razr 60 ultra и старше. Фото с официального сайта motorola.com, маленькие (420×420, прозрачный фон); крупнее там только рекламные баннеры. Старый razr 50 ultra (2024) убрать."
+ },
+ {
+  "brand": "ASUS",
+  "category": "Смартфоны",
+  "model": "ASUS ROG Phone 9 Pro",
+  "released": "2024-11",
+  "status": "current",
+  "specs": {
+   "display": "6,78\" AMOLED, 185 Гц",
+   "chip": "Snapdragon 8 Elite",
+   "memory": "16/512 ГБ, 24 ГБ/1 ТБ",
+   "extra": "светодиодная панель AniMe Vision на задней крышке, курки AirTrigger"
+  },
+  "description_ru": "Игровой смартфон ASUS с очень быстрым экраном, мощным охлаждением и сенсорными курками для игр. Последняя модель серии: новых ROG Phone в 2026 году не будет.",
+  "configs": [
+   {
+    "variant": "16/512 ГБ, глобальная версия",
+    "colors": [
+     "Phantom Black"
+    ],
+    "market_prices": [
+     {
+      "source": "ozon.ru (сниппет поиска)",
+      "price": 121053,
+      "url": "https://www.ozon.ru/product/asus-smartfon-asus-rog-phone-9-pro-globalnaya-versiya-global-16-512-gb-chernyy-1866148556/"
+     },
+     {
+      "source": "ozon.ru (сниппет поиска, категория)",
+      "price": 71780,
+      "url": "https://www.ozon.ru/category/smartfon-asus-rog-phone/"
+     },
+     {
+      "source": "ozon.ru (сниппет поиска, категория)",
+      "price": 73073,
+      "url": "https://www.ozon.ru/category/smartfon-asus-rog-phone/"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска, цена с Яндекс Пэй)",
+      "price": 109000,
+      "url": "https://market.yandex.ru/search?text=asus+rog+phone+9"
+     }
+    ],
+    "market_median": 91037
+   }
+  ],
+  "image_urls": [
+   "https://dlcdnwebimgs.asus.com/gain/8D85BFE0-F7E5-406E-96D7-79D35CB96648",
+   "https://dlcdnwebimgs.asus.com/gain/8D85BFE0-F7E5-406E-96D7-79D35CB96648/w1200/fwebp"
+  ],
+  "note": "ASUS официально заявила, что в 2026 году новых смартфонов (ни ROG Phone, ни Zenfone) не выпускает, поэтому 9 Pro остаётся последней моделью; гарантия и обновления продолжаются, но в продаже телефон становится остатком. Цены только из сниппетов поиска и сильно разбегаются (72–121 тыс.); дешёвые предложения могут быть китайской версией или последними штуками. На price.ru карточка без предложений. Медиана ненадёжна, перепроверить вручную. Фото 2400×2400 PNG без расширения в ссылке (CDN ASUS); вторая ссылка — то же фото 1200 px в webp. Если ассортимент должен быть только из того, что продаётся сейчас, модель можно не брать."
+ },
+ {
+  "brand": "OtterBox",
+  "category": "Аксессуары",
+  "model": "OtterBox Defender Series Pro для iPhone 18 Pro Max / 17 Pro Max",
+  "released": "2026-08",
+  "status": "current",
+  "specs": {
+   "compatibility": "iPhone 18 Pro Max и iPhone 17 Pro Max (один и тот же чехол)",
+   "construction": "трёхслойный корпус, усиленные углы",
+   "magsafe": "есть",
+   "extra": "встроенная кнопка Camera Control"
+  },
+  "description_ru": "Самый защищённый чехол OtterBox для большого iPhone: многослойный корпус с усиленными углами и рельефом для хвата. Совместим с MagSafe, есть версия с клипсой-кобурой для ремня.",
+  "configs": [
+   {
+    "variant": "iPhone 18 Pro Max / 17 Pro Max",
+    "colors": [
+     "Black",
+     "Witherwill Blue",
+     "Halfwise Green"
+    ],
+    "market_prices": [
+     {
+      "source": "market.yandex.ru (сниппет поиска, Defender для 17 Pro Max)",
+      "price": 3029,
+      "url": "https://market.yandex.ru/category/chekhly-otterbox-dlya-telefonov"
+     },
+     {
+      "source": "wildberries.ru (сниппет поиска, Defender MagSafe для 17 Pro Max)",
+      "price": 3636,
+      "url": "https://www.wildberries.ru/catalog/tags/otterbox-defender"
+     }
+    ],
+    "market_median": null
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0681/4321/8875/files/defender-pro-iphd25-black-1_7c54ffae-0bcc-4860-b1bf-4aa698f617fc.png?v=1785530966",
+   "https://cdn.shopify.com/s/files/1/0681/4321/8875/files/defender-pro-iphd25-black-2_9bb09726-8289-4a69-a933-ed41f3b49fc0.png?v=1785530966"
+  ],
+  "note": "Самый новый Pro Max — iPhone 18 Pro Max (сентябрь 2026). OtterBox прямо пишет, что этот чехол подходит и к 18 Pro Max, и к 17 Pro Max; цена на otterbox.com $69.99. Медиану НЕ ставлю: в выдаче Маркета и WB «Defender» для 17 Pro Max по 2 700–3 700 ₽, это вдвое дешевле официальной цены в США, похоже на копии; оригинальный Defender Series Pro в российских магазинах не нашёл. Вариант для тех, кому нужен прозрачный корпус, — Defender Series Pro XT ($69.99). Старую позицию Defender для iPhone 15 Pro Max убрать. Фото 1600×1600 PNG с официального сайта."
+ },
+ {
+  "brand": "Spigen",
+  "category": "Аксессуары",
+  "model": "Spigen Ultra Hybrid (MagFit) для iPhone 18 Pro Max / 17 Pro Max",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "compatibility": "iPhone 18 Pro Max и iPhone 17 Pro Max (одна модель чехла, артикулы совпадают)",
+   "type": "прозрачный, жёсткая спинка + мягкий бампер",
+   "magsafe": "встроенное магнитное кольцо MagFit"
+  },
+  "description_ru": "Самый популярный прозрачный чехол Spigen: не скрывает цвет iPhone и держит MagSafe-аксессуары встроенным магнитом. Есть петли для ремешка внизу.",
+  "configs": [
+   {
+    "variant": "iPhone 18 Pro Max / 17 Pro Max",
+    "colors": [
+     "Clear White",
+     "Clear Graphite",
+     "Clear Orange"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru (карточка «для iPhone 17 Pro Max»)",
+      "price": 3490,
+      "url": "https://biggeek.ru/products/prozracnyj-cehol-dla-iphone-17-pro-max-magsafe-spigen-ultra-hybrid-mag-fit-case"
+     }
+    ],
+    "market_median": 3490
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0808/0067/files/title_web_iphone_17_pro_max_ultra_hybrid_magfit_white_01.jpg?v=1763673376",
+   "https://cdn.shopify.com/s/files/1/0808/0067/files/title_web_iphone_18_pro_max_ultra_hybrid_magfit_clear_dark_cherry_01.jpg?v=1788298681"
+  ],
+  "note": "На spigen.com чехлы для iPhone 18 Pro Max подписаны «iPhone 18 Pro Max / iPhone 17 Pro Max» с теми же артикулами (Clear White = ACS10035), поэтому карточка biggeek «для 17 Pro Max» — это тот же товар. Цена в США $44.99, в РФ нашёл только biggeek (одна цена). Замена старому Tough Armor: на 2026 год у Spigen есть Tough Armor T (MagFit) для 18 Pro Max ($59.99, Black/Gunmetal), но в российских магазинах его не нашёл. Фото 1430×1430 с официального сайта Spigen."
+ },
+ {
+  "brand": "Belkin",
+  "category": "Аксессуары",
+  "model": "Belkin UltraCharge 2-in-1 складная магнитная подставка Qi2 25 Вт (WIZ039)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "type": "складная магнитная подставка с зарядкой для iPhone + площадка для AirPods",
+   "power": "до 25 Вт (Qi2.2)",
+   "modes": "телефон можно ставить вертикально и горизонтально",
+   "compatibility": "iPhone с MagSafe"
+  },
+  "description_ru": "Компактная складная подставка Belkin: магнитом держит iPhone на нужном угле и заряжает его вместе с наушниками. Подходит и для стола, и для поездок.",
+  "configs": [
+   {
+    "variant": "WIZ039, EU",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 8990,
+      "url": "https://biggeek.ru/products/zaradnoe-ustrojstvo-magsafe-belkin-ultracharge-round-form-2-in-1-foldable-charger-qi2-wiz039"
+     }
+    ],
+    "market_median": 8990
+   }
+  ],
+  "image_urls": [
+   "https://www.belkin.com/dw/image/v2/BGBH_PRD/on/demandware.static/-/Sites-master-product-catalog-blk/default/dw9b17590c/images/hi-res/2/2b6f167ba66de380_WIZ039dqWH-2in1-FoldableMagneticCharger-web-01.jpg?sw=1500&sfrm=png",
+   "https://www.belkin.com/dw/image/v2/BGBH_PRD/on/demandware.static/-/Sites-master-product-catalog-blk/default/dw8a8bee27/images/hi-res/e/46c2d048c767de95_WIZ039dqWH-2in1-FoldableMagneticCharger-web-11.jpg?sw=1500&sfrm=png"
+  ],
+  "note": "Взамен «Generic Metal Phone Stand». Модель есть на belkin.com в текущем каталоге; месяц выхода не проверял. Цена в РФ найдена только в biggeek. Дешевле, если нужен только держатель в машину: Belkin BoostCharge Qi2 15 Вт WIC012 (biggeek 4 490 ₽, price.ru от 5 190 ₽), но на belkin.com его уже сменил WIC014 (Qi2.2, 25 Вт), так что брать WIC012 как актуальный не советую. Первое фото — подставка с iPhone и AirPods (1500×1500, белый фон), второе — подставка в сложенном виде."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Для дома",
+  "model": "Xiaomi Mijia Smart Air Purifier 6",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "cadr": "443 м³/ч по частицам",
+   "area": "до 50 м²",
+   "sensors": "PM1, PM2.5, пыль, температура, влажность",
+   "filter": "пятислойный, с активированным углём; УФ-подсветка"
+  },
+  "description_ru": "Умный очиститель воздуха Xiaomi для комнаты до 50 м² с пятью датчиками качества воздуха и управлением со смартфона. Угольный слой убирает запахи и формальдегид, фильтр задерживает пыльцу и шерсть животных.",
+  "configs": [
+   {
+    "variant": "EU / Global (BHR08MZEU, AC-M25-SC)",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 19990,
+      "url": "https://biggeek.ru/products/ocistitel-vozduha-xiaomi-mijia-smart-air-purifier-6"
+     },
+     {
+      "source": "citilink.ru (сниппет поиска)",
+      "price": 19990,
+      "url": "https://www.citilink.ru/product/vozduhoochistitel-mijia-purifier-6-ac-m15-sc-40vt-belyi-bhr08mzeu-2160663/"
+     },
+     {
+      "source": "mvideo.ru (сниппет поиска)",
+      "price": 21742,
+      "url": "https://www.mvideo.ru/products/vozduhoochistitel-xiaomi-mijia-smart-air-purifier-6-eu-bhr08mzeu-400629256/shopdirections"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска)",
+      "price": 21145,
+      "url": "https://market.yandex.ru/search?text=%D0%9E%D1%87%D0%B8%D1%81%D1%82%D0%B8%D1%82%D0%B5%D0%BB%D1%8C+%D0%B2%D0%BE%D0%B7%D0%B4%D1%83%D1%85%D0%B0+Xiaomi+Mijia+Smart+Air+Purifier+6"
+     }
+    ],
+    "market_median": 20568
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/485_operatorx_operatorx_opx/14/08/2025/4a5ba97c319ca03c17727f48d0d177c5.png"
+  ],
+  "note": "Взамен снятого Sharp KC-G50EU-W. Модель есть на mi.com (Global) и в Mi-shop. Месяц выхода не проверял (судя по файлам на mi.com, лето 2025). DNS: 16 699 ₽, но нет в наличии, в медиану не брал. Фото 1600×1600 PNG с mi.com, вид спереди на белом фоне. Если нужен Dyson: в biggeek есть HushJet HJ10 (2025, от 33 990 ₽) и BP06 (2025, 95 990 ₽)."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Для дома",
+  "model": "Xiaomi LED Desk Lamp 2",
+  "released": "2024",
+  "status": "current",
+  "specs": {
+   "head": "горизонтальная 60 см, свет вперёд, 112 светодиодов",
+   "cri": "Ra95",
+   "color_temp": "2700–5100 K",
+   "smart": "поддержка Google Assistant и Alexa (по данным mi.com)"
+  },
+  "description_ru": "Настольная лампа Xiaomi с широкой горизонтальной головой: освещает весь стол и нависает над ноутбуком. Яркость и температура света меняются сенсорным слайдером, есть управление голосовыми ассистентами.",
+  "configs": [
+   {
+    "variant": "Global (BHR9186GL / MJTD06YL)",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "mi-shop.com",
+      "price": 6490,
+      "url": "https://mi-shop.com/catalog/smart_devices/6941812706961/"
+     },
+     {
+      "source": "dns-shop.ru (сниппет поиска)",
+      "price": 5699,
+      "url": "https://www.dns-shop.ru/product/5a4d925cffb6d21a/nastolnyj-svetilnik-xiaomi-led-desk-lamp-2-belyj/"
+     },
+     {
+      "source": "market.yandex.ru (сниппет поиска)",
+      "price": 4763,
+      "url": "https://market.yandex.ru/search?text=Xiaomi+Mijia+Desk+Lamp+2"
+     }
+    ],
+    "market_median": 5699
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/540_operatorx_operatorx_opx/30/07/2024/80a5bea960bc496ae1daef9f01f11f0a.png"
+  ],
+  "note": "Взамен Mi Desk Lamp Pro (старая модель). Актуальная модель на mi.com (Global), вышла в 2024 году; более новой умной настольной лампы Xiaomi не нашёл. В biggeek стоит 6 490 ₽, но «Распродано»; на Ozon есть предложение за 3 605 ₽, но продавец не ясен, в медиану не брал. Цена Mi-shop проверена на сайте, DNS и Маркет — из сниппетов поиска. Фото 1600×1600 PNG с mi.com, вид спереди на белом фоне."
+ }
+]

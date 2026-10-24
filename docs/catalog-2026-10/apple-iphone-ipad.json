@@ -1,0 +1,1023 @@
+[
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone 18 Pro Max",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "display": "6.9\" OLED ProMotion",
+      "chip": "A20 Pro",
+      "camera": "48 Мп основная с переменной диафрагмой ƒ/1.48–ƒ/4.0, тройная",
+      "battery": "до 30 ч типичного использования, 249 г"
+    },
+    "description_ru": "Старший iPhone 2026 года с экраном 6,9 дюйма и чипом A20 Pro. Основная камера 48 Мп получила переменную диафрагму, батарея — самая ёмкая в линейке (до 30 часов по данным Apple).",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-silver-202609?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-max-finish-select-burgundy-202609?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел 18.09.2026. Цвета Apple: Black, Silver, Glacier, Burgundy; память 256 ГБ–2 ТБ. В магазинах Glacier часто подписан как «голубой», Burgundy — «вишнёвый». Цены сильно расходятся: biggeek (параллельный импорт) заметно дешевле re:Store, МегаФона и KNS. Цена в источнике — минимальная по цветам для данного объёма. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Silver",
+          "Black",
+          "Glacier"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 138990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-max-256-gb-cernyj-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 199990,
+            "url": "https://www.re-store.ru/catalog/10118MAX256BRGN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 189999,
+            "url": "https://shop.megafon.ru/mobile/213936"
+          },
+          {
+            "source": "kns.ru",
+            "price": 220486,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-max-256gb-burgundy-mjxq4za-a/"
+          }
+        ],
+        "market_median": 194994
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Silver",
+          "Black",
+          "Burgundy"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 163990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-max-512-gb-serebristyj-silver"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 229990,
+            "url": "https://www.re-store.ru/catalog/10118MAX512GLRN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 219999,
+            "url": "https://shop.megafon.ru/mobile/213933"
+          },
+          {
+            "source": "kns.ru",
+            "price": 248697,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-max-512gb-silver-mjxu4za-a/"
+          }
+        ],
+        "market_median": 224994
+      },
+      {
+        "variant": "1TB",
+        "colors": [
+          "Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 213990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-max-1-tb-cernyj-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 299990,
+            "url": "https://www.re-store.ru/catalog/10118MAX1TBBRGN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 279999,
+            "url": "https://shop.megafon.ru/mobile/213932"
+          },
+          {
+            "source": "kns.ru",
+            "price": 287152,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-max-1tb-black-mjxx4kh-a/"
+          }
+        ],
+        "market_median": 283575
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone 18 Pro",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "display": "6.3\" OLED ProMotion",
+      "chip": "A20 Pro",
+      "camera": "48 Мп основная с переменной диафрагмой ƒ/1.48–ƒ/4.0, тройная",
+      "battery": "до 24 ч типичного использования, 211 г"
+    },
+    "description_ru": "Флагман 2026 года в компактном корпусе: экран 6,3 дюйма, чип A20 Pro, тройная камера с переменной диафрагмой основного модуля. Начинка как у Pro Max, отличия — размер экрана и батарея.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-glacier-202609?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-18-pro-finish-select-black-202609?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел 18.09.2026. Цвета: Black, Silver, Glacier, Burgundy; память 256 ГБ–2 ТБ. В re:Store есть дешёвая версия только с eSIM (256 ГБ — 144 990 ₽), в расчёт взята обычная (nano-SIM + eSIM). Цена в источнике — минимальная по цветам. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Black",
+          "Silver",
+          "Glacier"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 122990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-256-gb-serebristyj-silver"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 164990,
+            "url": "https://www.re-store.ru/catalog/10118PRO256BLKN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 174999,
+            "url": "https://shop.megafon.ru/mobile/213106"
+          },
+          {
+            "source": "kns.ru",
+            "price": 175202,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-256gb-burgundy-mjrr4kh-a/"
+          }
+        ],
+        "market_median": 169994
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Black",
+          "Silver",
+          "Burgundy"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 146990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-512-gb-bordovyj-burgundy"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 199990,
+            "url": "https://www.re-store.ru/catalog/10118PRO512BLKN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 204999,
+            "url": "https://shop.megafon.ru/mobile/213108"
+          },
+          {
+            "source": "kns.ru",
+            "price": 214795,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-512gb-burgundy-mjrw4kh-a/"
+          }
+        ],
+        "market_median": 202494
+      },
+      {
+        "variant": "1TB",
+        "colors": [
+          "Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 185990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-18-pro-1-tb-lednik-glacier"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 249990,
+            "url": "https://www.re-store.ru/catalog/10118PRO1TBBRGN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 264999,
+            "url": "https://shop.megafon.ru/mobile/213916"
+          },
+          {
+            "source": "kns.ru",
+            "price": 282599,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-18-pro-1tb-blue-mjt24kh-a/"
+          }
+        ],
+        "market_median": 257494
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone Duo",
+    "released": "2026-10",
+    "status": "current",
+    "specs": {
+      "display": "7.6\" внутренний складной OLED + 5.4\" внешний",
+      "chip": "A20 Pro",
+      "camera": "48 Мп основная + 48 Мп ультраширокая + 2x",
+      "weight": "254 г"
+    },
+    "description_ru": "Первый складной iPhone: внутренний экран 7,6 дюйма, внешний 5,4 дюйма, чип A20 Pro. Весит 254 г, память от 256 ГБ до 2 ТБ.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-duo-finish-select-night-sky-202609?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-duo-finish-select-star-white-202609?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "В продаже с 23.10.2026 (поступил в Apple Store вчера). Цвета: Night Sky, Star White. В России только две цены: biggeek (в наличии) и МегаФон (предзаказ, все версии подписаны как eSIM); re:Store продаёт лишь сертификат на предзаказ. Цены первых дней, могут быстро меняться — перепроверить через 1–2 недели. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Night Sky",
+          "Star White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 339990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-duo-256-gb-nocnoe-nebo-night-sky"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 299999,
+            "url": "https://shop.megafon.ru/mobile/213116"
+          }
+        ],
+        "market_median": 319994
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Night Sky",
+          "Star White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 394990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-duo-512-gb-nocnoe-nebo-night-sky"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 339999,
+            "url": "https://shop.megafon.ru/mobile/213944"
+          }
+        ],
+        "market_median": 367494
+      },
+      {
+        "variant": "1TB",
+        "colors": [
+          "Night Sky",
+          "Star White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 479990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-duo-1-tb-nocnoe-nebo-night-sky"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 399999,
+            "url": "https://shop.megafon.ru/mobile/213945"
+          }
+        ],
+        "market_median": 439994
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone Air",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "display": "6.5\" OLED ProMotion 120 Гц",
+      "chip": "A19 Pro",
+      "camera": "48 Мп (одна основная)",
+      "body": "5,64 мм, 165 г, только eSIM"
+    },
+    "description_ru": "Самый тонкий iPhone — 5,64 мм и 165 г, экран 6,5 дюйма 120 Гц, чип A19 Pro. Одна основная камера 48 Мп, работает только с eSIM — слота под физическую SIM нет.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-skyblue-202509?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-air-finish-select-cloudwhite-202509?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Apple продолжает продавать его в текущей линейке, второго поколения Air нет. Цвета: Space Black, Cloud White, Light Gold, Sky Blue. Только eSIM — покупателю стоит знать заранее. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Space Black",
+          "Sky Blue",
+          "Cloud White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 79990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-air-256-gb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 99990,
+            "url": "https://www.re-store.ru/catalog/101AIR256WHTE/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 94999,
+            "url": "https://shop.megafon.ru/mobile/200844"
+          }
+        ],
+        "market_median": 94999
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Space Black",
+          "Sky Blue",
+          "Light Gold"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 86990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-air-512-gb-svetlo-zolotoj-light-gold"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 109990,
+            "url": "https://www.re-store.ru/catalog/101AIR512BLKE/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 103999,
+            "url": "https://shop.megafon.ru/mobile/200848"
+          },
+          {
+            "source": "kns.ru",
+            "price": 131137,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-air-512gb-white-mg2d4j-a/"
+          }
+        ],
+        "market_median": 106994
+      },
+      {
+        "variant": "1TB",
+        "colors": [
+          "Space Black",
+          "Cloud White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 103990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-air-1-tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 119990,
+            "url": "https://www.re-store.ru/catalog/101AIR1TBBLUE/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 120999,
+            "url": "https://shop.megafon.ru/mobile/200840"
+          }
+        ],
+        "market_median": 119990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone 17",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "display": "6.3\" OLED ProMotion 120 Гц",
+      "chip": "A19",
+      "camera": "48 Мп основная + 48 Мп ультраширокая",
+      "front": "18 Мп Center Stage"
+    },
+    "description_ru": "Базовый iPhone текущей линейки: экран 6,3 дюйма с частотой до 120 Гц, чип A19, две камеры по 48 Мп. Фронтальная камера 18 Мп с автокадрированием Center Stage.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-finish-select-lavender-202509?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17-finish-select-mistblue-202509?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Обычного iPhone 18 Apple пока не выпустила, поэтому iPhone 17 остаётся текущей базовой моделью. Цвета: Black, White, Mist Blue, Sage, Lavender; память 256/512 ГБ. У KNS «Blue» = Mist Blue, «Green» = Sage. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Black",
+          "Lavender",
+          "Mist Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 79990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-17-256-gb-salfejno-zelenyj-sage"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 99990,
+            "url": "https://www.re-store.ru/catalog/10117256BLKN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 92999,
+            "url": "https://shop.megafon.ru/mobile/200738"
+          },
+          {
+            "source": "kns.ru",
+            "price": 109592,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-17-256gb-lavender-mg6m4hn-a/"
+          }
+        ],
+        "market_median": 96494
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Black",
+          "White",
+          "Sage"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 94990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-17-512-gb-cernyj-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 122990,
+            "url": "https://www.re-store.ru/catalog/10117512SGEN/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 126584,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-17-512gb-green-mg6v4hn-a/"
+          }
+        ],
+        "market_median": 122990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone 17e",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.1\" OLED",
+      "chip": "A19",
+      "camera": "48 Мп (одна основная)",
+      "charging": "MagSafe и Qi2 до 15 Вт, 169 г"
+    },
+    "description_ru": "Самый доступный iPhone текущего поколения: экран 6,1 дюйма, чип A19, одна основная камера 48 Мп. Есть MagSafe до 15 Вт, вес 169 г.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17e-finish-select-white-202603?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-17e-finish-select-softpink-202603?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел 11.03.2026. Цвета: Black, White, Soft Pink; память 256/512 ГБ. Цены нашлись только у двух магазинов (biggeek и re:Store), МегаФон и KNS эту модель не продают — медиана по двум точкам. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "256GB",
+        "colors": [
+          "Black",
+          "White",
+          "Soft Pink"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 66990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-17e-256-gb-cernyj-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 74990,
+            "url": "https://www.re-store.ru/catalog/10117E256PNKN/"
+          }
+        ],
+        "market_median": 70990
+      },
+      {
+        "variant": "512GB",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 73990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-17e-512-gb-cernyj-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 99990,
+            "url": "https://www.re-store.ru/catalog/10117E512PNKN/"
+          }
+        ],
+        "market_median": 86990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Смартфоны",
+    "model": "iPhone 16",
+    "released": "2024-09",
+    "status": "previous_official",
+    "specs": {
+      "display": "6.1\" OLED 60 Гц",
+      "chip": "A18",
+      "camera": "48 Мп основная + 12 Мп ультраширокая",
+      "memory": "128 ГБ (официально)"
+    },
+    "description_ru": "iPhone прошлых поколений, который Apple оставила в продаже как недорогой вариант. Экран 6,1 дюйма, чип A18, две камеры и кнопка «Камера».",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-ultramarine-select-202409?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/iphone-16-black-select-202409?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Apple официально продаёт только iPhone 16 128 ГБ (16 Plus и 256 ГБ из линейки Apple убраны). Цвета: Black, White, Pink, Teal, Ultramarine. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "128GB",
+        "colors": [
+          "Black",
+          "White",
+          "Ultramarine"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 68990,
+            "url": "https://biggeek.ru/products/smartfon-apple-iphone-16-128-gb-belyj-white"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 84990,
+            "url": "https://www.re-store.ru/catalog/10116128BLKN/"
+          },
+          {
+            "source": "shop.megafon.ru",
+            "price": 70999,
+            "url": "https://shop.megafon.ru/mobile/187917"
+          },
+          {
+            "source": "kns.ru",
+            "price": 90406,
+            "url": "https://www.kns.ru/product/smartfon-apple-iphone-16-128gb-pink-myea3hn-a/"
+          }
+        ],
+        "market_median": 77994
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad Pro 11\" (M5)",
+    "released": "2025-10",
+    "status": "current",
+    "specs": {
+      "display": "11\" Ultra Retina XDR (OLED), 120 Гц",
+      "chip": "Apple M5",
+      "memory": "256 ГБ – 2 ТБ",
+      "body": "5,3 мм, Apple Pencil Pro, Magic Keyboard"
+    },
+    "description_ru": "Старший iPad на чипе M5 с OLED-экраном 11 дюймов и частотой до 120 Гц. Корпус толщиной 5,3 мм, работает с Apple Pencil Pro и Magic Keyboard.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-select-wifi-spaceblack-202405?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-11-select-wifi-silver-202405?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел в октябре 2025, текущее поколение (Apple в своём сравнении относит его к current iPad models). Цвета: Space Black, Silver. Цены — версия Wi‑Fi без нанотекстурного стекла. Фото Apple использует то же, что для M4 (дизайн не менялся). Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных. Для 512GB Wi-Fi нашлось только 2 цены — медиана = среднее двух.",
+    "configs": [
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 106990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-pro-11-256-gb-wi-fi-cernyj-kosmos-space-black-m5-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 134990,
+            "url": "https://www.re-store.ru/catalog/102PRO11SM5W256BLK/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 141706,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-pro-2025-11-wi-fi-256gb-silver-mdwl4zp-a/"
+          }
+        ],
+        "market_median": 134990
+      },
+      {
+        "variant": "512GB Wi-Fi",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 131990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-pro-11-512-gb-wi-fi-cernyj-kosmos-space-black-m5-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 149990,
+            "url": "https://www.re-store.ru/catalog/102PRO11SM5W512SLV/"
+          }
+        ],
+        "market_median": 140990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad Pro 13\" (M5)",
+    "released": "2025-10",
+    "status": "current",
+    "specs": {
+      "display": "13\" Ultra Retina XDR (OLED), 120 Гц",
+      "chip": "Apple M5",
+      "memory": "256 ГБ – 2 ТБ",
+      "body": "5,1 мм, Apple Pencil Pro, Magic Keyboard"
+    },
+    "description_ru": "Старший iPad на чипе M5 с OLED-экраном 13 дюймов и частотой до 120 Гц. Корпус толщиной 5,1 мм, работает с Apple Pencil Pro и Magic Keyboard.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-select-wifi-spaceblack-202405?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-pro-13-select-wifi-silver-202405?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел в октябре 2025, текущее поколение (Apple в своём сравнении относит его к current iPad models). Цвета: Space Black, Silver. Цены — версия Wi‑Fi без нанотекстурного стекла. Фото Apple использует то же, что для M4 (дизайн не менялся). Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных. Для 512GB Wi-Fi нашлось только 2 цены — медиана = среднее двух.",
+    "configs": [
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 124990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-pro-13-256-gb-wi-fi-cernyj-kosmos-space-black-m5-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 164990,
+            "url": "https://www.re-store.ru/catalog/102PRO13SM5W256BLK/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 170080,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-pro-2025-13-wi-fi-256gb-silver-mdyk4j-a/"
+          }
+        ],
+        "market_median": 164990
+      },
+      {
+        "variant": "512GB Wi-Fi",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 149990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-pro-13-512-gb-wi-fi-cernyj-kosmos-space-black-m5-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 199990,
+            "url": "https://www.re-store.ru/catalog/102PRO13SM5W512BLK/"
+          }
+        ],
+        "market_median": 174990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad Air 11\" (M4)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "11\" Liquid Retina",
+      "chip": "Apple M4",
+      "ram": "12 ГБ",
+      "memory": "128 ГБ – 1 ТБ"
+    },
+    "description_ru": "Планшет среднего класса на чипе M4 с экраном 11 дюймов и 12 ГБ оперативной памяти. Поддерживает Apple Pencil Pro и Magic Keyboard.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-select-11in-wifi-blue-202405?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-select-11in-wifi-purple-202405?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел 11.03.2026. Цвета: Space Gray, Blue, Purple, Starlight. Цены — Wi‑Fi версия. Не путать с прошлыми Air на M2/M3 — магазины продают их рядом, в карточке указывать чип M4. Фото у Apple общее с прошлыми Air (дизайн не менялся). Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "128GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Purple"
+        ],
+        "market_prices": [
+          {
+            "source": "shop.megafon.ru",
+            "price": 70999,
+            "url": "https://shop.megafon.ru/planshet/208161"
+          },
+          {
+            "source": "biggeek.ru",
+            "price": 67990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-air-11-128-gb-wi-fi-seryj-kosmos-space-gray-m4-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 84990,
+            "url": "https://www.re-store.ru/catalog/102AIR11M4W128GRY/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 85446,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-air-2026-11-wi-fi-128gb-blue-mh314ll-a/"
+          }
+        ],
+        "market_median": 77994
+      },
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Starlight"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 78990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-air-11-256-gb-wi-fi-goluboj-blue-m4-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 99990,
+            "url": "https://www.re-store.ru/catalog/102AIR11M4W256PPL/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 100243,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-air-2026-11-wi-fi-256gb-grey-mh354zp-a/"
+          }
+        ],
+        "market_median": 99990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad Air 13\" (M4)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "13\" Liquid Retina",
+      "chip": "Apple M4",
+      "ram": "12 ГБ",
+      "memory": "128 ГБ – 1 ТБ"
+    },
+    "description_ru": "Планшет среднего класса на чипе M4 с экраном 13 дюймов и 12 ГБ оперативной памяти. Поддерживает Apple Pencil Pro и Magic Keyboard.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-select-13in-wifi-blue-202405?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-air-select-13in-wifi-purple-202405?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел 11.03.2026. Цвета: Space Gray, Blue, Purple, Starlight. Цены — Wi‑Fi версия. Не путать с прошлыми Air на M2/M3 — магазины продают их рядом, в карточке указывать чип M4. Фото у Apple общее с прошлыми Air (дизайн не менялся). Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных. Для 256GB Wi-Fi нашлось только 2 цены — медиана = среднее двух.",
+    "configs": [
+      {
+        "variant": "128GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Purple"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 87990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-air-13-128-gb-wi-fi-siausaa-zvezda-starlight-m4-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 109990,
+            "url": "https://www.re-store.ru/catalog/102AIR13M4W128GRY/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 111178,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-air-2026-13-wi-fi-128gb-blue-mh5p4zp-a/"
+          }
+        ],
+        "market_median": 109990
+      },
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Starlight"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 99990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-air-13-256-gb-wi-fi-seryj-kosmos-space-gray-m4-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 129990,
+            "url": "https://www.re-store.ru/catalog/102AIR13M4W256GRY/"
+          }
+        ],
+        "market_median": 114990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad (A16)",
+    "released": "2025-03",
+    "status": "current",
+    "specs": {
+      "display": "11\" Liquid Retina",
+      "chip": "A16",
+      "memory": "128 / 256 / 512 ГБ",
+      "accessories": "Apple Pencil (USB-C), Magic Keyboard Folio"
+    },
+    "description_ru": "Базовый iPad с экраном 11 дюймов и чипом A16, от 128 ГБ памяти. Для учёбы, видео и документов; работает с Apple Pencil (USB‑C) и Magic Keyboard Folio.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-blue-wifi-select?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-2022-hero-yellow-wifi-select?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Текущий базовый iPad (11-го поколения), вышел в марте 2025. Цвета: Blue, Pink, Yellow, Silver. Старые позиции «iPad 64GB» — это 9/10-е поколение, их убрать. Фото Apple переиспользует с 10-го поколения (внешне одинаковы) — именно его показывает страница покупки iPad на apple.com. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "128GB Wi-Fi",
+        "colors": [
+          "Blue",
+          "Silver",
+          "Pink"
+        ],
+        "market_prices": [
+          {
+            "source": "shop.megafon.ru",
+            "price": 44999,
+            "url": "https://shop.megafon.ru/planshet/196866"
+          },
+          {
+            "source": "biggeek.ru",
+            "price": 42990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-11-128-gb-wi-fi-serebristyj-silver-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 52990,
+            "url": "https://www.re-store.ru/catalog/10211W128SLV/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 53577,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-2025-11-wi-fi-128gb-silver-md3y4ll-a/"
+          }
+        ],
+        "market_median": 48994
+      },
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Blue",
+          "Silver",
+          "Yellow"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 53990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-11-256-gb-wi-fi-serebristyj-silver-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 65990,
+            "url": "https://www.re-store.ru/catalog/10211W256BLU/"
+          },
+          {
+            "source": "kns.ru",
+            "price": 67804,
+            "url": "https://www.kns.ru/product/planshet-apple-ipad-2025-11-wi-fi-256gb-blue-md4h4ll-a/"
+          }
+        ],
+        "market_median": 65990
+      }
+    ]
+  },
+  {
+    "brand": "Apple",
+    "category": "Планшеты",
+    "model": "iPad mini (A17 Pro)",
+    "released": "2024-10",
+    "status": "current",
+    "specs": {
+      "display": "8.3\" Liquid Retina",
+      "chip": "A17 Pro",
+      "memory": "128 / 256 / 512 ГБ",
+      "accessories": "Apple Pencil Pro"
+    },
+    "description_ru": "Компактный планшет с экраном 8,3 дюйма и чипом A17 Pro. Помещается в одну руку, поддерживает Apple Pencil Pro.",
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-mini-select-wifi-purple-202410?wid=2000&hei=2000&fmt=png-alpha",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ipad-mini-select-wifi-starlight-202410?wid=2000&hei=2000&fmt=png-alpha"
+    ],
+    "note": "Вышел в октябре 2024, нового mini Apple не выпускала — модель актуальна. Цвета: Space Gray, Blue, Purple, Starlight. Цены нашлись у двух магазинов (biggeek, re:Store) — медиана по двум точкам. Старый «iPad mini» без указания чипа в каталоге заменить этой моделью. Цены сняты 24.10.2026; в источнике — минимальная цена по цветам для объёма. biggeek продаёт параллельный импорт (без предустановки RuStore) и обычно на 15–30 % дешевле остальных.",
+    "configs": [
+      {
+        "variant": "128GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Purple"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 55990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-mini-128-gb-wi-fi-seryj-kosmos-space-gray-2024"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 69990,
+            "url": "https://www.re-store.ru/catalog/102MINI7W128SPG/"
+          }
+        ],
+        "market_median": 62990
+      },
+      {
+        "variant": "256GB Wi-Fi",
+        "colors": [
+          "Space Gray",
+          "Blue",
+          "Starlight"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 62990,
+            "url": "https://biggeek.ru/products/planset-apple-ipad-mini-256-gb-wi-fi-siausaa-zvezda-starlight-2024"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 84990,
+            "url": "https://www.re-store.ru/catalog/102MINI7W256BLU/"
+          }
+        ],
+        "market_median": 73990
+      }
+    ]
+  }
+]

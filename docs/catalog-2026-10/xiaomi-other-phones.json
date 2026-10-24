@@ -1,0 +1,1171 @@
+[
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "Xiaomi 17 Ultra",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "6.9\" OLED (HyperRGB)",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "Leica 50 Мп 1\" + перископ 200 Мп (75–100 мм)",
+   "battery": "6000 мА·ч, 90 Вт / 50 Вт беспр."
+  },
+  "description_ru": "Камерофлагман Xiaomi с основным сенсором формата 1 дюйм и оптикой Leica. Отличается телеобъективом 200 Мп с переменным фокусным расстоянием 75–100 мм.",
+  "configs": [
+   {
+    "variant": "16/512GB",
+    "colors": [
+     "Black",
+     "White",
+     "Starlit Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 105990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17-ultra-16gb-512gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 119990,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17-ultra/",
+      "note": "17 Ultra 16/512GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 96990,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17-ultra-16-512gb-black/",
+      "note": "медиана 9 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 105990
+   },
+   {
+    "variant": "16GB/1TB",
+    "colors": [
+     "Black",
+     "White",
+     "Starlit Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 118990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17-ultra-16gb-1tb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 129990,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17-ultra/",
+      "note": "17 Ultra 16/1024GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 108195,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17-ultra-16-1tb-black/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 118990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/645_operatorx_operatorx_xm/14/02/2026/df23386f3a67d3d5fdce72e4e1a18b96.png",
+   "https://i02.appmifile.com/146_operatorx_operatorx_opx/20/02/2026/dbdf12655687b48d825c298dffc04954.png"
+  ],
+  "note": "Глобальная версия представлена 28.02.2026 в Барселоне. Батарея глобальной версии 6000 мА·ч (у китайской больше). На mi-shop цена официальная (выше рынка), на price.ru есть дешёвые CN-версии — их не учитывал. Фото 1600×1600 с mi.com."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "Xiaomi 17",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "6.3\" OLED",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "Leica 50 Мп (1/1.31\") + теле 60 мм 50 Мп + ширик 50 Мп",
+   "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
+  },
+  "description_ru": "Компактный флагман Xiaomi с экраном 6,3 дюйма и тройной камерой Leica. При небольшом корпусе (191 г) получил батарею 6330 мА·ч.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "Venture Green",
+     "Ice Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 81990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17-12gb-256gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 84990,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17/",
+      "note": "17 12/256GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 77725,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17-12-256gb-ice-blue/",
+      "note": "медиана 2 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 81990
+   },
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Black",
+     "Venture Green",
+     "Ice Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 87990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17-12gb-512gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 94990,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17/",
+      "note": "17 12/512GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 79240,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17-12-512gb-black/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 87990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/513_operatorx_operatorx_xm/14/02/2026/7e83548bfc090e9eeaa224dc4bdae063.png",
+   "https://i02.appmifile.com/688_operatorx_operatorx_opx/20/02/2026/3f1abe3d947c14ca8dbcb839bf280309.png"
+  ],
+  "note": "Глобальный запуск 28.02.2026. Xiaomi 17 Pro / Pro Max глобально не выходили (только Китай) — не включать. Есть ещё розовый цвет Alpine Pink."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "Xiaomi 17T Pro",
+  "released": "2026-05",
+  "status": "current",
+  "specs": {
+   "display": "6.83\" AMOLED 144 Гц",
+   "chip": "MediaTek Dimensity 9500",
+   "camera": "Leica 50 Мп (Light Fusion 950)",
+   "battery": "7000 мА·ч, 100 Вт"
+  },
+  "description_ru": "Флагман T-серии Xiaomi с крупным экраном 6,83 дюйма и камерами Leica. Стоит заметно дешевле Xiaomi 17 и выделяется батареей 7000 мА·ч.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "Deep Blue",
+     "Deep Violet"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 61990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17t-pro-12gb-256gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 71240,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17t-pro/",
+      "note": "17T Pro 12/256GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 57580,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17t-pro-12-256gb-black/",
+      "note": "медиана 9 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 61990
+   },
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Black",
+     "Deep Blue",
+     "Deep Violet"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 65990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-17t-pro-12gb-512gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 75990,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/xiaomi-17t-pro/",
+      "note": "17T Pro 12/512GB"
+     },
+     {
+      "source": "price.ru",
+      "price": 60945,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-17t-pro-12-512gb-black/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 65990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/800_operatorx_operatorx_opx/28/05/2026/6719f2e5c878ea3de4114140bfa6b5ed.png"
+  ],
+  "note": "Глобальный запуск 28.05.2026. Есть также Xiaomi 17T (Dimensity, дешевле: biggeek 46 990 ₽ за 12/256) — можно добавить отдельной карточкой."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "Redmi Note 17 Pro Max 5G",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "display": "6.83\" AMOLED 1.5K 120 Гц",
+   "chip": "Snapdragon 6 Gen 5",
+   "camera": "50 Мп OIS + 8 Мп ширик",
+   "battery": "10000 мА·ч, 100 Вт"
+  },
+  "description_ru": "Старшая модель актуальной серии Redmi Note с аккумулятором 10 000 мА·ч. Корпус защищён по IP66/IP68/IP69/IP69K.",
+  "configs": [
+   {
+    "variant": "8/256GB",
+    "colors": [
+     "Black",
+     "Green",
+     "Purple"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 38990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-redmi-note-17-pro-max-5g-nfc-8gb-256gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 40840,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/redmi-note-17-pro-max-5g/",
+      "note": "Note 17 Pro Max 5G 8/256"
+     },
+     {
+      "source": "price.ru",
+      "price": 35670,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-redmi-note-17-pro-max-8-256gb-green/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 38990
+   },
+   {
+    "variant": "8/512GB",
+    "colors": [
+     "Black",
+     "Green",
+     "Purple"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 43990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-redmi-note-17-pro-max-5g-nfc-8gb-512gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 46540,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/redmi-note-17-pro-max-5g/",
+      "note": "Note 17 Pro Max 5G 8/512"
+     },
+     {
+      "source": "price.ru",
+      "price": 40340,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-redmi-note-17-pro-max-8-512gb-green/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 43990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/323_operator_sg/24/08/2026/1ef9c7e6bbab71ad6bf32f738066bf12.png"
+  ],
+  "note": "Глобальный запуск конец лета 2026, в РФ официальные продажи стартовали осенью 2026. Фото 1000×630 (все цвета сразу) — крупнее на mi.com не нашёл. Заменяет Redmi Note 13/14/15 Pro из старого каталога."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "Redmi Note 17 Pro 5G",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "display": "6.83\" AMOLED 1.5K 120 Гц",
+   "chip": "Snapdragon 6s Gen 4",
+   "camera": "50 Мп OIS",
+   "battery": "8340 мА·ч, 67 Вт"
+  },
+  "description_ru": "Массовый Redmi Note текущего поколения с большим AMOLED-экраном и батареей 8340 мА·ч. Защита IP66/IP68/IP69/IP69K.",
+  "configs": [
+   {
+    "variant": "6/128GB",
+    "colors": [
+     "Black",
+     "Satin Orange",
+     "Sky Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 26490,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-redmi-note-17-pro-5g-nfc-6gb-128gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 27540,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/redmi-note-17-pro-5g/",
+      "note": "Note 17 Pro 5G 6/128"
+     },
+     {
+      "source": "price.ru",
+      "price": 27740,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-redmi-note-17-pro-6-128gb-orange/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 27540
+   },
+   {
+    "variant": "8/256GB",
+    "colors": [
+     "Black",
+     "Satin Orange",
+     "Sky Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 32990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-redmi-note-17-pro-5g-nfc-8gb-256gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 33240,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/redmi-note-17-pro-5g/",
+      "note": "Note 17 Pro 5G 8/256"
+     },
+     {
+      "source": "price.ru",
+      "price": 30655,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-redmi-note-17-pro-8-256gb-orange/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 32990
+   },
+   {
+    "variant": "8/512GB",
+    "colors": [
+     "Black",
+     "Satin Orange",
+     "Sky Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 36990,
+      "url": "https://biggeek.ru/products/smartfon-xiaomi-redmi-note-17-pro-5g-nfc-8gb-512gb-black-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 38940,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/redmi-note-17-pro-5g/",
+      "note": "Note 17 Pro 5G 8/512"
+     },
+     {
+      "source": "price.ru",
+      "price": 33740,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-redmi-note-17-pro-8-512gb-orange/",
+      "note": "медиана 10 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 36990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/26_operator_sg/24/08/2026/ab065bd494998d05f086324558ce4935.png"
+  ],
+  "note": "Цвет Purple тоже продаётся. Фото 1000×630 со всеми цветами."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "POCO F9 Ultra",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "display": "6.9\" AMOLED 185 Гц",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "200 Мп + перископ 50 Мп 5x + ширик 50 Мп",
+   "battery": "8050 мА·ч, 100 Вт / 50 Вт беспр."
+  },
+  "description_ru": "Старший POCO F текущего поколения на топовом Snapdragon 8 Elite Gen 5. Выделяется экраном 185 Гц и батареей 8050 мА·ч.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "Red"
+    ],
+    "market_prices": [
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 76490,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/poco-f9-series-m/",
+      "note": "F9 Ultra 12/256"
+     },
+     {
+      "source": "price.ru",
+      "price": 66090,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-poco-f9-ultra-12-256gb-black/",
+      "note": "медиана 8 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 71290
+   },
+   {
+    "variant": "16/512GB",
+    "colors": [
+     "Black",
+     "Red"
+    ],
+    "market_prices": [
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 85490,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/poco-f9-series-m/",
+      "note": "F9 Ultra 16/512"
+     },
+     {
+      "source": "price.ru",
+      "price": 73500,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-poco-f9-ultra-16-512gb-black/",
+      "note": "медиана 7 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 79495
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/545_operator_sg/15/08/2026/66a9735335fd7a6b04318ac96e917565.png"
+  ],
+  "note": "Глобальные продажи с 01.09.2026. В biggeek пока нет — медиана по двум источникам (официальный mi-shop заметно дороже рынка). Фото 1200×600. Заменяет Poco F5/F6 (и F8 тоже уже прошлое поколение)."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Смартфоны",
+  "model": "POCO F9 Pro",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "display": "6.59\" AMOLED 185 Гц",
+   "chip": "Snapdragon 8 Elite Gen 5 (V)",
+   "camera": "200 Мп OIS + теле 2.5x + ширик 8 Мп",
+   "battery": "6330 мА·ч, 100 Вт / 50 Вт беспр."
+  },
+  "description_ru": "Компактный POCO F на урезанной версии Snapdragon 8 Elite Gen 5. Флагманская производительность за цену ниже Xiaomi 17.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "White",
+     "Green"
+    ],
+    "market_prices": [
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 69098,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/poco-f9-series-m/",
+      "note": "F9 Pro 12/256"
+     },
+     {
+      "source": "price.ru",
+      "price": 57125,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-poco-f9-pro-12-256gb-black/",
+      "note": "медиана 4 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 63112
+   },
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Black",
+     "White",
+     "Green"
+    ],
+    "market_prices": [
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 74213,
+      "url": "https://www.mi-shop.com/ru/catalog/smartphones/poco-f9-series-m/",
+      "note": "F9 Pro 12/512"
+     },
+     {
+      "source": "price.ru",
+      "price": 60900,
+      "url": "https://price.ru/mobilnye-telefony/xiaomi-poco-f9-pro-12-512gb-black/",
+      "note": "медиана 9 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 67556
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/780_operatorx_operatorx_opx/01/09/2026/fc3098e1bedf1ab93c25a64a0361eb23.png"
+  ],
+  "note": "Глобальные продажи с 01.09.2026. В biggeek пока нет; медиана по двум источникам. Фото 1600×1600."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Планшеты",
+  "model": "Xiaomi Pad 8 Pro",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "11.2\" 3.2K (3200×2136)",
+   "chip": "Snapdragon 8 Elite",
+   "battery": "9200 мА·ч, 67 Вт",
+   "camera": "50 Мп"
+  },
+  "description_ru": "Старший планшет Xiaomi на Snapdragon 8 Elite с экраном 11,2 дюйма 3,2K. Подходит для работы с клавиатурой и стилусом.",
+  "configs": [
+   {
+    "variant": "8/256GB",
+    "colors": [
+     "Gray",
+     "Blue",
+     "Pine Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 50490,
+      "url": "https://biggeek.ru/products/planset-xiaomi-pad-8-pro-8gb-256gb-gray-standard-version-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 53091,
+      "url": "https://www.mi-shop.com/ru/catalog/planshety/",
+      "note": "Pad 8 Pro 8/256 (черный)"
+     }
+    ],
+    "market_median": 51790
+   },
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Gray",
+     "Blue",
+     "Pine Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 57990,
+      "url": "https://biggeek.ru/products/planset-xiaomi-pad-8-pro-12gb-512gb-gray-standard-version-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 65990,
+      "url": "https://www.mi-shop.com/ru/catalog/planshety/",
+      "note": "Pad 8 Pro 12/512 (черный)"
+     }
+    ],
+    "market_median": 61990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/329_operatorx_operatorx_opx/24/02/2026/6ba665a230d2ec06629da3cbee01af55.png",
+   "https://i02.appmifile.com/218_operatorx_operatorx_xm/20/02/2026/38f37b6999ec21ba8715ca36b1b9a1f2.png"
+  ],
+  "note": "Глобальный запуск 28.02.2026 вместе с Xiaomi 17. Есть версия с матовым стеклом. На price.ru цен по конфигурациям не нашёл — медиана по двум магазинам."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Планшеты",
+  "model": "Xiaomi Pad 8",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "11.2\" 3.2K (3200×2136)",
+   "chip": "Snapdragon 8s Gen 4",
+   "battery": "9200 мА·ч, 45 Вт",
+   "weight": "485 г"
+  },
+  "description_ru": "Базовый планшет Xiaomi текущего поколения с экраном 11,2 дюйма 3,2K. Производительный Snapdragon 8s Gen 4 при цене ниже Pro-версии.",
+  "configs": [
+   {
+    "variant": "8/128GB",
+    "colors": [
+     "Gray",
+     "Blue",
+     "Pine Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 38490,
+      "url": "https://biggeek.ru/products/planset-xiaomi-pad-8-8gb-128gb-gray-gl"
+     }
+    ],
+    "market_median": 38490
+   },
+   {
+    "variant": "8/256GB",
+    "colors": [
+     "Gray",
+     "Blue",
+     "Pine Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 41490,
+      "url": "https://biggeek.ru/products/planset-xiaomi-pad-8-8gb-256gb-gray-gl"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 49990,
+      "url": "https://www.mi-shop.com/ru/catalog/planshety/",
+      "note": "Pad 8 8/256 (черный)"
+     }
+    ],
+    "market_median": 45740
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/308_operatorx_operatorx_opx/24/02/2026/41a1ac56a805cdbe4e74b33f6e4dca8f.png",
+   "https://i02.appmifile.com/872_operatorx_operatorx_xm/20/02/2026/5e70d08246ce16e52d597b087abae4b9.png"
+  ],
+  "note": "8/128 — цена только из biggeek (один источник). Заменяет Xiaomi Pad 7 и Pad Pro 12 из старого каталога."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Часы",
+  "model": "Xiaomi Smart Band 10",
+  "released": "2025-06",
+  "status": "previous_official",
+  "specs": {
+   "display": "1.72\" AMOLED 212×520",
+   "battery": "233 мА·ч",
+   "weight": "≈16 г (без ремешка)",
+   "nfc": "есть версия с NFC и Ceramic Edition"
+  },
+  "description_ru": "Фитнес-браслет Xiaomi с AMOLED-экраном 1,72 дюйма. Остаётся основной официальной моделью линейки Smart Band в России.",
+  "configs": [
+   {
+    "variant": "Стандарт (без NFC)",
+    "colors": [
+     "Midnight Black",
+     "Glacier Silver",
+     "Mystic Rose"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 4290,
+      "url": "https://biggeek.ru/products/fitnes-braslet-xiaomi-smart-band-10"
+     },
+     {
+      "source": "mi-shop.com (офиц. магазин Xiaomi в РФ)",
+      "price": 4290,
+      "url": "https://www.mi-shop.com/ru/catalog/smart_devices/umnye-chasy-i-braslety/",
+      "note": "Smart Band 10 (Черный)"
+     },
+     {
+      "source": "price.ru",
+      "price": 3499,
+      "url": "https://price.ru/smart-chasy-i-umnye-braslety/xiaomi-mi-smart-band-10-46-mm-midnight-black-case-tpu-black/",
+      "note": "медиана 5 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 4290
+   },
+   {
+    "variant": "Ceramic Edition",
+    "colors": [
+     "Pearl White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 5990,
+      "url": "https://biggeek.ru/products/fitnes-braslet-xiaomi-smart-band-10-ceramic-edition"
+     }
+    ],
+    "market_median": 5990
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/796_operatorx_operatorx_opx/23/06/2025/fd50b8df4e716c892c6b83d6d40eec9b.png"
+  ],
+  "note": "Формально уже прошлое поколение: Smart Band 11 вышел глобально в сентябре 2026, но в РФ официально пока продаётся только Smart Band 11 Active (от 2 890 ₽). Band 10 официально продают mi-shop и mi.com. Ceramic — цена из одного источника. Заменяет Mi Band 7/8."
+ },
+ {
+  "brand": "Xiaomi",
+  "category": "Часы",
+  "model": "Xiaomi Smart Band 11",
+  "released": "2026-09",
+  "status": "current",
+  "specs": {
+   "display": "1.72\" AMOLED 212×520",
+   "battery": "233 мА·ч",
+   "weight": "15.6 г (без ремешка)",
+   "nfc": "есть версия NFC и Ceramic Edition"
+  },
+  "description_ru": "Новый фитнес-браслет Xiaomi текущего поколения. Внешне близок к Band 10, весит меньше и получил ряд новых функций мониторинга сна.",
+  "configs": [
+   {
+    "variant": "Стандарт",
+    "colors": [
+     "Midnight Black",
+     "Glacier Silver",
+     "Mystic Rose"
+    ],
+    "market_prices": [],
+    "market_median": null
+   }
+  ],
+  "image_urls": [
+   "https://i02.appmifile.com/432_operatorx_operatorx_opx/21/09/2026/2e272934c5d697e236738ab6b99466c5.png"
+  ],
+  "note": "Глобальная страница на mi.com есть, но в российских магазинах базовой Band 11 пока нет (только Band 11 Active) — цены нет, market_median: null. Ставить на сайт, когда появится в РФ; до этого продавать Band 10."
+ },
+ {
+  "brand": "Honor",
+  "category": "Смартфоны",
+  "model": "HONOR Magic8 Pro",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "6.71\" OLED",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "50 Мп (1/1.3\") + перископ 200 Мп 3.7x",
+   "battery": "7100 мА·ч, 100 Вт / 80 Вт беспр."
+  },
+  "description_ru": "Флагман Honor с перископом 200 Мп и кремний-углеродной батареей 7100 мА·ч. Официально продаётся в России с февраля 2026 года.",
+  "configs": [
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Black",
+     "Sunrise Gold",
+     "Sky Cyan"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 85990,
+      "url": "https://biggeek.ru/products/smartfon-honor-magic8-pro-12-512gb-black-global"
+     },
+     {
+      "source": "price.ru",
+      "price": 79490,
+      "url": "https://price.ru/mobilnye-telefony/honor-magic8-pro-12-512gb-velvet-black/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     },
+     {
+      "source": "xcom-shop.ru",
+      "price": 110283,
+      "url": "https://www.xcom-shop.ru/honor_magic_8_pro_12512gb_1288260.html"
+     }
+    ],
+    "market_median": 85990
+   },
+   {
+    "variant": "16GB/1TB",
+    "colors": [
+     "Black",
+     "Sunrise Gold",
+     "Sky Cyan"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 97990,
+      "url": "https://biggeek.ru/products/smartfon-honor-magic8-pro-16-1tb-black-global"
+     },
+     {
+      "source": "price.ru",
+      "price": 88945,
+      "url": "https://price.ru/mobilnye-telefony/honor-magic8-pro-16-1tb-sun-golden-sand/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 93468
+   }
+  ],
+  "image_urls": [
+   "https://www.honor.com/content/dam/honor/common/product-list/product-series/honor-magic8-pro/magic8-pro-list-gold.png"
+  ],
+  "note": "Официальный старт в РФ 17.02.2026 по 119 990 ₽ (12/512), сейчас рынок ниже. Magic9 вышел в Китае в конце сентября 2026, глобально ожидается в 2027 — пока не включать. На российском honor.com страницы модели нет, фото с глобального honor.com, только 500×500. Заменяет Magic6 Pro."
+ },
+ {
+  "brand": "Huawei",
+  "category": "Смартфоны",
+  "model": "HUAWEI Pura 90s Pro",
+  "released": "2026-07",
+  "status": "current",
+  "specs": {
+   "display": "6.6\" LTPO OLED 1–120 Гц",
+   "camera": "50 Мп с переменной диафрагмой f/1.4–4.0 + телемакро 50 Мп + ширик 12.5 Мп",
+   "battery": "5850 мА·ч",
+   "os": "EMUI 16"
+  },
+  "description_ru": "Актуальный камерофон Huawei серии Pura для глобального рынка. Основная камера с регулируемой диафрагмой и телемакрообъектив 50 Мп.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Mulberry Black",
+     "Coconut White",
+     "Orange Soda"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 59990,
+      "url": "https://biggeek.ru/products/smartfon-huawei-pura-90s-pro-12gb-256gb-mulberry-black-global"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 69990,
+      "url": "https://re-store.ru/catalog/51098YXL/"
+     },
+     {
+      "source": "price.ru",
+      "price": 54990,
+      "url": "https://price.ru/mobilnye-telefony/huawei-pura-90s-pro-12-256gb-mulberry-black/",
+      "note": "медиана 5 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 59990
+   },
+   {
+    "variant": "12/512GB",
+    "colors": [
+     "Mulberry Black",
+     "Coconut White",
+     "Orange Soda"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 65990,
+      "url": "https://biggeek.ru/products/smartfon-huawei-pura-90s-pro-12gb-512gb-mulberry-black-global"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 79990,
+      "url": "https://re-store.ru/catalog/51098YXG/"
+     },
+     {
+      "source": "price.ru",
+      "price": 62500,
+      "url": "https://price.ru/mobilnye-telefony/huawei-pura-90s-pro-12-512gb-mulberry-black/",
+      "note": "медиана 5 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 65990
+   }
+  ],
+  "image_urls": [
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/plp-x/phones-v5/0714-2026-huawei-flagship-product-launch/product-shelf-and-pop-up/pura-series/pura90s-pro.png",
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/pura90s-pro/specs-mulberry-black.png"
+  ],
+  "note": "Официально в РФ с конца июля 2026 (МТС, М.Видео, re:Store). Есть старшая Pura 90s Pro Max (12/256 от ~72 000 ₽ в biggeek). Фото 800×800 и 300×800 (крупнее на consumer.huawei.com не нашёл). Заменяет Pura 70 Pro."
+ },
+ {
+  "brand": "Huawei",
+  "category": "Смартфоны",
+  "model": "HUAWEI Mate 80 Pro",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "display": "6.75\" OLED",
+   "camera": "50 Мп RYYB с переменной диафрагмой + телемакро 48 Мп + ширик 40 Мп",
+   "battery": "5620 мА·ч, 100 Вт",
+   "os": "EMUI 15"
+  },
+  "description_ru": "Флагман Huawei серии Mate на глобальном рынке. Камеры с RYYB-сенсорами и быстрая зарядка 100 Вт.",
+  "configs": [
+   {
+    "variant": "16/512GB",
+    "colors": [
+     "Black",
+     "Gold",
+     "Green"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 66990,
+      "url": "https://biggeek.ru/products/smartfon-huawei-mate-80-pro-16gb-512gb-black-gl"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 69990,
+      "url": "https://re-store.ru/catalog/51098SRA/"
+     },
+     {
+      "source": "price.ru",
+      "price": 63490,
+      "url": "https://price.ru/mobilnye-telefony/huawei-mate-80-pro-16-512gb-obsidian-black/",
+      "note": "медиана 8 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 66990
+   }
+  ],
+  "image_urls": [
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/pdp/phones/mate80-pro/specs-black.png",
+   "https://consumer.huawei.com/dam/content/dam/huawei-cbg-site/common/mkt/plp-x/phones-v5/0226-2026-huawei-innovative-product-launch/product-shelf-and-pop-up/mate-series/huawei-phones-mate80-pro.png"
+  ],
+  "note": "Глобальный запуск — презентация Huawei 26.02.2026 (дата по пути файлов на consumer.huawei.com), продаётся на российском сайте Huawei и в re:Store. В РФ одна конфигурация 16/512. Фото небольшие: 294×800 и 320×320."
+ },
+ {
+  "brand": "OnePlus",
+  "category": "Смартфоны",
+  "model": "OnePlus 15",
+  "released": "2025-11",
+  "status": "current",
+  "specs": {
+   "display": "6.78\" 1.5K 165 Гц",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "3 × 50 Мп",
+   "battery": "7300 мА·ч"
+  },
+  "description_ru": "Флагман OnePlus с экраном 165 Гц и батареей 7300 мА·ч. Остаётся актуальной глобальной моделью бренда.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Infinite Black",
+     "Sand Storm",
+     "Ultra Violet"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 79990,
+      "url": "https://biggeek.ru/products/smartfon-oneplus-15-12-gb-plus-256-gb-beskonecno-cernyj-infinite-black-versia-global"
+     },
+     {
+      "source": "price.ru",
+      "price": 75750,
+      "url": "https://price.ru/mobilnye-telefony/oneplus-15-12-256gb-infinite-black/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 77870
+   },
+   {
+    "variant": "16/512GB",
+    "colors": [
+     "Infinite Black",
+     "Ultra Violet"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 90990,
+      "url": "https://biggeek.ru/products/smartfon-oneplus-15-16-gb-plus-512-gb-beskonecno-cernyj-infinite-black-versia-global"
+     },
+     {
+      "source": "price.ru",
+      "price": 85020,
+      "url": "https://price.ru/mobilnye-telefony/oneplus-15-16-512gb-infinite-black/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 88005
+   }
+  ],
+  "image_urls": [
+   "https://www.oneplus.com/content/dam/oneplus/2025/product-station/15/spec/OnePlus15-black-1080x1080.png",
+   "https://www.oneplus.com/content/dam/oneplus/2025/product-station/15/spec/OnePlus15-sand-1080x1080.png"
+  ],
+  "note": "OnePlus 16 вышел в Китае 12.10.2026, глобального запуска нет (бренд сворачивает новинки в Европе/США). В РФ OnePlus официально не представлен — только параллельный импорт, цены выросли относительно старта (49–57 тыс. ₽ в конце 2025). Фото 2160×2160. Заменяет OnePlus 11/12."
+ },
+ {
+  "brand": "Nothing",
+  "category": "Смартфоны",
+  "model": "Nothing Phone (3)",
+  "released": "2025-07",
+  "status": "current",
+  "specs": {
+   "display": "6.67\" AMOLED 120 Гц",
+   "chip": "Snapdragon 8s Gen 4",
+   "camera": "4 × 50 Мп (вкл. перископ и фронталку)",
+   "charging": "65 Вт"
+  },
+  "description_ru": "Флагман Nothing с прозрачным дизайном и дисплеем Glyph Matrix на задней панели. Остаётся флагманом бренда в 2026 году.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 45990,
+      "url": "https://biggeek.ru/products/smartfon-nothing-phone-3-12-plus-256-gb-black"
+     },
+     {
+      "source": "price.ru",
+      "price": 44240,
+      "url": "https://price.ru/mobilnye-telefony/nothing-phone-3-12-256gb-black/",
+      "note": "медиана 6 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 45115
+   },
+   {
+    "variant": "16/512GB",
+    "colors": [
+     "Black",
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 52990,
+      "url": "https://biggeek.ru/products/smartfon-nothing-phone-3-16-plus-512-gb-black"
+     },
+     {
+      "source": "price.ru",
+      "price": 48250,
+      "url": "https://price.ru/mobilnye-telefony/nothing-phone-3-16-512gb-black/",
+      "note": "медиана 7 предложений нового товара (без CN-версий)"
+     }
+    ],
+    "market_median": 50620
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0376/5420/0459/files/0000s_0012_Phone-3-black.png",
+   "https://cdn.shopify.com/s/files/1/0376/5420/0459/files/Arbok-Primary-Black.png"
+  ],
+  "note": "Carl Pei подтвердил: Phone (4) в 2026 не будет, Phone (3) остаётся флагманом. Фото с официального магазина nothing.tech (хостинг Shopify), 2048 и 1352 px, вид сзади. Из среднего класса актуален Phone (4a) Pro (biggeek от 45 990 ₽) — можно добавить."
+ },
+ {
+  "brand": "vivo",
+  "category": "Смартфоны",
+  "model": "vivo X500 Pro",
+  "released": "2026-10",
+  "status": "current",
+  "specs": {
+   "display": "6.36\" LTPO AMOLED 144 Гц",
+   "chip": "Dimensity 9600 Pro",
+   "camera": "50 + 50 + 64 Мп (ZEISS)",
+   "battery": "6510 мА·ч, 90 Вт / 40 Вт беспр."
+  },
+  "description_ru": "Новый компактный флагман vivo с камерами ZEISS. Официально представлен в России 20.10.2026.",
+  "configs": [
+   {
+    "variant": "12/256GB",
+    "colors": [
+     "Black",
+     "Orange"
+    ],
+    "market_prices": [
+     {
+      "source": "rozetked.me (цена на маркетплейсах при старте)",
+      "price": 114000,
+      "url": "https://rozetked.me/news/48979-seriya-vivo-x500-oficial-no-predstavlena-v-rossii-kakie-ceny"
+     },
+     {
+      "source": "comss.ru (цена при старте)",
+      "price": 114000,
+      "url": "https://www.comss.ru/page.php?id=22506"
+     },
+     {
+      "source": "t-j.ru (Ozon/Wildberries, офиц. продавец)",
+      "price": 102995,
+      "url": "https://t-j.ru/news/vivo-x500-in-russia/"
+     },
+     {
+      "source": "price.ru (последняя цена, предложений нет)",
+      "price": 98466,
+      "url": "https://price.ru/mobilnye-telefony/vivo-x500-pro-12-256gb-black/"
+     }
+    ],
+    "market_median": 108498
+   }
+  ],
+  "image_urls": [
+   "https://ru-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1792151876702/de54a1200ce2542d602450cd0d6c4b0f.png",
+   "https://ru-exstatic-vivofs.vivo.com/PSee2l50xoirPK7y/1792151860412/4b3c9a0ce37749e1c652398cb5f22ec0.png"
+  ],
+  "note": "ПРЕДЗАКАЗ: в РФ предзаказ до 30.10, продажи Pro-версии с ноября 2026. Цены — стартовые из новостей, не живые цены магазинов; пересчитать после начала продаж. Есть 12/512. Если нужен товар в наличии прямо сейчас — vivo X300 Ultra (RU-версия, biggeek 114 990 ₽ за 16/512). Фото с vivo.com/ru, 640×640. Заменяет vivo X100 Ultra."
+ },
+ {
+  "brand": "OPPO",
+  "category": "Смартфоны",
+  "model": "OPPO Find X9 Ultra",
+  "released": "2026-05",
+  "status": "current",
+  "specs": {
+   "display": "6.82\" AMOLED",
+   "chip": "Snapdragon 8 Elite Gen 5",
+   "camera": "Hasselblad: 200 Мп осн. + 200 Мп теле + 50 Мп теле 10x + 50 Мп ширик",
+   "battery": "7050 мА·ч, 100 Вт"
+  },
+  "description_ru": "Камерофлагман OPPO с двумя 200-мегапиксельными камерами Hasselblad и 10-кратным оптическим зумом. Официально продаётся в России с мая 2026 года.",
+  "configs": [
+   {
+    "variant": "12/512GB",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "rozetked.me / hi-tech.mail.ru (офиц. предзаказ, AliExpress)",
+      "price": 99999,
+      "url": "https://rozetked.me/news/46004-oppo-otkryla-predzakaz-na-fotoflagman-find-x9-ultra-v-rossii-ot-99-999-rubley"
+     },
+     {
+      "source": "helpix.ru (глобальная версия на AliExpress)",
+      "price": 98062,
+      "url": "https://www.helpix.ru/news/202605/081024-v_prodazhe_fotoflagman_oppo_find_x9_ultra_globalnaja_versija/"
+     },
+     {
+      "source": "kimovil.com (сводка по 5 магазинам, дата неизвестна)",
+      "price": 129757,
+      "url": "https://www.kimovil.com/ru/oppo-find-x9-ultra/antutu"
+     }
+    ],
+    "market_median": 99999
+   }
+  ],
+  "image_urls": [
+   "https://www.oppo.com/content/dam/oppo_com/common/mkt/v2-2/find-x9-ultra-x9s-en/find-x9-ultra/list-page/480-600-brown.png",
+   "https://www.oppo.com/content/dam/oppo_com/common/mkt/v2-2/find-x9-ultra-x9s-en/find-x9-ultra/navigation/440-440-brown.png"
+  ],
+  "note": "Цены — весенние (предзаказ май 2026), свежих цен магазинов найти не удалось: biggeek OPPO не продаёт, price.ru карточки нет. Перед публикацией проверить на Ozon/AliExpress. В РФ продаётся одна конфигурация 12/512; название цвета на сайте не нашёл. Фото маленькие (480×600, 440×440). Заменяет Find X6 Pro."
+ }
+]

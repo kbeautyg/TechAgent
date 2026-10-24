@@ -1,0 +1,2669 @@
+[
+ {
+  "brand": "Sony",
+  "category": "Игровые консоли",
+  "model": "PlayStation 5 Slim (с дисководом)",
+  "released": "2023-11",
+  "status": "current",
+  "specs": {
+   "storage": "1 ТБ SSD",
+   "drive": "Ultra HD Blu-ray (съёмный)",
+   "video": "до 4K 120 Гц, HDR",
+   "model_no": "CFI-2000 (2-я ревизия CFI-2100)"
+  },
+  "description_ru": "Основная версия PS5 в уменьшенном корпусе Slim с дисководом Blu-ray и SSD на 1 ТБ. Подходит тем, кто покупает игры на дисках или берёт б/у диски.",
+  "configs": [
+   {
+    "variant": "1 ТБ",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 77990,
+      "url": "https://biggeek.ru/products/sony-playstation-5-new"
+     },
+     {
+      "source": "kns.ru",
+      "price": 94337,
+      "url": "https://www.kns.ru/product/igrovaya-pristavka-sony-playstation-5-slim-cfi-2116a01y/"
+     },
+     {
+      "source": "price.ru",
+      "price": 71750,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 74490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 70490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 70990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 70490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim/"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 107999,
+      "url": "https://www.holodilnik.ru/search/?search=PlayStation+5"
+     }
+    ],
+    "market_median": 71370
+   }
+  ],
+  "image_urls": [
+   "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-edition-left-image-block-01-en-24jun24?$1600px$"
+  ],
+  "note": "Разброс большой: на price.ru 69–78 тыс., в КНС 94 тыс., в Холодильнике 108 тыс. Медиана держится около 72 тыс. Картинка с playstation.com показывает консоль вместе с геймпадом."
+ },
+ {
+  "brand": "Sony",
+  "category": "Игровые консоли",
+  "model": "PlayStation 5 Slim Digital Edition",
+  "released": "2023-11",
+  "status": "current",
+  "specs": {
+   "storage": "1 ТБ или 825 ГБ SSD",
+   "drive": "нет (дисковод докупается отдельно)",
+   "video": "до 4K 120 Гц, HDR"
+  },
+  "description_ru": "PS5 Slim без дисковода, игры только из цифрового магазина. Отдельно продаётся версия на 825 ГБ — это самая дешёвая PS5 в продаже.",
+  "configs": [
+   {
+    "variant": "1 ТБ",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 74990,
+      "url": "https://biggeek.ru/products/sony-playstation-5-new-digital-edition"
+     },
+     {
+      "source": "price.ru",
+      "price": 69990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 66490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 71000,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     }
+    ],
+    "market_median": 70495
+   },
+   {
+    "variant": "825 ГБ",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 71990,
+      "url": "https://biggeek.ru/products/igrovaa-konsol-sony-playstation-5-slim-digital-edition-825-gb"
+     },
+     {
+      "source": "price.ru",
+      "price": 66990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 64950,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69077,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-slim-digital-edition/"
+     }
+    ],
+    "market_median": 68034
+   }
+  ],
+  "image_urls": [
+   "https://gmedia.playstation.com/is/image/SIEPDC/ps5-slim-digital-edition-right-image-block-01-en-24jun24?$1600px$"
+  ],
+  "note": "У re-store эта консоль стоит «от 78 800 ₽», но объём там не указан, поэтому в расчёт её не брал. Покупателю стоит объяснить, что эта версия не читает диски."
+ },
+ {
+  "brand": "Sony",
+  "category": "Игровые консоли",
+  "model": "PlayStation 5 Pro",
+  "released": "2024-11",
+  "status": "current",
+  "specs": {
+   "storage": "2 ТБ SSD",
+   "gpu": "улучшенная графика, PSSR-апскейлинг",
+   "wifi": "Wi-Fi 7",
+   "drive": "нет (докупается)"
+  },
+  "description_ru": "Старшая PS5 с более мощной графикой: в поддерживаемых играх выше чёткость и стабильнее частота кадров. Дисковода нет, накопитель на 2 ТБ.",
+  "configs": [
+   {
+    "variant": "2 ТБ",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 139990,
+      "url": "https://biggeek.ru/products/sony-playstation-5-pro"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 144990,
+      "url": "https://re-store.ru/catalog/AG_CFI-7000-B01/"
+     },
+     {
+      "source": "kns.ru",
+      "price": 155482,
+      "url": "https://www.kns.ru/product/igrovaya-pristavka-sony-playstation-5-pro-digital-cfi-7119b01/"
+     },
+     {
+      "source": "price.ru",
+      "price": 122290,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 124990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 121890,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 124890,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 127750,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 122490,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     },
+     {
+      "source": "price.ru",
+      "price": 122990,
+      "url": "https://price.ru/igrovye-pristavki/sony-playstation-5-pro-digital-edition/"
+     }
+    ],
+    "market_median": 124940
+   }
+  ],
+  "image_urls": [
+   "https://gmedia.playstation.com/is/image/SIEPDC/ps5-pro-dualsense-image-block-01-en-16aug24?$1600px$"
+  ],
+  "note": "Сетевые магазины (biggeek, re-store, КНС) просят 140–155 тыс., магазины с price.ru — 122–128 тыс. Медиана ближе к нижней группе. Холодильник показывает 155 тыс., но товара нет в наличии, поэтому его не учитывал."
+ },
+ {
+  "brand": "Sony",
+  "category": "Игровые консоли",
+  "model": "DualSense (геймпад PS5)",
+  "released": "2020-11",
+  "status": "current",
+  "specs": {
+   "connection": "Bluetooth, USB-C",
+   "features": "адаптивные триггеры, тактильная отдача",
+   "battery": "встроенный аккумулятор"
+  },
+  "description_ru": "Стандартный беспроводной геймпад PS5 с адаптивными триггерами и встроенным микрофоном. В продаже новая ревизия CFI-ZCT2 и много цветов.",
+  "configs": [
+   {
+    "variant": "DualSense",
+    "colors": [
+     "White",
+     "Midnight Black",
+     "Cosmic Red"
+    ],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 7467,
+      "url": "https://www.kns.ru/product/geimpad-sony-playstation-5-dualsense-cfi-zct2w-black/"
+     },
+     {
+      "source": "kns.ru",
+      "price": 7763,
+      "url": "https://www.kns.ru/product/geimpad-sony-playstation-5-dualsense-cfi-zct2w-white/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 7400,
+      "url": "https://re-store.ru/catalog/PS719827696/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 7500,
+      "url": "https://re-store.ru/catalog/PS719399902/"
+     }
+    ],
+    "market_median": 7484
+   },
+   {
+    "variant": "DualSense Edge",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 21990,
+      "url": "https://biggeek.ru/products/gejmpad-sony-dualsense-edge-ps5-wireless-controller-midnight-collection"
+     },
+     {
+      "source": "kns.ru",
+      "price": 22429,
+      "url": "https://www.kns.ru/product/geimpad-sony-playstation-5-dualsense-edge-cfi-zcp1-white/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 23990,
+      "url": "https://re-store.ru/catalog/CFI-ZCP1/"
+     }
+    ],
+    "market_median": 22429
+   }
+  ],
+  "image_urls": [
+   "https://gmedia.playstation.com/is/image/SIEPDC/dualsense-controller-product-thumbnail-01-en-14sep21?$1600px$"
+  ],
+  "note": "У re-store цены указаны «от», то есть это нижняя граница. Edge — профессиональная версия со сменными стиками и задними кнопками; в biggeek взята цена чёрной версии."
+ },
+ {
+  "brand": "Nintendo",
+  "category": "Игровые консоли",
+  "model": "Nintendo Switch 2",
+  "released": "2025-06",
+  "status": "current",
+  "specs": {
+   "display": "7.9\" LCD, 1080p, 120 Гц",
+   "storage": "256 ГБ",
+   "tv": "до 4K в доке",
+   "controllers": "Joy-Con 2 на магнитах"
+  },
+  "description_ru": "Новое поколение гибридной консоли: играть можно в руках и на телевизоре через док. Большой экран 7,9 дюйма, 256 ГБ памяти, запускает большинство игр с первой Switch.",
+  "configs": [
+   {
+    "variant": "256 ГБ",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 54990,
+      "url": "https://biggeek.ru/products/igrovaa-konsol-nintendo-switch-2"
+     },
+     {
+      "source": "kns.ru",
+      "price": 63090,
+      "url": "https://www.kns.ru/product/igrovaya-pristavka-nintendo-switch-2/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 59200,
+      "url": "https://re-store.ru/catalog/BEE-S-KB6AA-HKG/"
+     },
+     {
+      "source": "price.ru",
+      "price": 45990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     },
+     {
+      "source": "price.ru",
+      "price": 49890,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44490,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44900,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     },
+     {
+      "source": "price.ru",
+      "price": 51990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-2/"
+     }
+    ],
+    "market_median": 49890
+   }
+  ],
+  "image_urls": [
+   "https://assets.nintendo.com/image/upload/f_png/q_auto/ncom/My%20Nintendo%20Store/EN-US/Nintendo%20Switch%202/Hardware/123669-nintendo-switch-2-docked-2000x2000",
+   "https://assets.nintendo.com/image/upload/f_png/q_auto/ncom/My%20Nintendo%20Store/EN-US/Nintendo%20Switch%202/Hardware/123669-nintendo-switch-2-dock-joy-con-grip-2000x2000"
+  ],
+  "note": "Наборы с игрой (Mario Kart World, Pokémon Legends Z-A) стоят на 6–15 тыс. дороже. Цена re-store — «от». В Холодильнике 68 тыс., но товара нет в наличии."
+ },
+ {
+  "brand": "Nintendo",
+  "category": "Игровые консоли",
+  "model": "Nintendo Switch OLED",
+  "released": "2021-10",
+  "status": "previous_official",
+  "specs": {
+   "display": "7\" OLED, 720p",
+   "storage": "64 ГБ",
+   "battery": "4,5–9 ч"
+  },
+  "description_ru": "Прошлое поколение Switch с OLED-экраном 7 дюймов. Nintendo продолжает её выпускать, и это более дешёвый способ войти в экосистему.",
+  "configs": [
+   {
+    "variant": "64 ГБ",
+    "colors": [
+     "White",
+     "Neon Blue/Neon Red"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 31990,
+      "url": "https://biggeek.ru/products/nintendo-switch-oled-model"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 36990,
+      "url": "https://re-store.ru/catalog/AG_HEG-001_64GB_WHITE/"
+     },
+     {
+      "source": "price.ru",
+      "price": 28990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 31990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 28500,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 28590,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29190,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29490,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 30990,
+      "url": "https://price.ru/igrovye-pristavki/nintendo-switch-oled-white/"
+     }
+    ],
+    "market_median": 29490
+   }
+  ],
+  "image_urls": [
+   "https://assets.nintendo.com/image/upload/f_png/q_auto/ncom/en_US/products/hardware/nintendo-switch-oled-model-white-set/115461-switch-oled-white-console-dock-joy-con-grip-1200x675",
+   "https://assets.nintendo.com/image/upload/f_png/q_auto/ncom/en_US/products/hardware/nintendo-switch-oled-model-neon-blue-neon-red/115464-switch-oled-red-blue-console-front-1200x675"
+  ],
+  "note": "Это прошлое поколение, но Nintendo официально его продаёт: страница OLED-модели есть на nintendo.com. Красную Mario Red Edition можно оставить: в biggeek она стоит 39 990 ₽."
+ },
+ {
+  "brand": "Microsoft",
+  "category": "Игровые консоли",
+  "model": "Xbox Series X",
+  "released": "2020-11",
+  "status": "current",
+  "specs": {
+   "storage": "1 ТБ / 2 ТБ SSD",
+   "video": "до 4K 120 Гц",
+   "drive": "Blu-ray (кроме Digital Edition)"
+  },
+  "description_ru": "Старшая консоль Xbox. Есть версия с дисководом, белая Digital Edition без дисковода и Galaxy Black на 2 ТБ.",
+  "configs": [
+   {
+    "variant": "1 ТБ, с дисководом",
+    "colors": [
+     "Carbon Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 92990,
+      "url": "https://biggeek.ru/products/igrovaa-konsol-xbox-series-x"
+     },
+     {
+      "source": "price.ru",
+      "price": 78990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-carbon-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 77400,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-carbon-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 79990,
+      "url": "https://price.ru/igrovye-pristavki/igrovye-pristavki-microsoft-xbox/"
+     },
+     {
+      "source": "price.ru",
+      "price": 79790,
+      "url": "https://price.ru/igrovye-pristavki/igrovye-pristavki-microsoft-xbox/"
+     },
+     {
+      "source": "price.ru",
+      "price": 73090,
+      "url": "https://price.ru/igrovye-pristavki/igrovye-pristavki-microsoft-xbox/"
+     }
+    ],
+    "market_median": 79390
+   },
+   {
+    "variant": "1 ТБ Digital Edition",
+    "colors": [
+     "Robot White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 83990,
+      "url": "https://biggeek.ru/products/microsoft-xbox-series-x-1tb-digital-edition"
+     },
+     {
+      "source": "price.ru",
+      "price": 72990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-digital-edition-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 73990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-digital-edition-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 76850,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-digital-edition-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 71480,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-digital-edition-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 75230,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-digital-edition-robot-white/"
+     }
+    ],
+    "market_median": 74610
+   },
+   {
+    "variant": "2 ТБ Galaxy Black",
+    "colors": [
+     "Galaxy Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 115990,
+      "url": "https://biggeek.ru/products/microsoft-xbox-series-x-2tb-galaxy-black-special-edition"
+     },
+     {
+      "source": "price.ru",
+      "price": 105990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-x-special-edition-galaxy-black-/"
+     }
+    ],
+    "market_median": 110990
+   }
+  ],
+  "image_urls": [
+   "https://cms-assets.xboxservices.com/assets/bc/40/bc40fdf3-85a6-4c36-af92-dca2d36fc7e5.png?n=642227_Hero-Gallery-0_A1_857x676.png",
+   "https://cms-assets.xboxservices.com/assets/5c/5b/5c5bf348-d948-4c48-b7cc-55aaf94f2782.png?n=642227_Hero-Gallery-0_B1_857x676.png"
+  ],
+  "note": "Первая картинка — чёрная версия с дисководом, вторая — белая Digital. Ti-store на price.ru просит 195–199 тыс., это явный выброс, его не учитывал. Galaxy 2 ТБ нашлась только в двух местах."
+ },
+ {
+  "brand": "Microsoft",
+  "category": "Игровые консоли",
+  "model": "Xbox Series S",
+  "released": "2020-11",
+  "status": "current",
+  "specs": {
+   "storage": "512 ГБ / 1 ТБ SSD",
+   "video": "1440p до 120 Гц",
+   "drive": "нет"
+  },
+  "description_ru": "Компактная и самая доступная консоль Xbox без дисковода. Удобна для подписки Game Pass.",
+  "configs": [
+   {
+    "variant": "512 ГБ",
+    "colors": [
+     "Robot White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 52990,
+      "url": "https://biggeek.ru/products/igrovaa-konsol-xbox-series-s"
+     },
+     {
+      "source": "price.ru",
+      "price": 46990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-512gb-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 45990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-512gb-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 46480,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-512gb-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 47400,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-512gb-robot-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 47590,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-512gb-robot-white/"
+     }
+    ],
+    "market_median": 47195
+   },
+   {
+    "variant": "1 ТБ",
+    "colors": [
+     "Carbon Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 54990,
+      "url": "https://biggeek.ru/products/microsoft-xbox-series-s-1tb-all-digital"
+     },
+     {
+      "source": "price.ru",
+      "price": 54990,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-1tb-carbon-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 54480,
+      "url": "https://price.ru/igrovye-pristavki/microsoft-xbox-series-s-digital-edition-1tb-carbon-black/"
+     }
+    ],
+    "market_median": 54990
+   }
+  ],
+  "image_urls": [
+   "https://cms-assets.xboxservices.com/assets/bf/b0/bfb06f23-4c87-4c58-b4d9-ed25d3a739b9.png?n=389964_Hero-Gallery-0_A1_857x676.png",
+   "https://assets.xboxservices.com/assets/97/d3/97d3bf27-1a7d-4db6-85bc-929f2badf14e.png?n=389964_Buy-Box-0_857x676_01.png"
+  ],
+  "note": "Картинки с xbox.com — белая версия на 512 ГБ, около 860 px."
+ },
+ {
+  "brand": "ASUS",
+  "category": "Игровые консоли",
+  "model": "ROG Xbox Ally / Ally X",
+  "released": "2025-10",
+  "status": "current",
+  "specs": {
+   "display": "7\" IPS, 1080p, 120 Гц",
+   "chip": "AMD Ryzen Z2 A / Z2 Extreme",
+   "memory": "16/512 ГБ или 24 ГБ/1 ТБ",
+   "os": "Windows 11 с интерфейсом Xbox"
+  },
+  "description_ru": "Портативная консоль ASUS, сделанная вместе с Microsoft: Windows с полноэкранным интерфейсом Xbox, на ней запускаются Game Pass и Steam. Версия Ally X мощнее и с большим аккумулятором.",
+  "configs": [
+   {
+    "variant": "Ally 16/512 ГБ",
+    "colors": [
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 59990,
+      "url": "https://biggeek.ru/products/portativnaa-igrovaa-konsol-asus-rog-xbox-ally-512gb"
+     },
+     {
+      "source": "price.ru",
+      "price": 62990,
+      "url": "https://price.ru/igrovye-pristavki/asus/"
+     },
+     {
+      "source": "price.ru",
+      "price": 59990,
+      "url": "https://price.ru/igrovye-pristavki/asus/"
+     }
+    ],
+    "market_median": 59990
+   },
+   {
+    "variant": "Ally X 24 ГБ/1 ТБ",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 135990,
+      "url": "https://biggeek.ru/products/portativnaa-igrovaa-konsol-asus-rog-xbox-ally-x-1tb"
+     },
+     {
+      "source": "price.ru",
+      "price": 119990,
+      "url": "https://price.ru/igrovye-pristavki/asus/"
+     },
+     {
+      "source": "price.ru",
+      "price": 114990,
+      "url": "https://price.ru/igrovye-pristavki/asus/"
+     }
+    ],
+    "market_median": 119990
+   }
+  ],
+  "image_urls": [
+   "https://dlcdnwebimgs.asus.com/gain/87564E5A-0325-4C9E-AB1F-DB28D65A20C5",
+   "https://dlcdnwebimgs.asus.com/gain/BEEE4F75-C6D0-4696-B487-81ACCDAE571B"
+  ],
+  "note": "Это не консоль Microsoft, а портативный ПК ASUS под брендом Xbox. Добавил её как «Xbox, который реально продаётся» и как замену Steam Deck. Картинки — PNG 2400 px с rog.asus.com, ссылки без расширения файла."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Mini 5 Pro",
+  "released": "2025-09",
+  "status": "current",
+  "specs": {
+   "camera": "1\" CMOS 50 Мп",
+   "video": "4K/120 fps HDR",
+   "weight": "до 249 г",
+   "sensing": "всенаправленный обход препятствий + LiDAR"
+  },
+  "description_ru": "Компактный дрон до 249 г с однодюймовой камерой и поворотом подвеса на 225° для вертикальной съёмки. Главный кандидат на замену Mini 4 Pro.",
+  "configs": [
+   {
+    "variant": "Базовый (пульт DJI RC-N3)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 82490,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 70990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 76740
+   },
+   {
+    "variant": "Fly More Combo (DJI RC 2)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 96490,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 92990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 94740
+   },
+   {
+    "variant": "Fly More Combo Plus (DJI RC 2)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 99490,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 102790,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 109780,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 102790
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/3462d29fa23cf5d29fce9171fb2b6b9d.png",
+   "https://www-cdn.djiits.com/cms/uploads/e9eaf07e91ff482e6c65844fab7f3063.png"
+  ],
+  "note": "Дронов нет ни в biggeek, ни в re-store, ни в КНС. Цены взяты из предложений магазинов на странице price.ru (2centru, UPSTORE24, WISHMASTER). В поиске мелькали карточки DNS (базовый 94 999 ₽, Combo Plus 135 499 ₽, нет в наличии), но страницу DNS я не открывал и в расчёт их не брал. Картинки dji.com — 870 и 720 px."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Air 3S",
+  "released": "2024-10",
+  "status": "current",
+  "specs": {
+   "camera": "1\" 50 Мп (широкая) + 1/1.3\" 70 мм (теле)",
+   "video": "4K/60 HDR",
+   "flight": "до 45 мин",
+   "sensing": "всенаправленный + LiDAR"
+  },
+  "description_ru": "Дрон среднего класса с двумя камерами: широкой однодюймовой и телеобъективом 70 мм. Air 4 на сайте DJI нет, поэтому Air 3S остаётся текущей моделью.",
+  "configs": [
+   {
+    "variant": "Fly More Combo (DJI RC 2)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 142990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 142990
+   },
+   {
+    "variant": "Fly More Combo (RC-N3)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 129380,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 129380
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/ef97699c719414c2138ae8cca2806760.png",
+   "https://www-cdn.djiits.com/cms/uploads/742ae3704ad341c2ebfe7d1b6aa611f1.png"
+  ],
+  "note": "Нашлось только по одной цене на комплект (UPSTORE24 и WISHMASTER на price.ru), медиана ненадёжная. Базовую версию без Combo в продаже не нашёл. Air 3 из старого каталога — прошлое поколение."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Avata 360",
+  "released": "2026-03",
+  "status": "current",
+  "specs": {
+   "camera": "360°, сенсоры эквивалент 1\"",
+   "video": "8K/60 fps HDR (360°)",
+   "type": "FPV/360-дрон с защитой винтов"
+  },
+  "description_ru": "Новый FPV-дрон с камерой 360°: снимает всё вокруг, а кадр выбирается уже после полёта. Сменил Avata 2 в роли главного FPV-дрона DJI.",
+  "configs": [
+   {
+    "variant": "С пультом DJI RC 2",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 66990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69980,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 68485
+   },
+   {
+    "variant": "Fly More Combo (DJI RC 2)",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 77990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 77990
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/19c15ba39f4574808ca6b0380b7d44dc.png",
+   "https://www-cdn.djiits.com/cms/uploads/9e9c39b0841f0068f61addd929d5a2f9.png"
+  ],
+  "note": "Avata 2 всё ещё есть на сайте DJI, но в магазинах price.ru попадается редко. Цены на Avata 360 — от двух магазинов, стоит перепроверить: дрон новый, цены могут скакать."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Neo 2",
+  "released": "2025-11",
+  "status": "current",
+  "specs": {
+   "camera": "4K",
+   "weight": "около 150 г",
+   "control": "с ладони, жестами, со смартфона или пульта",
+   "sensing": "всенаправленный обход препятствий"
+  },
+  "description_ru": "Самый маленький дрон DJI для селфи и съёмки «следуй за мной»: взлетает с ладони, управляется жестами и со смартфона. Подходит как недорогой первый дрон.",
+  "configs": [
+   {
+    "variant": "Без пульта",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 27490,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 31380,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 29435
+   },
+   {
+    "variant": "Fly More Combo",
+    "colors": [
+     "Grey"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 40990,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     },
+     {
+      "source": "price.ru",
+      "price": 39890,
+      "url": "https://price.ru/kvadrokoptery/dji/"
+     }
+    ],
+    "market_median": 40440
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/c108f7561fdb680e96523c11e959c1cf.png",
+   "https://www-cdn.djiits.com/cms/uploads/1f7d1c7bf99809f9f147ad09081c6d01.png"
+  ],
+  "note": "Месяц выхода (ноябрь 2025) взят по памяти, на сайте DJI дата не указана. Есть ещё Motion Fly More Combo с FPV-очками: UPSTORE24, 61 990 ₽. В апреле 2026 DJI выпустила начальную серию Lito (Lito 1 / Lito X1, 43–52 тыс. ₽) — её можно добавить позже."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Osmo Pocket 4",
+  "released": "2026-04",
+  "status": "current",
+  "specs": {
+   "sensor": "1\" CMOS",
+   "video": "4K/240 fps, 10-bit D-Log, 14 стопов",
+   "zoom": "2× без потерь",
+   "stabilization": "3-осевой подвес"
+  },
+  "description_ru": "Карманная камера на стабилизаторе с однодюймовой матрицей для влогов и путешествий. По сравнению с Pocket 3 снимает до 240 к/с и получила двукратный зум.",
+  "configs": [
+   {
+    "variant": "Standard Combo",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 53990,
+      "url": "https://re-store.ru/catalog/OSMO_POCKET_4P/"
+     },
+     {
+      "source": "price.ru",
+      "price": 39990,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 38990,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 39490,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 41990,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44490,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-standard-combo/"
+     }
+    ],
+    "market_median": 40990
+   },
+   {
+    "variant": "Creator Combo",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 68990,
+      "url": "https://re-store.ru/catalog/AG_OSMO_POCKET_4C/"
+     },
+     {
+      "source": "price.ru",
+      "price": 52990,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-creator-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 48990,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-creator-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 49490,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-creator-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 50490,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-creator-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 46490,
+      "url": "https://price.ru/videokamery/dji-osmo-pocket-4-creator-combo/"
+     }
+    ],
+    "market_median": 49990
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/45985ce4b270f08ca58ae7c682dd65d5.png",
+   "https://www-cdn.djiits.com/cms/uploads/9ee18763c0cddbf0b117a77b2d0129d8.png"
+  ],
+  "note": "Есть старшая Osmo Pocket 4P (Vlog Combo в re-store — 89 990 ₽). Pocket 3 из старого каталога ещё продаётся, но это прошлое поколение. Цена re-store — «от»."
+ },
+ {
+  "brand": "DJI",
+  "category": "Камеры и дроны",
+  "model": "DJI Osmo Action 6",
+  "released": "2025-11",
+  "status": "current",
+  "specs": {
+   "sensor": "квадратный 1/1.1\"",
+   "aperture": "переменная диафрагма",
+   "video": "4K, кадр 4:3 и квадратный",
+   "protection": "водозащита без бокса"
+  },
+  "description_ru": "Флагманская экшн-камера DJI с квадратной матрицей 1/1,1\" и переменной диафрагмой. Квадратный кадр можно потом обрезать и в горизонталь, и в вертикаль.",
+  "configs": [
+   {
+    "variant": "Standard Combo",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 38990,
+      "url": "https://biggeek.ru/products/kamera-dji-osmo-action-6-standard-combo"
+     },
+     {
+      "source": "kns.ru",
+      "price": 50081,
+      "url": "https://www.kns.ru/product/ekshn-kamera-dji-osmo-action-6-standard-combo-oa6j01/"
+     },
+     {
+      "source": "price.ru",
+      "price": 33990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 34890,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 34900,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 35990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-standard-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 36990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-standard-combo/"
+     }
+    ],
+    "market_median": 35990
+   },
+   {
+    "variant": "Adventure Combo",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 45990,
+      "url": "https://biggeek.ru/products/kamera-dji-osmo-action-6-adventure-combo"
+     },
+     {
+      "source": "kns.ru",
+      "price": 60081,
+      "url": "https://www.kns.ru/product/ekshn-kamera-dji-osmo-action-6-adventure-combo-oa6j02/"
+     },
+     {
+      "source": "price.ru",
+      "price": 43990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-adventure-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 41890,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-adventure-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 41900,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-adventure-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 40990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-adventure-combo/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44990,
+      "url": "https://price.ru/videokamery/dji-osmo-action-6-adventure-combo/"
+     }
+    ],
+    "market_median": 43990
+   }
+  ],
+  "image_urls": [
+   "https://www-cdn.djiits.com/cms/uploads/ae781cd30b6dc794eb49ad3d44e26845.png",
+   "https://www-cdn.djiits.com/cms/uploads/7570636fd80d294e04e7738cb8de46db.png"
+  ],
+  "note": "Месяц выхода (ноябрь 2025) — по памяти. Action 5 Pro ещё продаётся дешевле (biggeek — 29 490 ₽), но это прошлое поколение."
+ },
+ {
+  "brand": "GoPro",
+  "category": "Камеры и дроны",
+  "model": "GoPro HERO13 Black",
+  "released": "2024-09",
+  "status": "current",
+  "specs": {
+   "sensor": "1/1.9\" 27 Мп",
+   "video": "5.3K/60, 4K/120",
+   "battery": "Enduro 1900 мА·ч",
+   "mounts": "магнитное крепление, сменные линзы HB-серии"
+  },
+  "description_ru": "Текущая экшн-камера линейки HERO: водозащита до 10 м без бокса, поддержка сменных линз. Новее HERO у GoPro пока нет.",
+  "configs": [
+   {
+    "variant": "Камера (Black Edition)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 37100,
+      "url": "https://re-store.ru/catalog/AG_CHDHX-131-RW/"
+     }
+    ],
+    "market_median": 37100
+   },
+   {
+    "variant": "Creator Edition",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 55400,
+      "url": "https://re-store.ru/catalog/AG_CHDHX-131-RWC/"
+     },
+     {
+      "source": "kns.ru",
+      "price": 56910,
+      "url": "https://www.kns.ru/product/ekshn-kamera-gopro-hero13-black-creator-edition-chdfb-131-as/"
+     }
+    ],
+    "market_median": 56155
+   }
+  ],
+  "image_urls": [
+   "https://gopro.com/on/demandware.static/-/Sites-gopro-products/default/dw212f9f28/images/Product%20Images/cameras/CHDHX-131-master/plp-product-card-h13.png",
+   "https://static.gopro.com/assets/blta2b8522e5372af40/blt6dfc1d1b5ef16686/681b9359d90121f20cc60254/01_dropdown-menu-h13b.png"
+  ],
+  "note": "На базовую камеру нашлась одна цена (re-store, «от»). На price.ru минимальная цена HERO13 — от 27 790 ₽, но по отдельным магазинам разобрать не получилось. В 2026 году у GoPro вышла новая линейка Mission 1 / Mission 1 Pro (компактные «кино»-камеры 8K, на price.ru от 50–56 тыс. ₽). Картинки небольшие: 720 и 448 px."
+ },
+ {
+  "brand": "Sony",
+  "category": "Камеры и дроны",
+  "model": "Sony Alpha 7 V (ILCE-7M5)",
+  "released": "2025-12",
+  "status": "current",
+  "specs": {
+   "sensor": "полнокадровый 33 Мп BSI",
+   "video": "4K/60 без кропа, 4K/120 в APS-C",
+   "ibis": "стабилизация до 8 ступеней",
+   "wifi": "Wi-Fi 6E, 2× USB-C"
+  },
+  "description_ru": "Базовая полнокадровая беззеркалка Sony нового поколения: процессор с ИИ-блоком для автофокуса, стабилизация матрицы до 8 ступеней. Пришла на смену A7 IV.",
+  "configs": [
+   {
+    "variant": "Body (без объектива)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [],
+    "market_median": null
+   }
+  ],
+  "image_urls": [
+   "https://www.sony.jp/products/picture/ILCE-7M5.jpg"
+  ],
+  "note": "Цену не нашёл: на price.ru у модели нет отдельной страницы, Яндекс Маркет закрыт капчей. В поисковых сниппетах Маркета мелькало 244–290 тыс. ₽ за body, но сами страницы я не видел. Предшественник A7 IV на price.ru — 132–143 тыс. ₽ за body, медиана 137 990 ₽; продаёт ли его Sony официально, не проверял. A7R V из старого каталога — дорогая модель 2022 года, нового поколения у неё пока нет. Картинка с sony.jp — 626 px, крупнее не нашлось."
+ },
+ {
+  "brand": "Sony",
+  "category": "Наушники",
+  "model": "Sony WH-1000XM6",
+  "released": "2025-05",
+  "status": "current",
+  "specs": {
+   "type": "полноразмерные, закрытые",
+   "anc": "процессор QN3, 12 микрофонов",
+   "battery": "до 30 ч с ANC",
+   "codecs": "LDAC, LC3"
+  },
+  "description_ru": "Флагманские полноразмерные наушники Sony с шумоподавлением. По сравнению с XM5 снова складываются и получили новый процессор шумоподавления.",
+  "configs": [
+   {
+    "variant": "WH-1000XM6",
+    "colors": [
+     "Black",
+     "Platinum Silver",
+     "Midnight Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 30990,
+      "url": "https://biggeek.ru/products/besprovodnye-nausniki-sony-wh-1000xm6-wireless-noise-cancelling-headphones"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 37990,
+      "url": "https://re-store.ru/catalog/WH1000XM6-B/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 34990,
+      "url": "https://re-store.ru/catalog/39146630/"
+     },
+     {
+      "source": "price.ru",
+      "price": 25990,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 26590,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 26290,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27490,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 26800,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27150,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27990,
+      "url": "https://price.ru/naushniki/sony-wh-1000xm6-black/"
+     }
+    ],
+    "market_median": 27320
+   }
+  ],
+  "image_urls": [
+   "https://www.sony.jp/products/picture/WH-1000XM6_03.jpg"
+  ],
+  "note": "В re-store чёрные стоят 37 990 ₽, серебристые и синие — 34 990 ₽. Одно предложение на price.ru за 57 700 ₽ — выброс, его не учитывал. Сайт sony.com не пускает робота; картинка с sony.jp (626 px, все цвета на одном фото). XM5 из старого каталога ещё продаётся, но это прошлое поколение."
+ },
+ {
+  "brand": "Sony",
+  "category": "Наушники",
+  "model": "Sony WF-1000XM6",
+  "released": "2026-02",
+  "status": "current",
+  "specs": {
+   "type": "TWS-вкладыши",
+   "anc": "адаптивное шумоподавление",
+   "codecs": "LDAC, LC3",
+   "case": "беспроводная зарядка"
+  },
+  "description_ru": "Новые флагманские TWS-наушники Sony: более плоский и компактный корпус, сильное шумоподавление. Сменили WF-1000XM5.",
+  "configs": [
+   {
+    "variant": "WF-1000XM6",
+    "colors": [
+     "Black",
+     "Silver"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 26990,
+      "url": "https://biggeek.ru/products/besprovodnye-nausniki-sony-wf-1000xm6-wireless-noise-cancelling-earbuds"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 35990,
+      "url": "https://re-store.ru/catalog/WF1000XM6-BZE/"
+     },
+     {
+      "source": "price.ru",
+      "price": 24990,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22890,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22990,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22690,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22290,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 21950,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 23990,
+      "url": "https://price.ru/naushniki/sony-wf-1000xm6-black/"
+     }
+    ],
+    "market_median": 22990
+   }
+  ],
+  "image_urls": [
+   "https://www.sony.jp/products/picture/WF-1000XM6.jpg"
+  ],
+  "note": "Не учитывал два предложения с price.ru (28 780 и 46 650 ₽): похоже на завышенные цены. re-store заметно дороже рынка."
+ },
+ {
+  "brand": "Bose",
+  "category": "Наушники",
+  "model": "Bose QuietComfort Ultra Headphones (2nd Gen)",
+  "released": "2025-09",
+  "status": "current",
+  "specs": {
+   "type": "полноразмерные",
+   "anc": "шумоподавление + режим Aware",
+   "battery": "до 30 ч",
+   "audio": "Immersive Audio, проводной режим по USB-C"
+  },
+  "description_ru": "Флагманские полноразмерные наушники Bose второго поколения с одним из лучших шумоподавлений на рынке. Звук и музыку можно слушать по USB-C без потерь.",
+  "configs": [
+   {
+    "variant": "QC Ultra Headphones 2",
+    "colors": [
+     "Black",
+     "White Smoke",
+     "Driftwood Sand"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 42990,
+      "url": "https://re-store.ru/catalog/890101-0100/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29800,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29890,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 32990,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 31980,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 38590,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29490,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29390,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 33990,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-white/"
+     },
+     {
+      "source": "price.ru",
+      "price": 30990,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-headphones-white/"
+     }
+    ],
+    "market_median": 31485
+   }
+  ],
+  "image_urls": [
+   "https://assets.bosecreative.com/transform/69de3d90-3cc5-4f7c-ac71-d03a030e4154/FY27_QCUHIILE27-ChryChoc_CREA-1174_PDP_EcomGal1_Silo_1500x1120?format=png&quality=95"
+  ],
+  "note": "Картинка с bose.com — PNG 1500 px, но в цвете Cherry Chocolate. Цена re-store — «от». Предложения Ti-store (52–60 тыс. ₽) примерно вдвое выше рынка, их не учитывал. QC45 из старого каталога устарели."
+ },
+ {
+  "brand": "Bose",
+  "category": "Наушники",
+  "model": "Bose QuietComfort Ultra Earbuds (2nd Gen)",
+  "released": "2025-06",
+  "status": "current",
+  "specs": {
+   "type": "TWS-вкладыши",
+   "anc": "шумоподавление CustomTune",
+   "battery": "до 6 ч + кейс",
+   "case": "беспроводная зарядка"
+  },
+  "description_ru": "TWS-наушники Bose второго поколения с сильным шумоподавлением и пространственным звуком. Кейс теперь заряжается без провода.",
+  "configs": [
+   {
+    "variant": "QC Ultra Earbuds 2",
+    "colors": [
+     "Black",
+     "White Smoke",
+     "Deep Plum"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 30990,
+      "url": "https://re-store.ru/catalog/896637-0010/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27990,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-earbuds-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 25800,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-earbuds-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 23480,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-earbuds-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22590,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-earbuds-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 29110,
+      "url": "https://price.ru/naushniki/bose-quietcomfort-ultra-2-earbuds-black/"
+     },
+     {
+      "source": "price.ru",
+      "price": 26490,
+      "url": "https://price.ru/naushniki/bose/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27770,
+      "url": "https://price.ru/naushniki/bose/"
+     }
+    ],
+    "market_median": 27130
+   }
+  ],
+  "image_urls": [
+   "https://assets.bosecreative.com/transform/bb7b1552-1001-446f-bfd5-f7e2c4ee31ee/QCUEII_DeepPlum_Ecomm-Gallery-1-1634x1224?format=png&quality=95"
+  ],
+  "note": "Картинка с bose.com — PNG 1634 px, цвет Deep Plum. Предложение на 54 010 ₽ не учитывал."
+ },
+ {
+  "brand": "JBL",
+  "category": "Наушники",
+  "model": "JBL Flip 7",
+  "released": "2025-03",
+  "status": "current",
+  "specs": {
+   "type": "портативная колонка",
+   "protection": "IP68, защита от падения",
+   "battery": "до 14 ч (+2 ч Playtime Boost)",
+   "audio": "USB-C Lossless, AI Sound Boost"
+  },
+  "description_ru": "Самая ходовая портативная колонка JBL нового поколения. По сравнению с Flip 6 стала прочнее (IP68, выдерживает падение) и научилась играть звук по USB-C.",
+  "configs": [
+   {
+    "variant": "Flip 7",
+    "colors": [
+     "Black",
+     "Blue",
+     "Red"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 10490,
+      "url": "https://biggeek.ru/products/portativnaa-kolonka-jbl-flip-7"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 11990,
+      "url": "https://re-store.ru/catalog/JBLFLIP7BLK/"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 12299,
+      "url": "https://www.holodilnik.ru/search/?search=JBL+Flip+7"
+     },
+     {
+      "source": "price.ru",
+      "price": 9990,
+      "url": "https://price.ru/portativnye-kolonki/jbl-flip-7/"
+     },
+     {
+      "source": "price.ru",
+      "price": 11630,
+      "url": "https://price.ru/portativnye-kolonki/jbl-flip-7/"
+     },
+     {
+      "source": "price.ru",
+      "price": 10780,
+      "url": "https://price.ru/portativnye-kolonki/jbl-flip-7/"
+     },
+     {
+      "source": "price.ru",
+      "price": 8990,
+      "url": "https://price.ru/portativnye-kolonki/jbl-flip-7/"
+     },
+     {
+      "source": "price.ru",
+      "price": 8490,
+      "url": "https://price.ru/portativnye-kolonki/jbl-flip-7/"
+     }
+    ],
+    "market_median": 10635
+   }
+  ],
+  "image_urls": [],
+  "note": "Категория в каталоге условная: колонки, если раздела «Аудио» нет, поставил в «Наушники». Сайт jbl.com закрыт от робота (403), фото с официального сайта я не достал, нужно подобрать вручную. Если нужна колонка покрупнее — JBL Charge 6 в biggeek стоит 13 990 ₽."
+ },
+ {
+  "brand": "Marshall",
+  "category": "Наушники",
+  "model": "Marshall Emberton III",
+  "released": "2024-06",
+  "status": "current",
+  "specs": {
+   "type": "портативная колонка",
+   "battery": "до 32 ч",
+   "protection": "IP67",
+   "features": "Auracast, Stack Mode"
+  },
+  "description_ru": "Компактная колонка Marshall в фирменном «гитарном» дизайне с батареей до 32 часов. Защищена от воды и пыли по IP67, несколько колонок можно связать по Auracast.",
+  "configs": [
+   {
+    "variant": "Emberton III",
+    "colors": [
+     "Black & Brass",
+     "Cream",
+     "Midnight Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 14990,
+      "url": "https://biggeek.ru/products/kolonka-marshall-emberton-iii"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 16990,
+      "url": "https://re-store.ru/catalog/1006884/"
+     },
+     {
+      "source": "price.ru",
+      "price": 14990,
+      "url": "https://price.ru/portativnye-kolonki/marshall-emberton/"
+     },
+     {
+      "source": "price.ru",
+      "price": 16630,
+      "url": "https://price.ru/portativnye-kolonki/marshall-emberton/"
+     },
+     {
+      "source": "price.ru",
+      "price": 12290,
+      "url": "https://price.ru/portativnye-kolonki/marshall-emberton/"
+     }
+    ],
+    "market_median": 14990
+   }
+  ],
+  "image_urls": [
+   "https://images.ctfassets.net/javen7msabdh/Fttl4DrU7xxpEqrPBRiRB/58175527eaf6b1c3a114bfd04e5bbc9b/emberton-iii-blackandbrass-front-desktop.jpeg"
+  ],
+  "note": "Месяц выхода (июнь 2024) — по памяти. На marshall.com все фото на тёмно-сером фоне, белого нет. Если нужны наушники Marshall, то Major V стоят в re-store 9 990 ₽, в Холодильнике 10 599 ₽."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Телевизоры",
+  "model": "Samsung HW-Q990H",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "channels": "11.1.4",
+   "set": "саундбар + сабвуфер + 2 тыловые колонки",
+   "audio": "Dolby Atmos, DTS:X",
+   "features": "Q-Symphony с ТВ Samsung"
+  },
+  "description_ru": "Флагманский саундбар Samsung 2026 года — полный комплект для домашнего кино с тыловыми колонками и сабвуфером. Сменил прошлогодний HW-Q990F.",
+  "configs": [
+   {
+    "variant": "HW-Q990H (11.1.4)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 124990,
+      "url": "https://re-store.ru/search/?q=Samsung+HW-Q990"
+     },
+     {
+      "source": "price.ru",
+      "price": 91500,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 109990,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 98315,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 98200,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 98409,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 99560,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 94990,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 92070,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 129990,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q990h/"
+     }
+    ],
+    "market_median": 98362
+   },
+   {
+    "variant": "HW-Q930H (9.1.4)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 89990,
+      "url": "https://re-store.ru/search/?q=Samsung+HW-Q"
+     },
+     {
+      "source": "price.ru",
+      "price": 66490,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 84430,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 74780,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69990,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 67550,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 81320,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     },
+     {
+      "source": "price.ru",
+      "price": 72709,
+      "url": "https://price.ru/domashnie-kinoteatry/samsung-hw-q930h/"
+     }
+    ],
+    "market_median": 73744
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/uk/hw-q990h-xu/gallery/uk-q-series-soundbar-hw-q990h-hw-q990h-xu-thumb-551779387?$1300_1038_PNG$"
+  ],
+  "note": "Месяц выхода не уточнял: магазины пишут просто «2026». Категорию поставил «Телевизоры» как ближайшую, лучше бы подошёл раздел «Аудио». Q990B из старого каталога — модель 2022 года, устарела. В Холодильнике лежит прошлогодний Q990F (118 тыс. ₽, нет в наличии). Фото с samsung.com — PNG 1300 px, комплект виден мелко."
+ },
+ {
+  "brand": "Dyson",
+  "category": "Для дома",
+  "model": "Dyson Airwrap Co-anda 2x (HS09)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "type": "мультистайлер",
+   "motor": "Hyperdymium, поток воздуха в 2 раза сильнее прошлого Airwrap",
+   "versions": "Straight+Wavy / Curly+Coily",
+   "features": "режим сушки и укладки, Bluetooth-приложение"
+  },
+  "description_ru": "Новое поколение стайлера Airwrap: завивка, выпрямление и сушка за счёт потока воздуха, без сильного нагрева. Сменил Airwrap i.d. (HS08).",
+  "configs": [
+   {
+    "variant": "Complete Long, Straight+Wavy",
+    "colors": [
+     "Ceramic Pink/Rose Gold",
+     "Jasper Plum",
+     "Ceramic Apricot/Topaz"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 46990,
+      "url": "https://biggeek.ru/products/stajler-dyson-hairstyler-air-lab-coanda-2x-hs09-complete-long-ceramic-pinkrose-gold-2025"
+     },
+     {
+      "source": "biggeek.ru",
+      "price": 45990,
+      "url": "https://biggeek.ru/products/stajler-dyson-hs09-hairstyler-air-lab-coanda-2x-complete-long-straight-plus-wavy-ceramic-apricottopaz-2026"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 55800,
+      "url": "https://re-store.ru/catalog/598757-01/"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 58000,
+      "url": "https://re-store.ru/catalog/598775-01/"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 84599,
+      "url": "https://www.holodilnik.ru/search/?search=Dyson+Airwrap+Coanda"
+     },
+     {
+      "source": "price.ru",
+      "price": 50990,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     },
+     {
+      "source": "price.ru",
+      "price": 49990,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     },
+     {
+      "source": "price.ru",
+      "price": 49890,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     },
+     {
+      "source": "price.ru",
+      "price": 48890,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44490,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     },
+     {
+      "source": "price.ru",
+      "price": 43090,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-hs-09/"
+     }
+    ],
+    "market_median": 49890
+   }
+  ],
+  "image_urls": [
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/598757-01.png?wid=1500&fmt=png-alpha"
+  ],
+  "note": "Год выхода (2025) — по маркировке в biggeek, месяц не уточнял. Цена сильно зависит от цвета: Amber Silk и Red Velvet стоят 60–67 тыс. ₽. Холодильник просит 85–99 тыс. ₽, это сильно выше рынка. Фото взято с CDN Dyson (сам dyson.com робота не пускает), в углу маленький значок Bluetooth. HS08 Airwrap i.d. Dyson тоже ещё продаёт: в biggeek 38–52 тыс. ₽."
+ },
+ {
+  "brand": "Dyson",
+  "category": "Для дома",
+  "model": "Dyson Supersonic Nural (HD16)",
+  "released": "2024",
+  "status": "current",
+  "specs": {
+   "type": "фен",
+   "sensor": "датчик расстояния до головы, сам снижает нагрев",
+   "attachments": "5 насадок с памятью настроек",
+   "motor": "Hyperdymium"
+  },
+  "description_ru": "Флагманский фен Dyson с датчиком: подстраивает температуру под расстояние до кожи головы и запоминает настройки для каждой насадки.",
+  "configs": [
+   {
+    "variant": "HD16",
+    "colors": [
+     "Ceramic Pink/Rose Gold",
+     "Jasper Plum",
+     "Ceramic Patina/Topaz"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 28990,
+      "url": "https://biggeek.ru/products/fen-dyson-supersonic-nural-hair-dryer-straight-plus-wavy-hd16-ceramic-pinkrose-gold-20231"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 42990,
+      "url": "https://re-store.ru/catalog/598969-01/"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 56399,
+      "url": "https://www.holodilnik.ru/search/?search=Dyson+Supersonic+Nural"
+     },
+     {
+      "source": "price.ru",
+      "price": 43390,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     },
+     {
+      "source": "price.ru",
+      "price": 28890,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     },
+     {
+      "source": "price.ru",
+      "price": 41690,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27890,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     },
+     {
+      "source": "price.ru",
+      "price": 44490,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     },
+     {
+      "source": "price.ru",
+      "price": 38890,
+      "url": "https://price.ru/feny-pribory-dlya-ukladki-volos/dyson-supersonic-nural-hd16/"
+     }
+    ],
+    "market_median": 41690
+   }
+  ],
+  "image_urls": [
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/598975-01.png?wid=1500&fmt=png-alpha",
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/113407-01.png?wid=1500&fmt=png-alpha"
+  ],
+  "note": "Разброс 28–56 тыс. ₽: розовый Ceramic Pink около 28–29 тыс., подарочные цвета 41–47 тыс. Месяц выхода не уточнял. Есть ещё Supersonic r (HD17, около 38–40 тыс. ₽ в biggeek) и дорожный Supersonic Travel (HD19, 2026, 22–26 тыс. ₽). Supersonic HD07/HD08 из старого каталога — предыдущие модели."
+ },
+ {
+  "brand": "Dyson",
+  "category": "Для дома",
+  "model": "Dyson V16 Piston Animal",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "type": "беспроводной вертикальный пылесос",
+   "features": "пресс-контейнер Piston, лазерная подсветка пыли, датчик частиц",
+   "battery": "сменный аккумулятор",
+   "model_no": "SV53"
+  },
+  "description_ru": "Новый флагман V-серии: контейнер с поршнем выдавливает мусор без пыли, лазер подсвечивает мелкую пыль на полу. Есть версия Submarine с влажной уборкой.",
+  "configs": [
+   {
+    "variant": "Piston Animal",
+    "colors": [
+     "Black/Copper"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 68990,
+      "url": "https://biggeek.ru/products/besprovodnoj-vertikalnyj-pylesos-dyson-v16-piston-animal-ds60-blackgold-2025"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 94990,
+      "url": "https://re-store.ru/catalog/499085-01/"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 116999,
+      "url": "https://www.holodilnik.ru/search/?search=Dyson+V16"
+     },
+     {
+      "source": "price.ru",
+      "price": 68990,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     },
+     {
+      "source": "price.ru",
+      "price": 68790,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     },
+     {
+      "source": "price.ru",
+      "price": 69390,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     },
+     {
+      "source": "price.ru",
+      "price": 58490,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     },
+     {
+      "source": "price.ru",
+      "price": 58550,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     },
+     {
+      "source": "price.ru",
+      "price": 89850,
+      "url": "https://price.ru/pylesosy/dyson-v16-piston-animal/"
+     }
+    ],
+    "market_median": 68990
+   },
+   {
+    "variant": "Piston Animal Submarine",
+    "colors": [
+     "Black/Copper"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 72990,
+      "url": "https://biggeek.ru/products/besprovodnoj-vertikalnyj-pylesos-dyson-v16-piston-animal-submarine-ds60-blackgold-2025"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 90200,
+      "url": "https://re-store.ru/catalog/492969-01/"
+     },
+     {
+      "source": "price.ru",
+      "price": 67990,
+      "url": "https://price.ru/pylesosy/dyson-v16s/"
+     },
+     {
+      "source": "price.ru",
+      "price": 67690,
+      "url": "https://price.ru/pylesosy/dyson-v16s/"
+     },
+     {
+      "source": "price.ru",
+      "price": 70550,
+      "url": "https://price.ru/pylesosy/dyson-v16s/"
+     },
+     {
+      "source": "price.ru",
+      "price": 77990,
+      "url": "https://price.ru/pylesosy/dyson-v16s/"
+     }
+    ],
+    "market_median": 71770
+   }
+  ],
+  "image_urls": [
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/492963-01.png?wid=1500&fmt=png-alpha",
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/499085-01.png?wid=1500&fmt=png-alpha"
+  ],
+  "note": "Комплекты с док-станцией и набором насадок (87–103 тыс. ₽) в расчёт не брал. Цена re-store для Submarine — «от». На фото зелёный луч лазера — так выглядит официальное фото Dyson."
+ },
+ {
+  "brand": "Dyson",
+  "category": "Для дома",
+  "model": "Dyson V15 Detect Absolute",
+  "released": "2021",
+  "status": "previous_official",
+  "specs": {
+   "type": "беспроводной вертикальный пылесос",
+   "features": "лазер, пьезодатчик частиц, экран со статистикой",
+   "model_no": "SV47"
+  },
+  "description_ru": "Прошлый флагман V-серии с лазерной подсветкой и подсчётом пыли на экране. Dyson продолжает его продавать, и он заметно дешевле V16.",
+  "configs": [
+   {
+    "variant": "Detect Absolute",
+    "colors": [
+     "Yellow/Nickel"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 58990,
+      "url": "https://biggeek.ru/products/besprovodnoj-vertikalnyj-pylesos-dyson-v15-detect-absolute-sv47"
+     },
+     {
+      "source": "price.ru",
+      "price": 57890,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 56890,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 58500,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 57990,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 59490,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 60490,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     },
+     {
+      "source": "price.ru",
+      "price": 54990,
+      "url": "https://price.ru/pylesosy/dyson-v15-detect-absolute/"
+     }
+    ],
+    "market_median": 58245
+   }
+  ],
+  "image_urls": [
+   "https://dyson-h.assetsadobe2.com/is/image/content/dam/dyson/images/products/primary/446986-01.png?wid=1500&fmt=png-alpha"
+  ],
+  "note": "Отметил его как прошлое поколение, которое Dyson ещё продаёт. Это знание по памяти, страницу dyson.com открыть не получилось (сайт закрыт от робота). Если нужна только актуальная модель — оставить один V16."
+ },
+ {
+  "brand": "De'Longhi",
+  "category": "Для дома",
+  "model": "De'Longhi Magnifica Evo ECAM290.61",
+  "released": "2021",
+  "status": "current",
+  "specs": {
+   "type": "автоматическая зерновая кофемашина",
+   "milk": "автоматический капучинатор LatteCrema",
+   "drinks": "7 рецептов одной кнопкой",
+   "pressure": "15 бар"
+  },
+  "description_ru": "Популярная зерновая кофемашина De'Longhi: сама мелет зёрна и делает капучино и латте с автоматическим вспениванием молока. Простая в уходе.",
+  "configs": [
+   {
+    "variant": "ECAM290.61.B",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 47910,
+      "url": "https://price.ru/kofevarki-i-kofemashiny/delonghi-ecam-290.61/"
+     },
+     {
+      "source": "price.ru",
+      "price": 47010,
+      "url": "https://price.ru/kofevarki-i-kofemashiny/delonghi-ecam-290.61/"
+     },
+     {
+      "source": "price.ru",
+      "price": 52090,
+      "url": "https://price.ru/kofevarki-i-kofemashiny/delonghi-ecam-290.61/"
+     },
+     {
+      "source": "price.ru",
+      "price": 47517,
+      "url": "https://price.ru/kofevarki-i-kofemashiny/delonghi-ecam-290.61/"
+     },
+     {
+      "source": "price.ru",
+      "price": 45535,
+      "url": "https://price.ru/kofevarki-i-kofemashiny/delonghi-ecam-290.61/"
+     }
+    ],
+    "market_median": 47517
+   }
+  ],
+  "image_urls": [],
+  "note": "В biggeek и re-store кофемашин De'Longhi нет, цены только с price.ru. Версия .SB (серебристая) дороже: 55–71 тыс. ₽. Если нужна модель новее — Rivelia (EXAM440, 2023): в Холодильнике 71 499–74 999 ₽. Официальное фото с delonghi.com не нашёл (страницы отдают 404), нужно подобрать вручную. Nespresso из старого каталога стоит перепроверить отдельно: свежих цен на Vertuo я не нашёл."
+ },
+ {
+  "brand": "Dreame",
+  "category": "Для дома",
+  "model": "Dreame X60 Ultra Complete",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "suction": "35 000 Па",
+   "height": "7,95 см, выдвижной LiDAR",
+   "station": "самоочистка, мойка и сушка швабр, автоналив",
+   "model_no": "RLX87DE"
+  },
+  "description_ru": "Флагманский робот-пылесос Dreame с моющей станцией: сам опустошает контейнер, моет и сушит швабры. Корпус высотой 7,95 см проезжает под низкой мебелью.",
+  "configs": [
+   {
+    "variant": "X60 Ultra Complete",
+    "colors": [
+     "Black",
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "biggeek.ru",
+      "price": 120990,
+      "url": "https://biggeek.ru/products/robot-pylesos-dreame-x60-ultra-complete-robotic-vacuum-cleaner"
+     },
+     {
+      "source": "re-store.ru",
+      "price": 139990,
+      "url": "https://re-store.ru/catalog/RLX87DE/"
+     },
+     {
+      "source": "price.ru",
+      "price": 105990,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 107390,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 116990,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 117990,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 120000,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 103490,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     },
+     {
+      "source": "price.ru",
+      "price": 110390,
+      "url": "https://price.ru/pylesosy/xiaomi-dreame-x60-ultra-complete/"
+     }
+    ],
+    "market_median": 116990
+   }
+  ],
+  "image_urls": [],
+  "note": "Год (2026) — по странице серии X60 на сайте Dreame (создана в июне 2026), точный месяц не уточнял. Официального фото этой версии на dreametech.com не нашёл: там есть только X60 Ultra и X60 Pro Master. Если нужен робот подешевле — Xiaomi Robot Vacuum 5 (Global) в biggeek стоит 57 990 ₽, а S40 — 18 990 ₽."
+ },
+ {
+  "brand": "Anker",
+  "category": "Аксессуары",
+  "model": "Anker Prime Power Bank (26K, 300W)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "capacity": "26 250 мА·ч",
+   "power": "до 300 Вт суммарно, до 140 Вт на порт",
+   "ports": "2× USB-C + USB-A",
+   "display": "цветной экран, управление в приложении"
+  },
+  "description_ru": "Мощный внешний аккумулятор Anker, который заряжает ноутбук и телефон одновременно. Можно взять в самолёт (менее 100 Вт·ч).",
+  "configs": [
+   {
+    "variant": "26K, 300 Вт (A110A)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 22990,
+      "url": "https://re-store.ru/catalog/A110AH11/"
+     },
+     {
+      "source": "price.ru",
+      "price": 12470,
+      "url": "https://price.ru/vneshnie-akkumulyatory/anker/"
+     },
+     {
+      "source": "price.ru",
+      "price": 17990,
+      "url": "https://price.ru/vneshnie-akkumulyatory/anker/"
+     },
+     {
+      "source": "price.ru",
+      "price": 22990,
+      "url": "https://price.ru/vneshnie-akkumulyatory/anker/"
+     }
+    ],
+    "market_median": 20490
+   },
+   {
+    "variant": "Prime 20K, 220 Вт (A110B)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "re-store.ru",
+      "price": 15990,
+      "url": "https://re-store.ru/catalog/A110BH11/"
+     },
+     {
+      "source": "price.ru",
+      "price": 11490,
+      "url": "https://price.ru/vneshnie-akkumulyatory/anker-prime-20000/"
+     }
+    ],
+    "market_median": 13740
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/A110AH11_Richimage_TD01_US_V1_41ed3782-6e72-4335-8e1b-41b2fa7b7d35.png"
+  ],
+  "note": "Разброс большой: Регард 12 470 ₽, Технопарк 17 990 ₽, re-store и Galaxystore 22 990 ₽. Модель на 20K нашлась только в двух местах. Год выхода (2025) — по памяти. Фото с anker.com — PNG 2000 px. Хаб и пауэрбанк Anker из старого каталога стоит сверить по моделям, многие уже сняты."
+ },
+ {
+  "brand": "Anker",
+  "category": "Аксессуары",
+  "model": "Anker Nano Charger 45W Smart Display (A121D)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "power": "45 Вт",
+   "port": "1× USB-C",
+   "display": "экран с мощностью и температурой",
+   "plug": "складная вилка"
+  },
+  "description_ru": "Компактная зарядка Anker на 45 Вт с маленьким экраном: показывает, с какой мощностью идёт зарядка. Хватает для быстрой зарядки iPhone, Samsung и планшета.",
+  "configs": [
+   {
+    "variant": "45 Вт Smart Display",
+    "colors": [
+     "White",
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 3190,
+      "url": "https://price.ru/zaryadnye-ustroystva-i-adaptery/anker/"
+     },
+     {
+      "source": "price.ru",
+      "price": 3190,
+      "url": "https://price.ru/zaryadnye-ustroystva-i-adaptery/anker/"
+     }
+    ],
+    "market_median": 3190
+   },
+   {
+    "variant": "Nano 70 Вт, 2C1A (A121A)",
+    "colors": [
+     "Black",
+     "White"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru",
+      "price": 3890,
+      "url": "https://price.ru/zaryadnye-ustroystva-i-adaptery/anker/"
+     },
+     {
+      "source": "price.ru",
+      "price": 3890,
+      "url": "https://price.ru/zaryadnye-ustroystva-i-adaptery/anker/"
+     },
+     {
+      "source": "price.ru",
+      "price": 3370,
+      "url": "https://price.ru/zaryadnye-ustroystva-i-adaptery/anker/"
+     }
+    ],
+    "market_median": 3890
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0493/9834/9974/files/Group_2121236309_77952e43-e3b0-4fc6-9a95-65e7546da92b.png"
+  ],
+  "note": "Все цены — из предложений на price.ru (Технопарк, «Твой дом», Save & Sale, Регард). На фото с anker.com на экране зарядки показано «Hi». Для ноутбуков есть Anker Prime 100 Вт и 160 Вт, а также 140 Вт (A2697): 6 300–7 090 ₽."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Аксессуары",
+  "model": "Samsung 990 EVO Plus",
+  "released": "2024-10",
+  "status": "current",
+  "specs": {
+   "interface": "PCIe 4.0 x4 / 5.0 x2, NVMe",
+   "speed": "до 7 250 МБ/с",
+   "form": "M.2 2280",
+   "capacity": "1 / 2 / 4 ТБ"
+  },
+  "description_ru": "Самый ходовой SSD Samsung для ПК, ноутбука и PS5: быстрый, без радиатора, со средней ценой. Сменил 970 EVO Plus и 980.",
+  "configs": [
+   {
+    "variant": "1 ТБ (MZ-V9S1T0BW)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 22601,
+      "url": "https://www.kns.ru/product/ssd-disk-samsung-990-evo-plus-1tb-mz-v9s1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 23910,
+      "url": "https://price.ru/ssd-diski/samsung-mz-v9s1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 24490,
+      "url": "https://price.ru/ssd-diski/samsung-mz-v9s1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 35360,
+      "url": "https://price.ru/ssd-diski/samsung-mz-v9s1t0bw/"
+     }
+    ],
+    "market_median": 24200
+   },
+   {
+    "variant": "2 ТБ (MZ-V9S2T0BW)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 35040,
+      "url": "https://www.kns.ru/product/ssd-disk-samsung-990-evo-plus-2tb-mz-v9s2t0bw/"
+     }
+    ],
+    "market_median": 35040
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/uk/mz-v9s4t0bw/gallery/uk-990-evo-plus-nvme-m2-ssd-mz-v9s4t0bw-thumb-544057540?$1300_1038_PNG$"
+  ],
+  "note": "Для 2 ТБ нашлась одна цена (КНС). Цены на SSD в 2026 году высокие из-за дорогой памяти. 870 EVO из старого каталога — это SATA-SSD, его можно оставить для старых ПК, но это не флагман. На фото samsung.com сам диск маленький на большом белом поле. Есть версия с бейджами наград, её не брал."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Аксессуары",
+  "model": "Samsung 9100 PRO",
+  "released": "2025-03",
+  "status": "current",
+  "specs": {
+   "interface": "PCIe 5.0 x4, NVMe",
+   "speed": "до 14 700 МБ/с",
+   "form": "M.2 2280 (есть версия с радиатором)",
+   "capacity": "1 / 2 / 4 / 8 ТБ"
+  },
+  "description_ru": "Флагманский SSD Samsung на PCIe 5.0, почти вдвое быстрее 990 PRO. Для мощных игровых ПК и работы с видео.",
+  "configs": [
+   {
+    "variant": "1 ТБ (MZ-VAP1T0BW)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 27927,
+      "url": "https://www.kns.ru/product/ssd-disk-samsung-9100-pro-1tb-mz-vap1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27910,
+      "url": "https://price.ru/ssd-diski/samsung-mz-vap1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 27990,
+      "url": "https://price.ru/ssd-diski/samsung-mz-vap1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 23722,
+      "url": "https://price.ru/ssd-diski/samsung-mz-vap1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 24650,
+      "url": "https://price.ru/ssd-diski/samsung-mz-vap1t0bw/"
+     },
+     {
+      "source": "price.ru",
+      "price": 25180,
+      "url": "https://price.ru/ssd-diski/samsung-mz-vap1t0bw/"
+     }
+    ],
+    "market_median": 26545
+   },
+   {
+    "variant": "2 ТБ (MZ-VAP2T0BW)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 49593,
+      "url": "https://www.kns.ru/product/ssd-disk-samsung-9100-pro-2tb-mz-vap2t0bw/"
+     }
+    ],
+    "market_median": 49593
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/uk/mz-vap8t0bw/gallery/uk-9100-pro-nvme-m2-ssd-539078-mz-vap8t0bw-thumb-549017270?$1300_1038_PNG$"
+  ],
+  "note": "Одно предложение за 39 050 ₽ не учитывал. В КНС есть и прошлое поколение 990 PRO (1 ТБ — 25 244 ₽), оно ещё в линейке Samsung."
+ },
+ {
+  "brand": "TP-Link",
+  "category": "Аксессуары",
+  "model": "TP-Link Archer BE550",
+  "released": "2024",
+  "status": "current",
+  "specs": {
+   "wifi": "Wi-Fi 7, BE9300, три диапазона",
+   "ports": "5× 2,5 Гбит/с",
+   "usb": "USB 3.0",
+   "mesh": "EasyMesh"
+  },
+  "description_ru": "Домашний роутер Wi-Fi 7 средней цены со всеми портами на 2,5 Гбит/с. Подходит для гигабитного интернета и большой квартиры.",
+  "configs": [
+   {
+    "variant": "Archer BE550",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 22358,
+      "url": "https://www.kns.ru/product/router-tp-link-archer-be550/"
+     }
+    ],
+    "market_median": 22358
+   }
+  ],
+  "image_urls": [
+   "https://static.tp-link.com/upload/image-line/01_large_20241202062256x.jpg",
+   "https://static.tp-link.com/upload/image-line/02_large_20241202062256p.jpg"
+  ],
+  "note": "Нашлась одна цена (КНС). Ti-store на price.ru просит 35 400 ₽, но этот магазин систематически вдвое выше рынка. Дешевле есть Archer BE450 (13 577 ₽) и BE400 (14 146 ₽) — тоже Wi-Fi 7. AX3000 из старого каталога — это Wi-Fi 6, прошлое поколение. Фото с tp-link.com — 1000 px."
+ },
+ {
+  "brand": "ASUS",
+  "category": "Аксессуары",
+  "model": "ASUS RT-BE58U",
+  "released": "2024",
+  "status": "current",
+  "specs": {
+   "wifi": "Wi-Fi 7, BE3600, два диапазона",
+   "ports": "WAN/LAN 2,5 Гбит/с + 3× 1 Гбит/с",
+   "mesh": "AiMesh",
+   "usb": "USB 3.0"
+  },
+  "description_ru": "Доступный роутер ASUS с Wi-Fi 7 и поддержкой AiMesh: можно объединить с другими роутерами ASUS в одну сеть. Хороший вариант для обычной квартиры.",
+  "configs": [
+   {
+    "variant": "RT-BE58U",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "kns.ru",
+      "price": 10976,
+      "url": "https://www.kns.ru/product/router-asus-rt-be58u/"
+     },
+     {
+      "source": "price.ru",
+      "price": 11480,
+      "url": "https://price.ru/marshrutizatory/routery-asus/"
+     }
+    ],
+    "market_median": 11228
+   }
+  ],
+  "image_urls": [
+   "https://dlcdnwebimgs.asus.com/gain/fc8803ca-32a1-4606-b085-a8c7c84ad343/"
+  ],
+  "note": "Год выхода (2024) — по памяти. Старше и мощнее RT-BE88U: в КНС 29 878 ₽. Фото с asus.com — PNG 2400 px, ссылка без расширения файла. AiMesh из старого каталога заменить на эту модель или на ZenWiFi BD4."
+ },
+ {
+  "brand": "Keychron",
+  "category": "Аксессуары",
+  "model": "Keychron K8 Max",
+  "released": "2024-07",
+  "status": "current",
+  "specs": {
+   "layout": "TKL, 87 клавиш",
+   "connection": "2,4 ГГц, Bluetooth 5.1, USB-C",
+   "switches": "Gateron / Keychron, hot-swap",
+   "backlight": "RGB, алюминиевая рамка"
+  },
+  "description_ru": "Механическая клавиатура без цифрового блока: работает по проводу, Bluetooth и радиоканалу, переключатели меняются без пайки. Есть раскладка для Mac и Windows.",
+  "configs": [
+   {
+    "variant": "K8 Max, RGB, hot-swap",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "holodilnik.ru",
+      "price": 15299,
+      "url": "https://www.holodilnik.ru/search/?search=Keychron+K8+Max"
+     },
+     {
+      "source": "holodilnik.ru",
+      "price": 15299,
+      "url": "https://www.holodilnik.ru/search/?search=Keychron+K8+Max"
+     }
+    ],
+    "market_median": 15299
+   }
+  ],
+  "image_urls": [
+   "https://cdn.shopify.com/s/files/1/0059/0630/1017/files/Keychron-K8-Max-QMK-Wireless-Custom-Mechanical-Keyboard-RGB-Backlight-TKL-Layout-Fully-Assembled-for-Mac-Windows-Linux-Hot-Swappable-Keychron-Super-Red.jpg?v=1760934296"
+  ],
+  "note": "Цена только из Холодильника (версии Red и Brown, по 15 299 ₽), второй магазин не нашёл — медиана ненадёжная. Альтернатива с ценами: Logitech G715 (biggeek 17 990 ₽, price.ru 19 370 ₽) или NuPhy Air75 V3 (biggeek 16 990 ₽). Das Keyboard и Corsair K95 из старого каталога — старые модели. Фото с keychron.com — 2000 px, рядом с клавиатурой лежит переключатель."
+ }
+]

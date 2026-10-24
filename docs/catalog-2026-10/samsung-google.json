@@ -1,0 +1,1647 @@
+[
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy S26 Ultra",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.9\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "Snapdragon 8 Elite Gen 5 for Galaxy",
+      "camera": "200 МП основная",
+      "battery": "5000 мАч"
+    },
+    "description_ru": "Флагман Samsung 2026 года со встроенным пером S Pen и камерой на 200 МП. Отличается от S26+ большим экраном, телеобъективами и чипом Snapdragon во всех регионах.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 87990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-ultra-12-gb-256-gb-belyj-white-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 81990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-ultra/samsung-galaxy-s26-ultra-12-256gb-sky-blue/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 124990,
+            "url": "https://galaxystore.ru/product/SM-S948B12256WHT2E1S/"
+          }
+        ],
+        "market_median": 87990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 103990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-ultra-12-gb-512-gb-belyj-white-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 96490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-ultra/samsung-galaxy-s26-ultra-12-512gb-sky-blue/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 144990,
+            "url": "https://galaxystore.ru/product/SM-S948B12512WHT2E1S/"
+          }
+        ],
+        "market_median": 103990
+      },
+      {
+        "variant": "16/1TB",
+        "colors": [
+          "Black",
+          "Cobalt Violet"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 127990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-ultra-16-gb-1-tb-belyj-white-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 121990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-ultra/samsung-galaxy-s26-ultra-16-1tb-black/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 194990,
+            "url": "https://galaxystore.ru/product/SM-S948B16001WHT2E1S/"
+          }
+        ],
+        "market_median": 127990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-s26-ultra/buy/05_Color-Selection/Color-Selection_Black_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-s26-ultra/buy/05_Color-Selection/Color-Selection_Cobalt-Violet_PC.jpg"
+    ],
+    "note": "Продажи с 11.03.2026. Разброс цен большой: серые магазины (biggeek, hi-stores) примерно на 35–40 % дешевле официального партнёра galaxystore.ru. Цвета White, Pink Gold, Silver Shadow тоже продаются, но в РФ встречаются реже. Фото — с samsung.com/uk (1600×864, белый фон, вид спереди и сзади)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy S26+",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.7\" Dynamic AMOLED 2X QHD+, 120 Гц",
+      "chip": "Exynos 2600 или Snapdragon 8 Elite Gen 5 (зависит от версии)",
+      "camera": "50 МП основная",
+      "battery": "4900 мАч"
+    },
+    "description_ru": "Средняя модель линейки S26: большой экран QHD+ и та же оболочка с Galaxy AI, что у Ultra, но без пера и 200-мегапиксельной камеры. Подходит тем, кому нужен большой флагман дешевле Ultra.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 78990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-plus-12-gb-256-gb-goluboj-sky-blue-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 73390,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-plus/samsung-galaxy-s26-plus-12-256gb-sky-blue/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 99990,
+            "url": "https://galaxystore.ru/product/SM-S947B12256WHT2E1S/"
+          }
+        ],
+        "market_median": 78990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 87990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-plus-12-gb-512-gb-cernyj-black-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 81490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-plus/samsung-galaxy-s26-plus-12-512gb-sky-blue/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 114990,
+            "url": "https://galaxystore.ru/product/SM-S947B12512WHT2E1S/"
+          }
+        ],
+        "market_median": 87990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-s26/buy/05_Color-Selection/M2_Color-Selection/M2_Color-Selection_Black_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-s26/buy/05_Color-Selection/M2_Color-Selection/M2_Color-Selection_Cobalt-Violet_PC.jpg"
+    ],
+    "note": "Продажи с 11.03.2026. На biggeek продаются версии и на Exynos, и на Snapdragon; в расчёт взята самая дешёвая (Exynos). Официальная европейская версия (SM-S947B у galaxystore.ru) — Exynos. Фото «M2» со страницы покупки S26/S26+ на samsung.com/uk; то, что M2 — это именно S26+, выведено из порядка моделей, стоит проверить глазами."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy S26",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.3\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "Exynos 2600 или Snapdragon 8 Elite Gen 5 (зависит от версии)",
+      "camera": "50 МП основная",
+      "battery": "4300 мАч"
+    },
+    "description_ru": "Компактный флагман Samsung 2026 года с экраном 6,3 дюйма. Те же функции Galaxy AI и чип флагманского уровня, что у старших моделей, в корпусе весом около 167 г.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 68990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-12-gb-256-gb-lavandovyj-cobalt-violet-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 63990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26/samsung-galaxy-s26-12-256gb-sky-blue/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 84990,
+            "url": "https://galaxystore.ru/product/SM-S942B12256WHT2E1S/"
+          }
+        ],
+        "market_median": 68990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Black",
+          "Cobalt Violet"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 79990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-12-gb-512-gb-lavandovyj-cobalt-violet-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 73490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26/samsung-galaxy-s26-12-512gb-cobalt-violet/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 99990,
+            "url": "https://galaxystore.ru/product/SM-S942B12512WHT2E1S/"
+          }
+        ],
+        "market_median": 79990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-s26/buy/05_Color-Selection/M1_Color-Selection/M1_Color-Selection_Black_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-s26/buy/05_Color-Selection/M1_Color-Selection/M1_Color-Selection_Sky-Blue_PC.jpg"
+    ],
+    "note": "Продажи с 11.03.2026. Версии на Exynos и на Snapdragon стоят по-разному; в расчёт взята самая дешёвая. Фото «M1» со страницы покупки на samsung.com/uk; то, что M1 — это базовый S26, выведено из порядка моделей, стоит проверить глазами."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy S26 FE",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "display": "6.7\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "Exynos 2500",
+      "camera": "50 + 12 + 8 МП (телевик 3×)",
+      "battery": "4900 мАч"
+    },
+    "description_ru": "Облегчённая версия S26 с флагманским дизайном и тройной камерой с телеобъективом. Дешевле основной серии за счёт чипа Exynos 2500 и 8 ГБ памяти.",
+    "configs": [
+      {
+        "variant": "8/128GB",
+        "colors": [
+          "Graphite",
+          "Blueberry",
+          "Pistachio"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 51990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-fe-8gb-128gb-blueberry-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 46990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-fe/samsung-galaxy-s26-fe-8-128gb-graphite/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 64990,
+            "url": "https://galaxystore.ru/product/SM-S741B08128GRN2E1S/"
+          }
+        ],
+        "market_median": 51990
+      },
+      {
+        "variant": "8/256GB",
+        "colors": [
+          "Graphite",
+          "Blueberry",
+          "Pistachio"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 55990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-s26-fe-8gb-256gb-pistachio-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 49190,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-s/galaxy-s26-fe/samsung-galaxy-s26-fe-8-256gb-blueberry/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 74990,
+            "url": "https://galaxystore.ru/product/SM-S741B08256GRN2E1S/"
+          }
+        ],
+        "market_median": 55990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/smartphones/galaxy-s26/buy/2026-08-fe/03_gallery/S26_FE_Global_Group_KV_Image_PC_1600x864.jpg",
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-s741blgdeub/gallery/uk-galaxy-s26-fe-sm-s741-sm-s741blgdeub-thumb-554390226?$1300_1038_PNG$"
+    ],
+    "note": "Анонс 27.08.2026, продажи с 04.09.2026. Первое фото — все цвета вместе на белом фоне; второе — официальная миниатюра (прозрачный фон, но сам телефон на ней мелкий)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy Z Fold8 Ultra",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "8\" внутренний + 6.5\" внешний",
+      "chip": "Snapdragon 8 Elite Gen 5 for Galaxy",
+      "camera": "200 + 50 + 10 МП (3×)",
+      "battery": "5000 мАч"
+    },
+    "description_ru": "Главная «книжка» Samsung 2026 года, наследник линейки Z Fold. Самая большая камера и батарея среди складных Galaxy, вес 215 г.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Graphite",
+          "Violet Shadow",
+          "Cream"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 137990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-fold8-ultra-12-gb-256-gb-bezhevyj-cream-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 131490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-fold8-ultra/samsung-galaxy-z-fold8-ultra-12-256gb-graphite/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 164990,
+            "url": "https://galaxystore.ru/product/SM-F976B12256CRM2E1S/"
+          }
+        ],
+        "market_median": 137990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Graphite",
+          "Violet Shadow",
+          "Cream"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 156990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-fold8-ultra-12-gb-512-gb-bezhevyj-cream-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 146990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-fold8-ultra/samsung-galaxy-z-fold8-ultra-12-512gb-graphite/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 194990,
+            "url": "https://galaxystore.ru/product/SM-F976B12512CRM2E1S/"
+          }
+        ],
+        "market_median": 156990
+      },
+      {
+        "variant": "16/1TB",
+        "colors": [
+          "Graphite",
+          "Violet Shadow"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 203990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-fold8-ultra-16-gb-1-tb-fioletovyj-violet-shadow-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 196990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-fold8-ultra/samsung-galaxy-z-fold8-ultra-16-1tb-creamy/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 254990,
+            "url": "https://galaxystore.ru/product/SM-F976B16001CRM2E1S/"
+          }
+        ],
+        "market_median": 203990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-z-fold8-ultra/05_Color_Selection/Q8_Color_Selection_Graphite_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-z-fold8-ultra/05_Color_Selection/Q8_Color_Selection_Violet_Shadow_PC.jpg"
+    ],
+    "note": "Анонс 22.07.2026, продажи с 07.08.2026. С 2026 года у Samsung две «книжки»: Fold8 Ultra (классический формат, заменяет Fold7) и широкий Fold8. Цвет Green Shadow — эксклюзив сайта Samsung. Разница цен между серыми магазинами и galaxystore.ru — около 30 тыс. ₽."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy Z Fold8",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "7.6\" внутренний (4:3) + 5.5\" внешний",
+      "chip": "Snapdragon 8 Elite Gen 5 for Galaxy",
+      "battery": "4800 мАч",
+      "weight": "201 г"
+    },
+    "description_ru": "Новая широкая «книжка» Samsung: в раскрытом виде экран с пропорциями 4:3, в сложенном — короткий широкий внешний дисплей. Компромисс между форматом обычного телефона и планшета.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Graphite",
+          "Lavender",
+          "Cream"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 126990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-fold8-12-gb-256-gb-seryj-graphite-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 121490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-fold8/samsung-galaxy-z-fold8-12-256gb-lavender/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 149990,
+            "url": "https://galaxystore.ru/product/SM-F971B12256CRM2E1S/"
+          }
+        ],
+        "market_median": 126990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Graphite",
+          "Lavender",
+          "Cream"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 137990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-fold8-12-gb-512-gb-lavanda-lavender-snapdragon"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 131990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-fold8/samsung-galaxy-z-fold8-12-512gb-lavender/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 179990,
+            "url": "https://galaxystore.ru/product/SM-F971B12512CRM2E1S/"
+          }
+        ],
+        "market_median": 137990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-z-fold8/05_Color_Selection/H8_Color_Selection_Graphite_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-z-fold8/05_Color_Selection/H8_Color_Selection_Lavender_PC.jpg"
+    ],
+    "note": "Анонс 22.07.2026, продажи с 07.08.2026. В обзорах до анонса его называли Fold8 Wide. Есть ещё версия 16/1TB (biggeek от 177 990 ₽, hi-stores от 177 990 ₽, galaxystore 239 990 ₽). Цвет Pistachio — эксклюзив сайта Samsung."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy Z Flip8",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "6.9\" внутренний + 4.1\" внешний FlexWindow",
+      "chip": "Exynos 2600",
+      "camera": "50 + 12 МП",
+      "battery": "4300 мАч"
+    },
+    "description_ru": "Складной смартфон-«раскладушка» 2026 года с внешним экраном 4,1 дюйма, на котором работают приложения. Весит 180 г, корпус алюминиевый, защита IP48.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Graphite",
+          "Cream",
+          "Pink"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 78990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-flip8-12-gb-plus-256-gb-grafitovyj-graphite-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 71490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-flip8/samsung-galaxy-z-flip8-12-256gb-2026-graphite/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 104990,
+            "url": "https://galaxystore.ru/product/SM-F776B12256CRM2E1S/"
+          }
+        ],
+        "market_median": 78990
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Graphite",
+          "Cream",
+          "Pink"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 90990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-flip8-12-gb-plus-512-gb-grafitovyj-graphite-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 84990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-flip8/samsung-galaxy-z-flip8-12-512gb-2026-graphite/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 124990,
+            "url": "https://galaxystore.ru/product/SM-F776B12512CRM2E1S/"
+          }
+        ],
+        "market_median": 90990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-z-flip8/05_Color_Selection/B8_Color_Selection_Graphite_PC.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-z-flip8/05_Color_Selection/B8_Color_Selection_Pink_PC.jpg"
+    ],
+    "note": "Анонс 22.07.2026, продажи с 07.08.2026. Во всех странах, кроме Китая и Северной Америки, идёт на Exynos 2600. Цвет Mint — эксклюзив сайта Samsung. Версии Flip8 FE на 24.10.2026 нет."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy Z Flip7 FE",
+    "released": "2025-07",
+    "status": "current",
+    "specs": {
+      "display": "6.7\" внутренний + 3.4\" внешний",
+      "chip": "Exynos 2400",
+      "camera": "50 + 12 МП",
+      "battery": "4000 мАч"
+    },
+    "description_ru": "Самая доступная «раскладушка» Samsung. Корпус и экраны как у Flip прошлого поколения, чип попроще.",
+    "configs": [
+      {
+        "variant": "8/128GB",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 59990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-flip7-fe-8-gb-128-gb-belyj-white-exynos"
+          }
+        ],
+        "market_median": 59990
+      },
+      {
+        "variant": "8/256GB",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 65990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-z-flip7-fe-8-gb-256-gb-belyj-white-exynos"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 61990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-z/galaxy-z-flip7-fe/samsung-galaxy-z-flip7-fe-12-256gb-black/"
+          }
+        ],
+        "market_median": 63990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/smartphones/galaxy-z-flip7-fe/images/galaxy-z-flip7-fe-features-colors-black.jpg",
+      "https://images.samsung.com/uk/smartphones/galaxy-z-flip7-fe/images/galaxy-z-flip7-fe-features-colors-white.jpg"
+    ],
+    "note": "Наследника (Flip8 FE) нет, поэтому это текущая FE-«раскладушка»; Samsung UK продаёт её на сайте. В России с ней туго: у galaxystore.ru нет в наличии (49 990 ₽, в медиану не взято), у hi-stores есть только 8/256 Black. Фото маленькие (390×502) — лучше найти крупнее."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy A57",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.7\" Super AMOLED+, 120 Гц",
+      "chip": "Exynos 1680",
+      "camera": "50 + 12 + 5 МП",
+      "battery": "5000 мАч, 45 Вт"
+    },
+    "description_ru": "Старшая модель среднего класса Galaxy A 2026 года: алюминиевая рамка, защита IP68, быстрая зарядка 45 Вт. Самый ходовой Samsung среднего ценового сегмента.",
+    "configs": [
+      {
+        "variant": "8/128GB",
+        "colors": [
+          "Awesome Navy",
+          "Awesome Gray",
+          "Awesome Lilac"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 34490,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-a57-5g-8-gb-128-gb-goluboj-awesome-icyblue"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 32990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-a/galaxy-a57/samsung-galaxy-a57-8-128gb-awesome-lilac-1/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 42990,
+            "url": "https://galaxystore.ru/product/SM-A576B08128LIL2E1S/"
+          }
+        ],
+        "market_median": 34490
+      },
+      {
+        "variant": "8/256GB",
+        "colors": [
+          "Awesome Navy",
+          "Awesome Gray",
+          "Awesome Lilac"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 38990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-a57-5g-8-gb-256-gb-seryj-awesome-gray"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 36990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-a/galaxy-a57/samsung-galaxy-a57-8-256gb-awesome-lilac-1/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 46990,
+            "url": "https://galaxystore.ru/product/SM-A576B08256LIL2E1S/"
+          }
+        ],
+        "market_median": 38990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-a576bdbdeub/gallery/uk-galaxy-a57-5g-sm-a576-sm-a576bdbdeub-thumb-551708604?$1300_1038_PNG$"
+    ],
+    "note": "Анонс в марте 2026. Фото — официальная миниатюра с samsung.com/uk (прозрачный фон, но телефон на ней мелкий). Крупного снимка на белом фоне в открытом доступе не нашёл."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Смартфоны",
+    "model": "Galaxy A37",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "6.7\" Super AMOLED, 120 Гц",
+      "chip": "Exynos 1480",
+      "camera": "50 + 8 + 5 МП",
+      "battery": "5000 мАч, 45 Вт"
+    },
+    "description_ru": "Недорогой Samsung среднего класса с экраном AMOLED 120 Гц и защитой IP68. Чип тот же, что у A55 2024 года; это модель для тех, кому важна цена.",
+    "configs": [
+      {
+        "variant": "8/128GB",
+        "colors": [
+          "Awesome Charcoal",
+          "Awesome Lavender",
+          "Awesome White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 28990,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-a37-5g-8gb-128gb-awesome-white"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 27990,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-a/galaxy-a37/samsung-galaxy-a37-8-128gb-awesome-graygreen/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 36990,
+            "url": "https://galaxystore.ru/product/SM-A376E08128WHT21S/"
+          }
+        ],
+        "market_median": 28990
+      },
+      {
+        "variant": "8/256GB",
+        "colors": [
+          "Awesome Charcoal",
+          "Awesome Lavender",
+          "Awesome White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 32490,
+            "url": "https://biggeek.ru/products/smartfon-samsung-galaxy-a37-5g-8gb-256gb-awesome-white"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 31490,
+            "url": "https://hi-stores.ru/catalog/samsung/smartfoni/galaxy-a/galaxy-a37/samsung-galaxy-a37-8-256gb-awesome-charcoal/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 40990,
+            "url": "https://galaxystore.ru/product/SM-A376E08256WHT21S/"
+          }
+        ],
+        "market_median": 32490
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-a376bzageub/gallery/uk-galaxy-a37-5g-sm-a376-sm-a376bzageub-thumb-551708128?$1300_1038_PNG$"
+    ],
+    "note": "Анонс в марте 2026. У biggeek цены указаны как «от». Есть версия 6/128 (biggeek от 25 990 ₽). Фото — официальная миниатюра (телефон на ней мелкий)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "model": "Galaxy Tab S12 Ultra",
+    "released": "2026-10",
+    "status": "current",
+    "specs": {
+      "display": "14.6\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "MediaTek Dimensity 9500",
+      "battery": "11 600 мАч, до 23 ч видео",
+      "body": "5.1 мм, IP68, S Pen в комплекте"
+    },
+    "description_ru": "Самый большой и самый тонкий планшет Samsung, 14,6 дюйма при толщине 5,1 мм. Перо S Pen в комплекте, защита IP68, двойная основная камера.",
+    "configs": [
+      {
+        "variant": "Wi-Fi 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "hi-stores.ru",
+            "price": 136990,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s12-ultra/samsung-galaxy-tab-s12-ultra-wi-fi-12-256gb-gray/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 136990,
+            "url": "https://galaxystore.ru/product/SM-X940N12256GRYWF1S/"
+          }
+        ],
+        "market_median": 136990
+      },
+      {
+        "variant": "5G 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "hi-stores.ru",
+            "price": 151990,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s12-ultra/samsung-galaxy-tab-s12-ultra-5g-wi-fi-12-256gb-gray/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 151990,
+            "url": "https://galaxystore.ru/product/SM-X946B12256GRY11S/"
+          }
+        ],
+        "market_median": 151990
+      },
+      {
+        "variant": "Wi-Fi 12/512GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "hi-stores.ru",
+            "price": 159990,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s12-ultra/samsung-galaxy-tab-s12-ultra-wi-fi-12-512gb-gray/"
+          }
+        ],
+        "market_median": 159990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s12/buy/ultra/05_color-selection/TS12-Ultra-Color-Selection_Gray_PC_1600x864.jpg",
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s12/buy/ultra/05_color-selection/TS12-Ultra-Color-Selection_Silver_PC_1600x864.jpg"
+    ],
+    "note": "Анонс 30.09.2026, продажи с 07.10.2026; новинка. В России пока только два источника: hi-stores (под заказ) и galaxystore.ru (цены совпали до рубля). На biggeek модели ещё нет. Емкость батареи 11 600 мАч взята из обзоров; Samsung в пресс-релизе указывает только «до 23 часов». Модели Tab S12 без приставки нет."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "model": "Galaxy Tab S12+",
+    "released": "2026-10",
+    "status": "current",
+    "specs": {
+      "display": "12.6\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "MediaTek Dimensity 9500",
+      "battery": "до 21 ч видео",
+      "body": "IP68, S Pen в комплекте"
+    },
+    "description_ru": "Планшет 12,6 дюйма из новой серии Tab S12: тот же чип, что у Ultra, перо в комплекте, защита IP68. Меньше и дешевле Ultra, одна основная камера и Wi-Fi 6E.",
+    "configs": [
+      {
+        "variant": "Wi-Fi 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "galaxystore.ru",
+            "price": 117990,
+            "url": "https://galaxystore.ru/product/SM-X840N12256GRYWF1S/"
+          }
+        ],
+        "market_median": 117990
+      },
+      {
+        "variant": "5G 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "galaxystore.ru",
+            "price": 131990,
+            "url": "https://galaxystore.ru/product/SM-X846B12256SLV11S/"
+          }
+        ],
+        "market_median": 131990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s12/buy/05_color-selection/Color-Selection_Gray_PC_1600x864.jpg",
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s12/buy/05_color-selection/Color-Selection_Silver_PC_1600x864.jpg"
+    ],
+    "note": "Анонс 30.09.2026, продажи с 07.10.2026. Цена найдена только у одного магазина (galaxystore.ru, официальный партнёр), поэтому «медиана» здесь — это его цена. У серых магазинов цена, скорее всего, будет ниже; надо перепроверить через 1–2 недели."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "model": "Galaxy Tab S11",
+    "released": "2025-09",
+    "status": "previous_official",
+    "specs": {
+      "display": "11\" Dynamic AMOLED 2X, 120 Гц",
+      "chip": "MediaTek Dimensity 9400+",
+      "battery": "8400 мАч",
+      "weight": "469 г, S Pen в комплекте"
+    },
+    "description_ru": "Компактный флагманский планшет Samsung на 11 дюймов с пером в комплекте. В серии Tab S12 модели такого размера нет, поэтому Samsung продолжает продавать S11.",
+    "configs": [
+      {
+        "variant": "Wi-Fi 12/128GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 67990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s11-11-12-128gb-wi-fi-silver"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 64290,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s11/samsung-galaxy-tab-s11-wi-fi-12-128gb-gray/"
+          }
+        ],
+        "market_median": 66140
+      },
+      {
+        "variant": "Wi-Fi 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 76990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s11-11-12-256gb-wi-fi-silver"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 76790,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s11/samsung-galaxy-tab-s11-wi-fi-12-256gb-gray/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 75990,
+            "url": "https://galaxystore.ru/product/SM-X730N12256GRYWFS/"
+          }
+        ],
+        "market_median": 76790
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Color_Selection_Gray_PC_1600x864.png",
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s11/buy/colour-selection/TS11_Color_Selection_Silver_PC_1600x864.png"
+    ],
+    "note": "Прошлое поколение (09.2025), которое Samsung продаёт официально: страница покупки на samsung.com/uk открыта. Tab S11 Ultra вытеснен Tab S12 Ultra, его не включал. Это и есть замена позиции «Tab S10» из старого каталога."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "model": "Galaxy Tab S10 FE",
+    "released": "2025-04",
+    "status": "current",
+    "specs": {
+      "display": "10.9\" IPS, 90 Гц",
+      "chip": "Exynos 1580",
+      "battery": "8000 мАч",
+      "extra": "S Pen в комплекте, IP68"
+    },
+    "description_ru": "Доступный планшет Samsung на 10,9 дюйма с пером в комплекте. Экран IPS вместо AMOLED, зато цена примерно вдвое ниже, чем у серии Tab S.",
+    "configs": [
+      {
+        "variant": "Wi-Fi 8/128GB",
+        "colors": [
+          "Gray",
+          "Silver",
+          "Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 39990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s10-fe-wi-fi-8128-gb-blue"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 37790,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_tab/tab_s/galaxy-tab-s10-fe-2025/samsung-galaxy-tab-s10-fe-128gb-wi-fi-gray/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 39990,
+            "url": "https://galaxystore.ru/product/SM-X520N08128GRYWF1S/"
+          }
+        ],
+        "market_median": 39990
+      },
+      {
+        "variant": "5G 8/128GB",
+        "colors": [
+          "Gray",
+          "Silver",
+          "Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 50990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s10-fe-5g-8128-gb-blue"
+          }
+        ],
+        "market_median": 50990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Gray_PC_1600x864.png",
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Blue_PC_1600x864.png"
+    ],
+    "note": "Наследника (Tab S11 FE) на 24.10.2026 нет, поэтому это текущая FE-модель; Samsung UK продаёт её на сайте. У galaxystore.ru версии 5G нет в наличии, в медиану не взята. Есть версия 12/256 (biggeek: 59 990 ₽ Wi-Fi)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Планшеты",
+    "model": "Galaxy Tab S10 FE+",
+    "released": "2025-04",
+    "status": "current",
+    "specs": {
+      "display": "13.1\" IPS, 90 Гц",
+      "chip": "Exynos 1580",
+      "battery": "10 090 мАч",
+      "extra": "S Pen в комплекте, IP68"
+    },
+    "description_ru": "Большой доступный планшет Samsung на 13,1 дюйма с пером в комплекте. Тот же чип, что у Tab S10 FE, но экран и батарея крупнее.",
+    "configs": [
+      {
+        "variant": "Wi-Fi 8/128GB",
+        "colors": [
+          "Gray",
+          "Silver",
+          "Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 54990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s10-fe-plus-wi-fi-8128-gb-blue"
+          }
+        ],
+        "market_median": 54990
+      },
+      {
+        "variant": "Wi-Fi 12/256GB",
+        "colors": [
+          "Gray",
+          "Silver",
+          "Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 66990,
+            "url": "https://biggeek.ru/products/planset-samsung-galaxy-tab-s10-fe-plus-wi-fi-12256-gb-blue"
+          }
+        ],
+        "market_median": 66990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/tablets/galaxy-tab-s10-fe/buy/02-colour-section/S10FE_Color_Selection_Silver_PC_1600x864.png"
+    ],
+    "note": "Цена найдена только на biggeek; hi-stores модель не продаёт, у galaxystore.ru есть только 5G-версии без наличия (128 ГБ 67 890 ₽, 256 ГБ 76 390 ₽). Фото общее для FE и FE+ (страница покупки Tab S10 FE на samsung.com/uk); отдельного снимка FE+ на белом фоне не нашёл."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Часы",
+    "model": "Galaxy Watch9",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "size": "40 / 44 мм, алюминий",
+      "display": "1.47\" AMOLED (44 мм), до 3000 нит",
+      "chip": "Snapdragon Wear Elite",
+      "battery": "445 мАч (44 мм), IP68"
+    },
+    "description_ru": "Основные смарт-часы Samsung 2026 года на новом чипе Snapdragon Wear Elite. Два размера корпуса, версии с LTE и без.",
+    "configs": [
+      {
+        "variant": "40 мм Bluetooth",
+        "colors": [
+          "Graphite",
+          "Cream (белое золото)"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 28990,
+            "url": "https://biggeek.ru/products/umnye-chasy-samsung-galaxy-watch9-40-mm-bluetooth-wi-fi-alyuminij-kremovogo-cveta-remeshok-kremovogo-cveta"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 24390,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/galaxy-watch9/chasy-samsung-galaxy-watch9-40mm-graphite/"
+          }
+        ],
+        "market_median": 26690
+      },
+      {
+        "variant": "44 мм Bluetooth",
+        "colors": [
+          "Graphite",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 29990,
+            "url": "https://biggeek.ru/products/umnye-chasy-samsung-galaxy-watch9-44-mm-bluetooth-wi-fi-alyuminij-kremovogo-cveta-remeshok-kremovogo-cveta"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 25690,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/galaxy-watch9/chasy-samsung-galaxy-watch9-44mm-graphite/"
+          }
+        ],
+        "market_median": 27840
+      },
+      {
+        "variant": "44 мм LTE",
+        "colors": [
+          "Graphite",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 30990,
+            "url": "https://biggeek.ru/products/umnye-chasy-samsung-galaxy-watch9-44-mm-bluetooth-wi-fi-4g-lte-alyuminij-kremovogo-cveta-remeshok-kremovogo-cveta"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 25690,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/galaxy-watch9/chasy-samsung-galaxy-watch9-44mm-lte-silver/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 30990,
+            "url": "https://galaxystore.ru/product/SM-L355FZ44SLV11S/"
+          }
+        ],
+        "market_median": 30990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/galaxy-watch9/feature/Galaxy-Watch9_Design-colors-graphite-44mm-start_PC.jpg",
+      "https://images.samsung.com/is/image/samsung/assets/uk/galaxy-watch9/feature/Galaxy-Watch9_Design-colors-silver-44mm-start_PC.jpg"
+    ],
+    "note": "Анонс 22.07.2026, продажи с 07.08.2026. Часов Watch9 Classic не выпускали. У galaxystore.ru есть только LTE-версии (40 мм LTE — 28 990 ₽). У hi-stores 40 мм Silver называется так, а у biggeek и Samsung этот цвет — «белое золото» (Cream)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Часы",
+    "model": "Galaxy Watch Ultra2",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "size": "47 мм, титан",
+      "display": "1.5\" AMOLED, до 5000 нит",
+      "chip": "Snapdragon Wear Elite",
+      "battery": "800 мАч, до 100 ч"
+    },
+    "description_ru": "Защищённые смарт-часы Samsung для спорта и походов: титановый корпус 47 мм, LTE в каждой версии. Самый яркий экран и самая большая батарея среди Galaxy Watch.",
+    "configs": [
+      {
+        "variant": "47 мм LTE",
+        "colors": [
+          "Titanium Gray",
+          "Titanium Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 44990,
+            "url": "https://biggeek.ru/products/umnye-chasy-samsung-galaxy-watch-ultra2-47-mm-titan-chyornogo-cveta-remeshok-marine-chyornogo-cveta-2026"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 41490,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/galaxy-watch-ultra2/chasy-samsung-galaxy-watch-ultra2-47mm-lte-black/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 46990,
+            "url": "https://galaxystore.ru/product/SM-L715FZ47SLV11S/"
+          }
+        ],
+        "market_median": 44990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/assets/uk/galaxy-watch-ultra2/2607_feature/Galaxy-Watch-Ultra2_Design-colors-gray_PC.jpg",
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/f2607/gallery/uk-galaxy-watch-ultra2-l710-sm-l715fzsaeub-thumb-553804043?$1300_1038_PNG$"
+    ],
+    "note": "Анонс 22.07.2026, продажи с 07.08.2026. Первое фото крупное (1920×810), но на чёрном фоне; второе — официальная миниатюра на прозрачном фоне (часы на ней мелкие). Защита по данным biggeek — IP68 и IP69K."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Часы",
+    "model": "Galaxy Watch8 Classic",
+    "released": "2025-07",
+    "status": "previous_official",
+    "specs": {
+      "size": "46 мм, нержавеющая сталь",
+      "display": "1.34\" AMOLED",
+      "feature": "вращающийся безель",
+      "battery": "425 мАч, IP68"
+    },
+    "description_ru": "Классические смарт-часы Samsung со стальным корпусом и вращающимся безелем. В поколении 2026 года версии Classic нет, поэтому Samsung продолжает продавать эту модель.",
+    "configs": [
+      {
+        "variant": "46 мм Bluetooth",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 25490,
+            "url": "https://biggeek.ru/products/umnye-casy-samsung-galaxy-watch8-classic-46-mm-bluetoothwi-fi"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 21790,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/watch8-classic/chasy-samsung-galaxy-watch8-classic-46mm-white/"
+          }
+        ],
+        "market_median": 23640
+      },
+      {
+        "variant": "46 мм LTE",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 25990,
+            "url": "https://biggeek.ru/products/umnye-casy-samsung-galaxy-watch8-classic-46-mm-bluetoothwi-fi-plus-4g-lte"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 25190,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_watch/watch8-classic/chasy-samsung-galaxy-watch8-classic-46mm-bluetooth-wi-fi-4g-lte-white/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 32490,
+            "url": "https://galaxystore.ru/product/SM-L505FZ46WHT11S/"
+          }
+        ],
+        "market_median": 25990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/galaxy-watch8-classic/feature/galaxy-watch8-classic-design-colors-black-front.jpg",
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/f2507/gallery/uk-galaxy-watch8-classic-l500-sm-l500nzkaeua-thumb-547707845?$1300_1038_PNG$"
+    ],
+    "note": "Прошлое поколение (07.2025), но официально в продаже на samsung.com/uk: это единственные текущие Galaxy Watch с вращающимся безелем. Первое фото на светло-сером фоне и небольшое (588×410). Обычные Watch8 вытеснены Watch9, их не включал."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Наушники",
+    "model": "Galaxy Buds4 Pro",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "type": "TWS, активное шумоподавление",
+      "bluetooth": "6.1",
+      "battery": "до 6 ч (наушники)",
+      "weight": "55 г с кейсом"
+    },
+    "description_ru": "Флагманские беспроводные наушники Samsung 2026 года с активным шумоподавлением. Лучше всего работают со смартфонами Galaxy: Hi-Fi кодек Samsung, перевод речи через Galaxy AI.",
+    "configs": [
+      {
+        "variant": "Стандарт",
+        "colors": [
+          "Black",
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 15990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-samsung-galaxy-buds4-pro-tws"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 14590,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_buds/galaxy-buds4-pro/naushniki-samsung-galaxy-buds4-pro-r640-white/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 16990,
+            "url": "https://galaxystore.ru/product/SM-R640NWHT1S/"
+          }
+        ],
+        "market_median": 15990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/galaxy-buds4/buy/05_Color_Selection/Bach/Color_Selection_Black_PC.png",
+      "https://images.samsung.com/uk/galaxy-buds4/buy/05_Color_Selection/Bach/Color_Selection_White_PC.png"
+    ],
+    "note": "Вышли вместе с серией S26 (весна 2026). Заменяют Buds3 Pro из старого каталога. Фото взяты со страницы покупки Buds4 Pro на samsung.com/uk, папка «Bach» (так у Samsung называются Pro); там же есть цвет Pink Gold, но в РФ он не попадался. Автономность — по данным biggeek."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Наушники",
+    "model": "Galaxy Buds4",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "type": "TWS",
+      "bluetooth": "6.1",
+      "battery": "до 6 ч (наушники)",
+      "weight": "54 г с кейсом"
+    },
+    "description_ru": "Беспроводные наушники Samsung 2026 года, младшие относительно Buds4 Pro. Подходят тем, кому нужны наушники для Galaxy дешевле Pro.",
+    "configs": [
+      {
+        "variant": "Стандарт",
+        "colors": [
+          "White",
+          "Black"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 11990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-samsung-galaxy-buds4-tws"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 11190,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_buds/galaxy-buds4/naushniki-samsung-galaxy-buds4-r540-white/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 11990,
+            "url": "https://galaxystore.ru/product/SM-R540NWHT1S/"
+          }
+        ],
+        "market_median": 11990
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/uk/galaxy-buds4/buy/05_Color_Selection/Handel/Color_Selection_White_PC.png",
+      "https://images.samsung.com/uk/galaxy-buds4/buy/05_Color_Selection/Handel/Color_Selection_Black_PC.png"
+    ],
+    "note": "Вышли вместе с серией S26 (весна 2026). Есть ли в них шумоподавление, по источникам не проверял. Фото из папки «Handel» на странице покупки samsung.com/uk (так у Samsung называются обычные Buds4)."
+  },
+  {
+    "brand": "Samsung",
+    "category": "Наушники",
+    "model": "Galaxy Buds3 FE",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "type": "TWS, вкладыши со стержнем",
+      "bluetooth": "5.4",
+      "battery": "до 8.5 ч (наушники)",
+      "weight": "52 г с кейсом"
+    },
+    "description_ru": "Самые доступные наушники Samsung с дизайном в стиле Buds3. Подходят как недорогое дополнение к Galaxy.",
+    "configs": [
+      {
+        "variant": "Стандарт",
+        "colors": [
+          "Black",
+          "Gray"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 8490,
+            "url": "https://biggeek.ru/products/besprovodnye-naushniki-galaxy-buds3-fe"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 8390,
+            "url": "https://hi-stores.ru/catalog/samsung/galaxy_buds/galaxy-buds3-fe/naushniki-samsung-galaxy-buds3-fe-gray/"
+          },
+          {
+            "source": "galaxystore.ru",
+            "price": 8990,
+            "url": "https://galaxystore.ru/product/SM-R420NZBLK1S/"
+          }
+        ],
+        "market_median": 8490
+      }
+    ],
+    "image_urls": [
+      "https://images.samsung.com/is/image/samsung/p6pim/uk/sm-r420nzaaeua/gallery/uk-galaxy-buds3-fe-sm-r420nzaaeua-548603658?$1300_1038_PNG$"
+    ],
+    "note": "Наследника нет, поэтому это текущая FE-модель. Фото — официальное с samsung.com/uk (прозрачный фон, 1300×1038), но на нём только наушники, без кейса."
+  },
+  {
+    "brand": "Google",
+    "category": "Смартфоны",
+    "model": "Pixel 11",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "6.3\" OLED, 120 Гц",
+      "chip": "Google Tensor G6",
+      "camera": "48 МП основная",
+      "battery": "4985 мАч"
+    },
+    "description_ru": "Базовый смартфон Google 2026 года на чипе Tensor G6 и чистом Android с функциями Gemini. Компактный корпус 6,3 дюйма, защита IP68.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Obsidian",
+          "Frost",
+          "Hibiscus"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 73990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-256gb-12gb-pistachio-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 64390,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11/google-pixel-11-12-256gb-obsidian/"
+          }
+        ],
+        "market_median": 69190
+      },
+      {
+        "variant": "12/512GB",
+        "colors": [
+          "Obsidian",
+          "Frost"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 83990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-512gb-12gb-frost-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 74490,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11/google-pixel-11-12-512gb-frost/"
+          }
+        ],
+        "market_median": 79240
+      }
+    ],
+    "image_urls": [
+      "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Pixel_11_Family_Shot.width-1600.format-webp.webp"
+    ],
+    "note": "Анонс 12.08.2026, продажи с 20.08.2026. Официально в России Pixel не продаётся: оба магазина везут глобальную версию сами, поэтому медиана посчитана по двум ценам. Фото с блога Google — все цвета вместе, вид сзади, прозрачный фон (1600×1600, webp)."
+  },
+  {
+    "brand": "Google",
+    "category": "Смартфоны",
+    "model": "Pixel 11 Pro",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "6.3\" OLED, 120 Гц",
+      "chip": "Google Tensor G6",
+      "camera": "50 МП + телевик",
+      "battery": "4850 мАч"
+    },
+    "description_ru": "Компактный флагман Google с тройной камерой и телеобъективом. Тот же размер экрана, что у Pixel 11, но выше разрешение и лучше камеры.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Obsidian",
+          "Fog",
+          "Canyon"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 93990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-256gb-12gb-canyon-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 81990,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro/google-pixel-11-pro-12-256gb-obsidian/"
+          }
+        ],
+        "market_median": 87990
+      },
+      {
+        "variant": "16/512GB",
+        "colors": [
+          "Obsidian",
+          "Fog"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 113990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-512gb-16gb-fog-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 97990,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro/google-pixel-11-pro-16-512gb-fog/"
+          }
+        ],
+        "market_median": 105990
+      }
+    ],
+    "image_urls": [
+      "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Pixel-11ProXL_Family-Shot.width-1600.format-webp.webp"
+    ],
+    "note": "Анонс 12.08.2026, продажи с 20.08.2026. В базовой версии 12 ГБ памяти (у Pixel 10 Pro было 16), 16 ГБ — только в старших версиях. Официально в РФ не продаётся, медиана по двум магазинам. Фото общее для Pro и Pro XL (блог Google, четыре цвета, вид сзади)."
+  },
+  {
+    "brand": "Google",
+    "category": "Смартфоны",
+    "model": "Pixel 11 Pro XL",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "6.8\" OLED, 120 Гц",
+      "chip": "Google Tensor G6",
+      "camera": "50 МП + телевик",
+      "battery": "5115 мАч"
+    },
+    "description_ru": "Большой флагман Google с экраном 6,8 дюйма и самой ёмкой батареей в линейке Pixel 11. Камеры такие же, как у Pixel 11 Pro.",
+    "configs": [
+      {
+        "variant": "12/256GB",
+        "colors": [
+          "Obsidian",
+          "Fog",
+          "Olive"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 97990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-xl-256gb-12gb-olive-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 86290,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro-xl/google-pixel-11-pro-xl-12-256gb-canyon/"
+          }
+        ],
+        "market_median": 92140
+      },
+      {
+        "variant": "16/512GB",
+        "colors": [
+          "Obsidian",
+          "Fog"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 118990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-xl-512gb-16gb-obsidian-matte-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 105690,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro-xl/google-pixel-11-pro-xl-16-512gb-obsidian/"
+          }
+        ],
+        "market_median": 112340
+      }
+    ],
+    "image_urls": [
+      "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/Pixel-11ProXL_Family-Shot.width-1600.format-webp.webp"
+    ],
+    "note": "Анонс 12.08.2026, продажи с 20.08.2026; цена в США $1299 (на $100 дороже Pixel 10 Pro XL). Официально в РФ не продаётся, медиана по двум магазинам."
+  },
+  {
+    "brand": "Google",
+    "category": "Смартфоны",
+    "model": "Pixel 11 Pro Fold",
+    "released": "2026-08",
+    "status": "current",
+    "specs": {
+      "display": "8.0\" внутренний + 6.5\" внешний",
+      "chip": "Google Tensor G6",
+      "camera": "48 МП + телевик",
+      "battery": "4806 мАч"
+    },
+    "description_ru": "Складной смартфон-«книжка» Google, самый тонкий и лёгкий в линейке Pixel Fold. Защита IP68, оба экрана до 3600 нит.",
+    "configs": [
+      {
+        "variant": "16/256GB",
+        "colors": [
+          "Obsidian",
+          "Olive"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 145990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-fold-256gb-16gb-obsidian-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 126890,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro-fold/google-pixel-11-pro-fold-16-256gb-obsidian/"
+          }
+        ],
+        "market_median": 136440
+      },
+      {
+        "variant": "16/512GB",
+        "colors": [
+          "Obsidian",
+          "Olive"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 163990,
+            "url": "https://biggeek.ru/products/smartfon-google-pixel-11-pro-fold-512gb-16gb-obsidian-g"
+          },
+          {
+            "source": "hi-stores.ru",
+            "price": 132290,
+            "url": "https://hi-stores.ru/catalog/smartphones/google-phones/pixel-11-pro-fold/google-pixel-11-pro-fold-16-512gb-obsidian/"
+          }
+        ],
+        "market_median": 148140
+      }
+    ],
+    "image_urls": [
+      "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/P11PF_Obsidian.width-1600.format-webp.webp"
+    ],
+    "note": "Анонс 12.08.2026, продажи с 20.08.2026, в США от $1899. Официально в РФ не продаётся, медиана по двум магазинам. У hi-stores версия 16/512 Obsidian (132 290 ₽) дешевле, чем 16/256 Olive (136 490 ₽), — цены серых поставок скачут. Фото с блога Google: раскрытый и сложенный вид, белый фон."
+  }
+]

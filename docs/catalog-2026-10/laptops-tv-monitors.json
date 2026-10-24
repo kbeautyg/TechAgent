@@ -1,0 +1,2182 @@
+[
+ {
+  "brand": "ASUS",
+  "category": "Ноутбуки",
+  "model": "Zenbook 14 OLED (UX3405CA)",
+  "released": "2025-01",
+  "status": "current",
+  "specs": {
+   "display": "14\" OLED 2880×1800",
+   "chip": "Intel Core Ultra 5 225H / Core Ultra 7 255H",
+   "graphics": "Intel Arc 130T / 140T (встроенная)",
+   "memory": "16 или 32 ГБ"
+  },
+  "description_ru": "Лёгкий 14-дюймовый ультрабук ASUS с OLED-экраном 2,8K на процессорах Intel Core Ultra серии 200H. Самая ходовая модель Zenbook в российских магазинах: много предложений и предсказуемые цены.",
+  "configs": [
+   {
+    "variant": "Core Ultra 5 225H / 16 ГБ / 512 ГБ (UX3405CA-ST1350)",
+    "colors": [
+     "Ponder Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Регард",
+      "price": 112590,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1350/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 128600,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1350/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 133400,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1350/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 140900,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1350/"
+     }
+    ],
+    "market_median": 131000,
+    "offers_count": 4
+   },
+   {
+    "variant": "Core Ultra 7 255H / 16 ГБ / 1 ТБ (UX3405CA-ST1336)",
+    "colors": [
+     "Ponder Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Ti-store",
+      "price": 132363,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1336/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 132490,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1336/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 146140,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1336/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 159880,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1336/"
+     }
+    ],
+    "market_median": 139315,
+    "offers_count": 4
+   },
+   {
+    "variant": "Core Ultra 7 255H / 32 ГБ / 1 ТБ (UX3405CA-ST1353)",
+    "colors": [
+     "Ponder Blue"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 179870,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1353/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 189030,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1353/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 191450,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1353/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 203030,
+      "url": "https://price.ru/noutbuki/asus-ux3405ca-st1353/"
+     }
+    ],
+    "market_median": 190240,
+    "offers_count": 4
+   }
+  ],
+  "image_urls": [
+   "https://dlcdnwebimgs.asus.com/gain/c513878b-1b7e-419a-9cc2-828e5bcbdf91/"
+  ],
+  "note": "Вышла на CES 2025; в 2026 ASUS продаёт её дальше (в т. ч. под маркой «Zenbook 14 2026 UX3405CA»). Более новый Zenbook S14 UX5406AA на Core Ultra Series 3 в РФ есть только у Ti-store (240–288 тыс. ₽), поэтому не включал. Фото — официальное ASUS 2400×2400 PNG без фона; на экране обои с надписью «ASUS Zenbook». Ссылка на файл без расширения, отдаёт PNG."
+ },
+ {
+  "brand": "ASUS",
+  "category": "Ноутбуки",
+  "model": "ROG Zephyrus G16 (2026) GU606",
+  "released": "2026-01",
+  "status": "current",
+  "specs": {
+   "display": "16\" OLED 2560×1600, 240 Гц",
+   "chip": "Intel Core Ultra 9 386H",
+   "gpu": "GeForce RTX 5070 / 5070 Ti / 5080 Laptop",
+   "memory": "32 ГБ LPDDR5X"
+  },
+  "description_ru": "Тонкий 16-дюймовый игровой ноутбук ROG 2026 года на Intel Core Ultra 9 386H (Panther Lake) с OLED-экраном 240 Гц. Отличается от прошлогоднего GU605 новым процессором; видеокарты — RTX 5070, 5070 Ti или 5080.",
+  "configs": [
+   {
+    "variant": "Core Ultra 9 386H / RTX 5070 / 32 ГБ / 1 ТБ (GU606AP-TB081)",
+    "colors": [
+     "Platinum White"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 334100,
+      "url": "https://price.ru/noutbuki/asus-gu606ap-tb081/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 357190,
+      "url": "https://price.ru/noutbuki/asus-gu606ap-tb081/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 362310,
+      "url": "https://price.ru/noutbuki/asus-gu606ap-tb081/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 374100,
+      "url": "https://price.ru/noutbuki/asus-gu606ap-tb081/"
+     }
+    ],
+    "market_median": 359750,
+    "offers_count": 4
+   },
+   {
+    "variant": "Core Ultra 9 386H / RTX 5070 Ti / 32 ГБ / 1 ТБ (GU606AR-TB032)",
+    "colors": [
+     "Platinum White"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Регард",
+      "price": 392940,
+      "url": "https://price.ru/noutbuki/asus-gu606ar-tb032/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 412760,
+      "url": "https://price.ru/noutbuki/asus-gu606ar-tb032/"
+     }
+    ],
+    "market_median": 402850,
+    "offers_count": 2
+   },
+   {
+    "variant": "Core Ultra 9 386H / RTX 5080 / 32 ГБ / 1 ТБ (GU606AW-TB032W)",
+    "colors": [
+     "Platinum White"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 411060,
+      "url": "https://price.ru/noutbuki/asus-gu606aw-tb032w/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 439470,
+      "url": "https://price.ru/noutbuki/asus-gu606aw-tb032w/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 463720,
+      "url": "https://price.ru/noutbuki/asus-gu606aw-tb032w/"
+     }
+    ],
+    "market_median": 439470,
+    "offers_count": 3
+   }
+  ],
+  "image_urls": [
+   "https://dlcdnwebimgs.asus.com/gain/1F15425A-37EB-4227-8247-6EFCA38E1656",
+   "https://dlcdnwebimgs.asus.com/gain/DACA093E-132D-481C-90D3-571B18FA07B5"
+  ],
+  "note": "Индекс 2026 года — GU606 (GU605 — модель 2025 года). Есть и версия с RTX 5090 (GU606AX), но в РФ она от 559 тыс. ₽ и встречается единично — не включал. Фото: rog.asus.com, PNG 2400×2400 без фона, вид 3/4 (Eclipse Gray и Platinum White); ссылки без расширения, отдают PNG."
+ },
+ {
+  "brand": "Lenovo",
+  "category": "Ноутбуки",
+  "model": "ThinkPad X1 Carbon Gen 14 Aura Edition",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "display": "14\" OLED 2.8K (2880×1800), 120 Гц",
+   "chip": "Intel Core Ultra 7 356H (Core Ultra Series 3)",
+   "memory": "32 ГБ LPDDR5X",
+   "weight": "от ≈0,98 кг"
+  },
+  "description_ru": "Флагманский бизнес-ультрабук Lenovo 2026 года на платформе Intel Core Ultra Series 3 vPro. Корпус переработан, вес от примерно 0,98 кг, есть версия с LTE.",
+  "configs": [
+   {
+    "variant": "Core Ultra 7 356H / 32 ГБ / 1 ТБ / 2.8K OLED / LTE (21V7001RCD)",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → GlobalComputers",
+      "price": 316990,
+      "url": "https://price.ru/search/?query=ThinkPad%20X1%20Carbon%20Gen%2014",
+      "sku": "21V7001RCD"
+     }
+    ],
+    "market_median": 316990,
+    "offers_count": 1
+   }
+  ],
+  "image_urls": [
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkPad/ThinkPad_X1_Carbon_Gen_14_Aura_Edition/Compressedimage/ThinkPad_X1_Carbon_Gen_14_Aura_Edition_CT1_01.png",
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/ThinkPad/ThinkPad_X1_Carbon_Gen_14_Aura_Edition/Compressedimage/ThinkPad_X1_Carbon_Gen_14_Aura_Edition_CT1_04.png"
+  ],
+  "note": "В РФ почти нет: найдено одно предложение (GlobalComputers, помечено «Китай, новый», т. е. ввоз). Медиана по одному магазину — ориентир, не рынок. Остальные X1 Carbon в продаже — прошлогодний Gen 13. Фото — Lenovo PSREF, 2000×2000, белый фон; в углу мелкие логотипы Lenovo/Intel, на втором ещё надпись Copilot+PC — нужно обрезать. Файлы с расширением .png, внутри JPEG."
+ },
+ {
+  "brand": "Lenovo",
+  "category": "Ноутбуки",
+  "model": "Legion Pro 7i Gen 10 (16IAX10H)",
+  "released": "2025-03",
+  "status": "current",
+  "specs": {
+   "display": "16\" OLED 2560×1600, 240 Гц",
+   "chip": "Intel Core Ultra 9 275HX",
+   "gpu": "GeForce RTX 5080 / 5090 Laptop",
+   "memory": "32–64 ГБ DDR5"
+  },
+  "description_ru": "Топовый игровой ноутбук Lenovo на Intel Core Ultra 9 275HX с RTX 5080 или 5090 и OLED-экраном 240 Гц. Поколение Gen 10 остаётся текущим для серии Pro 7i: на CES 2026 Lenovo обновила только Legion 7a, 5i и 5a.",
+  "configs": [
+   {
+    "variant": "Core Ultra 9 275HX / RTX 5080 / 32 ГБ / 1 ТБ",
+    "colors": [
+     "Eclipse Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Gbstore",
+      "price": 358990,
+      "url": "https://price.ru/search/?query=Legion%20Pro%207i%20Gen%2010%20RTX%205080",
+      "sku": "83F500M0US"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 408990,
+      "url": "https://price.ru/search/?query=Lenovo%20Legion%20Pro%207%2016IAX10H",
+      "sku": "83F50012US"
+     }
+    ],
+    "market_median": 383990,
+    "offers_count": 2,
+    "config_note": "Обе цены от одного магазина (Gbstore), это разные артикулы одной конфигурации."
+   },
+   {
+    "variant": "Core Ultra 9 275HX / RTX 5090 / 32 ГБ / 1 ТБ (83F50017US)",
+    "colors": [
+     "Eclipse Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → GlobalComputers",
+      "price": 498990,
+      "url": "https://price.ru/noutbuki/lenovo-legion-83f50017us-/",
+      "sku": "83F50017US"
+     }
+    ],
+    "market_median": 498990,
+    "offers_count": 1
+   }
+  ],
+  "image_urls": [
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_Pro_7_16IAX10H/Compressedimage/Legion_Pro_7_16IAX10H_CT1_01.png",
+   "https://psrefstuff.lenovo.com/syspool/Sys/Image/Legion/Legion_Pro_7_16IAX10H/Compressedimage/Legion_Pro_7_16IAX10H_CT1_03.png"
+  ],
+  "note": "Месяц выхода приблизительный: анонс на CES 2025, продажи с весны 2025. Предложений мало, все американские артикулы (…US), ввоз. Цена RTX 5090 по одному магазину; есть и 64 ГБ за 726 250 ₽ (Регард, 83F50024RK). Фото — Lenovo PSREF, 2000×2000, белый фон, в правом нижнем углу маленький значок Intel Core — обрезать. Файлы .png, внутри JPEG. Lenovo Yoga не включал: новый Yoga Pro 9 16IPH11 есть только у Регарда (354 600 и 548 410 ₽), конфигурации не определил."
+ },
+ {
+  "brand": "Dell",
+  "category": "Ноутбуки",
+  "model": "XPS 14 (2026, DA14260)",
+  "released": "2026-01",
+  "status": "current",
+  "specs": {
+   "display": "14\" 2K 120 Гц (базово — FHD+)",
+   "chip": "Intel Core Ultra 7 355 (Core Ultra Series 3)",
+   "memory": "16 ГБ LPDDR5X (до 64 ГБ)",
+   "battery": "70 Вт·ч"
+  },
+  "description_ru": "Dell вернула бренд XPS: XPS 14 2026 года — тонкий 14-дюймовый ноутбук на Intel Core Ultra Series 3 (Panther Lake). Ориентирован на работу и автономность, а не на игры.",
+  "configs": [
+   {
+    "variant": "Core Ultra 7 / 16 ГБ / 512 ГБ",
+    "colors": [
+     "Graphite"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → GlobalComputers",
+      "price": 192490,
+      "url": "https://price.ru/search/?query=Dell%20XPS%2014",
+      "sku": "DA14260 FHD+, Core Ultra 7 355"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 228990,
+      "url": "https://price.ru/search/?query=Dell%20XPS%2014",
+      "sku": "DA14260 2K 120 Гц"
+     }
+    ],
+    "market_median": 210740,
+    "offers_count": 2,
+    "config_note": "Экраны у предложений разные: Gbstore — 2K 120 Гц, GlobalComputers — FHD+ (ввоз, «Китай»)."
+   }
+  ],
+  "image_urls": [
+   "https://i.dell.com/is/image/DellContent/content/dam/images/products/laptops-and-2-in-1s/xps/14-da14260-touch/dell-da14260t-laptop-c-15000ff100-gy-oled.psd?fmt=png-alpha&wid=2000",
+   "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/notebooks/xps-notebooks/xps-14-da14260/media-gallery/touch/laptop-da14260t-gray-gallery-2.psd?fmt=png-alpha&wid=2000"
+  ],
+  "note": "Представлен на CES 2026 (январь). В РФ два предложения — медиана ориентировочная. Фото с dell.com (PNG без фона, 2000 px) — версия с сенсорным OLED, внешне корпус тот же. XPS 13 9340 из старого каталога — модель 2024 года; в 2025 Dell сворачивала бренд XPS и вернула его в 2026 с XPS 14 и XPS 16."
+ },
+ {
+  "brand": "HP",
+  "category": "Ноутбуки",
+  "model": "HyperX OMEN MAX 16 (2026, 16-ah1000)",
+  "released": "2026-05",
+  "status": "current",
+  "specs": {
+   "display": "16\" OLED 2.5K, 240 Гц",
+   "chip": "Intel Core Ultra 9 290HX Plus",
+   "gpu": "GeForce RTX 5070 Ti / 5080 / 5090 Laptop",
+   "memory": "32 ГБ DDR5"
+  },
+  "description_ru": "Игровой 16-дюймовый ноутбук HP 2026 года, вышедший уже под маркой HyperX OMEN. Процессор — обновлённый Intel Core Ultra 9 290HX Plus, видеокарты до RTX 5090.",
+  "configs": [
+   {
+    "variant": "Core Ultra 9 290HX Plus / RTX 5070 Ti / 32 ГБ / 1 ТБ / OLED (16-ah1023dx)",
+    "colors": [
+     "Shadow Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → GlobalComputers",
+      "price": 309990,
+      "url": "https://price.ru/search/?query=HP%20OMEN%20MAX%2016",
+      "sku": "16-ah1023dx"
+     }
+    ],
+    "market_median": 309990,
+    "offers_count": 1
+   }
+  ],
+  "image_urls": [
+   "https://hp.widen.net/content/rtxh8dxquy/png/rtxh8dxquy.png?w=2000&dpi=72&color=ffffff00",
+   "https://hp.widen.net/content/nof5wxyyuc/png/nof5wxyyuc.png?w=2000&dpi=72&color=ffffff00"
+  ],
+  "note": "HP почти не представлен в РФ: одно предложение (GlobalComputers, ввоз «Китай»), цена ориентировочная. Месяц выхода приблизительный (обзоры и старт продаж — май 2026). Фото с официального хранилища HP (hp.widen.net, страница hp.com), PNG без фона 2000×1700: первое — вид сзади 3/4 без надписей; на втором на экране реклама Xbox Game Pass — лучше не использовать как главное."
+ },
+ {
+  "brand": "MSI",
+  "category": "Ноутбуки",
+  "model": "Stealth 16 AI+ (B3W, 2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "display": "16\" 2560×1600",
+   "chip": "Intel Core Ultra 9 386H",
+   "gpu": "GeForce RTX 5070 Ti / RTX 5080 Laptop",
+   "memory": "32 ГБ"
+  },
+  "description_ru": "Тонкий игровой ноутбук MSI 2026 года на Intel Core Ultra 9 386H (Panther Lake). В РФ продаётся с RTX 5070 Ti или RTX 5080, 32 ГБ памяти и SSD на 1 ТБ.",
+  "configs": [
+   {
+    "variant": "Core Ultra 9 386H / RTX 5070 Ti / 32 ГБ / 1 ТБ (B3WH-013RU)",
+    "colors": [
+     "Core Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Регард",
+      "price": 347090,
+      "url": "https://price.ru/noutbuki/msi-stealth-16-b3wh-013/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 374330,
+      "url": "https://price.ru/noutbuki/msi-stealth-16-b3wh-013/"
+     }
+    ],
+    "market_median": 360710,
+    "offers_count": 2
+   },
+   {
+    "variant": "Core Ultra 9 386H / RTX 5080 / 32 ГБ / 1 ТБ (B3WI-012RU)",
+    "colors": [
+     "Core Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 365210,
+      "url": "https://price.ru/noutbuki/msi-stealth-16-b3wi-012/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 403960,
+      "url": "https://price.ru/noutbuki/msi-stealth-16-b3wi-012/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 452610,
+      "url": "https://price.ru/noutbuki/msi-stealth-16-b3wi-012/"
+     }
+    ],
+    "market_median": 403960,
+    "offers_count": 3
+   }
+  ],
+  "image_urls": [
+   "https://storage-asset.msi.com/global/picture/product/product_1766130088329ede3856d4f9d8e2f80bc21155943e.webp",
+   "https://storage-asset.msi.com/global/picture/product/product_17661300862a21a6251ec793fb084e2f25c8f2a57d.webp"
+  ],
+  "note": "Цвет «Core Black» — по фото MSI, в предложениях магазинов цвет не указан. Предложений по 2–3 на конфигурацию. Фото с msi.com (галерея Stealth 16 AI+ B3WX), WebP 1000×800 без фона; главное фото галереи (1800×1440) не брал — на нём значки наград."
+ },
+ {
+  "brand": "MSI",
+  "category": "Ноутбуки",
+  "model": "Katana 15 HX (B14W)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "display": "15,6\" (FHD 144 Гц или QHD)",
+   "chip": "Intel Core i5-14450HX / i7-14650HX",
+   "gpu": "GeForce RTX 5060 / RTX 5070 Laptop",
+   "memory": "16 ГБ DDR5"
+  },
+  "description_ru": "Недорогой игровой ноутбук MSI с процессорами Intel Core HX 14-го поколения и видеокартами RTX 50-й серии. Одна из самых доступных моделей с RTX 5060 в российских магазинах.",
+  "configs": [
+   {
+    "variant": "Core i5-14450HX / RTX 5060 / 16 ГБ / 512 ГБ / FHD (B14WFK-1065XRU)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Регард",
+      "price": 127560,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wfk-1065x/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 143970,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wfk-1065x/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 146300,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wfk-1065x/"
+     },
+     {
+      "source": "price.ru → Цифрус",
+      "price": 156220,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wfk-1065x/"
+     }
+    ],
+    "market_median": 145135,
+    "offers_count": 4
+   },
+   {
+    "variant": "Core i7-14650HX / RTX 5070 / 1 ТБ / QHD (B14WGK-293US)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 182840,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wgk-293us/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 188990,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wgk-293us/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 214670,
+      "url": "https://price.ru/noutbuki/msi-katana-15-b14wgk-293us/"
+     }
+    ],
+    "market_median": 188990,
+    "offers_count": 3,
+    "config_note": "Память у продавцов указана по-разному: 16 ГБ (Gbstore) и 32 ГБ (третий магазин) — уточнять при закупке."
+   }
+  ],
+  "image_urls": [
+   "https://storage-asset.msi.com/global/picture/product/product_174521807461ffa4f9c2de564cda2daeac3bf2e6e8.webp",
+   "https://storage-asset.msi.com/global/picture/product/product_1745218074b1259d2def7b83425e5523d51b3064d7.webp"
+  ],
+  "note": "Модель 2025 года, MSI продолжает продавать её в 2026 (страница Katana 15 HX B14WX на msi.com активна). Цвет в предложениях не указан. Частоту экрана FHD-версии не проверял по магазину. Фото с msi.com, WebP 1000×800 без фона."
+ },
+ {
+  "brand": "Microsoft",
+  "category": "Ноутбуки",
+  "model": "Surface Laptop 8th Edition 13.8\"",
+  "released": "2026-06",
+  "status": "current",
+  "specs": {
+   "display": "13,8\" 2304×1536, 120 Гц, сенсорный",
+   "chip": "Snapdragon X2 Plus (10 ядер) / X2 Elite (12 ядер)",
+   "memory": "16 ГБ (до 64 ГБ)",
+   "storage": "512 ГБ"
+  },
+  "description_ru": "Новое поколение Surface Laptop на процессорах Qualcomm Snapdragon X2 с NPU до 80 TOPS. Выпускается в размерах 13,8\" и 15\"; память теперь до 64 ГБ.",
+  "configs": [
+   {
+    "variant": "Snapdragon X2 Plus / 16 ГБ / 512 ГБ",
+    "colors": [
+     "Platinum",
+     "Black",
+     "Dune"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Gbstore",
+      "price": 148990,
+      "url": "https://price.ru/search/?query=Surface%20Laptop%208"
+     }
+    ],
+    "market_median": 148990,
+    "offers_count": 1
+   }
+  ],
+  "image_urls": [
+   "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/b00-Surface-Laptop-Snapdragon-8Ed-HC-Front?wid=2000&fmt=png-alpha",
+   "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/b01-Surface-Laptop-Snapdragon-8Ed-HC-Left-Angle?wid=2000&fmt=png-alpha"
+  ],
+  "note": "Анонс и старт продаж — 16 июня 2026 (блог Windows). В РФ найден один продавец (Gbstore), медиана = его цена. Версия 15\" и с X2 Elite в РФ не найдены. Цвета — по официальному анонсу (Jade только для 13,8\"); какие цвета у продавца, не указано. Фото — Microsoft Store, 2000×1500 без фона (сервер может отдавать WebP)."
+ },
+ {
+  "brand": "Microsoft",
+  "category": "Ноутбуки",
+  "model": "Surface Pro 12th Edition 13\"",
+  "released": "2026-06",
+  "status": "current",
+  "specs": {
+   "display": "13\" 120 Гц (LCD с X2 Plus / OLED с X2 Elite)",
+   "chip": "Snapdragon X2 Plus (10 ядер) / X2 Elite (12 ядер)",
+   "memory": "16–24 ГБ",
+   "storage": "256–512 ГБ"
+  },
+  "description_ru": "Планшет-трансформер Microsoft на Snapdragon X2: с X2 Plus идёт LCD-экран, с X2 Elite — OLED. Клавиатура Flex Keyboard продаётся отдельно.",
+  "configs": [
+   {
+    "variant": "Snapdragon X2 Plus / 16 ГБ / 256 ГБ / LCD (EP2-66386)",
+    "colors": [
+     "Platinum"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Gbstore",
+      "price": 138990,
+      "url": "https://price.ru/search/?query=Surface%20Pro%2012th%20Edition",
+      "sku": "EP2-66386"
+     }
+    ],
+    "market_median": 138990,
+    "offers_count": 1
+   },
+   {
+    "variant": "Snapdragon X2 Plus / 16 ГБ / 512 ГБ / LCD",
+    "colors": [
+     "Platinum",
+     "Black",
+     "Dune"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Gbstore",
+      "price": 148990,
+      "url": "https://price.ru/search/?query=Surface%20Pro%2012th%20Edition",
+      "sku": "EP2-73249 / EP2-73275 / EP2-73301"
+     }
+    ],
+    "market_median": 148990,
+    "offers_count": 1
+   },
+   {
+    "variant": "Snapdragon X2 Elite / 16 ГБ / 512 ГБ / OLED",
+    "colors": [
+     "Platinum",
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Gbstore",
+      "price": 188990,
+      "url": "https://price.ru/search/?query=Surface%20Pro%2012th%20Edition",
+      "sku": "EP2-65131 / EP2-65151"
+     }
+    ],
+    "market_median": 188990,
+    "offers_count": 1
+   }
+  ],
+  "image_urls": [
+   "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/b01-Surface-Pro-Snapdragon-12Ed-MC-Front-Left?wid=2000&fmt=png-alpha",
+   "https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/b00-Surface-Pro-Snapdragon-12Ed-MC-Front?wid=2000&fmt=png-alpha"
+  ],
+  "note": "Это 2-в-1 (можно отнести и к «Планшетам»). Старт продаж — 16 июня 2026. Все цены от одного магазина (Gbstore). Цвета по артикулам у продавца не расшифрованы — указаны по официальному анонсу (Platinum, Black, Dune). Surface Pro 10 из старого каталога — бизнес-модель 2024 года, уже два поколения назад. Фото — Microsoft Store, 2000×1500 без фона."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Телевизоры",
+  "model": "Neo QLED QN80H (2026)",
+  "released": "2026-03",
+  "status": "current",
+  "specs": {
+   "panel": "Neo QLED (Quantum Mini LED), VA",
+   "resolution": "4K",
+   "processor": "NQ4 AI Gen2",
+   "refresh": "до 144 Гц"
+  },
+  "description_ru": "Mini LED-телевизор Samsung 2026 года — верхняя модель 4K Neo QLED в новой линейке. Над ним Samsung поставила уже телевизоры Micro RGB.",
+  "configs": [
+   {
+    "variant": "55\" (QE55QN80H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 93990,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 94750,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 95490,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 96710,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 97800,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 98000,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → Neo QLED телевизор Samsung QE55QN80HUXPY 4K Ultra HD",
+      "price": 102900,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 106660,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 109980,
+      "url": "https://price.ru/televizory/samsung-qe55qn80h/"
+     }
+    ],
+    "market_median": 97800,
+    "offers_count": 9
+   },
+   {
+    "variant": "65\" (QE65QN80H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 111890,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 113600,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 117750,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → Neo QLED телевизор Samsung QE65QN80H",
+      "price": 118500,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 118650,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 119000,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 120700,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 131140,
+      "url": "https://price.ru/televizory/samsung-qe65qn80h/"
+     }
+    ],
+    "market_median": 118575,
+    "offers_count": 8
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/us/qn65qn80hafxza/gallery/us-qled-qn80h-qn65qn80hafxza-551478192?$2052_1641_PNG$",
+   "https://images.samsung.com/is/image/samsung/p6pim/au/qa65qn80hawxxy/gallery/au-qled-qn80h-qa65qn80hawxxy-551698146?$2052_1641_PNG$"
+  ],
+  "note": "В 2026 у Samsung нет QN85H/QN90H: Neo QLED 4K представлены QN70H и QN80H. Старые QN85/QN90D/Q70D — модели 2023–2024. Месяц — начало продаж в США (март 2026). Фото — samsung.com, PNG 2052×1641 без фона: первое в 3/4 без надписей, на втором на экране надпись «Neo QLED»."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Телевизоры",
+  "model": "OLED S90H (2026)",
+  "released": "2026-03",
+  "status": "current",
+  "specs": {
+   "panel": "OLED, Glare Free",
+   "resolution": "4K",
+   "processor": "NQ4 AI Gen3",
+   "refresh": "до 165 Гц (Motion Xcelerator)"
+  },
+  "description_ru": "Средний OLED-телевизор Samsung 2026 года; в этом поколении получил антибликовое покрытие Glare Free. Выпускается в размерах от 42 до 83 дюймов.",
+  "configs": [
+   {
+    "variant": "55\" (QE55S90H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 140000,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 142750,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 143900,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 144100,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 148990,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 149955,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 164890,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 171770,
+      "url": "https://price.ru/televizory/samsung-qe55s90h/"
+     }
+    ],
+    "market_median": 146545,
+    "offers_count": 8
+   },
+   {
+    "variant": "65\" (QE65S90H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 169990,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 194990,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 195000,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 199955,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 200000,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 203650,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 214990,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 215800,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 227250,
+      "url": "https://price.ru/televizory/samsung-qe65s90h/"
+     }
+    ],
+    "market_median": 200000,
+    "offers_count": 9
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/us/qn65s90haexza/gallery/us-oled-s90h-qn65s90haexza-551642928?$2052_1641_PNG$",
+   "https://images.samsung.com/is/image/samsung/p6pim/us/qn65s90haexza/gallery/us-oled-s90h-qn65s90haexza-551642941?$2052_1641_PNG$"
+  ],
+  "note": "Фото — samsung.com, PNG 2052×1641 без фона: первое в 3/4 без надписей, на втором на экране надпись «OLED»."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Телевизоры",
+  "model": "OLED S95H (2026)",
+  "released": "2026-03",
+  "status": "current",
+  "specs": {
+   "panel": "OLED, Glare Free (подтверждено UL)",
+   "resolution": "4K",
+   "processor": "NQ4 AI Gen3",
+   "refresh": "100 Гц, VRR до 165 Гц"
+  },
+  "description_ru": "Флагманский OLED-телевизор Samsung 2026 года с новым дизайном FloatLayer и антибликовым экраном Glare Free. Есть размеры 55, 65, 77 и 83 дюйма.",
+  "configs": [
+   {
+    "variant": "65\" (QE65S95H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 247955,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 249990,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 254490,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 256490,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 259990,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 261700,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → QD-OLED телевизор Samsung QE65S95H EU 4K Ultra HD",
+      "price": 262000,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 262400,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 269700,
+      "url": "https://price.ru/televizory/samsung-qe65s95h/"
+     }
+    ],
+    "market_median": 259990,
+    "offers_count": 9
+   },
+   {
+    "variant": "77\" (QE77S95H)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 363009,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 364990,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 365400,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 385000,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 386700,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → QD-OLED телевизор Samsung QE77S95HAEXPY 4K Ultra HD",
+      "price": 387000,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 407320,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 409990,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 429930,
+      "url": "https://price.ru/televizory/samsung-qe77s95h/"
+     }
+    ],
+    "market_median": 386700,
+    "offers_count": 9
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/us/qn65s95hafxza/gallery/us-oled-s95h-qn65s95hafxza-551641808?$2052_1641_PNG$",
+   "https://images.samsung.com/is/image/samsung/p6pim/au/qa65s95hawxxy/gallery/au-oled-s95h-qa65s95hawxxy-552824409?$2052_1641_PNG$"
+  ],
+  "note": "Заменяет S95C из старого каталога (модель 2023 года; 85\" у S95C не было вовсе). Фото — samsung.com, PNG 2052×1641 без фона: первое в 3/4 без надписей, на втором на экране надпись «OLED»."
+ },
+ {
+  "brand": "LG",
+  "category": "Телевизоры",
+  "model": "OLED evo C6 (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "OLED evo",
+   "resolution": "4K",
+   "processor": "α11 AI Processor Gen3",
+   "refresh": "до 165 Гц"
+  },
+  "description_ru": "Самая популярная OLED-серия LG, поколение 2026 года, с процессором α11 AI Gen3 и частотой до 165 Гц для ПК и консолей. Главный конкурент Samsung S90H.",
+  "configs": [
+   {
+    "variant": "55\" (OLED55C6RLA)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → 2centru",
+      "price": 118990,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 119000,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 119400,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 119490,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 121990,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 123700,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 131110,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 139950,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     },
+     {
+      "source": "price.ru → Бытовая-Техника.МСК",
+      "price": 144990,
+      "url": "https://price.ru/televizory/lg-oled55c6rla/"
+     }
+    ],
+    "market_median": 121990,
+    "offers_count": 9
+   },
+   {
+    "variant": "65\" (OLED65C6RLA)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 159900,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 161990,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 162000,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 162790,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 162990,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 165000,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 171000,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 189950,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     },
+     {
+      "source": "price.ru → Бытовая-Техника.МСК",
+      "price": 190999,
+      "url": "https://price.ru/televizory/lg-oled65c6rla/"
+     }
+    ],
+    "market_median": 162990,
+    "offers_count": 9
+   }
+  ],
+  "image_urls": [
+   "https://media.us.lg.com/transform/2d2188e8-c041-4b39-97ef-4c96aee29a28/TVs_OLED65C6PUA_gallery-02_3000x3000?io=transform:fit,width:2000"
+  ],
+  "note": "В РФ продаётся версия с индексом RLA. Месяц начала продаж не уточнял. Фото — lg.com/us (OLED65C6PUA, корпус тот же), JPEG 2000×2000 на белом фоне, вид 3/4; на экране логотип «LG OLED evo AI». Главное фото галереи не брал — на нём рекламные плашки."
+ },
+ {
+  "brand": "LG",
+  "category": "Телевизоры",
+  "model": "OLED evo G6 (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "OLED evo, Brightness Booster Ultra",
+   "resolution": "4K",
+   "processor": "α11 AI Processor Gen3",
+   "refresh": "до 165 Гц; покрытие Reflection Free Premium"
+  },
+  "description_ru": "Флагманская OLED-серия LG 2026 года: ярче C6 и с антибликовым покрытием Reflection Free Premium. Рассчитана на крепление к стене вплотную.",
+  "configs": [
+   {
+    "variant": "55\" (OLED55G6RLA)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 155455,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 158300,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 158500,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 158950,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 160990,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 161990,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 165800,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     },
+     {
+      "source": "price.ru → Бытовая-Техника.МСК",
+      "price": 229999,
+      "url": "https://price.ru/televizory/lg-oled55g6rla/"
+     }
+    ],
+    "market_median": 159970,
+    "offers_count": 8
+   },
+   {
+    "variant": "65\" (OLED65G6RLA)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 209955,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 213500,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 213990,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 215000,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 216990,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 219790,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 220000,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 222900,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     },
+     {
+      "source": "price.ru → Бытовая-Техника.МСК",
+      "price": 249990,
+      "url": "https://price.ru/televizory/lg-oled65g6rla/"
+     }
+    ],
+    "market_median": 216990,
+    "offers_count": 9
+   }
+  ],
+  "image_urls": [
+   "https://media.us.lg.com/transform/7607d5e2-310a-4ffb-9090-b61525e13ae9/TVs_OLED65G6WUA_gallery-02_3000x3000?io=transform:fit,width:2000"
+  ],
+  "note": "Фото — lg.com/us (OLED65G6WUA), JPEG 2000×2000 на белом фоне, вид 3/4; на экране логотип «LG OLED evo AI». В старом каталоге «LG OLED65» без серии и года — заменить на C6/G6."
+ },
+ {
+  "brand": "Sony",
+  "category": "Телевизоры",
+  "model": "BRAVIA 7 II (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "True RGB: подсветка из RGB-светодиодов (RGB LED)",
+   "resolution": "4K",
+   "processor": "XR Processor с AI",
+   "os": "Google TV"
+  },
+  "description_ru": "Новый телевизор Sony 2026 года с подсветкой True RGB: красные, зелёные и синие светодиоды управляются по отдельности. Заменяет BRAVIA 7 2024 года, размеры от 50 до 98 дюймов.",
+  "configs": [
+   {
+    "variant": "55\" (K-55XR75M2)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 185000,
+      "url": "https://price.ru/televizory/sony-k-55xr75m2/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 190000,
+      "url": "https://price.ru/televizory/sony-k-55xr75m2/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 190000,
+      "url": "https://price.ru/televizory/sony-k-55xr75m2/"
+     },
+     {
+      "source": "price.ru → TV Техника",
+      "price": 193009,
+      "url": "https://price.ru/televizory/sony-k-55xr75m2/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 214990,
+      "url": "https://price.ru/televizory/sony-k-55xr75m2/"
+     }
+    ],
+    "market_median": 190000,
+    "offers_count": 5
+   },
+   {
+    "variant": "65\" (K-65XR75M2)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 208000,
+      "url": "https://price.ru/televizory/sony-k-65xr75m2/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 212000,
+      "url": "https://price.ru/televizory/sony-k-65xr75m2/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 212000,
+      "url": "https://price.ru/televizory/sony-k-65xr75m2/"
+     },
+     {
+      "source": "price.ru → TV Техника",
+      "price": 212009,
+      "url": "https://price.ru/televizory/sony-k-65xr75m2/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 229990,
+      "url": "https://price.ru/televizory/sony-k-65xr75m2/"
+     }
+    ],
+    "market_median": 212000,
+    "offers_count": 5
+   }
+  ],
+  "image_urls": [
+   "https://sony.scene7.com/is/image/sonyglobalsolutions/TVFY26_B7II_Primary_image?wid=2000&fmt=png-alpha",
+   "https://sony.scene7.com/is/image/sonyglobalsolutions/TVFY26_B7II_85in_Product_intro_02_M?wid=2000&fmt=png-alpha"
+  ],
+  "note": "Европейский индекс — XR75M2, в Азии та же модель называется XR70M2. Старая BRAVIA 7 (K-65XR70, 2024) ещё продаётся (от 188 тыс. ₽), но уже заменена. Месяц начала продаж не уточнял. Фото — sony.scene7.com (с sony.co.uk), 2000 px без фона (сервер отдаёт WebP); второе — модель 85\" в 3/4."
+ },
+ {
+  "brand": "Sony",
+  "category": "Телевизоры",
+  "model": "BRAVIA 8 II (QD-OLED)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "panel": "QD-OLED",
+   "resolution": "4K",
+   "processor": "XR Processor",
+   "os": "Google TV"
+  },
+  "description_ru": "OLED-флагман Sony на панели QD-OLED; в 2026 году он остаётся основной OLED-моделью Sony. Выпускается в размерах 55 и 65 дюймов.",
+  "configs": [
+   {
+    "variant": "55\" (K-55XR80M2 / K-55XR8M2)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Маркет Медиал",
+      "price": 191800,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → TV Техника",
+      "price": 194509,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 197000,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → Das-video.ru",
+      "price": 197500,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 197690,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 202000,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 202000,
+      "url": "https://price.ru/televizory/sony-k-55xr80m2/"
+     },
+     {
+      "source": "price.ru → Ru-electronics",
+      "price": 219999,
+      "url": "https://price.ru/televizory/sony-k-55xr8m2/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 229955,
+      "url": "https://price.ru/televizory/sony-k-55xr80m2/"
+     }
+    ],
+    "market_median": 197690,
+    "offers_count": 9
+   },
+   {
+    "variant": "65\" (K-65XR80M2 / K-65XR8M2)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 241909,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → Маркет Медиал",
+      "price": 243000,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 245000,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 250000,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 250000,
+      "url": "https://price.ru/televizory/sony-k-65xr80m2/"
+     },
+     {
+      "source": "price.ru → Das-video.ru",
+      "price": 253900,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → WISHMASTER",
+      "price": 269780,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 282490,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 289990,
+      "url": "https://price.ru/televizory/sony-k-65xr80m2/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 294990,
+      "url": "https://price.ru/televizory/sony-k-65xr8m2/"
+     }
+    ],
+    "market_median": 251950,
+    "offers_count": 10
+   }
+  ],
+  "image_urls": [
+   "https://sony.scene7.com/is/image/sonyglobalsolutions/TVFY25_BRAVIA8II_Primary_image?wid=2000&fmt=png-alpha"
+  ],
+  "note": "Модель 2025 года, Sony продаёт её и в 2026 (на sony.co.uk рядом с 7 II). Один телевизор продают под двумя индексами (XR80M2 и XR8M2) — цены объединены, от каждого магазина взята минимальная. Фото — sony.scene7.com, без фона (WebP). Имя файла подобрал по шаблону Sony (TVFY25_BRAVIA8II_Primary_image) — сервер отдаёт 200 и картинку BRAVIA 8 II, но на странице sony.co.uk я её не видел."
+ },
+ {
+  "brand": "TCL",
+  "category": "Телевизоры",
+  "model": "C8L SQD Mini LED (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "SQD Mini LED (QLED), HVA",
+   "resolution": "4K",
+   "brightness": "до 6000 нит (у 65\" — 5000)",
+   "refresh": "144 Гц, игровой режим 288 Гц VRR"
+  },
+  "description_ru": "Mini LED-телевизор TCL 2026 года на новой технологии SQD (Super Quantum Dot) с частотой 144 Гц. TCL официально продаёт его в России, в 55\" стоит более простая матрица HVA 2.0.",
+  "configs": [
+   {
+    "variant": "55\" (55C8L)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 83609,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → Das-video.ru",
+      "price": 83900,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 88990,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 89700,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 89750,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → Ru-electronics",
+      "price": 89999,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → WISHMASTER",
+      "price": 99470,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 99480,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 99800,
+      "url": "https://price.ru/televizory/tcl-55c8l/"
+     }
+    ],
+    "market_median": 89750,
+    "offers_count": 9,
+    "dropped_outliers": [
+     {
+      "source": "price.ru → Ti-store",
+      "price": 201350
+     }
+    ]
+   },
+   {
+    "variant": "65\" (65C8L)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 122509,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → Das-video.ru",
+      "price": 123000,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 129750,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 134300,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → store-tv.ru",
+      "price": 138000,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 138690,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 139990,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 145990,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     },
+     {
+      "source": "price.ru → Tele-ru.ru",
+      "price": 151000,
+      "url": "https://price.ru/televizory/tcl-65c8l/"
+     }
+    ],
+    "market_median": 138000,
+    "offers_count": 9,
+    "dropped_outliers": [
+     {
+      "source": "price.ru → Ti-store",
+      "price": 256880
+     }
+    ]
+   }
+  ],
+  "image_urls": [
+   "https://static-obg.tcl.com/content/dam/brandsite/product/tv/c/c8l/id/65-85/2.jpg",
+   "https://static-obg.tcl.com/content/dam/brandsite/product/tv/c/c8l/id/65-85/3.jpg"
+  ],
+  "note": "Яркость и частота — по сайту tcl.com/ru и магазину FormulaTV. Цена Ti-store (около 200–257 тыс. ₽) в медиану не вошла: в 1,6+ раза выше рынка. Фото — tcl.com, JPEG 1600×1200 на белом фоне, вид 3/4. TCL 98C645 из старого каталога не существует; если нужен 98\", у C8L и C7L он есть."
+ },
+ {
+  "brand": "TCL",
+  "category": "Телевизоры",
+  "model": "C7L SQD Mini LED (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "SQD Mini LED (QLED), HVA",
+   "resolution": "4K",
+   "sizes": "55–98\"",
+   "os": "Google TV"
+  },
+  "description_ru": "Более доступная серия TCL 2026 года, тоже на SQD Mini LED. Дешевле C8L на 14–35 тыс. ₽ при той же диагонали.",
+  "configs": [
+   {
+    "variant": "55\" (55C7L)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 68309,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 69990,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 74981,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 74990,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → WISHMASTER",
+      "price": 75980,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 75990,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 77730,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 78980,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → ML Russia",
+      "price": 80387,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 96920,
+      "url": "https://price.ru/televizory/tcl-55c7l/"
+     }
+    ],
+    "market_median": 75985,
+    "offers_count": 10
+   },
+   {
+    "variant": "65\" (65C7L)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TV Техника",
+      "price": 88009,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → ТЕХНОЛАБ",
+      "price": 93200,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → Apple God",
+      "price": 93490,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 97790,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 99750,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 105890,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 105990,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 121370,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → ML Russia",
+      "price": 129124,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 132188,
+      "url": "https://price.ru/televizory/tcl-65c7l/"
+     }
+    ],
+    "market_median": 102820,
+    "offers_count": 10
+   }
+  ],
+  "image_urls": [
+   "https://static-obg.tcl.com/content/dam/brandsite/product/tv/c/c7l/id/2.jpg",
+   "https://static-obg.tcl.com/content/dam/brandsite/product/tv/c/c7l/id/3.jpg"
+  ],
+  "note": "Пиковую яркость и частоту C7L по официальному сайту не уточнял — в характеристиках не указаны. Фото — tcl.com/ru, JPEG 1600×1200 на белом фоне, вид 3/4."
+ },
+ {
+  "brand": "Hisense",
+  "category": "Телевизоры",
+  "model": "U7S Mini LED (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "Mini LED (Hi-QLED)",
+   "resolution": "4K",
+   "brightness": "1400 нит",
+   "refresh": "игровой режим 144 Гц"
+  },
+  "description_ru": "Массовый Mini LED-телевизор Hisense 2026 года (индекс S означает 2026 год). Hisense продаёт его в России официально, это один из самых доступных Mini LED на 55–65 дюймов.",
+  "configs": [
+   {
+    "variant": "55\" (55U7S)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 43400,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 44490,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 44731,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 45750,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 51100,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → ML Russia",
+      "price": 56930,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → Бытовая-Техника.МСК",
+      "price": 59990,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 62990,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 64910,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 65000,
+      "url": "https://price.ru/televizory/hisense-55u7s/"
+     }
+    ],
+    "market_median": 54015,
+    "offers_count": 10
+   },
+   {
+    "variant": "65\" (65U7S)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Techline24",
+      "price": 61990,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 64990,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → Страна-производитель:",
+      "price": 68800,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 74880,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → АРМАДА ТВ",
+      "price": 77890,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "hisense.ru (официальный магазин)",
+      "price": 84999,
+      "url": "https://hisense.ru/product/televizor-hisense-65u7s"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 86990,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 93300,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 97427,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 115000,
+      "url": "https://price.ru/televizory/hisense-65u7s/"
+     }
+    ],
+    "market_median": 81444,
+    "offers_count": 10
+   }
+  ],
+  "image_urls": [
+   "https://cdn.insales-shop.ru/images/products/1/1889/3051358049/U7S-LEFT.png",
+   "https://cdn.insales-shop.ru/images/products/1/1881/3051358041/U7S-FRONT.png"
+  ],
+  "note": "Яркость — по hisense.ru, 144 Гц — по официальной картинке Hisense. Цена официального магазина (84 999 ₽ за 65\") выше медианы рынка. Фото — официальный магазин hisense.ru (картинки лежат на CDN его платформы, cdn.insales-shop.ru), PNG 1800×1800 без фона, экран тёмный, надписей нет. Hisense U7G из старого каталога — модель 2021 года."
+ },
+ {
+  "brand": "Hisense",
+  "category": "Телевизоры",
+  "model": "UR8S RGB Mini LED (2026)",
+  "released": "2026",
+  "status": "current",
+  "specs": {
+   "panel": "RGB Mini LED",
+   "resolution": "4K",
+   "brightness": "3500 нит",
+   "refresh": "игровой режим 180 Гц"
+  },
+  "description_ru": "Телевизор Hisense 2026 года с подсветкой RGB Mini LED и процессором Hi-View AI Engine RGB. Ступень ниже флагмана UR9S, размеры от 55 до 100 дюймов.",
+  "configs": [
+   {
+    "variant": "55\" (55UR8S)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → Techline24",
+      "price": 73400,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 74390,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 74990,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 77390,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → TVteam",
+      "price": 77750,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 78149,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → ЖК телевизор Hisense 55\" 55UR8S",
+      "price": 79200,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 100000,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 106060,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     },
+     {
+      "source": "price.ru → ML Russia",
+      "price": 114335,
+      "url": "https://price.ru/televizory/hisense-55ur8s/"
+     }
+    ],
+    "market_median": 77950,
+    "offers_count": 10
+   },
+   {
+    "variant": "65\" (65UR8S)",
+    "colors": [],
+    "market_prices": [
+     {
+      "source": "price.ru → TVteam",
+      "price": 99750,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → Techline24",
+      "price": 100700,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → RuMarkets",
+      "price": 103070,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 104130,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → 2centru",
+      "price": 104490,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → Gbstore",
+      "price": 104490,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → магазин на price.ru",
+      "price": 111500,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "hisense.ru (официальный магазин)",
+      "price": 139999,
+      "url": "https://hisense.ru/product/televizor-hisense-65ur8s"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 140000,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → ML Russia",
+      "price": 147435,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 163470,
+      "url": "https://price.ru/televizory/hisense-65ur8s/"
+     }
+    ],
+    "market_median": 104490,
+    "offers_count": 11
+   }
+  ],
+  "image_urls": [
+   "https://cdn.insales-shop.ru/images/products/1/5473/3127481697/n058wi5zdx3uckgs9no842co0wfdzp3v.png"
+  ],
+  "note": "Яркость — по hisense.ru, 180 Гц — по официальной картинке Hisense. Цена официального магазина (139 999 ₽ за 65\") заметно выше рынка (≈104 тыс. ₽). Фото — hisense.ru, PNG 1800×1800 без фона, вид спереди, экран тёмный. Вторую официальную картинку (UR8S.png) не взял — на экране логотип и значки."
+ },
+ {
+  "brand": "LG",
+  "category": "Аксессуары",
+  "model": "UltraGear 27GX790A-B",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "display": "27\" OLED 2560×1440",
+   "refresh": "480 Гц",
+   "response": "0,03 мс",
+   "brightness": "275 кд/м² (типовая)"
+  },
+  "description_ru": "Игровой OLED-монитор LG на 27 дюймов с разрешением QHD и частотой 480 Гц. Подходит для соревновательных игр, где важна скорость.",
+  "configs": [
+   {
+    "variant": "27\"",
+    "colors": [
+     "Black"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → ionliner",
+      "price": 89126,
+      "url": "https://price.ru/monitory/lg-27gx790a-b/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 91780,
+      "url": "https://price.ru/monitory/lg-27gx790a-b/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 92280,
+      "url": "https://price.ru/monitory/lg-27gx790a-b/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 92620,
+      "url": "https://price.ru/monitory/lg-27gx790a-b/"
+     }
+    ],
+    "market_median": 92030,
+    "offers_count": 4
+   }
+  ],
+  "image_urls": [
+   "https://media.us.lg.com/transform/3171f375-333f-4d44-bfe8-b5dac21544c9/Monitor_27GX790A-B_gallery_01_5000x5000?io=transform:fit,width:2000"
+  ],
+  "note": "Категории «Мониторы» в схеме нет, поставил «Аксессуары» — поменяйте, если заведёте отдельную. Фото — lg.com/us, JPEG 2000×2000 на белом фоне, вид спереди; на экране логотип «LG UltraGear OLED»."
+ },
+ {
+  "brand": "Samsung",
+  "category": "Аксессуары",
+  "model": "Odyssey OLED G6 G60SF (S27FG602SI)",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "display": "27\" QD-OLED 2560×1440",
+   "refresh": "500 Гц",
+   "response": "0,03 мс",
+   "hdr": "VESA DisplayHDR True Black 500, Glare Free"
+  },
+  "description_ru": "27-дюймовый игровой монитор Samsung на QD-OLED с частотой 500 Гц: Samsung называет его первым в мире OLED-монитором на 500 Гц. Матовое антибликовое покрытие.",
+  "configs": [
+   {
+    "variant": "27\"",
+    "colors": [
+     "Silver"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Цифрус",
+      "price": 68710,
+      "url": "https://price.ru/monitory/samsung-s27fg602si/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 72223,
+      "url": "https://price.ru/monitory/samsung-s27fg602si/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 78540,
+      "url": "https://price.ru/monitory/samsung-s27fg602si/"
+     },
+     {
+      "source": "price.ru → FormulaTV",
+      "price": 78910,
+      "url": "https://price.ru/monitory/samsung-s27fg602si/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 86650,
+      "url": "https://price.ru/monitory/samsung-s27fg602si/"
+     }
+    ],
+    "market_median": 78540,
+    "offers_count": 5
+   }
+  ],
+  "image_urls": [
+   "https://images.samsung.com/is/image/samsung/p6pim/au/ls27fg602sexxy/gallery/au-odyssey-oled-g6-27g60sf-ls27fg602sexxy-547402983?$2052_1641_PNG$",
+   "https://images.samsung.com/is/image/samsung/p6pim/au/ls27fg602sexxy/gallery/au-odyssey-oled-g6-27g60sf-ls27fg602sexxy-547403016?$2052_1641_PNG$"
+  ],
+  "note": "Цвет «серебристый» — по описанию у продавца (Регард). Фото — samsung.com, PNG 2052×1641 без фона: первое в 3/4, на втором на экране надпись «Odyssey OLED G6»."
+ },
+ {
+  "brand": "Dell",
+  "category": "Аксессуары",
+  "model": "UltraSharp 27 4K U2725QE",
+  "released": "2025",
+  "status": "current",
+  "specs": {
+   "display": "27\" IPS 3840×2160",
+   "refresh": "120 Гц",
+   "brightness": "450 кд/м²",
+   "use": "для работы и дизайна"
+  },
+  "description_ru": "Рабочий 4K-монитор Dell серии UltraSharp с IPS-матрицей и частотой 120 Гц. Подходит для офиса, дизайна и работы с документами.",
+  "configs": [
+   {
+    "variant": "27\"",
+    "colors": [
+     "Silver"
+    ],
+    "market_prices": [
+     {
+      "source": "price.ru → Цифрус",
+      "price": 71170,
+      "url": "https://price.ru/monitory/dell-u2725qe/"
+     },
+     {
+      "source": "price.ru → ionliner",
+      "price": 74796,
+      "url": "https://price.ru/monitory/dell-u2725qe/"
+     },
+     {
+      "source": "price.ru → Регард",
+      "price": 79620,
+      "url": "https://price.ru/monitory/dell-u2725qe/"
+     },
+     {
+      "source": "price.ru → Ti-store",
+      "price": 93640,
+      "url": "https://price.ru/monitory/dell-u2725qe/"
+     }
+    ],
+    "market_median": 77208,
+    "offers_count": 4
+   }
+  ],
+  "image_urls": [
+   "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-1.psd?fmt=png-alpha&wid=2000",
+   "https://i.dell.com/is/image/DellContent/content/dam/ss2/product-images/dell-client-products/peripherals/monitors/u-series/u2725qe/media-gallery/monitor-ultrasharp-u2725qe-gy-gallery-2.psd?fmt=png-alpha&wid=2000"
+  ],
+  "note": "Фото — dell.com, PNG 2000 px без фона, надписей нет. Хорошая замена ASUS ProArt PA278QV из старого каталога (модель 2020 года, QHD 75 Гц)."
+ }
+]

@@ -1,0 +1,1161 @@
+[
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Neo 13\" (A18 Pro)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "13\" Liquid Retina",
+      "chip": "A18 Pro (6 CPU / 5 GPU)",
+      "memory": "8 ГБ",
+      "battery": "до 16 ч"
+    },
+    "description_ru": "Самый доступный MacBook: алюминиевый корпус, 13-дюймовый экран и чип A18 Pro от iPhone. Подходит для учёбы, браузера и офиса; Touch ID есть только в версии на 512 ГБ.",
+    "configs": [
+      {
+        "variant": "8GB / 256GB",
+        "colors": [
+          "Silver",
+          "Indigo",
+          "Citrus"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 68990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-neo-13-mhfa4-a18-pro-6-core-gpu-5-core-8gb-256gb-serebristyj-silver"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 84990,
+            "url": "https://re-store.ru/catalog/MHFA4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 77999,
+            "url": "https://www.dns-shop.ru/product/a64c0bbb999fd481/13-noutbuk-apple-macbook-neo-a18-pro-serebristyj/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 78999,
+            "url": "https://www.mvideo.ru/noutbuki-planshety-komputery-8/noutbuki-118/f/collection_bottom=macbook-neo"
+          }
+        ],
+        "market_median": 78499
+      },
+      {
+        "variant": "8GB / 512GB (Touch ID)",
+        "colors": [
+          "Silver",
+          "Indigo",
+          "Blush"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 79990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-neo-13-mhfc4-a18-pro-6-core-gpu-5-core-8gb-512gb-serebristyj-silver"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 99990,
+            "url": "https://re-store.ru/catalog/MHFC4/"
+          }
+        ],
+        "market_median": 89990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/macbook-neo-silver-cto-hero-202603?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/macbook-neo-citrus-cto-hero-202603?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Новая линейка (анонс 04.03.2026). Цвета: Silver, Blush, Citrus, Indigo. Цены DNS и М.Видео — из сниппетов поиска (М.Видео — цвет Indigo). У 512 ГБ только две цены (biggeek, re:Store)."
+  },
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Air 13\" (M5)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "13.6\" Liquid Retina",
+      "chip": "Apple M5 (10 CPU)",
+      "memory": "16 ГБ",
+      "battery": "до 18 ч"
+    },
+    "description_ru": "Тонкий лёгкий ноутбук на чипе M5, базовый объём диска теперь 512 ГБ. Wi-Fi 7 через чип N1, два порта Thunderbolt 4, поддержка двух внешних мониторов.",
+    "configs": [
+      {
+        "variant": "16GB / 512GB (8-core GPU)",
+        "colors": [
+          "Midnight",
+          "Sky Blue",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 117990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-air-13-mdhe4-m5-10-core-gpu-8-core-16gb-512gb-temnaa-noc-midnight"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 169990,
+            "url": "https://re-store.ru/catalog/MDH74/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 130949,
+            "url": "https://www.mvideo.ru/products/noutbuk-apple-macbook-air-13-m5-10c-cpu-8c-gpu-2026-16-512-gb-polunochnyi-chernyi-mdhe4-30093928"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 127999,
+            "url": "https://www.dns-shop.ru/catalog/recipe/25f1a4a74bd84485/apple-macbook-air-m5/"
+          }
+        ],
+        "market_median": 129474
+      },
+      {
+        "variant": "16GB / 1TB (10-core GPU)",
+        "colors": [
+          "Midnight",
+          "Starlight",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 141990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-air-13-mdhf4-m5-10-core-gpu-10-core-16gb-1tb-temnaa-noc-midnight"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 189990,
+            "url": "https://re-store.ru/catalog/MDH84/"
+          }
+        ],
+        "market_median": 165990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mba13-skyblue-select-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mba13-midnight-select-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет Air на M4. Цвета: Sky Blue, Silver, Starlight, Midnight. Фото Apple для M5 переиспользует снимки 2025 г. (корпус тот же). Цены DNS/М.Видео — из сниппетов; цена DNS 127 999 — минимальная в каталоге Air M5, конфигурация в сниппете не уточнена. re:Store сильно дороже остальных."
+  },
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Air 15\" (M5)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "15.3\" Liquid Retina",
+      "chip": "Apple M5 (10 CPU / 10 GPU)",
+      "memory": "16 ГБ",
+      "battery": "до 18 ч"
+    },
+    "description_ru": "Большая версия MacBook Air на M5 с 15-дюймовым экраном и шестью динамиками. Та же тонкая конструкция без вентилятора и 512 ГБ в базе.",
+    "configs": [
+      {
+        "variant": "16GB / 512GB",
+        "colors": [
+          "Midnight",
+          "Sky Blue",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 135990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-air-15-mdvh4-m5-10-core-gpu-10-core-16gb-512gb-temnaa-noc-midnight"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 194990,
+            "url": "https://re-store.ru/catalog/MDV94/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 136747,
+            "url": "https://market.yandex.ru/search?text=Macbook+air+15+16+512+%D0%BA%D1%83%D0%BF%D0%B8%D1%82%D1%8C"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 152999,
+            "url": "https://www.dns-shop.ru/catalog/recipe/25f1a4a74bd84485/apple-macbook-air-m5/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 174711,
+            "url": "https://www.mvideo.ru/noutbuki-planshety-komputery-8/noutbuki-118/f/seriya=macbook-air"
+          }
+        ],
+        "market_median": 152999
+      },
+      {
+        "variant": "16GB / 1TB",
+        "colors": [
+          "Midnight",
+          "Starlight",
+          "Sky Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 169990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-air-15-mdvk4-m5-10-core-gpu-10-core-16gb-1tb-temnaa-noc-midnight"
+          }
+        ],
+        "market_median": 169990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mba15-midnight-select-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mba15-starlight-select-202503?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет Air 15 на M4. Цены Маркета (Sky Blue), DNS и М.Видео (Midnight) — из сниппетов поиска, DNS может быть устаревшей. У 1 ТБ только одна цена (biggeek)."
+  },
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Pro 14\" (M5)",
+    "released": "2025-10",
+    "status": "current",
+    "specs": {
+      "display": "14.2\" Liquid Retina XDR",
+      "chip": "Apple M5 (10 CPU / 10 GPU)",
+      "memory": "16 ГБ",
+      "ports": "3× Thunderbolt 4, HDMI, MagSafe 3"
+    },
+    "description_ru": "Младший MacBook Pro на базовом чипе M5 с экраном mini-LED XDR и активным охлаждением. С марта 2026 года Apple продаёт его с 1 ТБ в базе.",
+    "configs": [
+      {
+        "variant": "16GB / 1TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 181990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-14-mde14-m5-10-core-gpu-10-core-16gb-1tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 239990,
+            "url": "https://re-store.ru/catalog/MDE14/"
+          },
+          {
+            "source": "store77.net",
+            "price": 180780,
+            "url": "https://store77.net/macbook_pro_m5_14/noutbuk_apple_macbook_pro_14_m5_16_gb_1tb_ssd_space_black_mde14/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 194999,
+            "url": "https://www.dns-shop.ru/product/7aaa92f0aa27d582/142-noutbuk-apple-macbook-pro-m5-cernyj/"
+          },
+          {
+            "source": "citilink.ru",
+            "price": 225990,
+            "url": "https://www.citilink.ru/catalog/noutbuki/APPLE--macbook-pro-14/"
+          }
+        ],
+        "market_median": 194999
+      },
+      {
+        "variant": "24GB / 1TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 201990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-14-mde34-m5-10-core-gpu-10-core-24gb-1tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 259990,
+            "url": "https://re-store.ru/catalog/MDE34/"
+          }
+        ],
+        "market_median": 230990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp14-spaceblack-select-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp14-spaceblack-cto-hero-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Вышел 10.2025, в линейке Apple остаётся рядом с M5 Pro/Max; с 03.2026 Apple продаёт его только с 1 ТБ (версии на 512 ГБ в магазинах — остатки первой партии, не заводить). Цены store77, DNS (на 21.09.2026), Ситилинка — из сниппетов. Фото Apple — снимок корпуса 2024 г. на светло-сером фоне. У 24 ГБ только две цены."
+  },
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Pro 14\" (M5 Pro / M5 Max)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "14.2\" Liquid Retina XDR",
+      "chip": "M5 Pro (15 CPU / 16 GPU) или M5 Max (18 CPU / 32 GPU)",
+      "memory": "24 ГБ (Pro) / 36 ГБ (Max)",
+      "battery": "до 24 ч"
+    },
+    "description_ru": "Профессиональный 14-дюймовый ноутбук на чипах M5 Pro и M5 Max: диск от 1 ТБ (у Max от 2 ТБ), Wi-Fi 7 и Bluetooth 6 через чип N1. Для монтажа видео, 3D и локальных ИИ-моделей.",
+    "configs": [
+      {
+        "variant": "M5 Pro 15C/16C, 24GB / 1TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 228990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-14-mgdr4-m5-pro-15-core-gpu-16-core-24gb-1tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 299990,
+            "url": "https://re-store.ru/catalog/MGDR4/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 280241,
+            "url": "https://www.mvideo.ru/products/noutbuk-apple-macbook-pro-14-m5-pro-15c-cpu-16c-gpu-2026-24-1tb-chernyi-kosmos-400787682"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 264790,
+            "url": "https://market.yandex.ru/category/macbook-pro-m5"
+          },
+          {
+            "source": "store77.net",
+            "price": 223580,
+            "url": "https://store77.net/apple_macbook_pro_m5/"
+          }
+        ],
+        "market_median": 264790
+      },
+      {
+        "variant": "M5 Max 18C/32C, 36GB / 2TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 344990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-14-mgdu4-m5-max-18-core-gpu-32-core-36gb-2tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 469990,
+            "url": "https://re-store.ru/catalog/MGDU4/"
+          },
+          {
+            "source": "store77.net",
+            "price": 343980,
+            "url": "https://store77.net/macbook_pro_m5_14/noutbuk_apple_macbook_pro_14_m5_max_36_gb_2_tb_ssd_serebristyy_mgdq4_rusifitsirovannyy/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 371587,
+            "url": "https://market.yandex.ru/search?text=MacBook+Pro+M5+Max"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 410999,
+            "url": "https://www.dns-shop.ru/product/0bcabdaf10297734/142-noutbuk-apple-macbook-pro-m5-max-cernyj/"
+          }
+        ],
+        "market_median": 371587
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp14-spaceblack-select-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp14-spaceblack-cto-hero-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет 14\" на M4 Pro/M4 Max (и тем более M3 Pro/M3 Max из старого каталога). Цены М.Видео, Маркета, store77 и DNS — из сниппетов поиска; store77 по M5 Pro помечен как старая страница, у Маркета цена с Яндекс Пэй. store77 по Max — серебристый русифицированный MGDQ4. Внешне корпус не менялся, поэтому фото Apple — снимок 2024 г."
+  },
+  {
+    "brand": "Apple",
+    "category": "Ноутбуки",
+    "model": "MacBook Pro 16\" (M5 Pro / M5 Max)",
+    "released": "2026-03",
+    "status": "current",
+    "specs": {
+      "display": "16.2\" Liquid Retina XDR",
+      "chip": "M5 Pro (18 CPU / 20 GPU) или M5 Max (18 CPU / 32 GPU)",
+      "memory": "24 ГБ (Pro) / 36 ГБ (Max)",
+      "battery": "до 24 ч"
+    },
+    "description_ru": "Самый большой MacBook Pro на M5 Pro или M5 Max для тяжёлой работы с видео, графикой и кодом. Экран XDR с пиковой яркостью 1600 нит, диск от 1 ТБ.",
+    "configs": [
+      {
+        "variant": "M5 Pro 18C/20C, 24GB / 1TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 264990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-16-mgea4-m5-pro-18-core-gpu-20-core-24gb-1tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 359990,
+            "url": "https://re-store.ru/catalog/MGEA4/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 327266,
+            "url": "https://www.mvideo.ru/products/400774876"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 309999,
+            "url": "https://www.dns-shop.ru/product/f0a4c63fdc2c42c6/162-noutbuk-apple-macbook-pro-m5-pro-cernyj/"
+          }
+        ],
+        "market_median": 318632
+      },
+      {
+        "variant": "M5 Max 18C/32C, 36GB / 2TB",
+        "colors": [
+          "Space Black",
+          "Silver"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 327990,
+            "url": "https://biggeek.ru/products/noutbuk-apple-macbook-pro-16-mged4-m5-max-18-core-gpu-32-core-36gb-2tb-cernyj-kosmos-space-black"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 479990,
+            "url": "https://re-store.ru/catalog/MGED4/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 379915,
+            "url": "https://market.yandex.ru/search?text=MacBook+Pro+M5+Max"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 450999,
+            "url": "https://www.dns-shop.ru/product/a1fcdb522dc1058a/162-noutbuk-apple-macbook-pro-m5-max-cernyj/"
+          }
+        ],
+        "market_median": 415457
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/mbp16-silver-select-202410?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет 16\" на M4 Pro/M4 Max. Цены М.Видео, DNS (с предоплатой) и Маркета (Silver) — из сниппетов поиска. На biggeek раздел 16\" M5 Pro помечен как предзаказ. Фото Apple — снимок корпуса 2024 г. на светло-сером фоне."
+  },
+  {
+    "brand": "Apple",
+    "category": "Часы",
+    "model": "Apple Watch Series 12",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "case": "42 / 46 мм, алюминий, титан или керамика",
+      "chip": "S11",
+      "display": "Always-On Retina до 2000 нит",
+      "battery": "до 24 ч"
+    },
+    "description_ru": "Основные часы Apple с новой системой датчиков здоровья: точнее пульс и ВСР, появилась оценка готовности к нагрузке. Алюминиевые корпуса получили стекло Ceramic Shield 2, быстрая зарядка даёт 12 часов за 15 минут.",
+    "configs": [
+      {
+        "variant": "46 мм, алюминий, Sport Band (GPS)",
+        "colors": [
+          "Black",
+          "Space Gray",
+          "Dark Bronze"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 45990,
+            "url": "https://biggeek.ru/products/casy-apple-watch-series-12-46-mm-aluminij-cernogo-cveta-remesok-sport-band-cernogo-cveta"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 61990,
+            "url": "https://re-store.ru/catalog/MJEL4/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 53736,
+            "url": "https://market.yandex.ru/catalog--apple/56034/list?glfilter=7893318%3A153043"
+          },
+          {
+            "source": "ozon.ru",
+            "price": 49674,
+            "url": "https://www.ozon.ru/category/umnye-chasy-15516/apple-26303000/"
+          }
+        ],
+        "market_median": 51705
+      },
+      {
+        "variant": "42 мм, алюминий, Sport Band (GPS)",
+        "colors": [
+          "Black",
+          "Light Gold",
+          "Space Gray"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 40990,
+            "url": "https://biggeek.ru/products/casy-apple-watch-series-12-42-mm-aluminij-cernogo-cveta-remesok-sport-band-cernogo-cveta"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 54990,
+            "url": "https://re-store.ru/catalog/MJEA4/"
+          }
+        ],
+        "market_median": 47990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-compare-series-12-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/s12-case-unselect-gallery-1-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет Series 9 из старого каталога (и Series 10/11 — Apple их больше не продаёт). Алюминий: Dark Bronze, Black, Light Gold, Space Gray; титан: Radiant Gold, Natural; керамика: Pearl White, Night Blue. Цены Маркета и Ozon (46 мм Black) — из сниппетов; на Ozon была и цена распродажи 41 715, её не брал. У 42 мм только две цены. Первое фото — одни часы на белом (небольшое по площади), второе — три корпуса на светло-сером."
+  },
+  {
+    "brand": "Apple",
+    "category": "Часы",
+    "model": "Apple Watch Ultra 4",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "case": "49 мм, титан, сапфировое стекло",
+      "chip": "S11",
+      "display": "Always-On Retina до 3000 нит",
+      "battery": "тренировки на улице до 45 ч"
+    },
+    "description_ru": "Защищённые часы для спорта и походов: титановый корпус, сапфир, стандарт MIL-STD-810H, точный двухчастотный GPS и спутниковая связь. Новая система датчиков здоровья, как у Series 12.",
+    "configs": [
+      {
+        "variant": "49 мм, Ocean / Alpine / Trail Band",
+        "colors": [
+          "Black Titanium",
+          "Natural Titanium"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 81990,
+            "url": "https://biggeek.ru/products/casy-apple-watch-ultra-4-49-mm-titan-cernogo-cveta-remesok-ocean-cveta-poluprozracnyj-cernyj2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 105990,
+            "url": "https://re-store.ru/catalog/103U4BLOCBBlack/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 94648,
+            "url": "https://market.yandex.ru/category/umnyye-chasy-apple-watch-ultra"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 121999,
+            "url": "https://www.dns-shop.ru/product/ee4cf9fc1ce6900b/smart-casy-apple-watch-ultra-4-49-mm/"
+          }
+        ],
+        "market_median": 100319
+      },
+      {
+        "variant": "49 мм, Milanese Loop",
+        "colors": [
+          "Black Titanium",
+          "Natural Titanium"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 104990,
+            "url": "https://biggeek.ru/products/casy-apple-watch-ultra-4-49-mm-titan-cernogo-cveta-milanskij-setcatyj-braslet-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 118990,
+            "url": "https://re-store.ru/catalog/AG_103U4BLMILBlack_M/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 124431,
+            "url": "https://market.yandex.ru/category/umnyye-chasy-apple-watch-ultra"
+          }
+        ],
+        "market_median": 118990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-compare-ultra-4-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/ultra-case-unselect-gallery-1-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет Ultra 2 из старого каталога (Ultra 3 Apple тоже больше не продаёт). Всегда GPS + Cellular. Цена Маркета по ремешку Ocean — Natural MJAD4 (остаток 1 шт.), DNS — карточка без указания ремешка; обе из сниппетов. Ссылки re:Store собраны по артикулу из их поиска."
+  },
+  {
+    "brand": "Apple",
+    "category": "Часы",
+    "model": "Apple Watch SE 3",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "case": "40 / 44 мм, алюминий",
+      "chip": "S10",
+      "display": "Always-On Retina до 1000 нит",
+      "glass": "Ion-X, в 4 раза прочнее SE 2"
+    },
+    "description_ru": "Доступные часы Apple с постоянно включённым экраном, датчиком температуры запястья и оценкой сна. Подходят как первые часы или для ребёнка; продвинутых датчиков Series 12 нет.",
+    "configs": [
+      {
+        "variant": "40 мм, Sport Band (GPS)",
+        "colors": [
+          "Midnight",
+          "Starlight"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 20690,
+            "url": "https://biggeek.ru/products/casy-apple-watch-se-3-40-mm-aluminij-cveta-temnaa-noc-remesok-sport-band-temnaa-noc-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 27990,
+            "url": "https://re-store.ru/catalog/MEH94/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 25499,
+            "url": "https://www.dns-shop.ru/product/c8e4f1bf8dfad0a4/smart-casy-apple-watch-se-3-40-mm/"
+          },
+          {
+            "source": "ozon.ru",
+            "price": 21075,
+            "url": "https://www.ozon.ru/category/apple-watch-se3/"
+          }
+        ],
+        "market_median": 23287
+      },
+      {
+        "variant": "44 мм, Sport Band (GPS)",
+        "colors": [
+          "Midnight",
+          "Starlight"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 22990,
+            "url": "https://biggeek.ru/products/casy-apple-watch-se-3-44-mm-aluminij-cveta-temnaa-noc-remesok-sport-band-temnaa-noc-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 29990,
+            "url": "https://re-store.ru/catalog/MEHQ4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 28999,
+            "url": "https://www.dns-shop.ru/product/caac5e6a8dfad0a4/smart-casy-apple-watch-se-3-44-mm/"
+          },
+          {
+            "source": "citilink.ru",
+            "price": 26990,
+            "url": "https://www.citilink.ru/product/smart-chasy-apple-watch-se-3-2025-a3325-44mm-oled-siyayusch-zv-sport-b-2146624/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 23441,
+            "url": "https://market.yandex.ru/category/apple-watch-se-3"
+          }
+        ],
+        "market_median": 26990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/watch-compare-se-3-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/se-case-unselect-gallery-1-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Вышли в 09.2025 и остаются в линейке Apple в 2026 г. (обновили только цвета ремешков). Заменяют SE 2 из старого каталога. Цены DNS, Ozon (распродажа), Ситилинка и Маркета (с Яндекс Пэй) — из сниппетов поиска; biggeek — цена «от»."
+  },
+  {
+    "brand": "Apple",
+    "category": "Наушники",
+    "model": "AirPods 5",
+    "released": "2026-09",
+    "status": "current",
+    "specs": {
+      "type": "открытые вкладыши (без амбушюр)",
+      "chip": "H2",
+      "anc": "есть, на 50 % сильнее, чем у AirPods 4 с ANC",
+      "battery": "4 ч с ANC (5 ч в версии с беспроводным футляром)"
+    },
+    "description_ru": "Базовые наушники Apple без силиконовых амбушюр, теперь шумоподавление есть в обеих версиях. Версия с беспроводным футляром заряжается от Qi и зарядки Apple Watch, громкость регулируется свайпом, в футляре есть динамик для «Локатора».",
+    "configs": [
+      {
+        "variant": "AirPods 5 (футляр USB-C)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 15990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-apple-airpods-5-s-aktivnym-sumopodavleniem-anc-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 19990,
+            "url": "https://re-store.ru/catalog/MKFW4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 18999,
+            "url": "https://www.dns-shop.ru/product/f587962646ee785d/nausniki-tws-apple-airpods-5-belyj-2026/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 17999,
+            "url": "https://www.mvideo.ru/blog/obzory/obzor-airpods-5-chto-izmenilos-po-sravneniyu-s-chetvertym-pokoleniem"
+          }
+        ],
+        "market_median": 18499
+      },
+      {
+        "variant": "AirPods 5 с беспроводным зарядным футляром",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 17990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-apple-airpods-5-s-aktivnym-sumopodavleniem-anc-i-besprovodnym-zaradnym-futlarom-2026"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 22990,
+            "url": "https://re-store.ru/catalog/MKFT4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 21299,
+            "url": "https://www.dns-shop.ru/product/e64091006dabef24/nausniki-tws-apple-airpods-5-wireless-charging-case-belyj-2026/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 21999,
+            "url": "https://www.mvideo.ru/blog/obzory/obzor-airpods-5-chto-izmenilos-po-sravneniyu-s-chetvertym-pokoleniem"
+          }
+        ],
+        "market_median": 21649
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-5-select-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-5-wcc-select-202609?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Вышли 18.09.2026 и заменили AirPods 4 (страница AirPods 4 на apple.com теперь ведёт на AirPods 5). Цены DNS и М.Видео — из сниппетов, у М.Видео это «от» из их обзора. Первое фото — версия с USB-C футляром, второе — с беспроводным."
+  },
+  {
+    "brand": "Apple",
+    "category": "Наушники",
+    "model": "AirPods Pro 3",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "type": "внутриканальные",
+      "chip": "H2",
+      "anc": "лучшее у Apple, до 3 раз сильнее AirPods 5",
+      "battery": "до 8 ч с ANC, до 24 ч с футляром"
+    },
+    "description_ru": "Флагманские вкладыши Apple с самым сильным шумоподавлением и датчиком пульса для тренировок. Есть проверка слуха, режим слухового аппарата и защита слуха, футляр MagSafe с USB-C.",
+    "configs": [
+      {
+        "variant": "AirPods Pro 3 (MagSafe, USB-C)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 20990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-apple-airpods-pro-3-s-zaradnym-futlarom-magsafe-usb-c-2025"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 25990,
+            "url": "https://re-store.ru/catalog/MFHP4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 23999,
+            "url": "https://www.dns-shop.ru/product/2c503f088dfdd21a/nausniki-tws-apple-airpods-pro-3-belyj-2025/"
+          },
+          {
+            "source": "mvideo.ru",
+            "price": 23999,
+            "url": "https://www.mvideo.ru/products/naushniki-apple-airpods-pro-3-magsafe-case-usb-c-30087076"
+          }
+        ],
+        "market_median": 23999
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-hero-select-202509?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-pro-3-gallery-1-202509?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяют AirPods Pro (1) и AirPods Pro 2 из старого каталога — Apple продаёт только Pro 3. Цены DNS и М.Видео — из сниппетов. В re:Store есть «цветные» версии по 45 990 (артикулы AG_...) — Apple выпускает Pro 3 только белыми, такие цвета не заводить."
+  },
+  {
+    "brand": "Apple",
+    "category": "Наушники",
+    "model": "AirPods Max 2",
+    "released": "2026-04",
+    "status": "current",
+    "specs": {
+      "type": "полноразмерные",
+      "chip": "H2",
+      "anc": "в 1,5 раза сильнее первых AirPods Max",
+      "battery": "до 20 ч с ANC"
+    },
+    "description_ru": "Полноразмерные наушники Apple во втором поколении: чип H2 принёс адаптивный режим, распознавание разговора и живой перевод. Корпус и футляр Smart Case остались прежними.",
+    "configs": [
+      {
+        "variant": "AirPods Max 2",
+        "colors": [
+          "Midnight",
+          "Starlight",
+          "Blue"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 45990,
+            "url": "https://biggeek.ru/products/besprovodnye-nausniki-apple-airpods-max-2-goluboj-blue"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 64990,
+            "url": "https://re-store.ru/catalog/MHWM4/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 55999,
+            "url": "https://www.dns-shop.ru/product/15f897562c16d9cb/besprovodnyeprovodnye-nausniki-apple-airpods-max-2-bezevyj-2026/"
+          }
+        ],
+        "market_median": 55999
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-max-select-202409-midnight?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airpods-max-select-202409-blue?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Анонс 16.03.2026, заказ с 25.03, в продаже с начала апреля. Цвета: Midnight, Starlight, Orange, Purple, Blue. Заменяют AirPods Max (Lightning и USB-C) из старого каталога. На biggeek Midnight дороже — 48 990. Цена DNS (Starlight) — из сниппета, товара в DNS не было в наличии. Apple использует для Max 2 прежние студийные снимки 2024 г. (внешне не изменились)."
+  },
+  {
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "model": "AirTag (2-го поколения)",
+    "released": "2026-01",
+    "status": "current",
+    "specs": {
+      "chip": "Ultra Wideband 2-го поколения",
+      "range": "точный поиск на 50 % дальше",
+      "speaker": "громче прежнего",
+      "compatibility": "iPhone с iOS 26+, поиск с Apple Watch Series 9+ / Ultra 2+"
+    },
+    "description_ru": "Метка для поиска ключей, сумок и багажа через сеть «Локатор». Во втором поколении точный поиск работает с большего расстояния, а динамик стал громче.",
+    "configs": [
+      {
+        "variant": "1 шт.",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 3990,
+            "url": "https://biggeek.ru/products/metka-apple-airtag-2nd-generation-1-pack"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 6990,
+            "url": "https://re-store.ru/catalog/MFE94/"
+          },
+          {
+            "source": "dns-shop.ru",
+            "price": 4699,
+            "url": "https://www.dns-shop.ru/product/0d6e441efbe3d9cb/besprovodnaa-metka-apple-airtag-2-belyj/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 6580,
+            "url": "https://market.yandex.ru/category/airtag-2"
+          }
+        ],
+        "market_median": 5639
+      },
+      {
+        "variant": "4 шт.",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 10490,
+            "url": "https://biggeek.ru/products/metka-apple-airtag-2nd-generation-4-pack"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 19990,
+            "url": "https://re-store.ru/catalog/MFEA4/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 13782,
+            "url": "https://market.yandex.ru/category/airtag-2"
+          }
+        ],
+        "market_median": 13782
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airtag-1pack-select-202601?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/airtag-4pack-select-202601?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет AirTag первого поколения (2021) — его ещё продают магазины, но Apple продаёт только новый. Артикулы Apple: MFE94 (1 шт.), MFEA4 (4 шт.). Цены DNS и Маркета (с Яндекс Пэй) — из сниппетов."
+  },
+  {
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "model": "Зарядное устройство MagSafe (1 м, 2025)",
+    "released": "2025-09",
+    "status": "current",
+    "specs": {
+      "standard": "Qi2.2, MagSafe",
+      "power": "до 25 Вт (с адаптером от 30 Вт)",
+      "cable": "1 м, USB-C",
+      "adapter": "в комплекте нет"
+    },
+    "description_ru": "Фирменная магнитная зарядка для iPhone, AirPods и других устройств с Qi. Версия 2025 года поддерживает Qi2.2 и до 25 Вт на совместимых iPhone; блок питания покупается отдельно.",
+    "configs": [
+      {
+        "variant": "1 м (MGD74)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 5990,
+            "url": "https://biggeek.ru/products/zaradnoe-ustrojstvo-apple-magsafe-charger-1m"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 5990,
+            "url": "https://re-store.ru/catalog/MGD74/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 9040,
+            "url": "https://market.yandex.ru/category/originalnyye-zaryadnyye-ustroystva-magsafe-dlya-iphone"
+          }
+        ],
+        "market_median": 5990
+      },
+      {
+        "variant": "2 м (MGDM4)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 6490,
+            "url": "https://biggeek.ru/products/zaradnoe-ustrojstvo-apple-magsafe-charger-2m"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 6990,
+            "url": "https://re-store.ru/catalog/MGDM4/"
+          }
+        ],
+        "market_median": 6740
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MGD74?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MGD74_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Это замена позиции «MagSafe Battery Pack» из старого каталога: тот аккумулятор (2021) Apple давно не продаёт; из аккумуляторов у Apple сейчас только MagSafe Battery для iPhone Air. В магазинах ещё лежит MagSafe версии 2024 (Qi2, MX6X3/MX6Y3) — не путать. DNS в сниппете показывает 5 999 за MagSafe «Qi2» — версия неясна, в расчёт не брал."
+  },
+  {
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "model": "Кабель Apple USB-C 60 Вт, плетёный (1 м)",
+    "released": null,
+    "status": "current",
+    "specs": {
+      "connectors": "USB-C — USB-C",
+      "power": "до 60 Вт",
+      "data": "USB 2.0 (480 Мбит/с)",
+      "length": "1 м, оплётка"
+    },
+    "description_ru": "Оригинальный плетёный кабель Apple для зарядки iPhone, iPad, AirPods и MacBook Air. Подходит для повседневной зарядки и синхронизации, для MacBook Pro мощности 60 Вт мало.",
+    "configs": [
+      {
+        "variant": "1 м (MW493)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 2990,
+            "url": "https://biggeek.ru/products/apple-usb-c-woven-charge-cable-1m"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 4590,
+            "url": "https://re-store.ru/catalog/MW493/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 2156,
+            "url": "https://market.yandex.ru/product--kabel-apple-usb-c-woven-60w-usb-c-charge-cable-1m-white/49525114?sku=102432851773&uniqueId=924412"
+          }
+        ],
+        "market_median": 2990
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MW493?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MW493_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Дату выхода этой ревизии (артикул MW493) не проверял, поэтому released = null; в магазине Apple продаётся сейчас. Для MacBook Pro у Apple есть кабель 240 Вт 2 м (MYQT3, re:Store 6 290) — можно добавить второй позицией. Цена Маркета — «от» на карточке товара, из сниппета."
+  },
+  {
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "model": "Magic Keyboard с Touch ID (USB-C)",
+    "released": "2024-10",
+    "status": "current",
+    "specs": {
+      "connection": "Bluetooth, зарядка USB-C",
+      "touch_id": "есть (Mac с Apple silicon)",
+      "layout": "без цифрового блока",
+      "color": "белые клавиши"
+    },
+    "description_ru": "Беспроводная клавиатура Apple со сканером отпечатка для входа и оплаты Apple Pay на Mac с чипами Apple. Заряжается и подключается проводом через USB-C.",
+    "configs": [
+      {
+        "variant": "без цифрового блока (MXCK3)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "re-store.ru",
+            "price": 22990,
+            "url": "https://re-store.ru/catalog/MXCK3/"
+          },
+          {
+            "source": "market.yandex.ru",
+            "price": 19400,
+            "url": "https://market.yandex.ru/category/apple-magic-keyboard-s-touch-id"
+          }
+        ],
+        "market_median": 21195
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MJLY4_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "В российских магазинах продаётся MXCK3 (2024); в магазине Apple США у этой клавиатуры уже новый артикул MJLY4 — что изменилось, не проверял. На biggeek сейчас нет в наличии. На Маркете разброс 19 400–27 638 ₽, взята нижняя, у клавиатуры только две цены. Фото — с американской раскладкой."
+  },
+  {
+    "brand": "Apple",
+    "category": "Аксессуары",
+    "model": "Magic Mouse (USB-C)",
+    "released": "2024-10",
+    "status": "current",
+    "specs": {
+      "connection": "Bluetooth, зарядка USB-C",
+      "surface": "сенсорная Multi-Touch",
+      "colors": "белая или чёрная поверхность",
+      "compatibility": "Mac, iPad"
+    },
+    "description_ru": "Беспроводная мышь Apple с сенсорной поверхностью для жестов прокрутки и пролистывания. Начиная с версии 2024 года заряжается через USB-C.",
+    "configs": [
+      {
+        "variant": "белая (MXK53)",
+        "colors": [
+          "White"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 8990,
+            "url": "https://biggeek.ru/products/besprovodnaa-mys-apple-magic-mouse-usb-c-white-multi-touch-surface"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 15990,
+            "url": "https://re-store.ru/catalog/MXK53/"
+          }
+        ],
+        "market_median": 12490
+      },
+      {
+        "variant": "чёрная (MXK63)",
+        "colors": [
+          "Black"
+        ],
+        "market_prices": [
+          {
+            "source": "biggeek.ru",
+            "price": 10990,
+            "url": "https://biggeek.ru/products/besprovodnaa-mys-apple-magic-mouse-usb-c-black-multi-touch-surface"
+          },
+          {
+            "source": "re-store.ru",
+            "price": 17990,
+            "url": "https://re-store.ru/catalog/MXK63/"
+          }
+        ],
+        "market_median": 14490
+      }
+    ],
+    "image_urls": [
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MXK53?wid=1200&hei=1200&fmt=jpeg&qlt=90",
+      "https://store.storeimages.cdn-apple.com/1/as-images.apple.com/is/MXK53_AV1?wid=1200&hei=1200&fmt=jpeg&qlt=90"
+    ],
+    "note": "Заменяет Magic Mouse с Lightning. Только две цены, и они сильно расходятся (re:Store почти вдвое дороже), — медиана получается завышенной, лучше сверить вручную. В сниппете DNS было 8 899 ₽ рядом с Magic Mouse, но к какой модели оно относится, неясно, поэтому не брал."
+  }
+]
