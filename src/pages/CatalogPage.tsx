@@ -1,8 +1,8 @@
 import { Link, useSearchParams } from 'react-router-dom'
 import { useState, useMemo, useEffect, useCallback } from 'react'
-import { products } from '../data/products'
+import { products, type Product } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
-import { translateColor, translateStorage, translateSpecValue, translateProductName } from '../utils/translate'
+import { translateColor, translateStorage, translateProductName } from '../utils/translate'
 import { categoryLandings } from '../seo/categories'
 import { pluralRu, LEGAL_NAME } from '../seo/site'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
@@ -47,34 +47,24 @@ const brandBgClass: Record<string, string> = {
   JBL: 'cbg-jbl', Beats: 'cbg-beats', Nintendo: 'cbg-nintendo',
 }
 
-const topBrands = ['Apple', 'Samsung', 'Xiaomi', 'Sony', 'DJI', 'Dyson', 'JBL', 'Beats', 'Nintendo']
+/** Бренды для фильтра — самые представленные в каталоге */
+const topBrands = Object.entries(products.reduce<Record<string, number>>((m, p) => ({ ...m, [p.brand]: (m[p.brand] ?? 0) + 1 }), {}))
+  .sort((a, b) => b[1] - a[1]).slice(0, 14).map(([b]) => b)
 const PER_PAGE = 20
 
-/* ── Gather unique filter values from products ── */
+/* ── Значения фильтров из каталога: объёмы памяти и самые частые цвета ── */
+const toGB = (s: string) => parseFloat(s) * (/ТБ|TB/.test(s) ? 1024 : 1)
+
 function getFilterOptions() {
   const storages = new Set<string>()
-  const colors = new Set<string>()
-  const displays = new Set<string>()
-  const chips = new Set<string>()
-
+  const colorCount = new Map<string, number>()
   products.forEach(p => {
-    if (p.specs.storage) storages.add(p.specs.storage)
-    if (p.specs.color) colors.add(p.specs.color)
-    if (p.specs.display) displays.add(p.specs.display)
-    if (p.specs.chip) chips.add(p.specs.chip)
+    if (p.storage) storages.add(p.storage)
+    p.colors.forEach(c => c.name && colorCount.set(c.name, (colorCount.get(c.name) ?? 0) + 1))
   })
-
-  // Sort storages by size
-  const sortedStorages = [...storages].sort((a, b) => {
-    const toMB = (s: string) => s.includes('TB') ? parseFloat(s) * 1024 * 1024 : parseFloat(s) * (s.includes('GB') ? 1024 : 1)
-    return toMB(a) - toMB(b)
-  })
-
   return {
-    storages: sortedStorages,
-    colors: [...colors].sort(),
-    displays: [...displays].sort((a, b) => parseFloat(a) - parseFloat(b)),
-    chips: [...chips].sort(),
+    storages: [...storages].sort((a, b) => toGB(a) - toGB(b)),
+    colors: [...colorCount.entries()].sort((a, b) => b[1] - a[1]).slice(0, 12).map(([c]) => c),
   }
 }
 
@@ -169,18 +159,26 @@ export default function CatalogPage() {
   const filtered = useMemo(() => {
     let r = products.filter(p => {
       const q = search.toLowerCase()
-      const mS = !q || p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q) || Object.values(p.specs).some(v => v.toLowerCase().includes(q))
+      const mS = !q || `${p.brand} ${p.name} ${p.summary}`.toLowerCase().includes(q)
       const mC = cat === 'Все' || p.category === cat
       const mB = brand.length === 0 || brand.includes(p.brand)
       const mK = !stockOnly || p.inStock
-      const mSt = selStorage.length === 0 || selStorage.includes(p.specs.storage || '')
-      const mCl = selColor.length === 0 || selColor.includes(p.specs.color || '')
+      const mSt = selStorage.length === 0 || selStorage.includes(p.storage || '')
+      const mCl = selColor.length === 0 || p.colors.some(c => selColor.includes(c.name))
       const mPr = selPriceRange === null || (p.price >= priceRanges[selPriceRange].min && p.price < priceRanges[selPriceRange].max)
       return mS && mC && mB && mK && mSt && mCl && mPr
     })
-    if (sort === 'price-asc') r = [...r].sort((a, b) => a.price - b.price)
-    if (sort === 'price-desc') r = [...r].sort((a, b) => b.price - a.price)
-    return r
+    // Одна плитка на модель: самая дешёвая подходящая конфигурация, «от» — если подходят несколько
+    const byFamily = new Map<string, { p: Product; n: number }>()
+    for (const p of r) {
+      const g = byFamily.get(p.family)
+      if (!g) byFamily.set(p.family, { p, n: 1 })
+      else byFamily.set(p.family, { p: p.price < g.p.price ? p : g.p, n: g.n + 1 })
+    }
+    let tiles = [...byFamily.values()].map(({ p, n }) => ({ ...p, many: n > 1 }))
+    if (sort === 'price-asc') tiles = tiles.sort((a, b) => a.price - b.price)
+    if (sort === 'price-desc') tiles = tiles.sort((a, b) => b.price - a.price)
+    return tiles
   }, [search, cat, brand, sort, stockOnly, selStorage, selColor, selPriceRange])
 
   const totalPages = Math.ceil(filtered.length / PER_PAGE)
@@ -297,7 +295,7 @@ export default function CatalogPage() {
             {selColor.length > 0 && <span className="filter-clear" onClick={() => patchState({ colors: [] })}>Сбросить</span>}
           </div>
           <div className="filter-checks filter-checks-cols">
-            {filterOpts.colors.slice(0, 12).map(c => (
+            {filterOpts.colors.map(c => (
               <label key={c} className={`filter-check-item${selColor.includes(c) ? ' active' : ''}`} onClick={() => toggleColor(c)}>
                 <span className={`filter-checkbox${selColor.includes(c) ? ' checked' : ''}`}>
                   {selColor.includes(c) && ico.check}
@@ -320,7 +318,7 @@ export default function CatalogPage() {
       {/* Apply button (mobile only) */}
       {onApply && (
         <button className="filter-apply-btn" onClick={onApply}>
-          Показать {filtered.length} {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}
+          Показать {filtered.length} {pluralRu(filtered.length, ['модель', 'модели', 'моделей'])}
         </button>
       )}
     </>
@@ -391,7 +389,7 @@ export default function CatalogPage() {
           </div>
 
           <div className="products-topbar">
-            <div className="products-count"><span className="products-count-word">Найдено </span><strong>{filtered.length}</strong> {pluralRu(filtered.length, ['товар', 'товара', 'товаров'])}</div>
+            <div className="products-count"><span className="products-count-word">Найдено </span><strong>{filtered.length}</strong> {pluralRu(filtered.length, ['модель', 'модели', 'моделей'])}</div>
             <div className="products-sort-wrap">
               <span className="sort-label">Сортировка:</span>
               <select className="sort-select" value={sort} onChange={e => patchState({ sort: e.target.value })}>
@@ -425,10 +423,10 @@ export default function CatalogPage() {
                       <div className="pcard-brand">{p.brand}</div>
                       <div className="pcard-name">{translateProductName(p.name)}</div>
                       <div className="pcard-specs">
-                        {Object.entries(p.specs).slice(0, 3).map(([k, v]) => translateSpecValue(k, v)).join(' · ')}
+                        {p.summary}
                       </div>
                       <div className="pcard-bottom">
-                        <div className="pcard-price">{fmt(p.price)} <span>₽</span></div>
+                        <div className="pcard-price">{p.many && <small className="pcard-from">от </small>}{fmt(p.price)} <span>₽</span></div>
                         <span className="pcard-btn">{ico.arrow}</span>
                       </div>
                     </div>

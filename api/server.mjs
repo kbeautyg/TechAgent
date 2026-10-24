@@ -172,13 +172,13 @@ function seedDemo() {
   const ago = (days, hours = 0) => new Date(Date.now() - (days * 24 + hours) * 3600_000).toISOString()
   const day = (iso) => iso.slice(2, 10).replace(/-/g, '')
   const examples = [
-    { items: [['iph15pm256w', 1], ['airpodspro2', 1]], steps: [['NEW', ago(0, 6)], ['AWAITING_PAYMENT', ago(0, 5)]],
+    { items: [['iphone-17-pro-max-256-gb', 1], ['airpods-pro-3', 1]], steps: [['NEW', ago(0, 6)], ['AWAITING_PAYMENT', ago(0, 5)]],
       paymentUrl: 'https://techagent.pro/legal/payment' },
-    { items: [['sgts24u256b', 1]], steps: [['NEW', ago(4)], ['AWAITING_PAYMENT', ago(4, -1)], ['PAID', ago(3, 20)], ['SHIPPED', ago(2)]],
+    { items: [['galaxy-s26-ultra-256-gb', 1]], steps: [['NEW', ago(4)], ['AWAITING_PAYMENT', ago(4, -1)], ['PAID', ago(3, 20)], ['SHIPPED', ago(2)]],
       track: '1534672980' },
-    { items: [['macbookairm3256', 1]], steps: [['NEW', ago(18)], ['AWAITING_PAYMENT', ago(18, -1)], ['PAID', ago(17)], ['SHIPPED', ago(15)], ['READY', ago(9)], ['RECEIVED', ago(8)]],
+    { items: [['macbook-air-13-m5-10-8-16-gb-512-gb', 1]], steps: [['NEW', ago(18)], ['AWAITING_PAYMENT', ago(18, -1)], ['PAID', ago(17)], ['SHIPPED', ago(15)], ['READY', ago(9)], ['RECEIVED', ago(8)]],
       track: '1528841207' },
-    { items: [['aw9s45m', 1]], steps: [['NEW', ago(25)], ['CANCELLED', ago(24)]],
+    { items: [['apple-watch-series-12-46-mm-alyuminiy', 1]], steps: [['NEW', ago(25)], ['CANCELLED', ago(24)]],
       reason: 'Этого цвета не оказалось у поставщика. Оплата не списывалась.' },
   ]
   examples.forEach((ex, i) => {
@@ -419,13 +419,18 @@ async function createOrder(req, res) {
     const id = clean(it?.productId, 80)
     const qty = Number(it?.qty)
     const p = catalog[id]
-    if (!p || seen.has(id) || !Number.isInteger(qty) || qty < 1 || qty > 5) continue
+    // Цвет — только из списка цветов товара; если не передан или неизвестен — первый (у товаров без выбора цвета список пуст)
+    const colors = Array.isArray(p?.colors) ? p.colors : []
+    const asked = clean(it?.color, 80)
+    const color = colors.includes(asked) ? asked : (colors[0] || '')
+    const key = id + '|' + color
+    if (!p || seen.has(key) || !Number.isInteger(qty) || qty < 1 || qty > 5) continue
     if (!p.inStock) {
       errors.push('unavailable:' + id)
       continue
     }
-    seen.add(id)
-    items.push({ productId: id, name: p.name, price: p.price, qty })
+    seen.add(key)
+    items.push({ productId: id, ...(color ? { color } : {}), name: color && colors.length > 1 ? `${p.name}, ${color}` : p.name, price: p.price, qty })
   }
   if (!items.length) errors.push('items')
   if (errors.length) fail(422, 'fields', { fields: errors })

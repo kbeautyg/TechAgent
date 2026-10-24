@@ -1,5 +1,5 @@
 import type { Product } from '../../data/products'
-import { getProductImage } from '../../utils/productImages'
+import { getProductImage, withVersion } from '../../utils/productImages'
 import { translateProductName } from '../../utils/translate'
 
 const brandBgClass: Record<string, string> = {
@@ -9,8 +9,8 @@ const brandBgClass: Record<string, string> = {
 }
 
 /** Квадратная миниатюра товара для корзины и оформления: фото на фоне бренда или первая буква бренда */
-export default function ProductThumb({ product, size }: { product: Product; size: number }) {
-  const img = getProductImage(product.id, product.name, product.category)
+export default function ProductThumb({ product, size, color }: { product: Product; size: number; color?: string }) {
+  const img = withVersion(product.colors.find((c) => c.name === color)?.image || '') || getProductImage(product.id)
   return (
     <div
       className={`relative flex-none overflow-hidden rounded-2xl ${brandBgClass[product.brand] || 'cbg-default'}`}

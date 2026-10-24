@@ -134,8 +134,8 @@ export default function HomePage() {
                   </div>
                   <div className="app-list mt-3">
                     {[
-                      { item: 'iPhone 16 Pro Max', img: getProductImage('iph16promax', '', 'Смартфоны'), sub: 'Едет в ваш пункт', sum: formatPrice(priceOf('iph16promax')), status: 'В пути', color: 'text-amber-700' },
-                      { item: 'MacBook Air 13" M3', img: getProductImage('macbookairm3256', '', 'Ноутбуки'), sub: 'Ждёт покупателя', sum: formatPrice(priceOf('macbookairm3256')), status: 'В пункте', color: 'text-violet-700' },
+                      { item: 'iPhone 18 Pro Max', img: getProductImage('iphone-18-pro-max-256-gb', '', 'Смартфоны'), sub: 'Едет в ваш пункт', sum: formatPrice(priceOf('iphone-18-pro-max-256-gb')), status: 'В пути', color: 'text-amber-700' },
+                      { item: 'MacBook Air 13" M5', img: getProductImage('macbook-air-13-m5-10-8-16-gb-512-gb', '', 'Ноутбуки'), sub: 'Ждёт покупателя', sum: formatPrice(priceOf('macbook-air-13-m5-10-8-16-gb-512-gb')), status: 'В пункте', color: 'text-violet-700' },
                     ].map((o) => (
                       <div key={o.item} className="app-row">
                         <img src={o.img} alt="" width={44} height={44} loading="lazy" className="w-11 h-11 rounded-[14px] bg-white object-contain shrink-0" />
@@ -219,8 +219,8 @@ export default function HomePage() {
                       </div>
                       <div className="bg-white rounded-xl border border-gray-100 overflow-hidden">
                         {[
-                          { item: 'iPhone 16 Pro Max', img: getProductImage('iph16promax', '', 'Смартфоны'), sub: '#1847 · едет в ваш пункт', sum: formatPrice(priceOf('iph16promax')), status: 'В пути', color: 'text-amber-700' },
-                          { item: 'MacBook Air 13" M3', img: getProductImage('macbookairm3256', '', 'Ноутбуки'), sub: '#1845 · ждёт покупателя', sum: formatPrice(priceOf('macbookairm3256')), status: 'В пункте', color: 'text-violet-700' },
+                          { item: 'iPhone 18 Pro Max', img: getProductImage('iphone-18-pro-max-256-gb', '', 'Смартфоны'), sub: '#1847 · едет в ваш пункт', sum: formatPrice(priceOf('iphone-18-pro-max-256-gb')), status: 'В пути', color: 'text-amber-700' },
+                          { item: 'MacBook Air 13" M5', img: getProductImage('macbook-air-13-m5-10-8-16-gb-512-gb', '', 'Ноутбуки'), sub: '#1845 · ждёт покупателя', sum: formatPrice(priceOf('macbook-air-13-m5-10-8-16-gb-512-gb')), status: 'В пункте', color: 'text-violet-700' },
                         ].map((o) => (
                           <div key={o.item} className="flex items-center gap-2 px-2.5 py-1.5 border-b border-gray-50 last:border-0">
                             <img src={o.img} alt="" width={28} height={28} loading="lazy" className="w-7 h-7 rounded-lg bg-gray-50 object-contain shrink-0" />

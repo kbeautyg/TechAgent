@@ -1,16 +1,16 @@
-import { Link, useParams, useNavigate } from 'react-router-dom'
+import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { products } from '../data/products'
-import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
-import { translateSpecKey, translateSpecValue, translateColor, translateProductName, translateStorage } from '../utils/translate'
+import { getProductImage, withVersion, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
+import { translateSpecKey, translateSpecValue, translateProductName } from '../utils/translate'
 import { getCategoryByName } from '../seo/categories'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
 import { ShoppingCart, Check, Minus, Plus } from 'lucide-react'
-import { useCart, addToCart, setCartQty, MAX_QTY } from '../utils/cart'
+import { useCart, addToCart, setCartQty, findLine, MAX_QTY } from '../utils/cart'
 import type { Product } from '../data/products'
 
 /** Покупка на сайте: «В корзину», а когда товар уже там — количество и переход к оформлению */
-function BuyBox({ product }: { product: Product }) {
-  const line = useCart().find((i) => i.product.id === product.id)
+function BuyBox({ product, color }: { product: Product; color?: string }) {
+  const line = findLine(useCart(), product.id, color)
   if (!product.inStock) {
     return (
       <div className="pp-buy">
@@ -21,7 +21,7 @@ function BuyBox({ product }: { product: Product }) {
   if (!line) {
     return (
       <div className="pp-buy">
-        <button type="button" onClick={() => addToCart(product.id)} className="app-btn app-btn-primary">
+        <button type="button" onClick={() => addToCart(product.id, color)} className="app-btn app-btn-primary">
           <ShoppingCart size={20} /> В корзину
         </button>
         <p className="pp-buy-note">Доставка в пункт СДЭК или постамат, оплата через СБП</p>
@@ -32,11 +32,11 @@ function BuyBox({ product }: { product: Product }) {
     <div className="pp-buy">
       <div className="pp-buy-row">
         <div className="cart-qty cart-qty-lg" role="group" aria-label="Количество в корзине">
-          <button type="button" onClick={() => setCartQty(product.id, line.qty - 1)} aria-label="Меньше">
+          <button type="button" onClick={() => setCartQty(product.id, color, line.qty - 1)} aria-label="Меньше">
             <Minus size={18} />
           </button>
           <span aria-live="polite">{line.qty}</span>
-          <button type="button" onClick={() => setCartQty(product.id, line.qty + 1)} disabled={line.qty >= MAX_QTY} aria-label="Больше">
+          <button type="button" onClick={() => setCartQty(product.id, color, line.qty + 1)} disabled={line.qty >= MAX_QTY} aria-label="Больше">
             <Plus size={18} />
           </button>
         </div>
@@ -60,7 +60,7 @@ const brandBgClass: Record<string, string> = {
 export default function ProductPage() {
   const { id } = useParams<{ id: string }>()
   const product = products.find(p => p.id === id)
-  const navigate = useNavigate()
+  const [params, setParams] = useSearchParams()
 
   if (!product) {
     return (
@@ -76,31 +76,28 @@ export default function ProductPage() {
   }
 
   const specs = Object.entries(product.specs)
-  const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4)
+  const related = products.filter(p => p.category === product.category && p.family !== product.family)
+    .filter((p, i, arr) => arr.findIndex(x => x.family === p.family) === i).slice(0, 4)
   const bgClass = brandBgClass[product.brand] || 'cbg-default'
   const categoryLanding = getCategoryByName(product.category)
   const categoryHref = categoryLanding ? `/catalog/${categoryLanding.slug}` : `/catalog?cat=${encodeURIComponent(product.category)}`
 
-  // Find sibling products (same model line, different storage/color)
-  const getModelBase = (name: string) => {
-    // Remove storage (256GB, 512GB, 1TB) and color from name to get base model
-    return name.replace(/\s+\d+[GT]B/i, '').replace(/\s+(Black|White|Blue|Red|Green|Purple|Gold|Silver|Gray|Grey|Pink|Natural|Titanium|Midnight|Starlight|Graphite|Sierra|Alpine|Deep|Space|Phantom|Cream|Lavender|Mint|Burgundy|Orange|Yellow|Coral|Ice|Sand|Lime).*/i, '').trim()
+  // Конфигурации модели (память, размер, комплектация) — соседние карточки той же модели, по возрастанию цены
+  const siblings = products.filter(p => p.family === product.family && p.variant).sort((a, b) => a.price - b.price)
+  // Цвет — внутри карточки: ?color= в адресе, чтобы ссылкой можно было поделиться
+  const asked = params.get('color')
+  const color = product.colors.find(c => c.name === asked) ?? product.colors[0]
+  const colorName = color?.name || undefined
+  const image = withVersion(color?.image || '') || getProductImage(product.id)
+  // У часов Apple одно фото на все цвета — тогда миниатюры в выборе цвета не нужны
+  const colorThumbs = new Set(product.colors.map(c => c.image)).size > 1
+  const pickColor = (name: string) => {
+    const next = new URLSearchParams(params)
+    if (name === product.colors[0]?.name) next.delete('color'); else next.set('color', name)
+    setParams(next, { replace: true, preventScrollReset: true })
   }
-
-  const modelBase = getModelBase(product.name)
-  const siblings = products.filter(p => {
-    const pBase = getModelBase(p.name)
-    return pBase === modelBase && p.category === product.category && p.brand === product.brand
-  })
-
-  // Get unique storage options from siblings
-  const storageOptions = [...new Set(siblings.filter(s => s.specs.storage).map(s => s.specs.storage))].sort((a, b) => {
-    const toMB = (s: string) => s.includes('TB') ? parseFloat(s) * 1024 * 1024 : parseFloat(s) * (s.includes('GB') ? 1024 : 1)
-    return toMB(a) - toMB(b)
-  })
-
-  // Get unique color options from siblings
-  const colorOptions = [...new Set(siblings.filter(s => s.specs.color).map(s => s.specs.color))]
+  /** Ссылка на конфигурацию в том же цвете, если он у неё есть */
+  const variantHref = (p: Product) => `/catalog/${p.id}${colorName && p.colors.some(c => c.name === colorName) && p.colors[0]?.name !== colorName ? `?color=${encodeURIComponent(colorName)}` : ''}`
 
   return (
     <div className="pp-root">
@@ -123,8 +120,8 @@ export default function ProductPage() {
             <div className={`pp-gallery-bg ${bgClass}`} />
             {product.inStock && <span className="pp-gbadge pp-gbadge-stock">Доступен к заказу</span>}
             {!product.inStock && <span className="pp-gbadge pp-gbadge-out">Недоступен</span>}
-            {getProductImage(product.id, product.name, product.category) ? (
-              <img src={getProductImage(product.id, product.name, product.category)} alt={translateProductName(product.name)}
+            {image ? (
+              <img key={image} src={image} alt={`${translateProductName(product.name)}${colorName && product.colors.length > 1 ? `, ${colorName}` : ''}`}
                 width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
                 loading="eager" fetchPriority="high" className="pp-gallery-img" />
             ) : (
@@ -150,44 +147,50 @@ export default function ProductPage() {
             </div>
           </div>
 
-          {/* Variants */}
-          {storageOptions.length > 1 && (
+          {/* Конфигурации: ссылки на соседние карточки модели, цена меняется вместе с выбором */}
+          {siblings.length > 1 && (
             <div className="pp-variants">
-              <div className="pp-variant-label">Память</div>
+              <div className="pp-variant-label">{/\d\s?(ГБ|ТБ)/.test(product.variant || '') ? 'Память' : 'Вариант'}</div>
               <div className="pp-variant-chips">
-                {storageOptions.map(v => {
-                  const isActive = product.specs.storage === v
-                  const target = siblings.find(s => s.specs.storage === v && (product.specs.color ? s.specs.color === product.specs.color : true))
-                  return (
-                    <div key={v} className={`pp-variant-chip${isActive ? ' active' : ''}`}
-                      onClick={() => { if (target && !isActive) navigate(`/catalog/${target.id}`) }}
-                      style={{ cursor: isActive ? 'default' : 'pointer' }}
-                    >{translateStorage(v)}</div>
-                  )
-                })}
+                {siblings.map(v => (
+                  <Link
+                    key={v.id}
+                    to={variantHref(v)}
+                    replace
+                    preventScrollReset
+                    aria-current={v.id === product.id ? 'page' : undefined}
+                    className={`pp-variant-chip${v.id === product.id ? ' active' : ''}`}
+                  >
+                    <span>{v.variant}</span>
+                    {v.id !== product.id && <small>{v.price > product.price ? '+' : '−'}{fmt(Math.abs(v.price - product.price))} ₽</small>}
+                  </Link>
+                ))}
               </div>
             </div>
           )}
 
-          {colorOptions.length > 1 && (
+          {/* Цвет: меняет фото, цена та же */}
+          {product.colors.length > 1 && (
             <div className="pp-variants">
-              <div className="pp-variant-label">Цвет — {translateColor(product.specs.color)}</div>
+              <div className="pp-variant-label">Цвет — {colorName}</div>
               <div className="pp-variant-chips">
-                {colorOptions.map(v => {
-                  const isActive = product.specs.color === v
-                  const target = siblings.find(s => s.specs.color === v && (product.specs.storage ? s.specs.storage === product.specs.storage : true))
-                  return (
-                    <div key={v} className={`pp-variant-chip${isActive ? ' active' : ''}`}
-                      onClick={() => { if (target && !isActive) navigate(`/catalog/${target.id}`) }}
-                      style={{ cursor: isActive ? 'default' : 'pointer' }}
-                    >{translateColor(v)}</div>
-                  )
-                })}
+                {product.colors.map(c => (
+                  <button
+                    key={c.name}
+                    type="button"
+                    onClick={() => pickColor(c.name)}
+                    aria-pressed={c.name === colorName}
+                    className={`pp-variant-chip pp-color-chip${colorThumbs ? '' : ' pp-color-chip-text'}${c.name === colorName ? ' active' : ''}`}
+                  >
+                    {colorThumbs && c.image && <img src={withVersion(c.image)} alt="" width={28} height={28} loading="lazy" />}
+                    <span>{c.name}</span>
+                  </button>
+                ))}
               </div>
             </div>
           )}
 
-          <BuyBox product={product} />
+          <BuyBox product={product} color={colorName} />
 
           {/* Для партнёров: заказ покупателю в своём пункте выдачи. Отдельный блок с красной чертой — другой путь покупки */}
           <div className="pp-partner">
@@ -248,7 +251,7 @@ export default function ProductPage() {
                 <div className="pcard-info">
                   <div className="pcard-brand">{p.brand}</div>
                   <div className="pcard-name">{translateProductName(p.name)}</div>
-                  <div className="pcard-specs">{Object.entries(p.specs).slice(0, 3).map(([k, v]) => translateSpecValue(k, v)).join(' · ')}</div>
+                  <div className="pcard-specs">{p.summary}</div>
                   <div className="pcard-bottom">
                     <div className="pcard-price">{fmt(p.price)} <span>₽</span></div>
                     <span className="pcard-btn">

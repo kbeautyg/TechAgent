@@ -1,50 +1,32 @@
 /**
- * Product image and styling utilities
- * Uses local WebP images organized by category folders
- * Images located in /public/images/{category}/{productId}.webp
- * Generated via OpenAI DALL-E API (generate_images.py), converted by scripts/assets/convert-webp.mjs
+ * Фото и оформление товаров. Фото каталога лежат в /public/images/p/<семейство>/<цвет>.webp —
+ * их готовит docs/catalog-2026-10/process_images.mjs (квадрат 900×900 на белом фоне).
  */
 
-/** Интринсик-размер карточных изображений (файлы 500×500 после convert-webp.mjs) — для width/height у <img> */
-export const PRODUCT_IMAGE_SIZE = 500
+import { products } from '../data/products'
 
-/**
- * Фото не соответствуют товару (другая модель, бренд или цвет) либо это чужие рекламные карточки магазинов
- * с надписями — для них показывается заглушка (фон бренда и буква). 08.10.2026 все 66 таких фото заменены
- * снимками производителей, список пуст; новое несоответствие — добавить id сюда, пока не будет правильного фото.
- */
-const IMAGE_MISMATCH = new Set<string>()
+/** Размер обработанных фото каталога (квадрат, белый фон) — для width/height у <img> */
+export const PRODUCT_IMAGE_SIZE = 900
 
 /** Версия фото: меняется при замене файлов — иначе браузеры и кэш прокладки (30 дней) покажут старые картинки */
-const IMAGE_VERSION = '20261008'
+const IMAGE_VERSION = '20261024'
 
-// Category mapping (Russian -> folder name)
-const categoryFolders: Record<string, string> = {
-  'Смартфоны': 'smartphones',
-  'Ноутбуки': 'laptops',
-  'Планшеты': 'tablets',
-  'Наушники': 'headphones',
-  'Часы': 'watches',
-  'Камеры и дроны': 'cameras',
-  'Игровые консоли': 'consoles',
-  'Для дома': 'appliances',
-  'Телевизоры': 'tvs',
-  'Аксессуары': 'accessories',
-  'Умный дом': 'appliances',
-  'Электротранспорт': 'accessories',
-};
+const byId = new Map(products.map((p) => [p.id, p]))
+
+/** Фото с версией для сброса кэша */
+export function withVersion(path: string): string {
+  return path ? `${path}?v=${IMAGE_VERSION}` : ''
+}
 
 /**
- * Get local product image path based on product ID and category
- * Returns path to WebP in /images/{category}/{id}.webp
+ * Фото товара по id: фото первого цвета (или указанного цвета).
+ * Для товаров, которых больше нет в каталоге (старые заказы), — пустая строка, вместо фото рисуется буква бренда.
  */
-export function getProductImage(productId: string, _productName: string = '', category: string = ''): string {
-  if (IMAGE_MISMATCH.has(productId)) return '';
-  const folder = categoryFolders[category] || '';
-  if (folder) {
-    return `/images/${folder}/${productId}.webp?v=${IMAGE_VERSION}`;
-  }
-  return `/images/smartphones/${productId}.webp?v=${IMAGE_VERSION}`;
+export function getProductImage(productId: string, _productName: string = '', _category: string = '', color?: string): string {
+  const p = byId.get(productId)
+  if (!p) return ''
+  const img = (color && p.colors.find((c) => c.name === color)?.image) || p.image
+  return withVersion(img)
 }
 
 /**

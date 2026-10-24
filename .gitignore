@@ -12,3 +12,6 @@ node_modules/
 # База сервера заказов при локальной разработке
 api/data/
 api/catalog.json
+
+# Исходники фото каталога (обработанные лежат в public/images/p)
+.img-raw/

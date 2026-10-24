@@ -6,11 +6,14 @@ import { SDEK_DELIVERY_PRICE } from '../seo/site'
 /*
  * Корзина покупателя на сайте. Живёт в браузере покупателя (localStorage): до оформления заказа
  * ей больше негде быть, а вкладки видят одну и ту же корзину через событие `storage`.
- * Храним только id товара и количество — цену и название всегда берём из каталога.
+ * Храним id товара, цвет и количество — цену и название всегда берём из каталога.
+ * Один и тот же товар в двух цветах — две разные строки.
  */
 
 export interface CartLine {
   productId: string
+  /** Цвет из product.colors; у товаров без выбора цвета — пусто */
+  color?: string
   qty: number
 }
 
@@ -29,7 +32,7 @@ function load(): CartLine[] {
   if (cache) return cache
   const raw = readJson<CartLine[]>(KEY)
   cache = Array.isArray(raw)
-    ? raw.filter((l) => l && typeof l.productId === 'string' && Number.isInteger(l.qty) && l.qty > 0)
+    ? raw.filter((l) => l && typeof l.productId === 'string' && Number.isInteger(l.qty) && l.qty > 0 && (l.color === undefined || typeof l.color === 'string'))
     : []
   return cache
 }
@@ -63,7 +66,10 @@ export function useCart(): CartItem[] {
   const items: CartItem[] = []
   for (const l of lines) {
     const product = products.find((p) => p.id === l.productId)
-    if (product?.inStock) items.push({ ...l, qty: Math.min(l.qty, MAX_QTY), product })
+    if (!product?.inStock) continue
+    // Цвет, которого больше нет у товара, заменяется первым доступным
+    const color = product.colors.some((c) => c.name === l.color) ? l.color : product.colors[0]?.name
+    items.push({ ...l, color, qty: Math.min(l.qty, MAX_QTY), product })
   }
   return items
 }
@@ -85,21 +91,28 @@ export function cartTotal(items: CartItem[]): number {
   return cartGoodsTotal(items) + (cartDelivery(items) ?? 0)
 }
 
-export function addToCart(productId: string, qty = 1): void {
+const same = (l: CartLine, productId: string, color?: string) => l.productId === productId && (l.color || '') === (color || '')
+
+/** Строка корзины для товара в этом цвете, если он уже там */
+export function findLine(items: CartItem[], productId: string, color?: string): CartItem | undefined {
+  return items.find((i) => same(i, productId, color))
+}
+
+export function addToCart(productId: string, color?: string, qty = 1): void {
   const lines = [...load()]
-  const i = lines.findIndex((l) => l.productId === productId)
+  const i = lines.findIndex((l) => same(l, productId, color))
   if (i >= 0) lines[i] = { ...lines[i], qty: Math.min(MAX_QTY, lines[i].qty + qty) }
-  else lines.push({ productId, qty: Math.min(MAX_QTY, qty) })
+  else lines.push({ productId, ...(color ? { color } : {}), qty: Math.min(MAX_QTY, qty) })
   save(lines)
 }
 
-export function setCartQty(productId: string, qty: number): void {
-  if (qty <= 0) return removeFromCart(productId)
-  save(load().map((l) => (l.productId === productId ? { ...l, qty: Math.min(MAX_QTY, qty) } : l)))
+export function setCartQty(productId: string, color: string | undefined, qty: number): void {
+  if (qty <= 0) return removeFromCart(productId, color)
+  save(load().map((l) => (same(l, productId, color) ? { ...l, qty: Math.min(MAX_QTY, qty) } : l)))
 }
 
-export function removeFromCart(productId: string): void {
-  save(load().filter((l) => l.productId !== productId))
+export function removeFromCart(productId: string, color?: string): void {
+  save(load().filter((l) => !same(l, productId, color)))
 }
 
 export function clearCart(): void {

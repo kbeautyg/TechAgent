@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { products } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
-import { translateProductName, translateSpecValue } from '../utils/translate'
+import { translateProductName } from '../utils/translate'
 import { categoryLandings, type CategoryLanding } from '../seo/categories'
 import { pluralRu } from '../seo/site'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
@@ -21,7 +21,12 @@ interface Props {
 
 /** Категорийная посадочная /catalog/{slug}: уникальный текст + полная сетка товаров категории */
 export default function CategoryPage({ landing }: Props) {
-  const items = products.filter(p => p.category === landing.category)
+  // Одна плитка на модель: самая дешёвая конфигурация, «от» — если конфигураций несколько
+  const all = products.filter(p => p.category === landing.category)
+  const items = [...new Set(all.map(p => p.family))].map(f => {
+    const vs = all.filter(p => p.family === f)
+    return { ...vs.reduce((a, b) => (b.price < a.price ? b : a)), many: vs.length > 1 }
+  })
   const inStockCount = items.filter(p => p.inStock).length
   const minPrice = items.length ? Math.min(...items.map(p => p.price)) : 0
   const brands = [...new Set(items.map(p => p.brand))]
@@ -98,11 +103,9 @@ export default function CategoryPage({ landing }: Props) {
                   <div className="pcard-info">
                     <div className="pcard-brand">{p.brand}</div>
                     <div className="pcard-name">{translateProductName(p.name)}</div>
-                    <div className="pcard-specs">
-                      {Object.entries(p.specs).slice(0, 3).map(([k, v]) => translateSpecValue(k, v)).join(' · ')}
-                    </div>
+                    <div className="pcard-specs">{p.summary}</div>
                     <div className="pcard-bottom">
-                      <div className="pcard-price">{fmt(p.price)} <span>₽</span></div>
+                      <div className="pcard-price">{p.many && <small className="pcard-from">от </small>}{fmt(p.price)} <span>₽</span></div>
                       <span className="pcard-btn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                       </span>

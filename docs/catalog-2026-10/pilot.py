@@ -86,31 +86,32 @@ def market(q):
                 items.append({'name': it['name'], 'price': int(float(p)), 'url': it.get('@id') or it.get('url')})
     return items
 
-groups = json.load(open(sys.argv[1]))
-try:
-    out = json.load(open(sys.argv[2]))
-except Exception:
-    out = []
-done = {r['key'] for r in out}
-for key, q, must, excl in P:
-    if key in done:
-        continue
-    g = groups.get(key)
-    if not g:
-        print('нет группы', key, file=sys.stderr); continue
-    inst = [x for x in g if x['price']]
-    bg = min(x['price'] for x in inst)
-    best = min(inst, key=lambda x: x['price'])
-    items = market(q)
-    if items is None:
-        print('КАПЧА на Маркете — стоп', file=sys.stderr); break
-    ok = [i for i in items if not JUNK.search(i['name'])
-          and all(re.search(r, i['name'].lower()) for r in must)
-          and not any(re.search(r, i['name'].lower()) for r in excl)]
-    pr = [i['price'] for i in ok]
-    out.append({'key': key, 'query': q, 'bg': bg, 'bg_url': best['url'], 'ours': ((bg * 95 // 100) - 90) // 100 * 100 + 90,
-                'mk_n': len(pr), 'mk_found': len(items), 'mk_median': int(statistics.median(pr)) if pr else None,
-                'mk_min': min(pr) if pr else None, 'mk_max': max(pr) if pr else None, 'mk_offers': ok[:8]})
-    print(f"{key[:60]:60} bg={bg} mk={out[-1]['mk_median']} ({len(pr)}/{len(items)})", file=sys.stderr)
-    json.dump(out, open(sys.argv[2], 'w'), ensure_ascii=False, indent=1)
-    time.sleep(45 + random.random() * 20)
+if __name__ == '__main__':
+    groups = json.load(open(sys.argv[1]))
+    try:
+        out = json.load(open(sys.argv[2]))
+    except Exception:
+        out = []
+    done = {r['key'] for r in out}
+    for key, q, must, excl in P:
+        if key in done:
+            continue
+        g = groups.get(key)
+        if not g:
+            print('нет группы', key, file=sys.stderr); continue
+        inst = [x for x in g if x['price']]
+        bg = min(x['price'] for x in inst)
+        best = min(inst, key=lambda x: x['price'])
+        items = market(q)
+        if items is None:
+            print('КАПЧА на Маркете — стоп', file=sys.stderr); break
+        ok = [i for i in items if not JUNK.search(i['name'])
+              and all(re.search(r, i['name'].lower()) for r in must)
+              and not any(re.search(r, i['name'].lower()) for r in excl)]
+        pr = [i['price'] for i in ok]
+        out.append({'key': key, 'query': q, 'bg': bg, 'bg_url': best['url'], 'ours': ((bg * 95 // 100) - 90) // 100 * 100 + 90,
+                    'mk_n': len(pr), 'mk_found': len(items), 'mk_median': int(statistics.median(pr)) if pr else None,
+                    'mk_min': min(pr) if pr else None, 'mk_max': max(pr) if pr else None, 'mk_offers': ok[:8]})
+        print(f"{key[:60]:60} bg={bg} mk={out[-1]['mk_median']} ({len(pr)}/{len(items)})", file=sys.stderr)
+        json.dump(out, open(sys.argv[2], 'w'), ensure_ascii=False, indent=1)
+        time.sleep(45 + random.random() * 20)

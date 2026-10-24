@@ -2,7 +2,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Minus, Plus, Trash2, ShoppingBag, ArrowRight } from 'lucide-react'
 import { useCart, setCartQty, removeFromCart, cartTotal, MAX_QTY } from '../utils/cart'
 import { formatPrice } from '../utils/calculate'
-import { translateProductName, translateSpecValue } from '../utils/translate'
+import { translateProductName } from '../utils/translate'
 import ProductThumb from '../components/catalog/ProductThumb'
 import CartSummary from '../components/catalog/CartSummary'
 import { PageBar, StickyBar } from '../components/app/ui'
@@ -39,24 +39,24 @@ export default function CartPage() {
 
       <div className="cart-layout">
         <ul className="cart-list" aria-label="Товары в корзине">
-          {items.map(({ product, qty }) => {
-            const specs = Object.entries(product.specs).slice(0, 2).map(([k, v]) => translateSpecValue(k, v)).join(' · ')
+          {items.map(({ product, qty, color }) => {
+            const href = `/catalog/${product.id}${color && product.colors.length > 1 ? `?color=${encodeURIComponent(color)}` : ''}`
             return (
-              <li key={product.id} className="cart-line">
-                <Link to={`/catalog/${product.id}`} className="no-underline" aria-label={translateProductName(product.name)}>
-                  <ProductThumb product={product} size={isDesktop ? 96 : 76} />
+              <li key={`${product.id}|${color || ''}`} className="cart-line">
+                <Link to={href} className="no-underline" aria-label={translateProductName(product.name)}>
+                  <ProductThumb product={product} color={color} size={isDesktop ? 96 : 76} />
                 </Link>
                 <div className="cart-line-mid">
-                  <Link to={`/catalog/${product.id}`} className="cart-line-name">
+                  <Link to={href} className="cart-line-name">
                     {translateProductName(product.name)}
                   </Link>
-                  {specs && <div className="cart-line-specs">{specs}</div>}
+                  {color && <div className="cart-line-specs">Цвет: {color}</div>}
                   <div className="cart-line-bottom">
                     <div className="cart-qty" role="group" aria-label="Количество">
                       {/* На телефоне «минус» на последней штуке убирает товар; на компьютере для этого есть отдельная кнопка */}
                       <button
                         type="button"
-                        onClick={() => setCartQty(product.id, qty - 1)}
+                        onClick={() => setCartQty(product.id, color, qty - 1)}
                         disabled={isDesktop && qty === 1}
                         aria-label={qty === 1 ? 'Убрать из корзины' : 'Меньше'}
                       >
@@ -65,7 +65,7 @@ export default function CartPage() {
                       <span aria-live="polite">{qty}</span>
                       <button
                         type="button"
-                        onClick={() => setCartQty(product.id, qty + 1)}
+                        onClick={() => setCartQty(product.id, color, qty + 1)}
                         disabled={qty >= MAX_QTY}
                         aria-label="Больше"
                       >
@@ -81,7 +81,7 @@ export default function CartPage() {
                 <button
                   type="button"
                   className="cart-line-remove"
-                  onClick={() => removeFromCart(product.id)}
+                  onClick={() => removeFromCart(product.id, color)}
                   aria-label="Удалить из корзины"
                   title="Удалить"
                 >

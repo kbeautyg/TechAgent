@@ -23,14 +23,15 @@ const specLine = (p: Product, n = 3) =>
   Object.entries(p.specs).slice(0, n).map(([k, v]) => translateSpecValue(k, v)).join(' · ')
 
 /* Витрина: товары в начале страницы. Всё — из каталога, цены тоже */
-const HERO_MAIN = 'iph16promax'
-const HERO_SIDE = ['ps5be', 'dysonairwrapc']
+const HERO_MAIN = 'iphone-18-pro-max-256-gb'
+const HERO_SIDE = ['iphone-duo-256-gb', 'galaxy-s26-ultra-256-gb']
 
 /** Плитка категории: фото — первый товар из списка, который есть в каталоге */
 const CATEGORY_PHOTO: Record<string, string> = {
-  'Смартфоны': 'iph16pro', 'Ноутбуки': 'macbookairm3256', 'Планшеты': 'ipadpro13256',
-  'Наушники': 'airpodspro2', 'Часы': 'awu2gps', 'Игровые консоли': 'ps5be',
-  'Камеры и дроны': 'djimini4b', 'Для дома': 'dysonairwrapc',
+  'Смартфоны': 'iphone-18-pro-256-gb', 'Ноутбуки': 'macbook-air-13-m5-10-8-16-gb-512-gb', 'Планшеты': 'ipad-pro-11-m5-256-gb-wi-fi',
+  'Наушники': 'airpods-max-2', 'Часы': 'apple-watch-ultra-4-49-mm-titan', 'Игровые консоли': 'playstation-5-pro',
+  'Камеры и дроны': 'dji-mini-5-pro-fly-more-combo-dji-rc-2', 'Для дома': 'dyson-airwrap-co-anda-2x',
+  'Телевизоры': 'samsung-oled-s95h-65-qe65s95h', 'Аксессуары': 'airtag-2-go-pokoleniya-1-sht',
 }
 
 const categories = categoryLandings.map((c) => {
@@ -48,32 +49,37 @@ const categories = categoryLandings.map((c) => {
 /** Полки с товарами: сначала выбранные вручную, потом остальные из тех же категорий — по цене */
 function shelf(ids: string[], cats: string[], limit = 10): Product[] {
   const first = pick(ids)
-  const rest = products
-    .filter((p) => p.inStock && cats.includes(p.category) && !first.includes(p))
-    .sort((a, b) => b.price - a.price)
-  return [...first, ...rest].slice(0, limit)
+  const taken = new Set(first.map((p) => p.family))
+  // Остальные — по одной самой доступной конфигурации на модель
+  const rest: Product[] = []
+  for (const p of products.filter((p) => p.inStock && cats.includes(p.category)).sort((a, b) => a.price - b.price)) {
+    if (taken.has(p.family)) continue
+    taken.add(p.family)
+    rest.push(p)
+  }
+  return [...first, ...rest.sort((a, b) => b.price - a.price)].slice(0, limit)
 }
 
 const shelves = [
   {
     title: 'Смартфоны',
     to: '/catalog/smartfony',
-    items: shelf(['iph16promax', 'iph16pro', 'iph16256', 'sgts25u256b', 'sgts25256b', 'xm14ult512b', 'sgzflip6256'], ['Смартфоны']),
+    items: shelf(['iphone-18-pro-256-gb', 'iphone-air-256-gb', 'iphone-17-256-gb', 'galaxy-s26-ultra-256-gb', 'galaxy-z-fold8-256-gb', 'pixel-11-pro-256-gb', 'galaxy-s26-256-gb', 'iphone-17e-256-gb'], ['Смартфоны']),
   },
   {
     title: 'Ноутбуки и планшеты',
     to: '/catalog/noutbuki',
-    items: shelf(['macbookairm3256', 'ipadpro13256'], ['Ноутбуки', 'Планшеты']),
+    items: shelf(['macbook-air-13-m5-10-8-16-gb-512-gb', 'ipad-pro-11-m5-256-gb-wi-fi', 'macbook-neo-13-a18-pro-6-5-8-gb-256-gb', 'ipad-air-11-m4-128-gb-wi-fi', 'galaxy-tab-s11-128-gb-wi-fi', 'macbook-pro-14-m5-10-10-16-gb-512-gb'], ['Ноутбуки', 'Планшеты']),
   },
   {
     title: 'Наушники и часы',
     to: '/catalog/naushniki',
-    items: shelf(['airpodspro2', 'sonywh1000xm5b', 'awu2gps'], ['Наушники', 'Часы']),
+    items: shelf(['airpods-pro-3', 'apple-watch-series-12-42-mm-alyuminiy', 'airpods-max-2', 'sony-wh-1000xm6', 'apple-watch-ultra-4-49-mm-titan', 'galaxy-buds4-pro', 'galaxy-watch8-44-mm'], ['Наушники', 'Часы']),
   },
   {
     title: 'Игры, дроны и техника для дома',
     to: '/catalog/igrovye-konsoli',
-    items: shelf(['ps5be', 'switcholed', 'djimini4b', 'dysonairwrapc', 'ps5de'], ['Игровые консоли', 'Камеры и дроны', 'Для дома']),
+    items: shelf(['playstation-5-pro', 'nintendo-switch-2', 'dyson-airwrap-co-anda-2x', 'dji-osmo-action-6-standard-combo', 'dyson-supersonic-nural', 'playstation-5-slim-1-tb', 'dji-osmo-pocket-4p-standard-combo'], ['Игровые консоли', 'Камеры и дроны', 'Для дома']),
   },
 ]
 
@@ -204,7 +210,7 @@ function SearchBar() {
           type="search"
           value={q}
           onChange={(e) => setQ(e.target.value)}
-          placeholder="iPhone 16, AirPods, PlayStation…"
+          placeholder="iPhone 18, AirPods, PlayStation…"
           aria-label="Поиск по каталогу"
           className="store-search-input flex-1 min-w-0 h-full bg-transparent border-none outline-none px-3 text-[16px] text-text-primary placeholder:text-text-muted"
         />

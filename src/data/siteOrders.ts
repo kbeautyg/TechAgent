@@ -36,7 +36,7 @@ export async function submitSiteOrder(items: CartItem[], c: SiteOrderContacts): 
   try {
     const r = await api<{ orderNumber: string; total: number }>('/orders', {
       ...c,
-      items: items.map((i) => ({ productId: i.product.id, qty: i.qty })),
+      items: items.map((i) => ({ productId: i.product.id, ...(i.color ? { color: i.color } : {}), qty: i.qty })),
       offerAccepted: true,
       pdConsent: true,
     })

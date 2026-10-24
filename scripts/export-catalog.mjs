@@ -23,6 +23,6 @@ const out = await build({
 const mod = await import('data:text/javascript;base64,' + Buffer.from(out.outputFiles[0].text).toString('base64'))
 const catalog = {}
 // Название — по-русски, как на сайте: оно попадает в письма и в кабинет покупателя
-for (const p of mod.products) catalog[p.id] = { name: mod.translateProductName(p.name), price: p.price, inStock: p.inStock }
+for (const p of mod.products) catalog[p.id] = { name: mod.translateProductName(p.name), price: p.price, inStock: p.inStock, colors: (p.colors || []).map((c) => c.name).filter(Boolean) }
 writeFileSync(join(root, 'api/catalog.json'), JSON.stringify(catalog))
 console.log(`✓ api/catalog.json: ${Object.keys(catalog).length} товаров`)

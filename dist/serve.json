@@ -92,6 +92,941 @@
       "source": "/catalog/arellapro",
       "destination": "/catalog/tehnika-dlya-doma",
       "type": 301
+    },
+    {
+      "source": "/catalog/iph15pm256w",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph15pm256n",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph15pm512w",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph15p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph15p512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph15p1tb",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph14pm256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph14pm512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph14p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph14p512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph12pm256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph12p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25u256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25u512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25u256t",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25p512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts25512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts24u256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts24u512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts24p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts24256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts23u256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts23p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgts23256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgzfold6256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgzfold5256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgzflip6256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgzflip5256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xm14ult512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xm14512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xm13ult512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xm13512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmrn14p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmrn14p512b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmrn13p256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmrn13256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmpf6256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmpf5256b",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmpadp12s256b",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xmpad7256b",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm3256",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm3512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm315256",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm315512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm2256",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookairm2512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro14m3256",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro14m3512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro14m3pro512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro14m3max512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro16m3pro512",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/macbookpro16m3max1tb",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadpro11256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadpro13256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadpro13512",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadair11256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadair11512",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadair13256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadmini128",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadmini256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipad64",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipad256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpods2",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpods2c",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpods3",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpods3c",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpodspro",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpodspro2",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpodsmax",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/airpodsmaxb",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/aw9s41m",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/aw9s45m",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/aw9s41g",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/awu2gps",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/awu2cel",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/awse2",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/awse2s",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgw6cl",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgw6clb",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgbuds3p",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonywh1000xm5b",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonywh1000xm5s",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonya7rb",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/djimini4b",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/djiair3",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/djimavic3",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/djiavata",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ps5be",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ps5de",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ps5pro",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xboxsx",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xboxss",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/switcholed",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/switcholedred",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dysonairwrapc",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dysonsupersonicb",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtvqn65b",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtvqn75b",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtvqn85b",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lgtvoledc",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xiamibanda8",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xiamibanda7",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtabs10256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtabs9ultra",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtabs8",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgbudslive",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonywh900nb",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/bosequc45",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgw6sm",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgw5pro",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/garminepix",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/garminfe965",
+      "destination": "/catalog/chasy",
+      "type": 301
+    },
+    {
+      "source": "/catalog/oneplus12256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/oneplus12512",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/oneplus11256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/pixel9pro256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/pixel9pro512",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/pixel9promax256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/motorola_razr_2024",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/huaweip70pro512",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/nothing2a256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/asurog9pro512",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lenox1carbonm4",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lenovox1carbonm3",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dellxps13",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dellxps15",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/asusvivobook15",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/msige76",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/roggm16",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/razorblade16",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ipadprom211256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtaba13256",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/surfacepro10",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/surfacelaptopstudio",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ankerusb",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/appleusbclight",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/appleusbcc",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/otterbox15pm",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/spigeniphone15pm",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ankerasync",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ankerpower20000",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/applepower20",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/samsungevob1tb",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtvq70d",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/hisenseqledu7g",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/tcl98c645",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sonybravia",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/beyerdt880",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/djimini3pro",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/gopohero12",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/goprohero11",
+      "destination": "/catalog/kamery-i-drony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dysonsupersonics",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtv85",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sgtvq90d",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph16pro",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph16promax",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/iph16256",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/oppofind6pro",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/vivox100ultra",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/honormagic6pro",
+      "destination": "/catalog/smartfony",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lenovotabp12",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/huaweimatepadt11",
+      "destination": "/catalog/planshety",
+      "type": 301
+    },
+    {
+      "source": "/catalog/msistealth16ai",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/gigaaeroq17",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/frameworklaptop",
+      "destination": "/catalog/noutbuki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/acer272x",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/asus27pro",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/lgultrawide38",
+      "destination": "/catalog/televizory",
+      "type": 301
+    },
+    {
+      "source": "/catalog/genericphonestand",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/appleairtagsingle",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/samsungq990b",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/jbltunebuds",
+      "destination": "/catalog/naushniki",
+      "type": 301
+    },
+    {
+      "source": "/catalog/applemag",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/daskeyboard",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/corsairrk",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xiaomilamp",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sharpi3000",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/nespresso",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/dysonmashup",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/sharkuv",
+      "destination": "/catalog/tehnika-dlya-doma",
+      "type": 301
+    },
+    {
+      "source": "/catalog/ps5controller",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/xboxcontroller",
+      "destination": "/catalog/igrovye-konsoli",
+      "type": 301
+    },
+    {
+      "source": "/catalog/wifiax200",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/meshwifi",
+      "destination": "/catalog/aksessuary",
+      "type": 301
+    },
+    {
+      "source": "/catalog/tizenphone",
+      "destination": "/catalog/chasy",
+      "type": 301
     }
   ],
   "rewrites": [
