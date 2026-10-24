@@ -45,6 +45,8 @@ def pick_specs(fid):
 YES_NO = {'да', 'нет', 'есть'}
 
 def summary(p, sp):
+    if p.get('summary'):
+        return p['summary']
     if p['category'] in ('Смартфоны', 'Планшеты'):
         # У моделей, собранных помощниками, ключи английские: display / chip / camera
         parts = [sp.get('Экран') or sp.get('display'), sp.get('Процессор') or sp.get('Система на чипе (SoC)') or sp.get('chip')]

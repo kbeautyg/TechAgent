@@ -10,7 +10,7 @@ import { submitSiteOrder, type SiteOrderContacts } from '../data/siteOrders'
 import ProductThumb from '../components/catalog/ProductThumb'
 import CartSummary from '../components/catalog/CartSummary'
 import { PageBar, StickyBar } from '../components/app/ui'
-import { DELIVERY_TERM, SUPPORT_EMAIL, LEGAL_NAME } from '../seo/site'
+import { DELIVERY_TERM, SUPPORT_EMAIL } from '../seo/site'
 import SdekPicker, { type SdekChoice } from '../components/catalog/SdekPicker'
 import { useSdekConfig } from '../utils/sdek'
 import { reachGoal } from '../lib/metrika'
@@ -210,7 +210,7 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
               <ShieldCheck size={22} className="text-primary flex-none" />
               <div className="min-w-0">
                 <div className="text-[15px] font-semibold text-text-primary">СБП — Система быстрых платежей</div>
-                <div className="text-[13px] text-text-muted">Деньги поступают напрямую продавцу — {LEGAL_NAME}</div>
+                <div className="text-[13px] text-text-muted">По ссылке или QR-коду</div>
               </div>
             </div>
             <p className="text-[14px] leading-relaxed text-text-secondary mt-4 mb-0">

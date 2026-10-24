@@ -206,7 +206,7 @@ export default function PaymentPage() {
             <span className="font-medium text-sm text-text-primary">СБП (Система быстрых платежей)</span>
           </label>
           <p className="text-xs text-text-muted mt-2">
-            Деньги поступают напрямую {SELLER.name}. Не передавайте деньги за товар в пункте выдачи.
+            Не передавайте деньги за товар в пункте выдачи.
           </p>
         </div>
 
