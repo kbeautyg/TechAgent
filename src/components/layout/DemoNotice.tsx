@@ -10,7 +10,7 @@ export default function DemoNotice() {
   const shown = useSyncExternalStore(noop, () => DEMO_SESSION, () => false)
   if (!shown) return null
   return (
-    <div className="bg-amber-100 border-b border-amber-300 text-amber-900 text-sm">
+    <div className="print:hidden bg-amber-100 border-b border-amber-300 text-amber-900 text-sm">
       <div className="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center justify-between gap-2">
         <p>Тестовый доступ: демо-данные, видны только в этом браузере.</p>
         <button
