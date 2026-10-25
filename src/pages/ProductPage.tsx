@@ -4,6 +4,7 @@ import { getProductImage, withVersion, PRODUCT_IMAGE_SIZE } from '../utils/produ
 import { translateSpecKey, translateSpecValue, translateProductName } from '../utils/translate'
 import { getCategoryByName } from '../seo/categories'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
+import StockFlag from '../components/catalog/StockFlag'
 import { ShoppingCart, Check, Minus, Plus, Truck, CreditCard, RotateCcw } from 'lucide-react'
 import { SDEK_DELIVERY_PRICE } from '../seo/site'
 import { formatPrice, priceFor, hasColorPrices } from '../utils/calculate'
@@ -136,7 +137,7 @@ export default function ProductPage() {
         <div className="pp-gallery">
           <div className="pp-gallery-main">
             <div className={`pp-gallery-bg ${bgClass}`} />
-            {product.inStock && <span className="pp-gbadge pp-gbadge-stock">Доступен к заказу</span>}
+            {product.inStock && <StockFlag variant="page" />}
             {!product.inStock && <span className="pp-gbadge pp-gbadge-out">Недоступен</span>}
             {image ? (
               <img key={image} src={image} alt={`${translateProductName(product.name)}${colorName && product.colors.length > 1 ? `, ${colorName}` : ''}`}
@@ -275,7 +276,7 @@ export default function ProductPage() {
               <Link to={`/catalog/${p.id}`} key={p.id} className="product-card">
                 <div className="product-img">
                   <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                  {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
+                  {p.inStock ? <StockFlag /> : <span className="cbadge cbadge-out">Недоступен</span>}
                   {relImg ? (
                     <img src={relImg} alt={translateProductName(p.name)} width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE} className="product-real-img" loading="lazy" />
                   ) : (

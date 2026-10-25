@@ -108,7 +108,7 @@ export default function HomePage() {
                 Станьте пунктом выдачи электроники <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span>
               </h1>
               <p className="text-base sm:text-lg text-text-secondary leading-relaxed mb-6 sm:mb-8 max-w-xl sm:mx-auto lg:mx-0">
-                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ООО&nbsp;«ТехЭйджент», покупатель платит продавцу напрямую через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
+                Оформляйте заказы покупателей и&nbsp;выдавайте товар в&nbsp;своей точке. Продаёт товар ООО&nbsp;«ТехЭйджент», покупатель платит продавцу через СБП, а&nbsp;вам ТехЭйджент платит вознаграждение
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
@@ -337,7 +337,7 @@ export default function HomePage() {
             </h2>
             <p className="text-base text-text-secondary leading-relaxed max-w-3xl mb-6">
               Товар продаёт ООО&nbsp;«ТехЭйджент». Заказ оформляется в пункте выдачи партнёра TechAgent, оплата — через СБП
-              напрямую продавцу, товар выдаётся в том же пункте. Деньги за товар в пункте выдачи не принимают.
+              продавцу, товар выдаётся в том же пункте. Деньги за товар в пункте выдачи не принимают.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
               <Link to="/catalog" className="btn-primary inline-flex items-center justify-center gap-2 px-6 min-h-[52px] text-base font-semibold no-underline">
@@ -387,7 +387,7 @@ export default function HomePage() {
         {/* ===== CTA ===== */}
         <div className="pt-12 sm:pt-24 pb-4">
           <div className="bg-primary rounded-[28px] sm:rounded-3xl py-10 sm:py-16 px-6 sm:px-8 text-left sm:text-center text-white">
-            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром <span className="text-brand-red">Tech</span>Agent</h2>
+            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром TechAgent</h2>
             <p className="text-white/80 text-base leading-relaxed mb-7 sm:mb-8">Оставьте заявку — после проверки ТехЭйджент откроет вам доступ в кабинет</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 min-h-[54px] bg-white text-text-primary rounded-2xl text-base font-semibold no-underline hover:bg-white/90 transition-colors">

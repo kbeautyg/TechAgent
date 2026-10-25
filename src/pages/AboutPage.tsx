@@ -107,7 +107,7 @@ export default function AboutPage() {
             <span className="text-brand-red">Tech</span><span className="text-primary">Agent</span> — электроника с&nbsp;получением в&nbsp;пунктах выдачи партнёров
           </h1>
           <p className="text-base sm:text-lg text-text-secondary max-w-2xl sm:mx-auto leading-relaxed">
-            Продавец — ООО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, а&nbsp;на&nbsp;сайте можно заказать самому с&nbsp;получением в&nbsp;пункте СДЭК. Покупатели платят продавцу напрямую через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
+            Продавец — ООО&nbsp;«ТехЭйджент». Партнёры TechAgent оформляют заказы покупателей и&nbsp;выдают товар в&nbsp;своих точках, а&nbsp;на&nbsp;сайте можно заказать самому с&nbsp;получением в&nbsp;пункте СДЭК. Покупатели платят продавцу через СБП. В&nbsp;каталоге — Apple, Samsung, Xiaomi, Dyson, Sony, DJI и&nbsp;другие бренды.
           </p>
         </div>
       </section>
@@ -179,7 +179,7 @@ export default function AboutPage() {
           <div className="bg-bg-section rounded-[24px] sm:rounded-3xl p-5 sm:p-8 mt-3 sm:mt-4">
             <h3 className="text-lg font-extrabold text-text-primary tracking-tight mb-3">Договоры</h3>
             <p className="text-[15px] text-text-secondary leading-relaxed max-w-3xl">
-              Покупатель заключает договор купли-продажи с ООО&nbsp;«ТехЭйджент» и платит ему напрямую — условия в{' '}
+              Покупатель заключает договор купли-продажи с ООО&nbsp;«ТехЭйджент» и платит ему — условия в{' '}
               <Link to="/legal/sale-offer" className="text-primary font-semibold">оферте купли-продажи</Link>. Партнёр работает
               по <Link to="/legal/offer" className="text-primary font-semibold">агентскому договору-оферте</Link>: оформляет заказы и
               выдаёт товар, а вознаграждение получает от ТехЭйджент.{' '}
@@ -191,7 +191,7 @@ export default function AboutPage() {
         {/* ===== CTA ===== */}
         <div className="mb-14 sm:mb-20">
           <div className="bg-primary rounded-[28px] sm:rounded-3xl py-10 sm:py-16 px-6 sm:px-8 text-left sm:text-center text-white">
-            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром <span className="text-brand-red">Tech</span>Agent</h2>
+            <h2 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight mb-3">Станьте партнёром TechAgent</h2>
             <p className="text-white/80 text-base leading-relaxed mb-7 sm:mb-8 max-w-xl sm:mx-auto">Оставьте заявку — после проверки ТехЭйджент откроет вам доступ в&nbsp;кабинет для заказов покупателей</p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <Link to="/register" className="inline-flex items-center justify-center gap-2 px-8 min-h-[54px] bg-white text-text-primary rounded-2xl text-[15px] font-semibold no-underline hover:bg-white/90 transition-colors">

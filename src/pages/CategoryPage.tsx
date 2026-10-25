@@ -7,6 +7,7 @@ import { translateProductName } from '../utils/translate'
 import { categoryLandings, type CategoryLanding } from '../seo/categories'
 import { pluralRu } from '../seo/site'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
+import StockFlag from '../components/catalog/StockFlag'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -36,7 +37,7 @@ export default function CategoryPage({ landing }: Props) {
 
   return (
     <div className="bg-white min-h-screen">
-      <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
 
         {/* Breadcrumb */}
         <nav className="pp-breadcrumb !px-0 !pt-0" aria-label="Хлебные крошки">
@@ -93,7 +94,7 @@ export default function CategoryPage({ landing }: Props) {
                 <Link to={`/catalog/${p.id}`} className="product-card">
                   <div className="product-img">
                     <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                    {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
+                    {p.inStock ? <StockFlag /> : <span className="cbadge cbadge-out">Недоступен</span>}
                     {imgUrl ? (
                       <img src={imgUrl} alt={translateProductName(p.name)}
                         width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}

@@ -7,6 +7,7 @@ import { translateColor, translateStorage, translateProductName } from '../utils
 import { categoryLandings } from '../seo/categories'
 import { pluralRu, LEGAL_NAME } from '../seo/site'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
+import StockFlag from '../components/catalog/StockFlag'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 
@@ -346,7 +347,7 @@ export default function CatalogPage() {
   return (
     <div className="catalog-root">
       {/* ── SEO-шапка каталога ── */}
-      <header className="catalog-header max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-1">
+      <header className="catalog-header max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-1">
         <h1 className="text-[26px] sm:text-[32px] font-extrabold tracking-tight leading-tight text-text-primary mb-2">
           Каталог электроники
         </h1>
@@ -428,7 +429,7 @@ export default function CatalogPage() {
                   <Link to={`/catalog/${p.id}${p.pickedColor ? `?color=${encodeURIComponent(p.pickedColor.name)}` : ''}`} className="product-card">
                     <div className="product-img">
                       <div className={`product-img-bg ${brandBgClass[p.brand] || 'cbg-default'}`} />
-                      {p.inStock ? <span className="cbadge cbadge-stock">Доступен к заказу</span> : <span className="cbadge cbadge-out">Недоступен</span>}
+                      {p.inStock ? <StockFlag /> : <span className="cbadge cbadge-out">Недоступен</span>}
                       {imgUrl ? (
                         <img src={imgUrl} alt={translateProductName(p.name)}
                           width={PRODUCT_IMAGE_SIZE} height={PRODUCT_IMAGE_SIZE}
@@ -494,7 +495,7 @@ export default function CatalogPage() {
       </main>
 
       {/* ── Условия покупки ── */}
-      <section id="kak-kupit" className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16 scroll-mt-24">
+      <section id="kak-kupit" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16 scroll-mt-24">
         <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">Как купить</h2>
         <PurchaseTerms
           foot={<>Есть розничная точка? <Link to="/register" className="text-primary font-semibold">Станьте партнёром TechAgent</Link>: оформляйте заказы покупателей и выдавайте товар в своей точке.</>}
