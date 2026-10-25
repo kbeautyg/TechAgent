@@ -495,15 +495,10 @@ export default function CatalogPage() {
 
       {/* ── Условия покупки ── */}
       <section id="kak-kupit" className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-8 pt-4 pb-16 scroll-mt-24">
-        <div className="max-w-3xl">
-          <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">Как купить</h2>
-          <PurchaseTerms />
-          <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
-            Есть розничная точка?{' '}
-            <Link to="/register" className="text-primary font-semibold">Станьте партнёром TechAgent</Link>
-            : оформляйте заказы покупателей и выдавайте товар в своей точке. Вознаграждение платит ТехЭйджент.
-          </p>
-        </div>
+        <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">Как купить</h2>
+        <PurchaseTerms
+          foot={<>Есть розничная точка? <Link to="/register" className="text-primary font-semibold">Станьте партнёром TechAgent</Link>: оформляйте заказы покупателей и выдавайте товар в своей точке.</>}
+        />
       </section>
 
       {/* ═══ Mobile Category Popup (Bottom Sheet) ═══ */}

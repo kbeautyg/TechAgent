@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Truck, CreditCard, Clock, RotateCcw, type LucideIcon } from 'lucide-react'
 import { LEGAL_NAME, SALE_OFFER_PATH, DELIVERY_TERM, PICKUP_POINTS, SDEK_DELIVERY_PRICE } from '../../seo/site'
@@ -7,6 +8,7 @@ import { formatPrice } from '../../utils/calculate'
  * Условия покупки — один источник для каталога, посадочных категорий и карточек товара.
  * Формулировки совпадают с офертой купли-продажи: продавец ТехЭйджент; купить можно на сайте (доставка СДЭК)
  * или через партнёра — агента и пункт выдачи. Разложены по темам короткими пунктами, чтобы читалось с телефона.
+ * Одна панель на всю ширину: четыре темы колонками на компьютере, по две на планшете, списком на телефоне.
  */
 const sdekDelivery =
   SDEK_DELIVERY_PRICE === null
@@ -33,6 +35,7 @@ const GROUPS: { icon: LucideIcon; title: string; items: string[]; note?: string 
       'Через СБП по ссылке или QR-коду.',
       'Заказ на сайте: сначала проверяем наличие, затем присылаем ссылку на оплату.',
       'Цена товара окончательная.',
+      'Отказаться от заказа можно до получения — деньги вернём полностью.',
     ],
   },
   {
@@ -48,19 +51,19 @@ const GROUPS: { icon: LucideIcon; title: string; items: string[]; note?: string 
     icon: RotateCcw,
     title: 'Возврат и гарантия',
     items: [
-      'До получения от заказа можно отказаться — деньги возвращаются полностью.',
       'Гарантия — 14 дней.',
-      'Технически сложный товар с недостатком — вернуть или заменить в течение 15 дней после получения.',
-      'Исправный товар — вернуть в течение 7 дней, если нет следов использования, сохранены комплектация и акт приёма-передачи. Из суммы вычитаются расходы на доставку возвращённого товара.',
-      'Деньги возвращаются тем же способом в течение 10 дней.',
+      'Технически сложный товар с недостатком — возврат или замена в течение 15 дней.',
+      'Исправный товар — возврат в течение 7 дней: без следов использования, с комплектацией и актом. Вычитается стоимость обратной доставки.',
+      'Деньги возвращаем тем же способом в течение 10 дней.',
     ],
     note: 'По Закону РФ «О защите прав потребителей».',
   },
 ]
 
-export default function PurchaseTerms({ className = '' }: { className?: string }) {
+/** foot — строка для конкретной страницы под условиями: куда идти дальше */
+export default function PurchaseTerms({ className = '', foot }: { className?: string; foot?: ReactNode }) {
   return (
-    <div className={className}>
+    <div className={`terms-panel ${className}`}>
       <div className="terms-grid">
         {GROUPS.map(({ icon: Icon, title, items, note }) => (
           <section key={title} className="terms-group">
@@ -75,10 +78,13 @@ export default function PurchaseTerms({ className = '' }: { className?: string }
           </section>
         ))}
       </div>
-      <p className="terms-foot">
-        Продавец — {LEGAL_NAME}. Полные условия — в{' '}
-        <Link to={SALE_OFFER_PATH} className="text-primary font-semibold">публичной оферте купли-продажи</Link>.
-      </p>
+      <div className="terms-foot">
+        <p>
+          Продавец — {LEGAL_NAME}. Полные условия — в{' '}
+          <Link to={SALE_OFFER_PATH} className="text-primary font-semibold">публичной оферте купли-продажи</Link>.
+        </p>
+        {foot && <p>{foot}</p>}
+      </div>
     </div>
   )
 }

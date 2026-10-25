@@ -39,7 +39,7 @@ export default function CategoryPage({ landing }: Props) {
       <div className="max-w-[1200px] mx-auto px-4 sm:px-6 lg:px-8 pt-8 pb-16">
 
         {/* Breadcrumb */}
-        <nav className="pp-breadcrumb" aria-label="Хлебные крошки">
+        <nav className="pp-breadcrumb !px-0 !pt-0" aria-label="Хлебные крошки">
           <Link to="/">Главная</Link>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 18l6-6-6-6"/></svg>
           <Link to="/catalog">Каталог</Link>
@@ -120,15 +120,13 @@ export default function CategoryPage({ landing }: Props) {
         </div>
 
         {/* Условия покупки */}
-        <section id="kak-kupit" className="mt-14 max-w-3xl scroll-mt-24">
+        <section id="kak-kupit" className="mt-14 scroll-mt-24">
           <h2 className="text-[22px] font-extrabold tracking-tight text-text-primary mb-4">
             Как купить
           </h2>
-          <PurchaseTerms />
-          <p className="mt-3 text-[14px] text-text-secondary leading-relaxed">
-            Порядок заказа по шагам — на странице{' '}
-            <Link to="/how-it-works" className="text-primary font-semibold">«Как это работает»</Link>.
-          </p>
+          <PurchaseTerms
+            foot={<>Порядок заказа по шагам — на странице <Link to="/how-it-works" className="text-primary font-semibold">«Как это работает»</Link>.</>}
+          />
         </section>
 
         {/* Other categories */}
