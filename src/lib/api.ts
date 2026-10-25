@@ -53,6 +53,50 @@ export interface BuyerProfile {
   demo?: boolean
 }
 
+/** Учётка партнёра на сервере: заведена сотрудником по одобренной заявке */
+export interface PartnerProfile {
+  id: number
+  email: string
+  companyName: string
+  inn: string
+  ogrn: string
+  pointAddress: string
+  contactName: string
+  phone: string
+  bankName: string
+  bik: string
+  account: string
+  rewardPercent: number
+  /** Вошёл по временному паролю и ещё не задал свой */
+  mustChangePassword: boolean
+  /** Когда партнёр сам отметил согласие с агентским договором-офертой (п. 2.1); null — ещё не отметил */
+  offerAcceptedAt: string | null
+  offerEdition: string
+  createdAt: string
+  /** Только для сотрудников: адрес, с которого отмечено согласие */
+  offerAcceptIp?: string
+}
+
+/** Заявка партнёра с /register — для сотрудников */
+export interface PartnerApplicationView {
+  id: number
+  companyName: string
+  inn: string
+  ogrn: string
+  pointAddress: string
+  contactName: string
+  phone: string
+  email: string
+  bankName: string
+  bik: string
+  account: string
+  comment: string
+  status: 'NEW' | 'APPROVED' | 'DECLINED'
+  declineReason: string
+  partnerId: number | null
+  createdAt: string
+}
+
 export class ApiError extends Error {
   status: number
   fields?: string[]
@@ -91,7 +135,10 @@ export function apiErrorText(e: unknown): string {
     case 'password_wrong': return 'Неверный пароль.'
     case 'staff_not_configured': return 'Вход для сотрудников ещё не настроен.'
     case 'auth': return 'Войдите ещё раз.'
-    case 'not_found': return 'Заказ не найден.'
+    case 'not_found': return 'Не найдено — обновите страницу.'
+    case 'email_taken': return 'Партнёр с этим email уже есть.'
+    case 'decided': return 'По заявке уже есть решение — обновите страницу.'
+    case 'fields': return 'Проверьте заполненные поля.'
     default: return 'Что-то пошло не так. Попробуйте ещё раз.'
   }
 }

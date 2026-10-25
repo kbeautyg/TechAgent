@@ -8,6 +8,8 @@
  * Покупатель: оформляет заказ → входит по коду на email → видит свои заказы и этапы.
  * Сотрудник ТехЭйджент (/staff): входит по паролю → подтверждает наличие, даёт ссылку на оплату,
  * отмечает оплату, отправку (трек СДЭК), прибытие и получение. Каждое действие уходит покупателю письмом.
+ * Партнёр: оставляет заявку на /register → сотрудник одобряет её в /staff/partners → партнёру уходит письмо
+ * с временным паролем → при первом входе он задаёт свой пароль и сам отмечает согласие с агентским договором-офертой.
  *
  * Настройки — переменные окружения (на сервере /etc/techagent-api.env, пример: api/techagent-api.env.example).
  */
@@ -35,6 +37,10 @@ const ORDERS_EMAIL_TO = env('ORDERS_EMAIL_TO', '')
 const STAFF_PASSWORD_HASH = env('STAFF_PASSWORD_HASH', '')
 /** Локальная разработка: код входа возвращается в ответе, cookie без Secure */
 const DEV = env('DEV') === '1'
+/** Куда приходят заявки партнёров (сотрудникам ТехЭйджент) */
+const PARTNERS_EMAIL_TO = env('PARTNERS_EMAIL_TO', 'partners@techagent.pro')
+/** Редакция агентского договора-оферты, с которой партнёр соглашается при первом входе (src/data/documents.ts, EDITION_DATE) */
+const OFFER_EDITION = '10.10.2026'
 const PUBLIC_URL = env('PUBLIC_URL', 'https://techagent.pro')
 /** Ключ JavaScript API Яндекс Карт — открытый по природе (ограничивается адресом сайта в кабинете Яндекса) */
 const YMAPS_KEY = env('YMAPS_KEY', '')
@@ -109,7 +115,52 @@ db.exec(`
     expires_at INTEGER NOT NULL,
     created_at TEXT NOT NULL
   );
+  CREATE TABLE IF NOT EXISTS partner_applications (
+    id INTEGER PRIMARY KEY,
+    company_name TEXT NOT NULL,
+    inn TEXT NOT NULL,
+    ogrn TEXT NOT NULL,
+    point_address TEXT NOT NULL,
+    contact_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    email TEXT NOT NULL,
+    bank_name TEXT NOT NULL,
+    bik TEXT NOT NULL,
+    account TEXT NOT NULL,
+    comment TEXT NOT NULL DEFAULT '',
+    status TEXT NOT NULL DEFAULT 'NEW',
+    decline_reason TEXT NOT NULL DEFAULT '',
+    partner_id INTEGER,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );
+  CREATE TABLE IF NOT EXISTS partners (
+    id INTEGER PRIMARY KEY,
+    email TEXT NOT NULL UNIQUE,
+    company_name TEXT NOT NULL,
+    inn TEXT NOT NULL,
+    ogrn TEXT NOT NULL,
+    point_address TEXT NOT NULL,
+    contact_name TEXT NOT NULL,
+    phone TEXT NOT NULL,
+    bank_name TEXT NOT NULL,
+    bik TEXT NOT NULL,
+    account TEXT NOT NULL,
+    reward_percent REAL NOT NULL,
+    password_hash TEXT NOT NULL,
+    must_change_password INTEGER NOT NULL DEFAULT 1,
+    offer_accepted_at TEXT,
+    offer_edition TEXT NOT NULL DEFAULT '',
+    offer_accept_ip TEXT NOT NULL DEFAULT '',
+    offer_accept_ua TEXT NOT NULL DEFAULT '',
+    application_id INTEGER,
+    created_at TEXT NOT NULL,
+    updated_at TEXT NOT NULL
+  );
 `)
+
+/* Сессия партнёра: role = 'partner', partner_id — его учётка */
+if (!db.prepare('PRAGMA table_info(sessions)').all().some((c) => c.name === 'partner_id')) db.exec('ALTER TABLE sessions ADD COLUMN partner_id INTEGER')
 
 /* Колонки, добавленные позже: выбранный на карте пункт СДЭК */
 for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"], ['pickup_type', "TEXT NOT NULL DEFAULT 'SDEK'"]]) {
@@ -298,11 +349,11 @@ function loginLink(buyerId, to) {
   return `${PUBLIC_URL}/api/auth/link?t=${token}&to=${encodeURIComponent(to)}`
 }
 
-function openSession(res, role, buyerId) {
+function openSession(res, role, buyerId, partnerId) {
   const token = crypto.randomBytes(32).toString('base64url')
   const days = role === 'staff' ? 7 : 30
-  db.prepare('INSERT INTO sessions (token_hash, role, buyer_id, expires_at, created_at) VALUES (?, ?, ?, ?, ?)')
-    .run(sha(token), role, buyerId ?? null, Date.now() + days * 86400_000, now())
+  db.prepare('INSERT INTO sessions (token_hash, role, buyer_id, partner_id, expires_at, created_at) VALUES (?, ?, ?, ?, ?, ?)')
+    .run(sha(token), role, buyerId ?? null, partnerId ?? null, Date.now() + days * 86400_000, now())
   res.setHeader('Set-Cookie', sessionCookie(token, days * 86400))
 }
 
@@ -600,6 +651,10 @@ function me(req, res) {
   const s = session(req)
   if (!s) return send(res, 200, { role: null })
   if (s.role === 'staff') return send(res, 200, { role: 'staff' })
+  if (s.role === 'partner') {
+    const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id)
+    return send(res, 200, p ? { role: 'partner', partner: viewPartner(p) } : { role: null })
+  }
   const b = db.prepare('SELECT * FROM buyers WHERE id = ?').get(s.buyer_id)
   if (!b) return send(res, 200, { role: null })
   send(res, 200, {
@@ -694,6 +749,193 @@ async function staffNote(req, res, number) {
   send(res, 200, { ok: true })
 }
 
+/* ── Партнёры: заявка → одобрение сотрудником → письмо с доступом → первый вход с согласием на оферту ── */
+
+/** Пароль партнёра: scrypt$соль$хэш — тот же формат, что у пароля сотрудников */
+function hashPassword(password) {
+  const salt = crypto.randomBytes(16)
+  return `scrypt$${salt.toString('base64')}$${crypto.scryptSync(password, salt, 64).toString('base64')}`
+}
+function checkPassword(password, stored) {
+  const [scheme, salt, hash] = String(stored || '').split('$')
+  if (scheme !== 'scrypt' || !salt || !hash) return false
+  const got = crypto.scryptSync(password, Buffer.from(salt, 'base64'), 64)
+  const want = Buffer.from(hash, 'base64')
+  return got.length === want.length && crypto.timingSafeEqual(got, want)
+}
+/** Временный пароль из письма: без похожих букв и цифр (0/O, 1/l/I), чтобы его можно было продиктовать */
+function tempPassword() {
+  const abc = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789'
+  return Array.from({ length: 10 }, () => abc[crypto.randomInt(abc.length)]).join('')
+}
+
+const APP_FIELDS = [
+  ['companyName', 'company_name', 300], ['inn', 'inn', 12], ['ogrn', 'ogrn', 15], ['pointAddress', 'point_address', 500],
+  ['contactName', 'contact_name', 200], ['phone', 'phone', 40], ['email', 'email', 200], ['bankName', 'bank_name', 300],
+  ['bik', 'bik', 9], ['account', 'account', 20], ['comment', 'comment', 1000],
+]
+function viewApplication(a) {
+  const v = Object.fromEntries(APP_FIELDS.map(([k, col]) => [k, a[col]]))
+  return { id: a.id, ...v, status: a.status, declineReason: a.decline_reason, partnerId: a.partner_id, createdAt: a.created_at, updatedAt: a.updated_at }
+}
+function viewPartner(p, forStaff = false) {
+  const v = {
+    id: p.id,
+    email: p.email,
+    companyName: p.company_name,
+    inn: p.inn,
+    ogrn: p.ogrn,
+    pointAddress: p.point_address,
+    contactName: p.contact_name,
+    phone: p.phone,
+    bankName: p.bank_name,
+    bik: p.bik,
+    account: p.account,
+    rewardPercent: p.reward_percent,
+    mustChangePassword: Boolean(p.must_change_password),
+    offerAcceptedAt: p.offer_accepted_at || null,
+    offerEdition: p.offer_edition,
+    createdAt: p.created_at,
+  }
+  if (forStaff) Object.assign(v, { offerAcceptIp: p.offer_accept_ip, applicationId: p.application_id })
+  return v
+}
+
+/** Заявка с /register. Сохраняется в базе, сотрудникам — письмо, заявителю — подтверждение */
+async function partnerApplication(req, res) {
+  if (limited('app:' + ip(req), 5, 600_000)) fail(429, 'rate')
+  const b = await readJson(req)
+  const d = Object.fromEntries(APP_FIELDS.map(([k, , max]) => [k, clean(b[k], max)]))
+  d.email = d.email.toLowerCase()
+  const phone = normPhone(d.phone)
+  const errors = []
+  for (const k of ['companyName', 'pointAddress', 'contactName', 'bankName']) if (!d[k]) errors.push(k)
+  if (!phone) errors.push('phone')
+  if (!/^(\d{10}|\d{12})$/.test(d.inn)) errors.push('inn')
+  if (!/^(\d{13}|\d{15})$/.test(d.ogrn)) errors.push('ogrn')
+  if (!/^\d{9}$/.test(d.bik)) errors.push('bik')
+  if (!/^\d{20}$/.test(d.account)) errors.push('account')
+  if (!EMAIL_RE.test(d.email)) errors.push('email')
+  if (errors.length) fail(422, 'fields', { fields: errors })
+  d.phone = phone
+  const t = now()
+  const cols = APP_FIELDS.map(([, col]) => col)
+  const r = db.prepare(`INSERT INTO partner_applications (${cols.join(', ')}, created_at, updated_at) VALUES (${cols.map(() => '?').join(', ')}, ?, ?)`)
+    .run(...APP_FIELDS.map(([k]) => d[k]), t, t)
+  queueMicrotask(() => {
+    sendMail(PARTNERS_EMAIL_TO, ...letters.staffNewApplication(d, PUBLIC_URL), d.email)
+    sendMail(d.email, ...letters.applicationReceived(d), PARTNERS_EMAIL_TO)
+  })
+  console.log(`partner application ${r.lastInsertRowid}`)
+  send(res, 200, { ok: true })
+}
+
+async function partnerLogin(req, res) {
+  const b = await readJson(req)
+  const email = clean(b.email, 200).toLowerCase()
+  if (limited('plogin:' + ip(req), 20, 3600_000) || limited('plogin:' + email, 10, 3600_000)) fail(429, 'rate')
+  const p = db.prepare('SELECT * FROM partners WHERE email = ?').get(email)
+  // Неизвестный email и неверный пароль — одна и та же ошибка: по ней нельзя узнать, кто партнёр
+  if (!p || !checkPassword(clean(b.password, 200), p.password_hash)) fail(400, 'password_wrong')
+  openSession(res, 'partner', null, p.id)
+  send(res, 200, { ok: true })
+}
+
+function needPartner(req) {
+  const s = session(req)
+  if (!s || s.role !== 'partner') fail(401, 'auth')
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id)
+  if (!p) fail(401, 'auth')
+  return p
+}
+
+/** Первый вход: свой пароль вместо временного и согласие с офертой — его ставит только сам партнёр (п. 2.1).
+ *  Запоминаем, когда, с какого адреса и какой браузер — это подтверждение акцепта */
+async function partnerActivate(req, res) {
+  const p = needPartner(req)
+  const b = await readJson(req)
+  const password = typeof b.password === 'string' ? b.password : ''
+  if (p.must_change_password && password.length < 8) fail(422, 'fields', { fields: ['password'] })
+  if (password && password.length > 200) fail(422, 'fields', { fields: ['password'] })
+  if (!p.offer_accepted_at && b.acceptOffer !== true) fail(422, 'fields', { fields: ['offer'] })
+  const t = now()
+  if (password) db.prepare('UPDATE partners SET password_hash = ?, must_change_password = 0, updated_at = ? WHERE id = ?').run(hashPassword(password), t, p.id)
+  if (!p.offer_accepted_at) {
+    db.prepare('UPDATE partners SET offer_accepted_at = ?, offer_edition = ?, offer_accept_ip = ?, offer_accept_ua = ?, updated_at = ? WHERE id = ?')
+      .run(t, OFFER_EDITION, ip(req), clean(req.headers['user-agent'], 300), t, p.id)
+    console.log(`partner ${p.id} accepted offer`)
+  }
+  send(res, 200, { ok: true, partner: viewPartner(db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id)) })
+}
+
+/** Контакты партнёр меняет сам; наименование, ИНН и реквизиты — через partners@techagent.pro */
+async function partnerProfile(req, res) {
+  const p = needPartner(req)
+  const b = await readJson(req)
+  const contactName = clean(b.contactName, 200)
+  const phone = normPhone(clean(b.phone, 40))
+  if (!contactName || !phone) fail(422, 'fields', { fields: [...(contactName ? [] : ['contactName']), ...(phone ? [] : ['phone'])] })
+  db.prepare('UPDATE partners SET contact_name = ?, phone = ?, updated_at = ? WHERE id = ?').run(contactName, phone, now(), p.id)
+  send(res, 200, { ok: true, partner: viewPartner(db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id)) })
+}
+
+function staffPartners(req, res) {
+  needStaff(req)
+  const applications = db.prepare('SELECT * FROM partner_applications ORDER BY id DESC LIMIT 500').all().map(viewApplication)
+  const partners = db.prepare('SELECT * FROM partners ORDER BY id DESC').all().map((p) => viewPartner(p, true))
+  send(res, 200, { applications, partners })
+}
+
+/** Одобрить заявку: заводим учётку с временным паролем и пишем партнёру. Договор он заключит сам при первом входе */
+async function staffApprove(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const a = db.prepare('SELECT * FROM partner_applications WHERE id = ?').get(Number(id))
+  if (!a) fail(404, 'not_found')
+  if (a.status !== 'NEW') fail(409, 'decided')
+  const percent = Number(b.rewardPercent)
+  if (!Number.isFinite(percent) || percent <= 0 || percent > 50) fail(422, 'fields', { fields: ['rewardPercent'] })
+  if (db.prepare('SELECT 1 FROM partners WHERE email = ?').get(a.email)) fail(409, 'email_taken')
+  const password = tempPassword()
+  const t = now()
+  const r = db.prepare(`INSERT INTO partners (email, company_name, inn, ogrn, point_address, contact_name, phone, bank_name, bik, account,
+      reward_percent, password_hash, must_change_password, application_id, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?)`)
+    .run(a.email, a.company_name, a.inn, a.ogrn, a.point_address, a.contact_name, a.phone, a.bank_name, a.bik, a.account,
+      Math.round(percent * 100) / 100, hashPassword(password), a.id, t, t)
+  const partnerId = Number(r.lastInsertRowid)
+  db.prepare("UPDATE partner_applications SET status = 'APPROVED', partner_id = ?, updated_at = ? WHERE id = ?").run(partnerId, t, a.id)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(partnerId)
+  queueMicrotask(() => sendMail(p.email, ...letters.partnerAccess(viewPartner(p), password, PUBLIC_URL), PARTNERS_EMAIL_TO))
+  console.log(`partner ${partnerId} approved from application ${a.id}`)
+  // Пароль показываем сотруднику один раз — на случай, если письмо не дойдёт и его надо будет продиктовать
+  send(res, 200, { ok: true, partner: viewPartner(p, true), password, mail: mailReady() })
+}
+
+async function staffDecline(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const a = db.prepare('SELECT * FROM partner_applications WHERE id = ?').get(Number(id))
+  if (!a) fail(404, 'not_found')
+  if (a.status !== 'NEW') fail(409, 'decided')
+  const reason = clean(b.reason, 500)
+  db.prepare("UPDATE partner_applications SET status = 'DECLINED', decline_reason = ?, updated_at = ? WHERE id = ?").run(reason, now(), a.id)
+  if (b.notify !== false) queueMicrotask(() => sendMail(a.email, ...letters.applicationDeclined(viewApplication(a), reason), PARTNERS_EMAIL_TO))
+  send(res, 200, { ok: true })
+}
+
+/** Новый временный пароль: старые входы партнёра закрываются, при входе он снова задаст свой пароль */
+async function staffResetPartner(req, res, id) {
+  needStaff(req)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id))
+  if (!p) fail(404, 'not_found')
+  const password = tempPassword()
+  db.prepare('UPDATE partners SET password_hash = ?, must_change_password = 1, updated_at = ? WHERE id = ?').run(hashPassword(password), now(), p.id)
+  db.prepare("DELETE FROM sessions WHERE role = 'partner' AND partner_id = ?").run(p.id)
+  queueMicrotask(() => sendMail(p.email, ...letters.partnerAccess(viewPartner(p), password, PUBLIC_URL, true), PARTNERS_EMAIL_TO))
+  send(res, 200, { ok: true, password, mail: mailReady() })
+}
+
 /* ── Маршрутизация ── */
 const ORDER_NO = '(S-\\d{6}-\\d{4})'
 const routes = [
@@ -716,6 +958,14 @@ const routes = [
   ['GET', new RegExp(`^/api/staff/orders/${ORDER_NO}$`), staffOrder],
   ['POST', new RegExp(`^/api/staff/orders/${ORDER_NO}/status$`), staffSetStatus],
   ['POST', new RegExp(`^/api/staff/orders/${ORDER_NO}/note$`), staffNote],
+  ['POST', /^\/api\/partners\/applications$/, partnerApplication],
+  ['POST', /^\/api\/auth\/partner$/, partnerLogin],
+  ['POST', /^\/api\/partner\/activate$/, partnerActivate],
+  ['POST', /^\/api\/partner\/profile$/, partnerProfile],
+  ['GET', /^\/api\/staff\/partners$/, staffPartners],
+  ['POST', /^\/api\/staff\/applications\/(\d+)\/approve$/, staffApprove],
+  ['POST', /^\/api\/staff\/applications\/(\d+)\/decline$/, staffDecline],
+  ['POST', /^\/api\/staff\/partners\/(\d+)\/reset$/, staffResetPartner],
 ]
 
 /** Запросы, меняющие данные, принимаем только со своего сайта (защита от подделки запросов) */

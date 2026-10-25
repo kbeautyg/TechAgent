@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
-import { Link, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
+import { Link, NavLink, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ChevronRight, ExternalLink, LogOut } from 'lucide-react'
-import { api, apiErrorText, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
+import { api, apiErrorText, type PartnerApplicationView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
 import { logoutAccount, refreshAccount, useAccount } from '../../utils/account'
 import { formatPrice, formatDateTime } from '../../utils/calculate'
 import { PageBar } from '../../components/app/ui'
@@ -11,8 +11,10 @@ import { SITE_STATUS_COLOR, SITE_STATUS_LABEL, STAFF_TODO, itemsTitle } from '..
 import { copyText } from '../../utils/clipboard'
 
 /*
- * Раздел сотрудников ТехЭйджент: заказы покупателей с сайта.
+ * Раздел сотрудников ТехЭйджент: заказы покупателей с сайта и партнёры.
  * Сотрудник ведёт заказ по этапам; на каждом этапе покупателю уходит письмо, а в его кабинете меняется статус.
+ * Заявки партнёров: одобрение заводит учётку и отправляет партнёру письмо с временным паролем.
+ * Договор партнёр заключает сам — отметкой о согласии с офертой при первом входе.
  */
 
 const fieldCls =
@@ -64,6 +66,24 @@ export function StaffLoginPage() {
   )
 }
 
+/** Шапка раздела: заголовок, переключатель «Заказы / Партнёры» и выход */
+function StaffHead({ title, onLogout }: { title: string; onLogout: () => void }) {
+  return (
+    <>
+      <div className="flex items-center gap-3 mb-3">
+        <h1 className="acc-h1 m-0 flex-1">{title}</h1>
+        <button type="button" className="app-round" aria-label="Выйти" onClick={onLogout}>
+          <LogOut size={20} />
+        </button>
+      </div>
+      <nav className="staff-filters staff-sections mb-4" aria-label="Разделы">
+        <NavLink to="/staff" end className={({ isActive }) => (isActive ? 'on' : '')}>Заказы</NavLink>
+        <NavLink to="/staff/partners" className={({ isActive }) => (isActive ? 'on' : '')}>Партнёры</NavLink>
+      </nav>
+    </>
+  )
+}
+
 const FILTERS: { key: SiteOrderStatus | ''; label: string }[] = [
   { key: '', label: 'Все' },
   { key: 'NEW', label: 'Новые' },
@@ -100,13 +120,7 @@ function StaffOrders() {
 
   return (
     <div className="acc-wide acc-staff">
-      <div className="flex items-center gap-3 mb-4">
-        <h1 className="acc-h1 m-0 flex-1">Заказы с сайта</h1>
-        <button type="button" className="app-round" aria-label="Выйти"
-          onClick={async () => { await logoutAccount(); navigate('/', { replace: true }) }}>
-          <LogOut size={20} />
-        </button>
-      </div>
+      <StaffHead title="Заказы с сайта" onLogout={async () => { await logoutAccount(); navigate('/', { replace: true }) }} />
       <div className="staff-filters" role="tablist">
         {FILTERS.map((f) => {
           const n = f.key ? data?.counts[f.key] ?? 0 : total
@@ -311,6 +325,237 @@ function StaffOrder() {
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+/* ── Партнёры: заявки и учётки ── */
+
+export function StaffPartnersPage() {
+  return (
+    <RequireStaff>
+      <StaffPartners />
+    </RequireStaff>
+  )
+}
+
+interface PartnersData {
+  applications: PartnerApplicationView[]
+  partners: PartnerProfile[]
+}
+
+/** Выданный пароль показываем один раз: письмо могло не дойти — тогда его диктуют партнёру */
+interface Issued {
+  email: string
+  password: string
+  mail: boolean
+}
+
+function IssuedBox({ issued }: { issued: Issued }) {
+  return (
+    <div className="acc-card border-emerald-300 bg-emerald-50">
+      <p className="m-0 text-[15px] text-emerald-900">
+        {issued.mail
+          ? <>Письмо с доступом ушло на <b>{issued.email}</b>.</>
+          : <>Почта сервера не настроена — письмо не ушло. Передайте доступ партнёру сами: <b>{issued.email}</b>.</>}
+      </p>
+      <p className="mt-2 mb-0 text-[14px] text-emerald-900">
+        Временный пароль: <b className="font-mono text-[16px] select-all">{issued.password}</b>
+        <span className="block text-[13px] mt-1">Показан один раз — на случай, если письмо не дойдёт и пароль нужно продиктовать.</span>
+      </p>
+    </div>
+  )
+}
+
+function KV({ label, value }: { label: string; value: ReactNode }) {
+  return (
+    <div className="app-kv">
+      <div className="app-kv-text">
+        <span className="app-kv-label">{label}</span>
+        <span className="app-kv-value break-words">{value || '—'}</span>
+      </div>
+    </div>
+  )
+}
+
+function ApplicationCard({ a, onDone }: { a: PartnerApplicationView; onDone: (issued?: Issued) => void }) {
+  const [percent, setPercent] = useState('5')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const [declineOpen, setDeclineOpen] = useState(false)
+  const [reason, setReason] = useState('')
+  const pct = Number(percent.replace(',', '.'))
+  const pctOk = Number.isFinite(pct) && pct > 0 && pct <= 50
+
+  const approve = async () => {
+    setBusy(true)
+    setError('')
+    try {
+      const r = await api<{ password: string; mail: boolean; partner: PartnerProfile }>(`/staff/applications/${a.id}/approve`, { rewardPercent: pct })
+      onDone({ email: r.partner.email, password: r.password, mail: r.mail })
+    } catch (x) {
+      setError(apiErrorText(x))
+      setBusy(false)
+    }
+  }
+  const decline = async () => {
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/staff/applications/${a.id}/decline`, { reason: reason.trim() })
+      onDone()
+    } catch (x) {
+      setError(apiErrorText(x))
+      setBusy(false)
+    }
+  }
+
+  return (
+    <div className="acc-card">
+      <p className="acc-k m-0">Заявка от {formatDateTime(a.createdAt)}</p>
+      <b className="acc-v block mb-3">{a.companyName}</b>
+      <div className="app-group mb-4">
+        <KV label="ИНН / ОГРН" value={`${a.inn} / ${a.ogrn}`} />
+        <KV label="Адрес пункта выдачи" value={a.pointAddress} />
+        <KV label="Контактное лицо" value={`${a.contactName}, ${a.phone}`} />
+        <KV label="Email — сюда уйдёт доступ" value={a.email} />
+        <KV label="Реквизиты для выплаты" value={`${a.bankName}, БИК ${a.bik}, р/с ${a.account}`} />
+        {a.comment && <KV label="Комментарий" value={a.comment} />}
+      </div>
+      <label htmlFor={`pct-${a.id}`} className="block text-sm font-semibold mb-2 ml-1 text-text-secondary">
+        Вознаграждение, % от цены товара — партнёр увидит его в кабинете (оферта, п. 7.1)
+      </label>
+      <div className="flex flex-col sm:flex-row gap-3">
+        <input id={`pct-${a.id}`} inputMode="decimal" value={percent} onChange={(e) => setPercent(e.target.value)}
+          className={`${fieldCls} sm:w-32`} />
+        <button type="button" disabled={busy || !pctOk} className="app-btn app-btn-primary sm:flex-1" onClick={approve}>
+          {busy ? 'Отправляем…' : 'Одобрить и отправить доступ'}
+        </button>
+      </div>
+      <p className="acc-note text-left">
+        Партнёру уйдёт письмо с адресом входа и временным паролем. Договор он заключит сам — отметкой о согласии с офертой при первом входе.
+      </p>
+      {declineOpen ? (
+        <div className="mt-4 space-y-3 pt-4 border-t border-border">
+          <label htmlFor={`rs-${a.id}`} className="block text-sm font-semibold ml-1 text-text-secondary">Причина отказа — её увидит заявитель</label>
+          <input id={`rs-${a.id}`} type="text" value={reason} onChange={(e) => setReason(e.target.value)} className={fieldCls}
+            placeholder="Например: в этом районе пункт уже есть" />
+          <button type="button" disabled={busy} className="app-btn bg-red-600 text-white hover:bg-red-700" onClick={decline}>
+            Отклонить и написать заявителю
+          </button>
+        </div>
+      ) : (
+        <button type="button" className="acc-link-btn" onClick={() => setDeclineOpen(true)}>Отклонить заявку…</button>
+      )}
+      {error && <p className="text-red-600 text-[13.5px] mt-3 mb-0">{error}</p>}
+    </div>
+  )
+}
+
+function PartnerRow({ p, onIssued }: { p: PartnerProfile; onIssued: (i: Issued) => void }) {
+  const [confirm, setConfirm] = useState(false)
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const reset = async () => {
+    setBusy(true)
+    setError('')
+    try {
+      const r = await api<{ password: string; mail: boolean }>(`/staff/partners/${p.id}/reset`, {})
+      onIssued({ email: p.email, password: r.password, mail: r.mail })
+      setConfirm(false)
+    } catch (x) {
+      setError(apiErrorText(x))
+    }
+    setBusy(false)
+  }
+  return (
+    <div className="acc-card">
+      <div className="flex flex-col sm:flex-row sm:items-start gap-2 sm:gap-4">
+        <div className="min-w-0 flex-1">
+          <b className="acc-v block">{p.companyName}</b>
+          <p className="text-[14px] text-text-secondary m-0 mt-1 break-words">{p.email} · {p.contactName}, {p.phone}</p>
+          <p className="text-[14px] text-text-secondary m-0 mt-1">{p.pointAddress} · вознаграждение {String(p.rewardPercent).replace('.', ',')}%</p>
+        </div>
+        <span className="shrink-0">
+          {p.offerAcceptedAt
+            ? <StatusMark size="sm" color="#12B981">Оферту принял</StatusMark>
+            : <StatusMark size="sm" color="#F59E0B">Ждём первого входа</StatusMark>}
+        </span>
+      </div>
+      <p className="acc-note text-left">
+        {p.offerAcceptedAt
+          ? <>Согласие с агентским договором-офертой (ред. {p.offerEdition}) отмечено партнёром {formatDateTime(p.offerAcceptedAt)}{p.offerAcceptIp ? `, адрес ${p.offerAcceptIp}` : ''}. Доступ открыт {formatDateTime(p.createdAt)}.</>
+          : <>Доступ открыт {formatDateTime(p.createdAt)}. Договор будет заключён, когда партнёр войдёт и сам отметит согласие с офертой.</>}
+      </p>
+      {confirm ? (
+        <div className="flex flex-wrap items-center gap-3 mt-3">
+          <button type="button" disabled={busy} className="app-btn app-btn-primary w-auto px-5" onClick={reset}>
+            {busy ? 'Отправляем…' : 'Выдать новый пароль'}
+          </button>
+          <button type="button" className="acc-link-btn m-0" onClick={() => setConfirm(false)}>Отмена</button>
+          <span className="text-[13px] text-text-muted w-full">Старый пароль перестанет работать, партнёру уйдёт письмо.</span>
+        </div>
+      ) : (
+        <button type="button" className="acc-link-btn" onClick={() => setConfirm(true)}>Новый временный пароль…</button>
+      )}
+      {error && <p className="text-red-600 text-[13.5px] mt-3 mb-0">{error}</p>}
+    </div>
+  )
+}
+
+function StaffPartners() {
+  const [data, setData] = useState<PartnersData | null>(null)
+  const [error, setError] = useState('')
+  const [issued, setIssued] = useState<Issued | null>(null)
+  const navigate = useNavigate()
+
+  const load = useCallback(() => {
+    api<PartnersData>('/staff/partners').then(setData).catch((e) => setError(apiErrorText(e)))
+  }, [])
+  useEffect(load, [load])
+
+  const fresh = data?.applications.filter((a) => a.status === 'NEW') ?? []
+  const declined = data?.applications.filter((a) => a.status === 'DECLINED') ?? []
+
+  return (
+    <div className="acc-wide acc-staff">
+      <StaffHead title="Партнёры" onLogout={async () => { await logoutAccount(); navigate('/', { replace: true }) }} />
+      {error && <p className="acc-warn">{error}</p>}
+      {issued && <div className="mb-4"><IssuedBox issued={issued} /></div>}
+      {data && (
+        <div className="flex flex-col gap-6">
+          <section>
+            <h2 className="app-group-title">Новые заявки{fresh.length > 0 && `: ${fresh.length}`}</h2>
+            {fresh.length === 0
+              ? <p className="acc-note text-left">Новых заявок нет. Заявки приходят с techagent.pro/register — и письмом на partners@techagent.pro.</p>
+              : <div className="flex flex-col gap-3">
+                  {fresh.map((a) => (
+                    <ApplicationCard key={a.id} a={a} onDone={(i) => { if (i) setIssued(i); window.scrollTo(0, 0); load() }} />
+                  ))}
+                </div>}
+          </section>
+          <section>
+            <h2 className="app-group-title">Партнёры{data.partners.length > 0 && `: ${data.partners.length}`}</h2>
+            {data.partners.length === 0
+              ? <p className="acc-note text-left">Пока никого — одобрите заявку, и партнёр появится здесь.</p>
+              : <div className="flex flex-col gap-3">
+                  {data.partners.map((p) => (
+                    <PartnerRow key={p.id} p={p} onIssued={(i) => { setIssued(i); window.scrollTo(0, 0) }} />
+                  ))}
+                </div>}
+          </section>
+          {declined.length > 0 && (
+            <details className="acc-card">
+              <summary className="cursor-pointer font-semibold text-text-primary">Отклонённые заявки: {declined.length}</summary>
+              <ul className="mt-3 mb-0 pl-5 text-[14px] text-text-secondary space-y-1">
+                {declined.map((a) => (
+                  <li key={a.id}>{a.companyName}, {a.email} — {formatDateTime(a.createdAt)}{a.declineReason && `. Причина: ${a.declineReason}`}</li>
+                ))}
+              </ul>
+            </details>
+          )}
+        </div>
+      )}
     </div>
   )
 }

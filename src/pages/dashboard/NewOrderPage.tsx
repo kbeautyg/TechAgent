@@ -6,7 +6,7 @@ import ProductIcon from '../../components/app/ProductIcon'
 import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
-import { createOrder } from '../../data/mock'
+import { createOrder, DEMO_MODE } from '../../data/mock'
 import { formatPercent, formatPrice, formatReward, rewardFor, rewardPercentAt, priceFor, hasColorPrices } from '../../utils/calculate'
 import { formatPhone, isValidEmail, phoneError } from '../../utils/validate'
 import { copyText, selectText } from '../../utils/clipboard'
@@ -136,6 +136,23 @@ export default function NewOrderPage() {
   const [createdOrder, setCreatedOrder] = useState<Order | null>(null)
 
   if (!user) return null
+
+  // Боевой кабинет: заказ из браузера не дошёл бы до ТехЭйджент, а ссылка на оплату не открылась бы у покупателя
+  if (!DEMO_MODE) {
+    return (
+      <div className="max-w-2xl mx-auto">
+        <PageBar back="/dashboard" backLabel="На главную" title="Новый заказ" />
+        <div className="app-group p-5 lg:p-6 flex items-start gap-3">
+          <Lock size={20} className="text-text-muted shrink-0 mt-0.5" />
+          <p className="text-[15px] lg:text-sm leading-relaxed text-text-secondary">
+            Оформление заказов из кабинета подключаем. До этого заказ покупателя оформим вручную — напишите на{' '}
+            <a href="mailto:partners@techagent.pro" className="text-primary font-medium no-underline hover:underline">partners@techagent.pro</a>:
+            товар, данные покупателя и ваш пункт выдачи.
+          </p>
+        </div>
+      </div>
+    )
+  }
 
   if (user.partnerStatus !== 'VERIFIED') {
     return (

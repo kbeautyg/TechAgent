@@ -12,7 +12,7 @@ const fieldCls =
   'w-full px-4 py-3 rounded-lg border bg-bg-light text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none text-sm'
 
 export default function FirstLogin() {
-  const { user, setPassword, updateProfile } = useAuth()
+  const { user, completeFirstLogin } = useAuth()
   const [password, setPw] = useState('')
   const [repeat, setRepeat] = useState('')
   const [agree, setAgree] = useState(false)
@@ -29,9 +29,10 @@ export default function FirstLogin() {
     if (!agree) return setError('Без согласия с агентским договором-офертой работа в кабинете невозможна')
     setError('')
     setSaving(true)
-    if (needPassword) await setPassword(password)
-    updateProfile((fresh) => (fresh.offerAcceptedAt ? null : { offerAcceptedAt: new Date().toISOString() }))
+    // Согласие отмечает сам партнёр — сервер запоминает дату, адрес и браузер (подтверждение акцепта)
+    const err = await completeFirstLogin(needPassword ? password : null)
     setSaving(false)
+    if (err) return setError(err)
     window.scrollTo(0, 0)
   }
 

@@ -10,7 +10,8 @@ import { api, type BuyerProfile } from '../lib/api'
 export interface AccountState {
   /** false — сервер ещё не ответил */
   loaded: boolean
-  role: 'buyer' | 'staff' | null
+  /** partner — вошёл партнёр (его кабинет — AuthContext); для раздела покупателя это «не вошёл» */
+  role: 'buyer' | 'staff' | 'partner' | null
   buyer: BuyerProfile | null
 }
 
@@ -24,7 +25,7 @@ function set(next: AccountState) {
 }
 
 export function refreshAccount(): Promise<void> {
-  pending = api<{ role: 'buyer' | 'staff' | null; buyer?: BuyerProfile }>('/me')
+  pending = api<{ role: AccountState['role']; buyer?: BuyerProfile }>('/me')
     .then((r) => set({ loaded: true, role: r.role, buyer: r.buyer ?? null }))
     .catch(() => set({ loaded: true, role: null, buyer: null }))
   return pending

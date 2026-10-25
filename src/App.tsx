@@ -32,6 +32,7 @@ const AccountProfilePage = lazy(() => import('./pages/account/AccountProfilePage
 const StaffLoginPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffLoginPage })))
 const StaffOrdersPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrdersPage })))
 const StaffOrderPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrderPage })))
+const StaffPartnersPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffPartnersPage })))
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'))
 const AdminLayout = lazy(() => import('./components/layout/AdminLayout'))
@@ -90,6 +91,7 @@ function App() {
                 <Route path="/account/profile" element={<AccountProfilePage />} />
                 <Route path="/staff/login" element={<StaffLoginPage />} />
                 <Route path="/staff" element={<StaffOrdersPage />} />
+                <Route path="/staff/partners" element={<StaffPartnersPage />} />
                 <Route path="/staff/orders/:number" element={<StaffOrderPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/demo" element={<DemoPage />} />

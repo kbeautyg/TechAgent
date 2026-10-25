@@ -5,8 +5,8 @@ import { readJson, writeJson, mergeById, replaceArray, notifyDataChanged, onOthe
  * Заявки партнёров. Самостоятельной регистрации нет: человек оставляет заявку на /register,
  * ТехЭйджент проверяет данные и сам заводит партнёра в кабинет (админка → «Партнёры»).
  *
- * На боевом сайте заявка уходит на сервер (/api/partner-application, nginx на srv91) и приходит письмом
- * на partners@techagent.pro. В демо-режиме бэкенда нет: заявка сохраняется в этом браузере
+ * На боевом сайте заявка уходит на сервер заказов (/api/partners/applications, srv91): сохраняется в базе,
+ * письмом приходит на partners@techagent.pro, а одобряет её сотрудник в разделе /staff/partners. В демо-режиме бэкенда нет: заявка сохраняется в этом браузере
  * и видна в админке — так можно пройти весь путь «заявка → партнёр» руками.
  */
 
@@ -96,7 +96,7 @@ export async function submitApplication(data: ApplicationData): Promise<boolean>
     return true
   }
   try {
-    const res = await fetch('/api/partner-application', {
+    const res = await fetch('/api/partners/applications', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
       body: JSON.stringify(data),

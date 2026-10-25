@@ -108,8 +108,9 @@ export default function LoginPage() {
           </p>
           {showRecovery && (
             <p className="text-center text-sm text-text-secondary mt-1">
-              Для восстановления пароля напишите на{' '}
-              <a href="mailto:partners@techagent.pro" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+              Напишите с email, указанным в заявке, на{' '}
+              <a href="mailto:partners@techagent.pro?subject=Новый пароль от кабинета" className="text-primary no-underline hover:underline">partners@techagent.pro</a>
+              {' '}— пришлём новый временный пароль
             </p>
           )}
 

@@ -1908,6 +1908,10 @@ body {
 .staff-filters button { flex: none; height: 38px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--color-border); background: #fff; font: 600 14px var(--font-sans); color: var(--color-text-secondary); cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
 .staff-filters button.on { background: var(--color-text-primary); border-color: var(--color-text-primary); color: #fff; }
 .staff-filters button span { font-size: 12px; opacity: .7; }
+/* Разделы сотрудников «Заказы / Партнёры» — вкладки с чертой, чтобы не путать с фильтрами этапов */
+.staff-sections { gap: 22px; border-bottom: 1px solid var(--color-border); padding-bottom: 0; }
+.staff-sections a { flex: none; padding: 8px 0 10px; margin-bottom: -1px; border-bottom: 2px solid transparent; font: 700 15px var(--font-sans); color: var(--color-text-secondary); text-decoration: none; }
+.staff-sections a.on { color: var(--color-text-primary); border-bottom-color: var(--color-primary); }
 .staff-log { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; font-size: 14px; color: var(--color-text-secondary); }
 .staff-log span { display: block; font-size: 12.5px; color: var(--color-text-muted); }
 .staff-log em { font-style: normal; color: var(--color-text-muted); }

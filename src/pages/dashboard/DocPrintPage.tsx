@@ -15,7 +15,7 @@ export default function DocPrintPage() {
   const { id = '' } = useParams()
   const [params] = useSearchParams()
   const { pathname, search } = useLocation()
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   useDataRevision()
 
   const admin = pathname.startsWith('/admin/')
@@ -33,6 +33,9 @@ export default function DocPrintPage() {
     const t = window.setTimeout(() => window.print(), 400)
     return () => window.clearTimeout(t)
   }, [title, autoPrint])
+
+  // Сервер ещё не ответил, кто вошёл
+  if (loading) return <div className="paper-root" aria-busy="true" />
 
   // Документ Партнёра без входа не открываем: после входа вернём сюда же
   if (!doc && !user) {
