@@ -2,6 +2,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { useState, useMemo, useEffect, useCallback } from 'react'
 import { products, type Product } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
+import { priceFor, hasColorPrices } from '../utils/calculate'
 import { translateColor, translateStorage, translateProductName } from '../utils/translate'
 import { categoryLandings } from '../seo/categories'
 import { pluralRu, LEGAL_NAME } from '../seo/site'
@@ -188,10 +189,11 @@ export default function CatalogPage() {
       if (!g) byFamily.set(p.family, { p, n: 1 })
       else byFamily.set(p.family, { p: p.price < g.p.price ? p : g.p, n: g.n + 1 })
     }
-    // Выбран цвет — плитка показывает товар в этом цвете и открывает карточку сразу в нём
+    // Выбран цвет — плитка показывает товар в этом цвете, по его цене, и открывает карточку сразу в нём.
+    // «от» — если подходят несколько конфигураций или цвет не выбран, а цвета стоят по-разному
     let tiles = [...byFamily.values()].map(({ p, n }) => {
       const c = selColor.length ? p.colors.find(c => selColor.includes(baseColor(c.name) ?? '') || selColor.includes(c.name)) : undefined
-      return { ...p, many: n > 1, pickedColor: c && c.name !== p.colors[0]?.name ? c : undefined }
+      return { ...p, price: c ? priceFor(p, c.name) : p.price, many: n > 1 || (!c && hasColorPrices(p)), pickedColor: c && c.name !== p.colors[0]?.name ? c : undefined }
     })
     if (sort === 'price-asc') tiles = tiles.sort((a, b) => a.price - b.price)
     if (sort === 'price-desc') tiles = tiles.sort((a, b) => b.price - a.price)

@@ -242,11 +242,11 @@ function CheckoutForm({ buyer }: { buyer: BuyerProfile | null }) {
 
         <aside className="cart-aside">
           <ul className="co-items" aria-label="Состав заказа">
-            {items.map(({ product, qty, color }) => (
+            {items.map(({ product, qty, color, price }) => (
               <li key={`${product.id}|${color || ''}`}>
                 <ProductThumb product={product} color={color} size={52} />
                 <span className="co-items-name">{translateProductName(product.name)}{color && product.colors.length > 1 && `, ${color}`}{qty > 1 && <b> × {qty}</b>}</span>
-                <span className="co-items-sum">{formatPrice(product.price * qty)}</span>
+                <span className="co-items-sum">{formatPrice(price * qty)}</span>
               </li>
             ))}
           </ul>
@@ -301,10 +301,10 @@ function Success({ number, items, total, email, phone, loggedIn, partner }: { nu
         </ol>
 
         <div className="co-success-sum">
-          {items.map(({ product, qty, color }) => (
+          {items.map(({ product, qty, color, price }) => (
             <div key={`${product.id}|${color || ''}`} className="flex justify-between gap-4">
               <span className="text-text-secondary">{translateProductName(product.name)}{color && product.colors.length > 1 ? `, ${color}` : ''}{qty > 1 ? ` × ${qty}` : ''}</span>
-              <span className="text-text-primary font-semibold whitespace-nowrap">{formatPrice(product.price * qty)}</span>
+              <span className="text-text-primary font-semibold whitespace-nowrap">{formatPrice(price * qty)}</span>
             </div>
           ))}
           {deliveryKnown && (

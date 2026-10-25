@@ -7,6 +7,18 @@ export function formatPrice(amount: number): string {
   return new Intl.NumberFormat('ru-RU').format(amount) + '\u00A0₽'
 }
 
+type Priced = { price: number; colors: { name: string; price?: number }[] }
+
+/** Цена товара в выбранном цвете: у разных цветов одной модели цена бывает разной; без цвета — цена карточки (самая низкая) */
+export function priceFor(p: Priced, color?: string | null): number {
+  return p.colors.find((c) => c.name === color)?.price ?? p.price
+}
+
+/** Есть ли у товара цвета дороже цены карточки — тогда в списках пишем «от» */
+export function hasColorPrices(p: Priced): boolean {
+  return p.colors.some((c) => c.price !== undefined && c.price !== p.price)
+}
+
 /** Вознаграждение Партнёра по заказу: процент Партнёра от цены товара */
 export function rewardFor(price: number, percent?: number): number | null {
   return percent && percent > 0 ? Math.round((price * percent) / 100) : null

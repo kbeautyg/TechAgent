@@ -431,7 +431,9 @@ async function createOrder(req, res) {
       continue
     }
     seen.add(key)
-    items.push({ productId: id, ...(color ? { color } : {}), name: color && colors.length > 1 ? `${p.name}, ${color}` : p.name, price: p.price, qty })
+    // Цена — по цвету: у разных цветов одной модели она бывает разной (prices — только цвета дороже цены карточки)
+    const price = (color && p.prices?.[color]) || p.price
+    items.push({ productId: id, ...(color ? { color } : {}), name: color && colors.length > 1 ? `${p.name}, ${color}` : p.name, price, qty })
   }
   if (!items.length) errors.push('items')
   if (errors.length) fail(422, 'fields', { fields: errors })

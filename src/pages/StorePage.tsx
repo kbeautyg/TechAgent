@@ -7,6 +7,7 @@ import { translateProductName, translateSpecValue } from '../utils/translate'
 import { categoryLandings } from '../seo/categories'
 import { pluralRu, LEGAL_NAME, SDEK_DELIVERY_PRICE, DELIVERY_TERM } from '../seo/site'
 import { useCart, addToCart } from '../utils/cart'
+import { hasColorPrices } from '../utils/calculate'
 
 const fmt = (n: number) => n.toLocaleString('ru-RU')
 const byId = (id: string) => products.find((p) => p.id === id)
@@ -164,7 +165,7 @@ function ShelfCard({ product }: { product: Product }) {
           {translateProductName(product.name)}
         </div>
       </Link>
-      <div className="mt-2 text-lg font-bold text-text-primary whitespace-nowrap">{fmt(product.price)}&nbsp;₽</div>
+      <div className="mt-2 text-lg font-bold text-text-primary whitespace-nowrap">{hasColorPrices(product) && 'от '}{fmt(product.price)}&nbsp;₽</div>
       <div className="mt-3 grid">
         <CartButton product={product} />
       </div>
@@ -246,7 +247,7 @@ export default function StorePage() {
                 </h1>
                 <p className="mt-3 text-[15px] text-text-secondary leading-relaxed">{specLine(main, 4)}</p>
                 <div className="mt-auto pt-5 sm:pt-8">
-                  <div className="text-[30px] sm:text-[34px] font-bold text-text-primary">{fmt(main.price)}&nbsp;₽</div>
+                  <div className="text-[30px] sm:text-[34px] font-bold text-text-primary">{hasColorPrices(main) && 'от '}{fmt(main.price)}&nbsp;₽</div>
                   <div className="mt-4 flex flex-wrap gap-2.5">
                     <CartButton product={main} />
                     <span className="inline-flex items-center gap-1.5 h-11 px-4 text-sm font-semibold text-primary">
@@ -269,7 +270,7 @@ export default function StorePage() {
               <div className="relative z-10 p-6 flex flex-col w-[58%]">
                 <div className="text-[12px] font-semibold text-text-muted uppercase tracking-wide">{p.brand}</div>
                 <div className="mt-1 text-[19px] font-bold leading-tight text-text-primary">{translateProductName(p.name)}</div>
-                <div className="mt-auto pt-4 text-[20px] font-bold text-text-primary">{fmt(p.price)}&nbsp;₽</div>
+                <div className="mt-auto pt-4 text-[20px] font-bold text-text-primary">{hasColorPrices(p) && 'от '}{fmt(p.price)}&nbsp;₽</div>
               </div>
               <ProductPhoto product={p} className="absolute right-0 top-0 h-full w-[52%] p-4" />
             </Link>

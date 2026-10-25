@@ -20,7 +20,7 @@ const SIZE = 900
 const INNER = Math.round(SIZE * 0.88)
 const MAXW = 2000
 
-async function prepare(file) {
+async function prepare(file, blankScreen = false) {
   const img = sharp(file, { failOn: 'none' }).rotate()
   const meta = await img.metadata()
   const scale = Math.min(1, MAXW / Math.max(meta.width, meta.height))
@@ -57,6 +57,7 @@ async function prepare(file) {
       if (x > 0) push(x - 1, y); if (x < w - 1) push(x + 1, y); if (y > 0) push(x, y - 1); if (y < h - 1) push(x, y + 1)
     }
   }
+  if (blankScreen) blankWatchScreen(px, w, h)
   // Рамка товара: строки и столбцы, где есть хотя бы несколько заметно не-белых пикселей
   const ink = (k) => px[k] < 238 || px[k + 1] < 238 || px[k + 2] < 238
   let x0 = w, y0 = h, x1 = -1, y1 = -1
@@ -72,6 +73,36 @@ async function prepare(file) {
     .extract({ left: x0, top: y0, width: x1 - x0 + 1, height: y1 - y0 + 1 }).png().toBuffer(), cw: x1 - x0 + 1, ch: y1 - y0 + 1 }
 }
 
+/**
+ * Экран часов — сплошной чёрный. Фото Apple Watch по цветам есть только у BigGeek, а у них на экране
+ * надпись «Big Geek»: чужое имя на нашем сайте не показываем. Экран — самая большая область почти
+ * чёрных пикселей; в каждой её строке закрашиваем от левого до правого края — надписи и кнопки внутри уходят.
+ */
+function blankWatchScreen(px, w, h) {
+  const dark = (i) => px[i * 3] < 16 && px[i * 3 + 1] < 16 && px[i * 3 + 2] < 16
+  const comp = new Int32Array(w * h).fill(-1)
+  let best = -1, bestSize = 0, id = 0
+  for (let s = 0; s < w * h; s++) {
+    if (comp[s] !== -1 || !dark(s)) continue
+    const stack = [s]; comp[s] = id; let size = 0
+    while (stack.length) {
+      const i = stack.pop(); size++
+      const x = i % w, y = (i / w) | 0
+      for (const j of [x > 0 ? i - 1 : -1, x < w - 1 ? i + 1 : -1, y > 0 ? i - w : -1, y < h - 1 ? i + w : -1]) {
+        if (j >= 0 && comp[j] === -1 && dark(j)) { comp[j] = id; stack.push(j) }
+      }
+    }
+    if (size > bestSize) { bestSize = size; best = id }
+    id++
+  }
+  if (best < 0) return
+  for (let y = 0; y < h; y++) {
+    let a = -1, b = -1
+    for (let x = 0; x < w; x++) if (comp[y * w + x] === best) { if (a < 0) a = x; b = x }
+    for (let x = a; a >= 0 && x <= b; x++) { const k = (y * w + x) * 3; px[k] = px[k + 1] = px[k + 2] = 0 }
+  }
+}
+
 let ok = 0, missing = 0, failed = 0
 const small = []
 for (const [out, sha] of Object.entries(map)) {
@@ -81,7 +112,7 @@ for (const [out, sha] of Object.entries(map)) {
   const dest = join(root, 'public', out)
   mkdirSync(dirname(dest), { recursive: true })
   try {
-    const { buf, cw, ch } = await prepare(join(raw, src))
+    const { buf, cw, ch } = await prepare(join(raw, src), out.includes('/apple-watch-'))
     if (Math.max(cw, ch) < 450) small.push(`${out} (${cw}×${ch})`)
     const fitted = await sharp(buf).resize(INNER, INNER, { fit: 'inside', kernel: 'lanczos3' }).toBuffer()
     await sharp({ create: { width: SIZE, height: SIZE, channels: 3, background: '#ffffff' } })

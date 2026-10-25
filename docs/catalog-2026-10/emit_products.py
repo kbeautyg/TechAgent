@@ -7,6 +7,10 @@ ROOT = os.path.expanduser('~/TechAgent')
 cat = json.load(open('catalog-merged.json'))
 specs_all = json.load(open('specs.json')) if os.path.exists('specs.json') else {}
 
+def our_price(p):
+    # то же правило, что в build_catalog.py: −5 % от BigGeek, вниз до …90
+    return ((p * 95 // 100) - 90) // 100 * 100 + 90
+
 def slug(s):
     tr = dict(zip('абвгдеёжзийклмнопрстуфхцчшщъыьэюя', ['a','b','v','g','d','e','e','zh','z','i','y','k','l','m','n','o','p','r','s','t','u','f','h','c','ch','sh','sch','','y','','e','yu','ya']))
     s = ''.join(tr.get(ch, ch) for ch in (s or '').lower().replace('+', ' plus '))
@@ -127,7 +131,12 @@ for p in cat:
             name = ''
         if c.get('img'):
             imgmap[path] = hashlib.sha1(c['img'].encode()).hexdigest()[:16]
-        colors.append({'name': name, 'image': path if c.get('img') else ''})
+        col = {'name': name, 'image': path if c.get('img') else ''}
+        # У BigGeek цвета одной модели стоят по-разному (у iPhone до 20 000 ₽): цена цвета считается по тому же правилу,
+        # что и цена карточки (−5 %), и пишется, только когда отличается — цена карточки остаётся самой низкой
+        if c.get('bg_price') and p.get('bg_price') and our_price(c['bg_price']) != p['price']:
+            col['price'] = our_price(c['bg_price'])
+        colors.append(col)
     p['model'] = RENAME.get(p['model'], p['model'])
     name = p['model'] + (f' {var}' if var else '')
     p['id'] = slug(name.replace('″', ' ').replace('"', ' '))
@@ -147,6 +156,8 @@ export interface ProductColor {
   name: string
   /** Фото этого цвета, /images/p/<семейство>/<цвет>.webp */
   image: string
+  /** Цена этого цвета, если она не равна цене карточки (цена карточки — самый дешёвый цвет) */
+  price?: number
 }
 
 export interface Product {

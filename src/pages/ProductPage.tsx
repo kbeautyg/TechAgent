@@ -6,7 +6,7 @@ import { getCategoryByName } from '../seo/categories'
 import PurchaseTerms from '../components/catalog/PurchaseTerms'
 import { ShoppingCart, Check, Minus, Plus, Truck, CreditCard, RotateCcw } from 'lucide-react'
 import { SDEK_DELIVERY_PRICE } from '../seo/site'
-import { formatPrice } from '../utils/calculate'
+import { formatPrice, priceFor, hasColorPrices } from '../utils/calculate'
 import { useCart, addToCart, setCartQty, findLine, MAX_QTY } from '../utils/cart'
 import type { Product } from '../data/products'
 
@@ -100,9 +100,13 @@ export default function ProductPage() {
   const missingColor = asked && colorName && asked !== colorName ? asked : null
   // «Память» — только когда конфигурации отличаются одним объёмом; иначе («M5 · 16 ГБ · 1 ТБ», «128 ГБ · 5G») — «Конфигурация»
   const variantLabel = siblings.every(v => /^\d+\s?(ГБ|ТБ)$/.test(v.variant || '')) ? 'Память' : 'Конфигурация'
+  // Цена — выбранного цвета: у разных цветов одной модели она бывает разной
+  const price = priceFor(product, colorName)
+  const diff = (other: number) => other === price ? 'та же цена' : `${other > price ? '+' : '−'}${fmt(Math.abs(other - price))} ₽`
   const image = withVersion(color?.image || '') || getProductImage(product.id)
-  // У часов Apple одно фото на все цвета — тогда миниатюры в выборе цвета не нужны
+  // Если у всех цветов одно фото, миниатюры в выборе цвета не нужны
   const colorThumbs = new Set(product.colors.map(c => c.image)).size > 1
+  const colorPriced = hasColorPrices(product)
   const pickColor = (name: string) => {
     const next = new URLSearchParams(params)
     if (name === product.colors[0]?.name) next.delete('color'); else next.set('color', name)
@@ -156,7 +160,7 @@ export default function ProductPage() {
           {/* Price */}
           <div className="pp-price-block">
             <div className="pp-price-row">
-              <span className="pp-price-current">{fmt(product.price)}</span>
+              <span className="pp-price-current">{fmt(price)}</span>
               <span className="pp-price-currency">₽</span>
             </div>
           </div>
@@ -176,14 +180,14 @@ export default function ProductPage() {
                     className={`pp-variant-chip${v.id === product.id ? ' active' : ''}`}
                   >
                     <span>{v.variant}</span>
-                    {v.id !== product.id && <small>{v.price === product.price ? 'та же цена' : `${v.price > product.price ? '+' : '−'}${fmt(Math.abs(v.price - product.price))} ₽`}</small>}
+                    {v.id !== product.id && <small>{diff(priceFor(v, wantedColor))}</small>}
                   </Link>
                 ))}
               </div>
             </div>
           )}
 
-          {/* Цвет: меняет фото, цена та же */}
+          {/* Цвет: меняет фото, а если цвета стоят по-разному — и цену */}
           {product.colors.length > 1 && (
             <div className="pp-variants">
               <div className="pp-variant-label">Цвет — {colorName}</div>
@@ -197,7 +201,10 @@ export default function ProductPage() {
                     className={`pp-variant-chip pp-color-chip${colorThumbs ? '' : ' pp-color-chip-text'}${c.name === colorName ? ' active' : ''}`}
                   >
                     {colorThumbs && c.image && <img src={withVersion(c.image)} alt="" width={28} height={28} loading="lazy" />}
-                    <span>{c.name}</span>
+                    <span className="pp-color-chip-label">
+                      <span>{c.name}</span>
+                      {colorPriced && c.name !== colorName && <small>{diff(priceFor(product, c.name))}</small>}
+                    </span>
                   </button>
                 ))}
               </div>
@@ -280,7 +287,7 @@ export default function ProductPage() {
                   <div className="pcard-name">{translateProductName(p.name)}</div>
                   <div className="pcard-specs">{p.summary}</div>
                   <div className="pcard-bottom">
-                    <div className="pcard-price">{fmt(p.price)} <span>₽</span></div>
+                    <div className="pcard-price">{hasColorPrices(p) && <small className="pcard-from">от </small>}{fmt(p.price)} <span>₽</span></div>
                     <span className="pcard-btn">
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
                     </span>

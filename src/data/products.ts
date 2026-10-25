@@ -6,6 +6,8 @@ export interface ProductColor {
   name: string
   /** Фото этого цвета, /images/p/<семейство>/<цвет>.webp */
   image: string
+  /** Цена этого цвета, если она не равна цене карточки (цена карточки — самый дешёвый цвет) */
+  price?: number
 }
 
 export interface Product {
@@ -51,15 +53,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-18-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-18-pro-max/serebristyy.webp",
+    "price": 131990
    },
    {
     "name": "Ледовый щит",
-    "image": "/images/p/iphone-18-pro-max/ledovyy-schit.webp"
+    "image": "/images/p/iphone-18-pro-max/ledovyy-schit.webp",
+    "price": 136790
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp",
+    "price": 136790
    }
   ],
   "specs": {
@@ -101,15 +106,18 @@ export const products: Product[] = [
    },
    {
     "name": "Ледовый щит",
-    "image": "/images/p/iphone-18-pro-max/ledovyy-schit.webp"
+    "image": "/images/p/iphone-18-pro-max/ledovyy-schit.webp",
+    "price": 156690
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-18-pro-max/chernyy.webp"
+    "image": "/images/p/iphone-18-pro-max/chernyy.webp",
+    "price": 157690
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp",
+    "price": 161490
    }
   ],
   "specs": {
@@ -155,11 +163,13 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-18-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-18-pro-max/serebristyy.webp",
+    "price": 206090
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp",
+    "price": 208990
    }
   ],
   "specs": {
@@ -201,15 +211,18 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-18-pro-max/chernyy.webp"
+    "image": "/images/p/iphone-18-pro-max/chernyy.webp",
+    "price": 232690
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-18-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-18-pro-max/serebristyy.webp",
+    "price": 237490
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro-max/burgundskiy.webp",
+    "price": 270690
    }
   ],
   "specs": {
@@ -251,15 +264,18 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-18-pro/chernyy.webp"
+    "image": "/images/p/iphone-18-pro/chernyy.webp",
+    "price": 118690
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro/burgundskiy.webp",
+    "price": 119690
    },
    {
     "name": "Ледовый щит",
-    "image": "/images/p/iphone-18-pro/ledovyy-schit.webp"
+    "image": "/images/p/iphone-18-pro/ledovyy-schit.webp",
+    "price": 120590
    }
   ],
   "specs": {
@@ -301,11 +317,13 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-18-pro/serebristyy.webp"
+    "image": "/images/p/iphone-18-pro/serebristyy.webp",
+    "price": 140590
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-18-pro/chernyy.webp"
+    "image": "/images/p/iphone-18-pro/chernyy.webp",
+    "price": 140590
    }
   ],
   "specs": {
@@ -347,15 +365,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-18-pro/serebristyy.webp"
+    "image": "/images/p/iphone-18-pro/serebristyy.webp",
+    "price": 180490
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-18-pro/chernyy.webp"
+    "image": "/images/p/iphone-18-pro/chernyy.webp",
+    "price": 180490
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro/burgundskiy.webp",
+    "price": 182390
    }
   ],
   "specs": {
@@ -397,11 +418,13 @@ export const products: Product[] = [
    },
    {
     "name": "Ледовый щит",
-    "image": "/images/p/iphone-18-pro/ledovyy-schit.webp"
+    "image": "/images/p/iphone-18-pro/ledovyy-schit.webp",
+    "price": 246990
    },
    {
     "name": "Бургундский",
-    "image": "/images/p/iphone-18-pro/burgundskiy.webp"
+    "image": "/images/p/iphone-18-pro/burgundskiy.webp",
+    "price": 266890
    }
   ],
   "specs": {
@@ -623,11 +646,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp",
+    "price": 85490
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp"
+    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp",
+    "price": 85490
    }
   ],
   "specs": {
@@ -677,15 +702,18 @@ export const products: Product[] = [
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/galaxy-s26-ultra/fioletovyy.webp"
+    "image": "/images/p/galaxy-s26-ultra/fioletovyy.webp",
+    "price": 100690
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp"
+    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp",
+    "price": 104490
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp",
+    "price": 104490
    }
   ],
   "specs": {
@@ -739,11 +767,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26-ultra/rozovoe-zoloto.webp",
+    "price": 129190
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp"
+    "image": "/images/p/galaxy-s26-ultra/serebristyy.webp",
+    "price": 129190
    }
   ],
   "specs": {
@@ -835,7 +865,8 @@ export const products: Product[] = [
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/galaxy-z-fold8-ultra/fioletovyy.webp"
+    "image": "/images/p/galaxy-z-fold8-ultra/fioletovyy.webp",
+    "price": 153890
    }
   ],
   "specs": {
@@ -877,11 +908,13 @@ export const products: Product[] = [
    },
    {
     "name": "Графитовый",
-    "image": "/images/p/galaxy-z-fold8-ultra/grafitovyy.webp"
+    "image": "/images/p/galaxy-z-fold8-ultra/grafitovyy.webp",
+    "price": 195690
    },
    {
     "name": "Кремовый",
-    "image": "/images/p/galaxy-z-fold8-ultra/kremovyy.webp"
+    "image": "/images/p/galaxy-z-fold8-ultra/kremovyy.webp",
+    "price": 199490
    }
   ],
   "specs": {
@@ -969,15 +1002,18 @@ export const products: Product[] = [
    },
    {
     "name": "Кремовый",
-    "image": "/images/p/galaxy-z-fold8/kremovyy.webp"
+    "image": "/images/p/galaxy-z-fold8/kremovyy.webp",
+    "price": 132990
    },
    {
     "name": "Графитовый",
-    "image": "/images/p/galaxy-z-fold8/grafitovyy.webp"
+    "image": "/images/p/galaxy-z-fold8/grafitovyy.webp",
+    "price": 132990
    },
    {
     "name": "Фисташковый",
-    "image": "/images/p/galaxy-z-fold8/fistashkovyy.webp"
+    "image": "/images/p/galaxy-z-fold8/fistashkovyy.webp",
+    "price": 143390
    }
   ],
   "specs": {
@@ -1019,11 +1055,13 @@ export const products: Product[] = [
    },
    {
     "name": "Графитовый",
-    "image": "/images/p/galaxy-z-fold8/grafitovyy.webp"
+    "image": "/images/p/galaxy-z-fold8/grafitovyy.webp",
+    "price": 174790
    },
    {
     "name": "Кремовый",
-    "image": "/images/p/galaxy-z-fold8/kremovyy.webp"
+    "image": "/images/p/galaxy-z-fold8/kremovyy.webp",
+    "price": 178590
    }
   ],
   "specs": {
@@ -1065,11 +1103,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовый",
-    "image": "/images/p/galaxy-z-flip8/rozovyy.webp"
+    "image": "/images/p/galaxy-z-flip8/rozovyy.webp",
+    "price": 79790
    },
    {
     "name": "Кремовый",
-    "image": "/images/p/galaxy-z-flip8/kremovyy.webp"
+    "image": "/images/p/galaxy-z-flip8/kremovyy.webp",
+    "price": 79790
    }
   ],
   "specs": {
@@ -1111,11 +1151,13 @@ export const products: Product[] = [
    },
    {
     "name": "Кремовый",
-    "image": "/images/p/galaxy-z-flip8/kremovyy.webp"
+    "image": "/images/p/galaxy-z-flip8/kremovyy.webp",
+    "price": 88290
    },
    {
     "name": "Розовый",
-    "image": "/images/p/galaxy-z-flip8/rozovyy.webp"
+    "image": "/images/p/galaxy-z-flip8/rozovyy.webp",
+    "price": 95890
    }
   ],
   "specs": {
@@ -1207,15 +1249,18 @@ export const products: Product[] = [
    },
    {
     "name": "Туманный серо-голубой",
-    "image": "/images/p/pixel-11-pro-xl/tumannyy-sero-goluboy.webp"
+    "image": "/images/p/pixel-11-pro-xl/tumannyy-sero-goluboy.webp",
+    "price": 113990
    },
    {
     "name": "Розовый",
-    "image": "/images/p/pixel-11-pro-xl/rozovyy.webp"
+    "image": "/images/p/pixel-11-pro-xl/rozovyy.webp",
+    "price": 115890
    },
    {
     "name": "Оливковый",
-    "image": "/images/p/pixel-11-pro-xl/olivkovyy.webp"
+    "image": "/images/p/pixel-11-pro-xl/olivkovyy.webp",
+    "price": 115890
    }
   ],
   "specs": {
@@ -1303,7 +1348,8 @@ export const products: Product[] = [
    },
    {
     "name": "Оливковый",
-    "image": "/images/p/pixel-11-pro/olivkovyy.webp"
+    "image": "/images/p/pixel-11-pro/olivkovyy.webp",
+    "price": 91190
    }
   ],
   "specs": {
@@ -1349,11 +1395,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовый",
-    "image": "/images/p/pixel-11-pro/rozovyy.webp"
+    "image": "/images/p/pixel-11-pro/rozovyy.webp",
+    "price": 111090
    },
    {
     "name": "Оливковый",
-    "image": "/images/p/pixel-11-pro/olivkovyy.webp"
+    "image": "/images/p/pixel-11-pro/olivkovyy.webp",
+    "price": 111090
    }
   ],
   "specs": {
@@ -1433,7 +1481,8 @@ export const products: Product[] = [
    },
    {
     "name": "Оливковый",
-    "image": "/images/p/pixel-11-pro-fold/olivkovyy.webp"
+    "image": "/images/p/pixel-11-pro-fold/olivkovyy.webp",
+    "price": 139590
    }
   ],
   "specs": {
@@ -1475,7 +1524,8 @@ export const products: Product[] = [
    },
    {
     "name": "Оливковый",
-    "image": "/images/p/pixel-11-pro-fold/olivkovyy.webp"
+    "image": "/images/p/pixel-11-pro-fold/olivkovyy.webp",
+    "price": 157690
    }
   ],
   "specs": {
@@ -1609,11 +1659,13 @@ export const products: Product[] = [
    },
    {
     "name": "Красный",
-    "image": "/images/p/pixel-11/krasnyy.webp"
+    "image": "/images/p/pixel-11/krasnyy.webp",
+    "price": 80690
    },
    {
     "name": "Фисташковый",
-    "image": "/images/p/pixel-11/fistashkovyy.webp"
+    "image": "/images/p/pixel-11/fistashkovyy.webp",
+    "price": 82590
    }
   ],
   "specs": {
@@ -1705,15 +1757,18 @@ export const products: Product[] = [
    },
    {
     "name": "Космический чёрный",
-    "image": "/images/p/iphone-air/kosmicheskiy-chernyy.webp"
+    "image": "/images/p/iphone-air/kosmicheskiy-chernyy.webp",
+    "price": 84490
    },
    {
     "name": "Небесно-голубой",
-    "image": "/images/p/iphone-air/nebesno-goluboy.webp"
+    "image": "/images/p/iphone-air/nebesno-goluboy.webp",
+    "price": 86390
    },
    {
     "name": "Облачно-белый",
-    "image": "/images/p/iphone-air/oblachno-belyy.webp"
+    "image": "/images/p/iphone-air/oblachno-belyy.webp",
+    "price": 93090
    }
   ],
   "specs": {
@@ -1759,11 +1814,13 @@ export const products: Product[] = [
    },
    {
     "name": "Облачно-белый",
-    "image": "/images/p/iphone-air/oblachno-belyy.webp"
+    "image": "/images/p/iphone-air/oblachno-belyy.webp",
+    "price": 101590
    },
    {
     "name": "Небесно-голубой",
-    "image": "/images/p/iphone-air/nebesno-goluboy.webp"
+    "image": "/images/p/iphone-air/nebesno-goluboy.webp",
+    "price": 112090
    }
   ],
   "specs": {
@@ -1805,19 +1862,23 @@ export const products: Product[] = [
    },
    {
     "name": "Туманно-голубой",
-    "image": "/images/p/iphone-17/tumanno-goluboy.webp"
+    "image": "/images/p/iphone-17/tumanno-goluboy.webp",
+    "price": 77890
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-17/chernyy.webp"
+    "image": "/images/p/iphone-17/chernyy.webp",
+    "price": 78790
    },
    {
     "name": "Лавандовый",
-    "image": "/images/p/iphone-17/lavandovyy.webp"
+    "image": "/images/p/iphone-17/lavandovyy.webp",
+    "price": 78790
    },
    {
     "name": "Белый",
-    "image": "/images/p/iphone-17/belyy.webp"
+    "image": "/images/p/iphone-17/belyy.webp",
+    "price": 78790
    }
   ],
   "specs": {
@@ -1863,15 +1924,18 @@ export const products: Product[] = [
    },
    {
     "name": "Белый",
-    "image": "/images/p/iphone-17/belyy.webp"
+    "image": "/images/p/iphone-17/belyy.webp",
+    "price": 93090
    },
    {
     "name": "Туманно-голубой",
-    "image": "/images/p/iphone-17/tumanno-goluboy.webp"
+    "image": "/images/p/iphone-17/tumanno-goluboy.webp",
+    "price": 93090
    },
    {
     "name": "Лавандовый",
-    "image": "/images/p/iphone-17/lavandovyy.webp"
+    "image": "/images/p/iphone-17/lavandovyy.webp",
+    "price": 95890
    }
   ],
   "specs": {
@@ -1963,7 +2027,8 @@ export const products: Product[] = [
    },
    {
     "name": "Бледно-розовый",
-    "image": "/images/p/iphone-17e/bledno-rozovyy.webp"
+    "image": "/images/p/iphone-17e/bledno-rozovyy.webp",
+    "price": 71190
    }
   ],
   "specs": {
@@ -2005,23 +2070,28 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/galaxy-s26-plus/chernyy.webp"
+    "image": "/images/p/galaxy-s26-plus/chernyy.webp",
+    "price": 76890
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/galaxy-s26-plus/fioletovyy.webp"
+    "image": "/images/p/galaxy-s26-plus/fioletovyy.webp",
+    "price": 76890
    },
    {
     "name": "Белый",
-    "image": "/images/p/galaxy-s26-plus/belyy.webp"
+    "image": "/images/p/galaxy-s26-plus/belyy.webp",
+    "price": 76890
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26-plus/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26-plus/rozovoe-zoloto.webp",
+    "price": 79790
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26-plus/serebristyy.webp"
+    "image": "/images/p/galaxy-s26-plus/serebristyy.webp",
+    "price": 79790
    }
   ],
   "specs": {
@@ -2075,11 +2145,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26-plus/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26-plus/rozovoe-zoloto.webp",
+    "price": 87390
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26-plus/serebristyy.webp"
+    "image": "/images/p/galaxy-s26-plus/serebristyy.webp",
+    "price": 87390
    }
   ],
   "specs": {
@@ -2133,11 +2205,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26/rozovoe-zoloto.webp",
+    "price": 68390
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26/serebristyy.webp"
+    "image": "/images/p/galaxy-s26/serebristyy.webp",
+    "price": 68390
    }
   ],
   "specs": {
@@ -2191,11 +2265,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовое золото",
-    "image": "/images/p/galaxy-s26/rozovoe-zoloto.webp"
+    "image": "/images/p/galaxy-s26/rozovoe-zoloto.webp",
+    "price": 77890
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-s26/serebristyy.webp"
+    "image": "/images/p/galaxy-s26/serebristyy.webp",
+    "price": 77890
    }
   ],
   "specs": {
@@ -2237,7 +2313,8 @@ export const products: Product[] = [
    },
    {
     "name": "Зелёный",
-    "image": "/images/p/galaxy-s26-fe/zelenyy.webp"
+    "image": "/images/p/galaxy-s26-fe/zelenyy.webp",
+    "price": 50290
    }
   ],
   "specs": {
@@ -2583,11 +2660,13 @@ export const products: Product[] = [
    },
    {
     "name": "Оранжевый",
-    "image": "/images/p/huawei-pura-90s-pro/oranzhevyy.webp"
+    "image": "/images/p/huawei-pura-90s-pro/oranzhevyy.webp",
+    "price": 58890
    },
    {
     "name": "Белый",
-    "image": "/images/p/huawei-pura-90s-pro/belyy.webp"
+    "image": "/images/p/huawei-pura-90s-pro/belyy.webp",
+    "price": 58890
    }
   ],
   "specs": {
@@ -2779,11 +2858,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp",
+    "price": 105390
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro-max/serebristyy.webp",
+    "price": 109190
    }
   ],
   "specs": {
@@ -2825,11 +2906,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp",
+    "price": 120590
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro-max/serebristyy.webp",
+    "price": 129190
    }
   ],
   "specs": {
@@ -2871,11 +2954,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp",
+    "price": 139590
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro-max/serebristyy.webp",
+    "price": 141490
    }
   ],
   "specs": {
@@ -2917,11 +3002,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro-max/nasyschennyy-siniy.webp",
+    "price": 150090
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro-max/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro-max/serebristyy.webp",
+    "price": 165290
    }
   ],
   "specs": {
@@ -2963,11 +3050,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp",
+    "price": 99690
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro/serebristyy.webp",
+    "price": 102590
    }
   ],
   "specs": {
@@ -3009,11 +3098,13 @@ export const products: Product[] = [
    },
    {
     "name": "Космический оранжевый",
-    "image": "/images/p/iphone-17-pro/kosmicheskiy-oranzhevyy.webp"
+    "image": "/images/p/iphone-17-pro/kosmicheskiy-oranzhevyy.webp",
+    "price": 117790
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp",
+    "price": 120590
    }
   ],
   "specs": {
@@ -3055,11 +3146,13 @@ export const products: Product[] = [
    },
    {
     "name": "Насыщенный синий",
-    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp"
+    "image": "/images/p/iphone-17-pro/nasyschennyy-siniy.webp",
+    "price": 132990
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/iphone-17-pro/serebristyy.webp"
+    "image": "/images/p/iphone-17-pro/serebristyy.webp",
+    "price": 135790
    }
   ],
   "specs": {
@@ -3105,15 +3198,18 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/iphone-16/chernyy.webp"
+    "image": "/images/p/iphone-16/chernyy.webp",
+    "price": 66490
    },
    {
     "name": "Ультрамарин",
-    "image": "/images/p/iphone-16/ultramarin.webp"
+    "image": "/images/p/iphone-16/ultramarin.webp",
+    "price": 67390
    },
    {
     "name": "Розовый",
-    "image": "/images/p/iphone-16/rozovyy.webp"
+    "image": "/images/p/iphone-16/rozovyy.webp",
+    "price": 68390
    }
   ],
   "specs": {
@@ -3159,15 +3255,18 @@ export const products: Product[] = [
    },
    {
     "name": "Морская бирюза",
-    "image": "/images/p/iphone-16/morskaya-biryuza.webp"
+    "image": "/images/p/iphone-16/morskaya-biryuza.webp",
+    "price": 80690
    },
    {
     "name": "Ультрамарин",
-    "image": "/images/p/iphone-16/ultramarin.webp"
+    "image": "/images/p/iphone-16/ultramarin.webp",
+    "price": 81690
    },
    {
     "name": "Белый",
-    "image": "/images/p/iphone-16/belyy.webp"
+    "image": "/images/p/iphone-16/belyy.webp",
+    "price": 82590
    }
   ],
   "specs": {
@@ -3363,19 +3462,23 @@ export const products: Product[] = [
    },
    {
     "name": "Угольно-чёрный титан",
-    "image": "/images/p/galaxy-s25-ultra/ugolno-chernyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/ugolno-chernyy-titan.webp",
+    "price": 73090
    },
    {
     "name": "Серебряный титан",
-    "image": "/images/p/galaxy-s25-ultra/serebryanyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/serebryanyy-titan.webp",
+    "price": 74090
    },
    {
     "name": "Зелёный титан",
-    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp",
+    "price": 74990
    },
    {
     "name": "Розовый титан",
-    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp",
+    "price": 74990
    }
   ],
   "specs": {
@@ -3429,15 +3532,18 @@ export const products: Product[] = [
    },
    {
     "name": "Угольно-чёрный титан",
-    "image": "/images/p/galaxy-s25-ultra/ugolno-chernyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/ugolno-chernyy-titan.webp",
+    "price": 81690
    },
    {
     "name": "Зелёный титан",
-    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp",
+    "price": 85490
    },
    {
     "name": "Розовый титан",
-    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp",
+    "price": 85490
    }
   ],
   "specs": {
@@ -3495,11 +3601,13 @@ export const products: Product[] = [
    },
    {
     "name": "Зелёный титан",
-    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/zelenyy-titan.webp",
+    "price": 92090
    },
    {
     "name": "Розовый титан",
-    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp"
+    "image": "/images/p/galaxy-s25-ultra/rozovyy-titan.webp",
+    "price": 92090
    }
   ],
   "specs": {
@@ -3699,19 +3807,23 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/galaxy-s25/chernyy.webp"
+    "image": "/images/p/galaxy-s25/chernyy.webp",
+    "price": 54090
    },
    {
     "name": "Коралловый",
-    "image": "/images/p/galaxy-s25/korallovyy.webp"
+    "image": "/images/p/galaxy-s25/korallovyy.webp",
+    "price": 54090
    },
    {
     "name": "Розовый",
-    "image": "/images/p/galaxy-s25/rozovyy.webp"
+    "image": "/images/p/galaxy-s25/rozovyy.webp",
+    "price": 54090
    },
    {
     "name": "Серый",
-    "image": "/images/p/galaxy-s25/seryy.webp"
+    "image": "/images/p/galaxy-s25/seryy.webp",
+    "price": 54090
    }
   ],
   "specs": {
@@ -3765,15 +3877,18 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/galaxy-s25/chernyy.webp"
+    "image": "/images/p/galaxy-s25/chernyy.webp",
+    "price": 56990
    },
    {
     "name": "Коралловый",
-    "image": "/images/p/galaxy-s25/korallovyy.webp"
+    "image": "/images/p/galaxy-s25/korallovyy.webp",
+    "price": 58890
    },
    {
     "name": "Розовый",
-    "image": "/images/p/galaxy-s25/rozovyy.webp"
+    "image": "/images/p/galaxy-s25/rozovyy.webp",
+    "price": 58890
    }
   ],
   "specs": {
@@ -3827,15 +3942,18 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/galaxy-s25/chernyy.webp"
+    "image": "/images/p/galaxy-s25/chernyy.webp",
+    "price": 67390
    },
    {
     "name": "Коралловый",
-    "image": "/images/p/galaxy-s25/korallovyy.webp"
+    "image": "/images/p/galaxy-s25/korallovyy.webp",
+    "price": 67390
    },
    {
     "name": "Розовый",
-    "image": "/images/p/galaxy-s25/rozovyy.webp"
+    "image": "/images/p/galaxy-s25/rozovyy.webp",
+    "price": 67390
    }
   ],
   "specs": {
@@ -4111,11 +4229,13 @@ export const products: Product[] = [
    },
    {
     "name": "Лунный серый",
-    "image": "/images/p/pixel-10-pro/lunnyy-seryy.webp"
+    "image": "/images/p/pixel-10-pro/lunnyy-seryy.webp",
+    "price": 72190
    },
    {
     "name": "Светло-кремовый",
-    "image": "/images/p/pixel-10-pro/svetlo-kremovyy.webp"
+    "image": "/images/p/pixel-10-pro/svetlo-kremovyy.webp",
+    "price": 72190
    }
   ],
   "specs": {
@@ -4985,11 +5105,13 @@ export const products: Product[] = [
    },
    {
     "name": "Песчаная буря",
-    "image": "/images/p/oneplus-15/peschanaya-burya.webp"
+    "image": "/images/p/oneplus-15/peschanaya-burya.webp",
+    "price": 76890
    },
    {
     "name": "Ультрафиолет",
-    "image": "/images/p/oneplus-15/ultrafiolet.webp"
+    "image": "/images/p/oneplus-15/ultrafiolet.webp",
+    "price": 76890
    }
   ],
   "specs": {
@@ -5035,7 +5157,8 @@ export const products: Product[] = [
    },
    {
     "name": "Песчаная буря",
-    "image": "/images/p/oneplus-15/peschanaya-burya.webp"
+    "image": "/images/p/oneplus-15/peschanaya-burya.webp",
+    "price": 88290
    }
   ],
   "specs": {
@@ -5203,7 +5326,8 @@ export const products: Product[] = [
    },
    {
     "name": "Белый",
-    "image": "/images/p/nothing-phone-3/belyy.webp"
+    "image": "/images/p/nothing-phone-3/belyy.webp",
+    "price": 52190
    }
   ],
   "specs": {
@@ -5249,7 +5373,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/huawei-mate-x7/chernyy.webp"
+    "image": "/images/p/huawei-mate-x7/chernyy.webp",
+    "price": 118690
    }
   ],
   "specs": {
@@ -5955,7 +6080,8 @@ export const products: Product[] = [
    },
    {
     "name": "Мятный",
-    "image": "/images/p/galaxy-a27/myatnyy.webp"
+    "image": "/images/p/galaxy-a27/myatnyy.webp",
+    "price": 27490
    }
   ],
   "specs": {
@@ -6621,7 +6747,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-13/serebristyy.webp"
+    "image": "/images/p/ipad-pro-13/serebristyy.webp",
+    "price": 124390
    }
   ],
   "specs": {
@@ -6663,7 +6790,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-13/serebristyy.webp"
+    "image": "/images/p/ipad-pro-13/serebristyy.webp",
+    "price": 126290
    }
   ],
   "specs": {
@@ -6705,7 +6833,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-13/serebristyy.webp"
+    "image": "/images/p/ipad-pro-13/serebristyy.webp",
+    "price": 144390
    }
   ],
   "specs": {
@@ -6831,7 +6960,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный космос",
-    "image": "/images/p/ipad-pro-13/chernyy-kosmos.webp"
+    "image": "/images/p/ipad-pro-13/chernyy-kosmos.webp",
+    "price": 164290
    }
   ],
   "specs": {
@@ -6873,7 +7003,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный космос",
-    "image": "/images/p/ipad-pro-13/chernyy-kosmos.webp"
+    "image": "/images/p/ipad-pro-13/chernyy-kosmos.webp",
+    "price": 166190
    }
   ],
   "specs": {
@@ -6957,7 +7088,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 102590
    }
   ],
   "specs": {
@@ -6999,7 +7131,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 115890
    }
   ],
   "specs": {
@@ -7041,7 +7174,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 127290
    }
   ],
   "specs": {
@@ -7125,7 +7259,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 159590
    }
   ],
   "specs": {
@@ -7209,7 +7344,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 172890
    }
   ],
   "specs": {
@@ -7251,7 +7387,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-pro-11/serebristyy.webp"
+    "image": "/images/p/ipad-pro-11/serebristyy.webp",
+    "price": 177590
    }
   ],
   "specs": {
@@ -7351,7 +7488,8 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp",
+    "price": 87390
    }
   ],
   "specs": {
@@ -7393,15 +7531,18 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp",
+    "price": 97790
    },
    {
     "name": "Голубой",
-    "image": "/images/p/ipad-air-13/goluboy.webp"
+    "image": "/images/p/ipad-air-13/goluboy.webp",
+    "price": 97790
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-13/fioletovyy.webp"
+    "image": "/images/p/ipad-air-13/fioletovyy.webp",
+    "price": 97790
    }
   ],
   "specs": {
@@ -7443,15 +7584,18 @@ export const products: Product[] = [
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-13/fioletovyy.webp"
+    "image": "/images/p/ipad-air-13/fioletovyy.webp",
+    "price": 112090
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-air-13/seryy-kosmos.webp"
+    "image": "/images/p/ipad-air-13/seryy-kosmos.webp",
+    "price": 113990
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp",
+    "price": 117790
    }
   ],
   "specs": {
@@ -7551,7 +7695,8 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp",
+    "price": 139590
    }
   ],
   "specs": {
@@ -7593,15 +7738,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-air-13/seryy-kosmos.webp"
+    "image": "/images/p/ipad-air-13/seryy-kosmos.webp",
+    "price": 141490
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-13/siyayuschaya-zvezda.webp",
+    "price": 141490
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-13/fioletovyy.webp"
+    "image": "/images/p/ipad-air-13/fioletovyy.webp",
+    "price": 142490
    }
   ],
   "specs": {
@@ -7701,7 +7849,8 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp",
+    "price": 65490
    }
   ],
   "specs": {
@@ -7743,15 +7892,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-air-11/seryy-kosmos.webp"
+    "image": "/images/p/ipad-air-11/seryy-kosmos.webp",
+    "price": 77890
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp",
+    "price": 77890
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-11/fioletovyy.webp"
+    "image": "/images/p/ipad-air-11/fioletovyy.webp",
+    "price": 77890
    }
   ],
   "specs": {
@@ -7793,15 +7945,18 @@ export const products: Product[] = [
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-11/fioletovyy.webp"
+    "image": "/images/p/ipad-air-11/fioletovyy.webp",
+    "price": 75990
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-air-11/seryy-kosmos.webp"
+    "image": "/images/p/ipad-air-11/seryy-kosmos.webp",
+    "price": 76890
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp",
+    "price": 76890
    }
   ],
   "specs": {
@@ -7901,7 +8056,8 @@ export const products: Product[] = [
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-air-11/fioletovyy.webp"
+    "image": "/images/p/ipad-air-11/fioletovyy.webp",
+    "price": 112990
    }
   ],
   "specs": {
@@ -7951,7 +8107,8 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp",
+    "price": 126290
    }
   ],
   "specs": {
@@ -8051,7 +8208,8 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-air-11/siyayuschaya-zvezda.webp",
+    "price": 151990
    }
   ],
   "specs": {
@@ -8283,15 +8441,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-11/serebristyy.webp"
+    "image": "/images/p/ipad-11/serebristyy.webp",
+    "price": 53190
    },
    {
     "name": "Розовый",
-    "image": "/images/p/ipad-11/rozovyy.webp"
+    "image": "/images/p/ipad-11/rozovyy.webp",
+    "price": 53190
    },
    {
     "name": "Жёлтый",
-    "image": "/images/p/ipad-11/zheltyy.webp"
+    "image": "/images/p/ipad-11/zheltyy.webp",
+    "price": 53190
    }
   ],
   "specs": {
@@ -8337,11 +8498,13 @@ export const products: Product[] = [
    },
    {
     "name": "Розовый",
-    "image": "/images/p/ipad-11/rozovyy.webp"
+    "image": "/images/p/ipad-11/rozovyy.webp",
+    "price": 52190
    },
    {
     "name": "Жёлтый",
-    "image": "/images/p/ipad-11/zheltyy.webp"
+    "image": "/images/p/ipad-11/zheltyy.webp",
+    "price": 52190
    }
   ],
   "specs": {
@@ -8383,15 +8546,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/ipad-11/serebristyy.webp"
+    "image": "/images/p/ipad-11/serebristyy.webp",
+    "price": 74090
    },
    {
     "name": "Синий",
-    "image": "/images/p/ipad-11/siniy.webp"
+    "image": "/images/p/ipad-11/siniy.webp",
+    "price": 74090
    },
    {
     "name": "Жёлтый",
-    "image": "/images/p/ipad-11/zheltyy.webp"
+    "image": "/images/p/ipad-11/zheltyy.webp",
+    "price": 74090
    }
   ],
   "specs": {
@@ -8591,7 +8757,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-mini/seryy-kosmos.webp"
+    "image": "/images/p/ipad-mini/seryy-kosmos.webp",
+    "price": 60790
    }
   ],
   "specs": {
@@ -8633,15 +8800,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-mini/seryy-kosmos.webp"
+    "image": "/images/p/ipad-mini/seryy-kosmos.webp",
+    "price": 66490
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-mini/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-mini/siyayuschaya-zvezda.webp",
+    "price": 66490
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-mini/fioletovyy.webp"
+    "image": "/images/p/ipad-mini/fioletovyy.webp",
+    "price": 66490
    }
   ],
   "specs": {
@@ -8741,7 +8911,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серый космос",
-    "image": "/images/p/ipad-mini/seryy-kosmos.webp"
+    "image": "/images/p/ipad-mini/seryy-kosmos.webp",
+    "price": 85490
    }
   ],
   "specs": {
@@ -8783,15 +8954,18 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/ipad-mini/siyayuschaya-zvezda.webp"
+    "image": "/images/p/ipad-mini/siyayuschaya-zvezda.webp",
+    "price": 105390
    },
    {
     "name": "Голубой",
-    "image": "/images/p/ipad-mini/goluboy.webp"
+    "image": "/images/p/ipad-mini/goluboy.webp",
+    "price": 105390
    },
    {
     "name": "Фиолетовый",
-    "image": "/images/p/ipad-mini/fioletovyy.webp"
+    "image": "/images/p/ipad-mini/fioletovyy.webp",
+    "price": 105390
    }
   ],
   "specs": {
@@ -10011,7 +10185,8 @@ export const products: Product[] = [
    },
    {
     "name": "Зелёный",
-    "image": "/images/p/matepad-11-5-s/zelenyy.webp"
+    "image": "/images/p/matepad-11-5-s/zelenyy.webp",
+    "price": 32290
    }
   ],
   "specs": {
@@ -10297,7 +10472,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-16/serebristyy.webp"
+    "image": "/images/p/macbook-pro-16/serebristyy.webp",
+    "price": 255490
    }
   ],
   "specs": {
@@ -10339,7 +10515,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-16/serebristyy.webp"
+    "image": "/images/p/macbook-pro-16/serebristyy.webp",
+    "price": 322990
    }
   ],
   "specs": {
@@ -10381,7 +10558,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-16/serebristyy.webp"
+    "image": "/images/p/macbook-pro-16/serebristyy.webp",
+    "price": 313490
    }
   ],
   "specs": {
@@ -10423,7 +10601,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-16/serebristyy.webp"
+    "image": "/images/p/macbook-pro-16/serebristyy.webp",
+    "price": 400890
    }
   ],
   "specs": {
@@ -10465,7 +10644,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-14/serebristyy.webp"
+    "image": "/images/p/macbook-pro-14/serebristyy.webp",
+    "price": 181390
    }
   ],
   "specs": {
@@ -10507,7 +10687,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-14/serebristyy.webp"
+    "image": "/images/p/macbook-pro-14/serebristyy.webp",
+    "price": 186190
    }
   ],
   "specs": {
@@ -10591,7 +10772,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный космос",
-    "image": "/images/p/macbook-pro-14/chernyy-kosmos.webp"
+    "image": "/images/p/macbook-pro-14/chernyy-kosmos.webp",
+    "price": 217490
    }
   ],
   "specs": {
@@ -10717,7 +10899,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-14/serebristyy.webp"
+    "image": "/images/p/macbook-pro-14/serebristyy.webp",
+    "price": 257390
    }
   ],
   "specs": {
@@ -10759,7 +10942,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-pro-14/serebristyy.webp"
+    "image": "/images/p/macbook-pro-14/serebristyy.webp",
+    "price": 328690
    }
   ],
   "specs": {
@@ -10805,11 +10989,13 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/macbook-air-15/siyayuschaya-zvezda.webp"
+    "image": "/images/p/macbook-air-15/siyayuschaya-zvezda.webp",
+    "price": 132990
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-air-15/serebristyy.webp"
+    "image": "/images/p/macbook-air-15/serebristyy.webp",
+    "price": 133890
    }
   ],
   "specs": {
@@ -10851,15 +11037,18 @@ export const products: Product[] = [
    },
    {
     "name": "Сияющая звезда",
-    "image": "/images/p/macbook-air-15/siyayuschaya-zvezda.webp"
+    "image": "/images/p/macbook-air-15/siyayuschaya-zvezda.webp",
+    "price": 161490
    },
    {
     "name": "Тёмная ночь",
-    "image": "/images/p/macbook-air-15/temnaya-noch.webp"
+    "image": "/images/p/macbook-air-15/temnaya-noch.webp",
+    "price": 161490
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-air-15/serebristyy.webp"
+    "image": "/images/p/macbook-air-15/serebristyy.webp",
+    "price": 168090
    }
   ],
   "specs": {
@@ -10959,7 +11148,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-air-13/serebristyy.webp"
+    "image": "/images/p/macbook-air-13/serebristyy.webp",
+    "price": 114890
    }
   ],
   "specs": {
@@ -11009,7 +11199,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-air-13/serebristyy.webp"
+    "image": "/images/p/macbook-air-13/serebristyy.webp",
+    "price": 136790
    }
   ],
   "specs": {
@@ -11101,15 +11292,18 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-neo/serebristyy.webp"
+    "image": "/images/p/macbook-neo/serebristyy.webp",
+    "price": 65490
    },
    {
     "name": "Цитрус",
-    "image": "/images/p/macbook-neo/citrus.webp"
+    "image": "/images/p/macbook-neo/citrus.webp",
+    "price": 65490
    },
    {
     "name": "Румянец",
-    "image": "/images/p/macbook-neo/rumyanec.webp"
+    "image": "/images/p/macbook-neo/rumyanec.webp",
+    "price": 66490
    }
   ],
   "specs": {
@@ -11151,15 +11345,18 @@ export const products: Product[] = [
    },
    {
     "name": "Индиго",
-    "image": "/images/p/macbook-neo/indigo.webp"
+    "image": "/images/p/macbook-neo/indigo.webp",
+    "price": 74990
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/macbook-neo/serebristyy.webp"
+    "image": "/images/p/macbook-neo/serebristyy.webp",
+    "price": 75990
    },
    {
     "name": "Румянец",
-    "image": "/images/p/macbook-neo/rumyanec.webp"
+    "image": "/images/p/macbook-neo/rumyanec.webp",
+    "price": 76890
    }
   ],
   "specs": {
@@ -11277,7 +11474,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серый",
-    "image": "/images/p/galaxy-book6-14/seryy.webp"
+    "image": "/images/p/galaxy-book6-14/seryy.webp",
+    "price": 120590
    }
   ],
   "specs": {
@@ -11319,7 +11517,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебристый",
-    "image": "/images/p/galaxy-book6-14/serebristyy.webp"
+    "image": "/images/p/galaxy-book6-14/serebristyy.webp",
+    "price": 130090
    }
   ],
   "specs": {
@@ -12018,7 +12217,8 @@ export const products: Product[] = [
    },
    {
     "name": "Тёмная ночь",
-    "image": "/images/p/airpods-max-2/temnaya-noch.webp"
+    "image": "/images/p/airpods-max-2/temnaya-noch.webp",
+    "price": 46490
    }
   ],
   "specs": {
@@ -13003,31 +13203,38 @@ export const products: Product[] = [
    },
    {
     "name": "титан светлого цвета, ремешок Ocean цвета «полупрозрачный серый»",
-    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-ocean-cveta-poluprozrachnyy-seryy.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-ocean-cveta-poluprozrachnyy-seryy.webp",
+    "price": 78790
    },
    {
     "name": "титан чёрного цвета, ремешок Trail бордового цвета",
-    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-remeshok-trail-bordovogo-cveta.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-remeshok-trail-bordovogo-cveta.webp",
+    "price": 80690
    },
    {
     "name": "титан чёрного цвета, ремешок Alpine бордового цвета",
-    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-remeshok-alpine-bordovogo-cveta.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-remeshok-alpine-bordovogo-cveta.webp",
+    "price": 80690
    },
    {
     "name": "титан светлого цвета, ремешок Alpine цвета «пустыня»",
-    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-alpine-cveta-pustynya.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-alpine-cveta-pustynya.webp",
+    "price": 80690
    },
    {
     "name": "титан светлого цвета, ремешок Trail песочного цвета",
-    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-trail-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-remeshok-trail-pesochnogo-cveta.webp",
+    "price": 81690
    },
    {
     "name": "титан чёрного цвета, миланский сетчатый браслет",
-    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-milanskiy-setchatyy-braslet.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-chernogo-cveta-milanskiy-setchatyy-braslet.webp",
+    "price": 99690
    },
    {
     "name": "титан светлого цвета, миланский сетчатый браслет",
-    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-milanskiy-setchatyy-braslet.webp"
+    "image": "/images/p/apple-watch-ultra-4/titan-svetlogo-cveta-milanskiy-setchatyy-braslet.webp",
+    "price": 99690
    }
   ],
   "specs": {
@@ -13069,27 +13276,23 @@ export const products: Product[] = [
    },
    {
     "name": "алюминий цвета «серый космос», ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-cveta-seryy-kosmos-remeshok-sport-band-cveta-morskoy-siniy.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-cveta-seryy-kosmos-remeshok-sport-band-cveta-morskoy-siniy.webp",
+    "price": 38890
    },
    {
     "name": "алюминий чёрного цвета, ремешок Sport Band чёрного цвета",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-chernogo-cveta-remeshok-sport-band-chernogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-chernogo-cveta-remeshok-sport-band-chernogo-cveta.webp",
+    "price": 38890
    },
    {
     "name": "алюминий тёмно-бронзового цвета, ремешок Sport Band оливкового цвета",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-remeshok-sport-band-olivkovogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-remeshok-sport-band-olivkovogo-cveta.webp",
+    "price": 38890
    },
    {
     "name": "алюминий тёмно-бронзового цвета, миланский сетчатый браслет цвета «тёмная бронза»",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-milanskiy-setchatyy-braslet-cveta-temnaya-bronza.webp"
-   },
-   {
-    "name": "керамика цвета «тёмно-синяя ночь», ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
-   },
-   {
-    "name": "керамика цвета «белый жемчуг», ремешок Sport Band песочного цвета",
-    "image": "/images/p/apple-watch-series-12/keramika-cveta-belyy-zhemchug-remeshok-sport-band-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-milanskiy-setchatyy-braslet-cveta-temnaya-bronza.webp",
+    "price": 61690
    }
   ],
   "specs": {
@@ -13125,23 +13328,18 @@ export const products: Product[] = [
    },
    {
     "name": "алюминий тёмно-бронзового цвета, ремешок Sport Band оливкового цвета",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-remeshok-sport-band-olivkovogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-remeshok-sport-band-olivkovogo-cveta.webp",
+    "price": 41790
    },
    {
     "name": "алюминий светло-золотистого цвета, ремешок Sport Band песочного цвета",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-svetlo-zolotistogo-cveta-remeshok-sport-band-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-svetlo-zolotistogo-cveta-remeshok-sport-band-pesochnogo-cveta.webp",
+    "price": 43690
    },
    {
     "name": "алюминий тёмно-бронзового цвета, миланский сетчатый браслет цвета «тёмная бронза»",
-    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-milanskiy-setchatyy-braslet-cveta-temnaya-bronza.webp"
-   },
-   {
-    "name": "керамика цвета «тёмно-синяя ночь», ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
-   },
-   {
-    "name": "керамика цвета «белый жемчуг», ремешок Sport Band песочного цвета",
-    "image": "/images/p/apple-watch-series-12/keramika-cveta-belyy-zhemchug-remeshok-sport-band-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/alyuminiy-temno-bronzovogo-cveta-milanskiy-setchatyy-braslet-cveta-temnaya-bronza.webp",
+    "price": 66490
    }
   ],
   "specs": {
@@ -13177,15 +13375,18 @@ export const products: Product[] = [
    },
    {
     "name": "титан светлого цвета, миланский сетчатый браслет",
-    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-milanskiy-setchatyy-braslet.webp"
+    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-milanskiy-setchatyy-braslet.webp",
+    "price": 87390
    },
    {
     "name": "титан светлого цвета, ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-remeshok-sport-band-cveta-morskoy-siniy.webp"
+    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-remeshok-sport-band-cveta-morskoy-siniy.webp",
+    "price": 91190
    },
    {
     "name": "титан цвета «сияющее золото», ремешок Sport Band бордового цвета",
-    "image": "/images/p/apple-watch-series-12/titan-cveta-siyayuschee-zoloto-remeshok-sport-band-bordovogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/titan-cveta-siyayuschee-zoloto-remeshok-sport-band-bordovogo-cveta.webp",
+    "price": 92090
    }
   ],
   "specs": {
@@ -13225,15 +13426,91 @@ export const products: Product[] = [
    },
    {
     "name": "титан цвета «сияющее золото», ремешок Sport Band бордового цвета",
-    "image": "/images/p/apple-watch-series-12/titan-cveta-siyayuschee-zoloto-remeshok-sport-band-bordovogo-cveta.webp"
+    "image": "/images/p/apple-watch-series-12/titan-cveta-siyayuschee-zoloto-remeshok-sport-band-bordovogo-cveta.webp",
+    "price": 94990
    },
    {
     "name": "титан светлого цвета, ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-remeshok-sport-band-cveta-morskoy-siniy.webp"
+    "image": "/images/p/apple-watch-series-12/titan-svetlogo-cveta-remeshok-sport-band-cveta-morskoy-siniy.webp",
+    "price": 94990
    }
   ],
   "specs": {
    "Конфигурация": "46 мм · титан",
+   "Процессор": "Apple S11",
+   "Беспроводная зарядка": "да",
+   "Класс водонепроницаемости": "IP6X",
+   "Операционная система": "Watch OS",
+   "Совместимость с ОС": "iOS",
+   "Минимальная поддерживаемая версия iOS": "iOS 27",
+   "Установка сторонних приложений": "есть",
+   "Уведомления с просмотром или ответом": "есть"
+  },
+  "summary": "Apple S11 · IP6X · Watch OS",
+  "inStock": true,
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
+ },
+ {
+  "id": "apple-watch-series-12-42-mm-keramika",
+  "name": "Apple Watch Series 12 42 мм · керамика",
+  "model": "Apple Watch Series 12",
+  "variant": "42 мм · керамика",
+  "storage": null,
+  "family": "apple-watch-series-12",
+  "brand": "Apple",
+  "category": "Часы",
+  "price": 119690,
+  "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp",
+  "colors": [
+   {
+    "name": "керамика цвета «тёмно-синяя ночь», ремешок Sport Band цвета «морской синий»",
+    "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
+   },
+   {
+    "name": "керамика цвета «белый жемчуг», ремешок Sport Band песочного цвета",
+    "image": "/images/p/apple-watch-series-12/keramika-cveta-belyy-zhemchug-remeshok-sport-band-pesochnogo-cveta.webp",
+    "price": 123490
+   }
+  ],
+  "specs": {
+   "Конфигурация": "42 мм · керамика",
+   "Процессор": "Apple S11",
+   "Беспроводная зарядка": "да",
+   "Класс водонепроницаемости": "IP6X",
+   "Операционная система": "Watch OS",
+   "Совместимость с ОС": "iOS",
+   "Минимальная поддерживаемая версия iOS": "iOS 27",
+   "Установка сторонних приложений": "есть",
+   "Уведомления с просмотром или ответом": "есть"
+  },
+  "summary": "Apple S11 · IP6X · Watch OS",
+  "inStock": true,
+  "description": "Apple Watch Series 12: процессор — Apple S11; класс водонепроницаемости — IP6X; операционная система — Watch OS."
+ },
+ {
+  "id": "apple-watch-series-12-46-mm-keramika",
+  "name": "Apple Watch Series 12 46 мм · керамика",
+  "model": "Apple Watch Series 12",
+  "variant": "46 мм · керамика",
+  "storage": null,
+  "family": "apple-watch-series-12",
+  "brand": "Apple",
+  "category": "Часы",
+  "price": 123490,
+  "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp",
+  "colors": [
+   {
+    "name": "керамика цвета «тёмно-синяя ночь», ремешок Sport Band цвета «морской синий»",
+    "image": "/images/p/apple-watch-series-12/keramika-cveta-temno-sinyaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
+   },
+   {
+    "name": "керамика цвета «белый жемчуг», ремешок Sport Band песочного цвета",
+    "image": "/images/p/apple-watch-series-12/keramika-cveta-belyy-zhemchug-remeshok-sport-band-pesochnogo-cveta.webp",
+    "price": 147190
+   }
+  ],
+  "specs": {
+   "Конфигурация": "46 мм · керамика",
    "Процессор": "Apple S11",
    "Беспроводная зарядка": "да",
    "Класс водонепроницаемости": "IP6X",
@@ -13349,15 +13626,18 @@ export const products: Product[] = [
    },
    {
     "name": "алюминий цвета «сияющая звезда», ремешок Sport Band цвета «сияющая звезда»",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-cveta-siyayuschaya-zvezda.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-cveta-siyayuschaya-zvezda.webp",
+    "price": 21790
    },
    {
     "name": "алюминий цвета «сияющая звезда», ремешок Sport Band песочного цвета",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-pesochnogo-cveta.webp",
+    "price": 23690
    },
    {
     "name": "алюминий цвета «тёмная ночь», ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-temnaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-temnaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp",
+    "price": 25090
    }
   ],
   "specs": {
@@ -13393,15 +13673,18 @@ export const products: Product[] = [
    },
    {
     "name": "алюминий цвета «сияющая звезда», ремешок Sport Band цвета «сияющая звезда»",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-cveta-siyayuschaya-zvezda.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-cveta-siyayuschaya-zvezda.webp",
+    "price": 25090
    },
    {
     "name": "алюминий цвета «тёмная ночь», ремешок Sport Band цвета «морской синий»",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-temnaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-temnaya-noch-remeshok-sport-band-cveta-morskoy-siniy.webp",
+    "price": 28890
    },
    {
     "name": "алюминий цвета «сияющая звезда», ремешок Sport Band песочного цвета",
-    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-pesochnogo-cveta.webp"
+    "image": "/images/p/apple-watch-se-3/alyuminiy-cveta-siyayuschaya-zvezda-remeshok-sport-band-pesochnogo-cveta.webp",
+    "price": 28890
    }
   ],
   "specs": {
@@ -13724,7 +14007,8 @@ export const products: Product[] = [
    },
    {
     "name": "AMOLED, титан, сапфир, кожаный ремешок цвета «грецкий орех», силиконовый ремешок (с inReach)",
-    "image": "/images/p/garmin-fenix-9-pro/amoled-titan-sapfir-kozhanyy-remeshok-cveta-greckiy-oreh-silikonovyy-remeshok-s-inreach.webp"
+    "image": "/images/p/garmin-fenix-9-pro/amoled-titan-sapfir-kozhanyy-remeshok-cveta-greckiy-oreh-silikonovyy-remeshok-s-inreach.webp",
+    "price": 132990
    }
   ],
   "specs": {
@@ -13825,7 +14109,8 @@ export const products: Product[] = [
    },
    {
     "name": "AMOLED, титан с DLC, сапфир, силиконовый ремешок цвета чёрный/«серая галька» (с inReach)",
-    "image": "/images/p/garmin-fenix-9-pro/amoled-titan-s-dlc-sapfir-silikonovyy-remeshok-cveta-chernyy-seraya-galka-s-inreach.webp"
+    "image": "/images/p/garmin-fenix-9-pro/amoled-titan-s-dlc-sapfir-silikonovyy-remeshok-cveta-chernyy-seraya-galka-s-inreach.webp",
+    "price": 147190
    }
   ],
   "specs": {
@@ -13860,11 +14145,13 @@ export const products: Product[] = [
    },
    {
     "name": "силиконовый ремешок цвета «полупрозрачный фиолетовый»/«индиго»",
-    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-fioletovyy-indigo.webp"
+    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-fioletovyy-indigo.webp",
+    "price": 41790
    },
    {
     "name": "силиконовый ремешок цвета «полупрозрачный чёрный»/чёрный",
-    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-chernyy-chernyy.webp"
+    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-chernyy-chernyy.webp",
+    "price": 41790
    }
   ],
   "specs": {
@@ -13907,7 +14194,8 @@ export const products: Product[] = [
    },
    {
     "name": "силиконовый ремешок цвета «полупрозрачный костяной»/«манго»",
-    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-kostyanoy-mango.webp"
+    "image": "/images/p/garmin-forerunner-570/silikonovyy-remeshok-cveta-poluprozrachnyy-kostyanoy-mango.webp",
+    "price": 42690
    }
   ],
   "specs": {
@@ -14061,7 +14349,8 @@ export const products: Product[] = [
    },
    {
     "name": "Серебряный титан",
-    "image": "/images/p/galaxy-ring/serebryanyy-titan.webp"
+    "image": "/images/p/galaxy-ring/serebryanyy-titan.webp",
+    "price": 22790
    }
   ],
   "specs": {
@@ -14101,19 +14390,23 @@ export const products: Product[] = [
    },
    {
     "name": "Золотой",
-    "image": "/images/p/oura-ring-5/zolotoy.webp"
+    "image": "/images/p/oura-ring-5/zolotoy.webp",
+    "price": 72190
    },
    {
     "name": "Насыщенный розовый",
-    "image": "/images/p/oura-ring-5/nasyschennyy-rozovyy.webp"
+    "image": "/images/p/oura-ring-5/nasyschennyy-rozovyy.webp",
+    "price": 72190
    },
    {
     "name": "Брашированное серебро",
-    "image": "/images/p/oura-ring-5/brashirovannoe-serebro.webp"
+    "image": "/images/p/oura-ring-5/brashirovannoe-serebro.webp",
+    "price": 72190
    },
    {
     "name": "Матовый чёрный",
-    "image": "/images/p/oura-ring-5/matovyy-chernyy.webp"
+    "image": "/images/p/oura-ring-5/matovyy-chernyy.webp",
+    "price": 72190
    }
   ],
   "specs": {
@@ -14148,7 +14441,8 @@ export const products: Product[] = [
    },
    {
     "name": "Gold, миланский сетчатый браслет (версия Global)",
-    "image": "/images/p/huawei-watch-gt-6/gold-milanskiy-setchatyy-braslet-versiya-global.webp"
+    "image": "/images/p/huawei-watch-gt-6/gold-milanskiy-setchatyy-braslet-versiya-global.webp",
+    "price": 19890
    }
   ],
   "specs": {
@@ -15733,19 +16027,23 @@ export const products: Product[] = [
    },
    {
     "name": "Jasper Plum",
-    "image": "/images/p/dyson-airwrap-coanda-2x/jasper-plum.webp"
+    "image": "/images/p/dyson-airwrap-coanda-2x/jasper-plum.webp",
+    "price": 44590
    },
    {
     "name": "Ceramic Pink/Rose Gold",
-    "image": "/images/p/dyson-airwrap-coanda-2x/ceramic-pink-rose-gold.webp"
+    "image": "/images/p/dyson-airwrap-coanda-2x/ceramic-pink-rose-gold.webp",
+    "price": 44590
    },
    {
     "name": "Amber Silk",
-    "image": "/images/p/dyson-airwrap-coanda-2x/amber-silk.webp"
+    "image": "/images/p/dyson-airwrap-coanda-2x/amber-silk.webp",
+    "price": 50290
    },
    {
     "name": "Red Velvet/Gold",
-    "image": "/images/p/dyson-airwrap-coanda-2x/red-velvet-gold.webp"
+    "image": "/images/p/dyson-airwrap-coanda-2x/red-velvet-gold.webp",
+    "price": 63590
    }
   ],
   "specs": {
@@ -15785,35 +16083,43 @@ export const products: Product[] = [
    },
    {
     "name": "Ceramic Patina/Topaz Orange",
-    "image": "/images/p/dyson-airwrap-id/ceramic-patina-topaz-orange.webp"
+    "image": "/images/p/dyson-airwrap-id/ceramic-patina-topaz-orange.webp",
+    "price": 36990
    },
    {
     "name": "Red Velvet/Gold",
-    "image": "/images/p/dyson-airwrap-id/red-velvet-gold.webp"
+    "image": "/images/p/dyson-airwrap-id/red-velvet-gold.webp",
+    "price": 36990
    },
    {
     "name": "Prussian Blue/Rich Copper",
-    "image": "/images/p/dyson-airwrap-id/prussian-blue-rich-copper.webp"
+    "image": "/images/p/dyson-airwrap-id/prussian-blue-rich-copper.webp",
+    "price": 38890
    },
    {
     "name": "Ceramic Pink/Rose Gold",
-    "image": "/images/p/dyson-airwrap-id/ceramic-pink-rose-gold.webp"
+    "image": "/images/p/dyson-airwrap-id/ceramic-pink-rose-gold.webp",
+    "price": 38890
    },
    {
     "name": "Jasper Plum",
-    "image": "/images/p/dyson-airwrap-id/jasper-plum.webp"
+    "image": "/images/p/dyson-airwrap-id/jasper-plum.webp",
+    "price": 41790
    },
    {
     "name": "Vinca Blue/Topaz Orange",
-    "image": "/images/p/dyson-airwrap-id/vinca-blue-topaz-orange.webp"
+    "image": "/images/p/dyson-airwrap-id/vinca-blue-topaz-orange.webp",
+    "price": 41790
    },
    {
     "name": "Amber Silk",
-    "image": "/images/p/dyson-airwrap-id/amber-silk.webp"
+    "image": "/images/p/dyson-airwrap-id/amber-silk.webp",
+    "price": 41790
    },
    {
     "name": "Kanzan Pink",
-    "image": "/images/p/dyson-airwrap-id/kanzan-pink.webp"
+    "image": "/images/p/dyson-airwrap-id/kanzan-pink.webp",
+    "price": 49390
    }
   ],
   "specs": {
@@ -15853,23 +16159,28 @@ export const products: Product[] = [
    },
    {
     "name": "Ceramic Apricot/Topaz",
-    "image": "/images/p/dyson-supersonic-r/ceramic-apricot-topaz.webp"
+    "image": "/images/p/dyson-supersonic-r/ceramic-apricot-topaz.webp",
+    "price": 33190
    },
    {
     "name": "Vinca Blue/Topaz Orange",
-    "image": "/images/p/dyson-supersonic-r/vinca-blue-topaz-orange.webp"
+    "image": "/images/p/dyson-supersonic-r/vinca-blue-topaz-orange.webp",
+    "price": 35090
    },
    {
     "name": "Red Velvet/Gold",
-    "image": "/images/p/dyson-supersonic-r/red-velvet-gold.webp"
+    "image": "/images/p/dyson-supersonic-r/red-velvet-gold.webp",
+    "price": 36090
    },
    {
     "name": "Jasper Plum",
-    "image": "/images/p/dyson-supersonic-r/jasper-plum.webp"
+    "image": "/images/p/dyson-supersonic-r/jasper-plum.webp",
+    "price": 36990
    },
    {
     "name": "Kanzan Pink",
-    "image": "/images/p/dyson-supersonic-r/kanzan-pink.webp"
+    "image": "/images/p/dyson-supersonic-r/kanzan-pink.webp",
+    "price": 38890
    }
   ],
   "specs": {
@@ -15903,31 +16214,38 @@ export const products: Product[] = [
    },
    {
     "name": "Ceramic Apricot/Topaz",
-    "image": "/images/p/dyson-supersonic-nural/ceramic-apricot-topaz.webp"
+    "image": "/images/p/dyson-supersonic-nural/ceramic-apricot-topaz.webp",
+    "price": 36990
    },
    {
     "name": "Jasper Plum",
-    "image": "/images/p/dyson-supersonic-nural/jasper-plum.webp"
+    "image": "/images/p/dyson-supersonic-nural/jasper-plum.webp",
+    "price": 39890
    },
    {
     "name": "Ceramic Patina/Topaz Orange",
-    "image": "/images/p/dyson-supersonic-nural/ceramic-patina-topaz-orange.webp"
+    "image": "/images/p/dyson-supersonic-nural/ceramic-patina-topaz-orange.webp",
+    "price": 40790
    },
    {
     "name": "Strawberry Bronze/Blush Pink",
-    "image": "/images/p/dyson-supersonic-nural/strawberry-bronze-blush-pink.webp"
+    "image": "/images/p/dyson-supersonic-nural/strawberry-bronze-blush-pink.webp",
+    "price": 42690
    },
    {
     "name": "Red Velvet/Gold",
-    "image": "/images/p/dyson-supersonic-nural/red-velvet-gold.webp"
+    "image": "/images/p/dyson-supersonic-nural/red-velvet-gold.webp",
+    "price": 43690
    },
    {
     "name": "Vinca Blue/Topaz Orange",
-    "image": "/images/p/dyson-supersonic-nural/vinca-blue-topaz-orange.webp"
+    "image": "/images/p/dyson-supersonic-nural/vinca-blue-topaz-orange.webp",
+    "price": 45590
    },
    {
     "name": "Amber Silk",
-    "image": "/images/p/dyson-supersonic-nural/amber-silk.webp"
+    "image": "/images/p/dyson-supersonic-nural/amber-silk.webp",
+    "price": 48390
    }
   ],
   "specs": {
@@ -15968,31 +16286,38 @@ export const products: Product[] = [
    },
    {
     "name": "Ceramic Pink/Rose Gold",
-    "image": "/images/p/dyson-airstrait/ceramic-pink-rose-gold.webp"
+    "image": "/images/p/dyson-airstrait/ceramic-pink-rose-gold.webp",
+    "price": 29390
    },
    {
     "name": "Ceramic Apricot/Topaz",
-    "image": "/images/p/dyson-airstrait/ceramic-apricot-topaz.webp"
+    "image": "/images/p/dyson-airstrait/ceramic-apricot-topaz.webp",
+    "price": 34190
    },
    {
     "name": "Amber Silk",
-    "image": "/images/p/dyson-airstrait/amber-silk.webp"
+    "image": "/images/p/dyson-airstrait/amber-silk.webp",
+    "price": 35090
    },
    {
     "name": "Nickel/Copper",
-    "image": "/images/p/dyson-airstrait/nickel-copper.webp"
+    "image": "/images/p/dyson-airstrait/nickel-copper.webp",
+    "price": 36090
    },
    {
     "name": "Onyx Black/Gold",
-    "image": "/images/p/dyson-airstrait/onyx-black-gold.webp"
+    "image": "/images/p/dyson-airstrait/onyx-black-gold.webp",
+    "price": 41790
    },
    {
     "name": "Red Velvet/Gold",
-    "image": "/images/p/dyson-airstrait/red-velvet-gold.webp"
+    "image": "/images/p/dyson-airstrait/red-velvet-gold.webp",
+    "price": 43690
    },
    {
     "name": "Strawberry Bronze/Blush Pink",
-    "image": "/images/p/dyson-airstrait/strawberry-bronze-blush-pink.webp"
+    "image": "/images/p/dyson-airstrait/strawberry-bronze-blush-pink.webp",
+    "price": 45590
    }
   ],
   "specs": {
@@ -16137,7 +16462,8 @@ export const products: Product[] = [
    },
    {
     "name": "Black/Nikel",
-    "image": "/images/p/dyson-purifier/black-nikel.webp"
+    "image": "/images/p/dyson-purifier/black-nikel.webp",
+    "price": 41790
    }
   ],
   "specs": {
@@ -16207,7 +16533,8 @@ export const products: Product[] = [
    },
    {
     "name": "Nickel/Gold",
-    "image": "/images/p/dyson-purifier/nickel-gold.webp"
+    "image": "/images/p/dyson-purifier/nickel-gold.webp",
+    "price": 48390
    }
   ],
   "specs": {
@@ -17500,7 +17827,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/magic-keyboard-touch-id/chernyy.webp"
+    "image": "/images/p/magic-keyboard-touch-id/chernyy.webp",
+    "price": 20890
    }
   ],
   "specs": {
@@ -17536,7 +17864,8 @@ export const products: Product[] = [
    },
    {
     "name": "Чёрный",
-    "image": "/images/p/magic-mouse/chernyy.webp"
+    "image": "/images/p/magic-mouse/chernyy.webp",
+    "price": 10390
    }
   ],
   "specs": {

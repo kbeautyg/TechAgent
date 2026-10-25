@@ -1992,6 +1992,7 @@ body {
 .pp-color-chip.active img { mix-blend-mode: normal; }
 .pcard-from { font-size: 13px; font-weight: 600; color: var(--color-text-muted); }
 .pp-color-chip-text { padding: 10px 16px; }
+.pp-color-chip-label { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 1px; text-align: left; }
 
 /* ── Карточка товара: главное из условий под кнопкой покупки ── */
 .pp-facts { list-style: none; margin: -12px 0 28px; padding: 4px 16px; border: 1px solid var(--color-border); border-radius: 16px; background: var(--color-bg-white); }

@@ -8,6 +8,7 @@
 import { products, type Product } from '../data/products'
 import { getProductImage } from '../utils/productImages'
 import { translateProductName } from '../utils/translate'
+import { hasColorPrices } from '../utils/calculate'
 import { faqData } from '../data/faq'
 import { categoryLandings, getCategoryBySlug, type CategoryLanding } from './categories'
 import {
@@ -290,9 +291,9 @@ export function resolveMeta(pathname: string): PageMeta {
     if (product) {
       const name = translateProductName(product.name)
       return baseMeta({
-        title: `${name} — цена ${fmtPrice(product.price)} ₽ | TechAgent`,
+        title: `${name} — цена ${hasColorPrices(product) ? 'от ' : ''}${fmtPrice(product.price)} ₽ | TechAgent`,
         description: clampDescription(
-          `${name}: ${fmtPrice(product.price)} ₽. ${PURCHASE_TERMS_SNIPPET} ${product.description}`,
+          `${name}: ${hasColorPrices(product) ? 'от ' : ''}${fmtPrice(product.price)} ₽. ${PURCHASE_TERMS_SNIPPET} ${product.description}`,
         ),
         canonical: `${SITE_URL}/catalog/${product.id}`,
         /* Превью в мессенджерах — общая картинка 1200×630: фото товаров квадратные webp, их обрезают */

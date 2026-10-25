@@ -7,7 +7,7 @@ import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { createOrder } from '../../data/mock'
-import { formatPercent, formatPrice, formatReward, rewardFor, rewardPercentAt } from '../../utils/calculate'
+import { formatPercent, formatPrice, formatReward, rewardFor, rewardPercentAt, priceFor, hasColorPrices } from '../../utils/calculate'
 import { formatPhone, isValidEmail, phoneError } from '../../utils/validate'
 import { copyText, selectText } from '../../utils/clipboard'
 import { reachGoal } from '../../lib/metrika'
@@ -89,7 +89,7 @@ function CatalogPicker({ onPick }: { onPick: (p: Product) => void }) {
                 <div className="text-[15px] lg:text-sm font-medium text-text-primary truncate">{p.name}</div>
                 <div className="text-[13px] lg:text-xs text-text-muted truncate">{p.brand} · {p.category}{!p.inStock && ' · недоступен'}</div>
               </div>
-              <span className="text-[15px] lg:text-sm font-semibold text-primary shrink-0 whitespace-nowrap">{formatPrice(p.price)}</span>
+              <span className="text-[15px] lg:text-sm font-semibold text-primary shrink-0 whitespace-nowrap">{hasColorPrices(p) && 'от '}{formatPrice(p.price)}</span>
             </button>
           ))}
         </div>
@@ -123,6 +123,8 @@ export default function NewOrderPage() {
   })
   const setProduct = (p: Product | null) => { setProductState(p); setColor(p?.colors[0]?.name ?? '') }
   /** Название для заказа и покупателя: с цветом, если у товара есть выбор цвета */
+  // Цена — выбранного цвета: у разных цветов одной модели она бывает разной
+  const price = product ? priceFor(product, color) : 0
   const productTitle = product ? (color && product.colors.length > 1 ? `${product.name}, ${color}` : product.name) : ''
   const [buyerName, setBuyerName] = useState('')
   const [buyerPhone, setBuyerPhone] = useState('')
@@ -192,8 +194,8 @@ export default function NewOrderPage() {
       userId: user.id,
       productId: product.id,
       productName: productTitle,
-      price: product.price,
-      partnerReward: rewardFor(product.price, percent),
+      price,
+      partnerReward: rewardFor(price, percent),
       rewardPercent: percent,
       buyerName: buyerName.trim(),
       buyerPhone: formatPhone(buyerPhone),
@@ -307,7 +309,7 @@ export default function NewOrderPage() {
               )}
               <div className="border-t border-border mt-3 pt-3 flex justify-between gap-4 text-[15px] lg:text-sm">
                 <span className="text-text-secondary">Цена для покупателя</span>
-                <span className="font-bold text-text-primary whitespace-nowrap">{formatPrice(product.price)}</span>
+                <span className="font-bold text-text-primary whitespace-nowrap">{formatPrice(price)}</span>
               </div>
             </div>
           ) : (
@@ -336,7 +338,7 @@ export default function NewOrderPage() {
             <div className="app-group px-4 py-3 mb-5 flex items-center gap-3">
               <span className="flex-1 min-w-0">
                 <span className="block font-semibold text-[15px] lg:text-sm leading-snug text-text-primary truncate">{productTitle}</span>
-                <span className="block text-[13px] text-text-muted">{formatPrice(product.price)}</span>
+                <span className="block text-[13px] text-text-muted">{formatPrice(price)}</span>
               </span>
               <button type="button" onClick={() => goTo(1)} className="text-[15px] lg:text-sm text-primary font-semibold bg-transparent border-none cursor-pointer min-h-[44px] px-1 shrink-0">
                 Сменить
@@ -420,13 +422,13 @@ export default function NewOrderPage() {
               </div>
               <div className={`border-t border-border pt-2.5 ${kvRow} font-bold`}>
                 <span className="text-text-primary">Цена для покупателя — к оплате ТехЭйджент</span>
-                <span className="text-primary whitespace-nowrap">{formatPrice(product.price)}</span>
+                <span className="text-primary whitespace-nowrap">{formatPrice(price)}</span>
               </div>
               <div className={kvRow}>
                 <span className="text-text-secondary">
                   Ваше вознаграждение{percent ? ` (${formatPercent(percent)})` : ''}
                 </span>
-                <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(product.price, percent))}</span>
+                <span className="text-text-primary whitespace-nowrap">{formatReward(rewardFor(price, percent))}</span>
               </div>
               <p className="text-[13px] lg:text-xs leading-snug text-text-muted">Вознаграждение начисляется после выдачи товара и загрузки подписанного акта приёма-передачи.</p>
             </div>

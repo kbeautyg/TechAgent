@@ -9,7 +9,7 @@ import { products } from '../data/products'
 export const PRODUCT_IMAGE_SIZE = 900
 
 /** Версия фото: меняется при замене файлов — иначе браузеры и кэш прокладки (30 дней) покажут старые картинки */
-const IMAGE_VERSION = '20261024'
+const IMAGE_VERSION = '20261025'
 
 const byId = new Map(products.map((p) => [p.id, p]))
 

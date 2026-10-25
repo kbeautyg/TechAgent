@@ -208,7 +208,7 @@ def variant(f, t):
         return f'{chip.group(1)} {chip.group(2)}/{gpu.group(1)} · {ram[0]} ГБ · {ssd[0]} {"ТБ" if ssd[1] == "TB" else "ГБ"}'
     if k == 'watch':
         size = re.search(r'(\d+) мм', t).group(1)
-        mat = 'титан' if 'титан' in t else 'алюминий'
+        mat = 'титан' if 'титан' in t else 'керамика' if 'керамика' in t else 'алюминий'
         cell = ' · LTE' if re.search(r'Cellular|LTE', t) else ''
         return f'{size} мм · {mat}{cell}'
     if k == 'conn':

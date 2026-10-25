@@ -2,11 +2,12 @@ import { useSyncExternalStore } from 'react'
 import { products, type Product } from '../data/products'
 import { readJson, writeJson } from './store'
 import { SDEK_DELIVERY_PRICE } from '../seo/site'
+import { priceFor } from './calculate'
 
 /*
  * Корзина покупателя на сайте. Живёт в браузере покупателя (localStorage): до оформления заказа
  * ей больше негде быть, а вкладки видят одну и ту же корзину через событие `storage`.
- * Храним id товара, цвет и количество — цену и название всегда берём из каталога.
+ * Храним id товара, цвет и количество — цену (она зависит от цвета) и название всегда берём из каталога.
  * Один и тот же товар в двух цветах — две разные строки.
  */
 
@@ -19,6 +20,8 @@ export interface CartLine {
 
 export interface CartItem extends CartLine {
   product: Product
+  /** Цена одной штуки в выбранном цвете */
+  price: number
 }
 
 const KEY = 'techagent.cart'
@@ -69,7 +72,7 @@ export function useCart(): CartItem[] {
     if (!product?.inStock) continue
     // Цвет, которого больше нет у товара, заменяется первым доступным
     const color = product.colors.some((c) => c.name === l.color) ? l.color : product.colors[0]?.name
-    items.push({ ...l, color, qty: Math.min(l.qty, MAX_QTY), product })
+    items.push({ ...l, color, qty: Math.min(l.qty, MAX_QTY), product, price: priceFor(product, color) })
   }
   return items
 }
@@ -79,7 +82,7 @@ export function cartCount(items: CartItem[]): number {
 }
 
 export function cartGoodsTotal(items: CartItem[]): number {
-  return items.reduce((s, i) => s + i.product.price * i.qty, 0)
+  return items.reduce((s, i) => s + i.price * i.qty, 0)
 }
 
 /** Доставка одна на заказ. null — сумма ещё не назначена, её сообщают при подтверждении */

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight } from 'lucide-react'
 import { products } from '../data/products'
 import { getProductImage, PRODUCT_IMAGE_SIZE } from '../utils/productImages'
+import { hasColorPrices } from '../utils/calculate'
 import { translateProductName } from '../utils/translate'
 import { categoryLandings, type CategoryLanding } from '../seo/categories'
 import { pluralRu } from '../seo/site'
@@ -21,11 +22,12 @@ interface Props {
 
 /** Категорийная посадочная /catalog/{slug}: уникальный текст + полная сетка товаров категории */
 export default function CategoryPage({ landing }: Props) {
-  // Одна плитка на модель: самая дешёвая конфигурация, «от» — если конфигураций несколько
+  // Одна плитка на модель: самая дешёвая конфигурация, «от» — если конфигураций несколько или цвета стоят по-разному
   const all = products.filter(p => p.category === landing.category)
   const items = [...new Set(all.map(p => p.family))].map(f => {
     const vs = all.filter(p => p.family === f)
-    return { ...vs.reduce((a, b) => (b.price < a.price ? b : a)), many: vs.length > 1 }
+    const p = vs.reduce((a, b) => (b.price < a.price ? b : a))
+    return { ...p, many: vs.length > 1 || hasColorPrices(p) }
   })
   const inStockCount = items.filter(p => p.inStock).length
   const minPrice = items.length ? Math.min(...items.map(p => p.price)) : 0

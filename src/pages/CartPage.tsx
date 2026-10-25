@@ -39,7 +39,7 @@ export default function CartPage() {
 
       <div className="cart-layout">
         <ul className="cart-list" aria-label="Товары в корзине">
-          {items.map(({ product, qty, color }) => {
+          {items.map(({ product, qty, color, price }) => {
             const href = `/catalog/${product.id}${color && product.colors.length > 1 ? `?color=${encodeURIComponent(color)}` : ''}`
             return (
               <li key={`${product.id}|${color || ''}`} className="cart-line">
@@ -73,8 +73,8 @@ export default function CartPage() {
                       </button>
                     </div>
                     <div className="cart-line-price">
-                      {formatPrice(product.price * qty)}
-                      {qty > 1 && <small>{formatPrice(product.price)} за&nbsp;шт.</small>}
+                      {formatPrice(price * qty)}
+                      {qty > 1 && <small>{formatPrice(price)} за&nbsp;шт.</small>}
                     </div>
                   </div>
                 </div>
