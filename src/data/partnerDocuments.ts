@@ -1,5 +1,6 @@
-import type { Document, DocumentReview, Order, User } from '../types'
+import type { AgentDocForm, Document, DocumentReview, Order, User } from '../types'
 import { mockDocuments } from './documents'
+import { PRINCIPAL_PARTY, partnerParty } from './parties'
 import { addBusinessDays, formatDate, formatPercent, formatPrice, periodLabel, periodOf } from '../utils/calculate'
 import {
   readJson,
@@ -71,6 +72,9 @@ function syncAll(): void {
 onOtherTabChange([DOCS_KEY, REVIEWS_KEY, REVOKED_KEY], syncAll)
 
 /* ── Документы ── */
+
+/** Есть ли у документа бланк или текст для просмотра */
+export const isReadable = (doc: Document): boolean => Boolean(doc.agentForm || doc.acceptanceForm || doc.content)
 
 export const isAgentDocument = (d: Document): boolean => d.type === 'REPORT' || d.type === 'ACT'
 
@@ -417,6 +421,42 @@ ${deductionBlock}Вознаграждение Партнёра к выплате
   }
 
   const actNumber = nextActNumber(period)
+  // Бланк отчёта и акта: реквизиты сторон фиксируются на дату формирования
+  const agentForm: AgentDocForm = {
+    number: actNumber,
+    date: createdAt,
+    periodFrom: from,
+    periodTo: to,
+    acceptedAt: partner.offerAcceptedAt,
+    agent: partnerParty(partner),
+    principal: PRINCIPAL_PARTY,
+    rows: list.map((o) => ({
+      orderNumber: o.orderNumber,
+      product: o.productName,
+      paidAt: o.paidAt,
+      issuedAt: o.issuedAt,
+      buyer: o.issuedToName || o.buyerName,
+      price: o.price,
+      percent: orderPercent(o),
+      reward: o.partnerReward,
+    })),
+    returns: newReturns.map((o) => {
+      const rep = reportedIn(o)
+      return {
+        orderNumber: o.orderNumber,
+        returnedAt: o.returnedAt,
+        period: (rep && documentPeriod(rep)) ?? (o.issuedAt ? periodOf(o.issuedAt) : null),
+        amount: reward(o),
+      }
+    }),
+    carried,
+    deducted,
+    carryForward,
+    goodsTotal,
+    accruedTotal,
+    payable,
+  }
+  report.agentForm = agentForm
   const deductionLines =
     deducted > 0
       ? `\nУдержано по возвратам (п. 7.3 агентского договора-оферты): ${MINUS}${formatPrice(deducted)}\nК выплате: ${formatPrice(payable)}`
@@ -431,6 +471,7 @@ ${deductionBlock}Вознаграждение Партнёра к выплате
     createdAt,
     period,
     orderIds: list.map((o) => o.id),
+    agentForm,
     content: `АКТ ОБ ОКАЗАНИИ УСЛУГ № ${actNumber}
 от ${today}
 
@@ -459,4 +500,38 @@ ${deductionBlock}Вознаграждение Партнёра к выплате
   writeJson(DOCS_KEY, partnerDocuments)
   notifyDataChanged()
   return { status: 'created', docs: [report, act] }
+}
+
+/* ── Подтверждение акцепта и поиск документа ── */
+
+/** Подтверждение акцепта агентского договора-оферты — по отметке Партнёра при первом входе (п. 2.1).
+ *  У демо-учёток свой образец в documents.ts */
+export function acceptanceDocument(user: User): Document | null {
+  if (!user.offerAcceptedAt) return null
+  if (mockDocuments.some((d) => d.userId === user.id && d.type === 'CONTRACT')) return null
+  return {
+    id: `acc-${user.id}`,
+    userId: user.id,
+    type: 'CONTRACT',
+    title: 'Подтверждение акцепта агентского договора-оферты',
+    fileUrl: '#',
+    createdAt: user.offerAcceptedAt,
+    acceptanceForm: {
+      partner: partnerParty(user),
+      principal: PRINCIPAL_PARTY,
+      openedAt: user.createdAt,
+      acceptedAt: user.offerAcceptedAt,
+    },
+  }
+}
+
+/** Документ по id для просмотра и печати: публичный — всем, документ Партнёра — ему самому и ТехЭйджент */
+export function findDocument(id: string, user: User | null): Document | undefined {
+  syncAll()
+  const own = user ? acceptanceDocument(user) : null
+  const doc = [...mockDocuments, ...partnerDocuments.filter(isActive), ...(own ? [own] : [])].find((d) => d.id === id)
+  if (!doc) return undefined
+  if (doc.userId === 'public') return doc
+  if (user && (user.role === 'ADMIN' || doc.userId === user.id)) return doc
+  return undefined
 }

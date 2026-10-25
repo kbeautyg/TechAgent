@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
-import { X } from 'lucide-react'
+import { Download, X } from 'lucide-react'
+import { DocSheet } from '../../components/docs/DocSheet'
 import { mockOrders, mockUsers, DEMO_MODE } from '../../data/mock'
 import {
   agentPairs,
   canRevoke,
   deductions,
   generateAgentDocuments,
+  isReadable,
   pairReviewState,
   pairTitle,
   reportableOrders,
@@ -244,7 +246,7 @@ export default function AdminReportsPage() {
         </div>
       )}
 
-      {openDoc && openDoc.content && (
+      {openDoc && isReadable(openDoc) && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[200] flex items-start justify-center pt-12 px-4"
           onClick={() => setOpenDoc(null)}
@@ -253,21 +255,29 @@ export default function AdminReportsPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="admin-doc-title"
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl"
+            className="bg-white rounded-2xl max-w-4xl w-full max-h-[85vh] overflow-hidden shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between gap-3 p-5 border-b border-gray-100">
               <h3 id="admin-doc-title" className="font-bold text-lg text-text-primary break-words min-w-0">{openDoc.title}</h3>
-              <button
-                className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors shrink-0"
-                onClick={() => setOpenDoc(null)}
-                aria-label="Закрыть"
-              >
-                <X size={16} />
-              </button>
+              <div className="flex items-center gap-4 shrink-0">
+                <button
+                  className="text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline p-0 flex items-center gap-1.5"
+                  onClick={() => window.open(`/admin/documents/${encodeURIComponent(openDoc.id)}/print?print=1`, '_blank')}
+                >
+                  <Download size={16} /> Скачать PDF
+                </button>
+                <button
+                  className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors shrink-0"
+                  onClick={() => setOpenDoc(null)}
+                  aria-label="Закрыть"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-              <pre className="whitespace-pre-wrap break-words font-sans text-sm text-text-secondary leading-relaxed">{openDoc.content}</pre>
+            <div className="p-6 sm:px-10 overflow-y-auto max-h-[calc(85vh-80px)]">
+              <DocSheet doc={openDoc} />
             </div>
           </div>
         </div>

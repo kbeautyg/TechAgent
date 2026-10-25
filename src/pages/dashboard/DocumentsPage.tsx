@@ -5,6 +5,8 @@ import { FileText, Download, X, Shield, BookOpen, ScrollText, FileCheck, CreditC
 import { useAuth } from '../../context/AuthContext'
 import { mockDocuments } from '../../data/documents'
 import {
+  acceptanceDocument,
+  isReadable,
   userDocuments,
   isAgentDocument,
   agentPairs,
@@ -15,6 +17,7 @@ import {
   type AgentPair,
 } from '../../data/partnerDocuments'
 import { formatDate } from '../../utils/calculate'
+import { DocSheet } from '../../components/docs/DocSheet'
 import { useDataRevision } from '../../utils/store'
 import type { Document, DocumentType } from '../../types'
 
@@ -48,20 +51,13 @@ const typeIcons: Record<DocumentType, React.ComponentType<{ size: number; classN
   PAYMENT: CreditCard,
 }
 
-/** Имя файла — название документа как есть, только «/» (в номере акта) заменён на «-» */
-const fileName = (title: string) => `${title.replace(/\//g, '-')}.txt`
-
+/** «Скачать» — лист A4 в новой вкладке с окном печати: там документ сохраняется в PDF или печатается */
 function download(doc: Document) {
-  const content = doc.content || `${doc.title}\n\nДата: ${formatDate(doc.createdAt)}\n\nДля получения оригинала обратитесь к менеджеру в чате.`
-  const url = URL.createObjectURL(new Blob([content], { type: 'text/plain;charset=utf-8' }))
-  const a = document.createElement('a')
-  a.href = url
-  a.download = fileName(doc.title)
-  document.body.appendChild(a)
-  a.click()
-  a.remove()
-  setTimeout(() => URL.revokeObjectURL(url), 1000)
+  window.open(`/dashboard/documents/${encodeURIComponent(doc.id)}/print?print=1`, '_blank')
 }
+
+/** Бланк (отчёт, акт, акцепт) шире текста оферты — под таблицу */
+const isForm = (doc: Document) => Boolean(doc.agentForm || doc.acceptanceForm)
 
 const textBtn = 'text-primary text-sm font-medium bg-transparent border-none cursor-pointer hover:underline p-0'
 
@@ -73,9 +69,9 @@ function DocRow({ doc, onOpen, showDate = true }: { doc: Document; onOpen: (id: 
     <div className="flex items-center gap-3 min-h-[56px]">
       <button
         type="button"
-        className={`flex items-center gap-3 min-w-0 flex-1 text-left bg-transparent border-none p-0 ${doc.content ? 'cursor-pointer' : 'cursor-default'}`}
-        onClick={() => { if (doc.content) onOpen(doc.id) }}
-        disabled={!doc.content}
+        className={`flex items-center gap-3 min-w-0 flex-1 text-left bg-transparent border-none p-0 ${isReadable(doc) ? 'cursor-pointer' : 'cursor-default'}`}
+        onClick={() => { if (isReadable(doc)) onOpen(doc.id) }}
+        disabled={!isReadable(doc)}
       >
         <span className="w-8 flex items-center justify-center shrink-0">
           <Icon size={24} className="text-primary" />
@@ -86,7 +82,7 @@ function DocRow({ doc, onOpen, showDate = true }: { doc: Document; onOpen: (id: 
         </span>
       </button>
       <div className="flex items-center gap-4 shrink-0">
-        {doc.content && (
+        {isReadable(doc) && (
           <button className={`hidden lg:inline ${textBtn}`} onClick={() => onOpen(doc.id)}>
             Читать
           </button>
@@ -238,7 +234,10 @@ export default function DocumentsPage() {
 
   const pairs = user ? agentPairs(user.id) : []
   const waitingPairs = pairs.filter((p) => pairReviewState(p).kind === 'WAITING')
-  const otherDocs = user ? userDocuments(user.id).filter((d) => !isAgentDocument(d)) : []
+  const acceptance = user ? acceptanceDocument(user) : null
+  const otherDocs = user
+    ? [...userDocuments(user.id).filter((d) => !isAgentDocument(d)), ...(acceptance ? [acceptance] : [])]
+    : []
   const publicDocs = mockDocuments.filter((d) => d.userId === 'public')
 
   /* «Мои документы»: решённые отчёты с актами и прочие документы, новые сверху */
@@ -304,13 +303,14 @@ export default function DocumentsPage() {
 
       {/* Документ на телефоне — в панели снизу */}
       {!desktop && (
-        <Sheet open={Boolean(activeDoc?.content)} onClose={() => setOpenDoc(null)} title={activeDoc?.title ?? ''}>
+        <Sheet open={Boolean(activeDoc && isReadable(activeDoc))} onClose={() => setOpenDoc(null)} title={activeDoc?.title ?? ''}>
           {activeDoc && (
             <>
               {typeHint(activeDoc) && <p className="text-[13px] text-text-muted -mt-1 mb-3">{typeHint(activeDoc)}</p>}
-              <pre className="whitespace-pre-wrap break-words font-sans text-[15px] text-text-secondary leading-relaxed m-0">
-                {activeDoc.content}
-              </pre>
+              <DocSheet doc={activeDoc} />
+              <button className={`${textBtn} mt-4 inline-flex items-center gap-1.5`} onClick={() => download(activeDoc)}>
+                <Download size={16} /> Скачать PDF
+              </button>
               {activePair && activePair.userId === user?.id && (
                 <div className="mt-5 pt-4 border-t border-border">
                   <p className="text-[13px] text-text-muted mb-2">{pairTitle(activePair)}</p>
@@ -323,7 +323,7 @@ export default function DocumentsPage() {
       )}
 
       {/* Окно документа на компьютере */}
-      {desktop && activeDoc && activeDoc.content && (
+      {desktop && activeDoc && isReadable(activeDoc) && (
         <div
           className="fixed inset-0 bg-black/40 backdrop-blur-sm z-[200] flex items-start justify-center pt-12 px-4"
           onClick={() => setOpenDoc(null)}
@@ -332,7 +332,7 @@ export default function DocumentsPage() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="doc-dialog-title"
-            className="bg-white rounded-2xl max-w-2xl w-full max-h-[80vh] overflow-hidden shadow-2xl"
+            className={`bg-white rounded-2xl ${isForm(activeDoc) ? 'max-w-4xl' : 'max-w-2xl'} w-full max-h-[85vh] overflow-hidden shadow-2xl`}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex items-center justify-between gap-3 p-5 border-b border-gray-100">
@@ -340,18 +340,21 @@ export default function DocumentsPage() {
                 <h3 id="doc-dialog-title" className="font-bold text-lg text-text-primary break-words">{activeDoc.title}</h3>
                 {typeHint(activeDoc) && <p className="text-xs text-text-muted mt-0.5">{typeHint(activeDoc)}</p>}
               </div>
-              <button
-                className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors shrink-0"
-                onClick={() => setOpenDoc(null)}
-                aria-label="Закрыть"
-              >
-                <X size={16} />
-              </button>
+              <div className="flex items-center gap-4 shrink-0">
+                <button className={`${textBtn} flex items-center gap-1.5`} onClick={() => download(activeDoc)}>
+                  <Download size={16} /> Скачать PDF
+                </button>
+                <button
+                  className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center cursor-pointer border-none hover:bg-gray-200 transition-colors shrink-0"
+                  onClick={() => setOpenDoc(null)}
+                  aria-label="Закрыть"
+                >
+                  <X size={16} />
+                </button>
+              </div>
             </div>
-            <div className="p-6 overflow-y-auto max-h-[calc(80vh-80px)]">
-              <pre className="whitespace-pre-wrap break-words font-sans text-sm text-text-secondary leading-relaxed">
-                {activeDoc.content}
-              </pre>
+            <div className="p-6 sm:px-10 overflow-y-auto max-h-[calc(85vh-80px)]">
+              <DocSheet doc={activeDoc} />
               {activePair && activePair.userId === user?.id && (
                 <div className="mt-5 pt-4 border-t border-border">
                   <p className="text-xs text-text-muted mb-2">{pairTitle(activePair)}</p>

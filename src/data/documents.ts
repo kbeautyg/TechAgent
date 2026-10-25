@@ -1,4 +1,4 @@
-import type { Document } from '../types'
+import type { AgentDocForm, DocParty, Document } from '../types'
 
 /*
  * Документы TechAgent по модели «ТехЭйджент — продавец, Партнёр — агент и пункт выдачи».
@@ -8,6 +8,7 @@ import type { Document } from '../types'
  */
 
 import { DEMO_MODE as DEMO } from '../utils/demo'
+import { PRINCIPAL_PARTY } from './parties'
 
 /** Дата редакции всех публичных документов — проставить в день выкладки */
 const EDITION_DATE = '10.10.2026'
@@ -561,6 +562,41 @@ const DEMO_PARTNER = `Партнёр (Агент): Демо-партнёр 1 (д
 ИНН: 0000000000, ОГРН: 0000000000000
 Пункт выдачи: г. Москва, ул. Демонстрационная, д. 1`
 
+const demoParty = (n: number): DocParty => ({
+  name: `Демо-партнёр ${n} (демонстрационные данные)`,
+  details: ['ИНН 0000000000', 'ОГРН 0000000000000', ...(n === 1 ? ['Пункт выдачи: г. Москва, ул. Демонстрационная, д. 1'] : [])],
+})
+
+/** Бланк демо-отчёта и демо-акта за февраль 2026 */
+const demoAgentForm: AgentDocForm = {
+  number: 'TA-2026/02-001',
+  date: '2026-03-01T10:00:00Z',
+  periodFrom: '01.02.2026',
+  periodTo: '28.02.2026',
+  acceptedAt: '2026-01-16T10:00:00Z',
+  agent: demoParty(1),
+  principal: PRINCIPAL_PARTY,
+  rows: [
+    {
+      orderNumber: '#1235',
+      product: 'Samsung Galaxy S24 256GB Black',
+      paidAt: '2026-01-25T10:00:00Z',
+      issuedAt: '2026-02-01T10:00:00Z',
+      buyer: 'Покупатель 6 (демо)',
+      price: 89900,
+      percent: 5,
+      reward: 4495,
+    },
+  ],
+  returns: [],
+  carried: 0,
+  deducted: 0,
+  carryForward: 0,
+  goodsTotal: 89900,
+  accruedTotal: 4495,
+  payable: 4495,
+}
+
 const demoDocuments: Document[] = [
   {
     id: 'd1',
@@ -569,6 +605,13 @@ const demoDocuments: Document[] = [
     title: 'Подтверждение акцепта агентского договора-оферты',
     fileUrl: '#',
     createdAt: '2026-01-15T10:00:00Z',
+    acceptanceForm: {
+      partner: demoParty(1),
+      principal: PRINCIPAL_PARTY,
+      openedAt: '2026-01-15T10:00:00Z',
+      acceptedAt: '2026-01-16T10:00:00Z',
+      percent: 5,
+    },
     content: `ПОДТВЕРЖДЕНИЕ АКЦЕПТА АГЕНТСКОГО ДОГОВОРА-ОФЕРТЫ
 (демонстрационный образец)
 
@@ -599,6 +642,7 @@ ${DEMO_PARTNER}
     title: 'Отчёт агента за февраль 2026',
     fileUrl: '#',
     createdAt: '2026-03-01T10:00:00Z',
+    agentForm: demoAgentForm,
     content: `ОТЧЁТ АГЕНТА
 за период с 01.02.2026 по 28.02.2026
 (демонстрационный образец)
@@ -639,6 +683,7 @@ ${DEMO_PARTNER}
     title: 'Акт об оказании услуг № TA-2026/02-001',
     fileUrl: '#',
     createdAt: '2026-03-01T10:00:00Z',
+    agentForm: demoAgentForm,
     content: `АКТ ОБ ОКАЗАНИИ УСЛУГ № TA-2026/02-001
 от 01.03.2026
 (демонстрационный образец)
@@ -669,6 +714,13 @@ ${DEMO_PARTNER}
     title: 'Подтверждение акцепта агентского договора-оферты',
     fileUrl: '#',
     createdAt: '2026-01-20T10:00:00Z',
+    acceptanceForm: {
+      partner: demoParty(2),
+      principal: PRINCIPAL_PARTY,
+      openedAt: '2026-01-20T10:00:00Z',
+      acceptedAt: '2026-01-21T10:00:00Z',
+      percent: 5,
+    },
     content: `ПОДТВЕРЖДЕНИЕ АКЦЕПТА АГЕНТСКОГО ДОГОВОРА-ОФЕРТЫ
 (демонстрационный образец)
 

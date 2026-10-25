@@ -40,6 +40,7 @@ const OrdersPage = lazy(() => import('./pages/dashboard/OrdersPage'))
 const NewOrderPage = lazy(() => import('./pages/dashboard/NewOrderPage'))
 const OrderDetailPage = lazy(() => import('./pages/dashboard/OrderDetailPage'))
 const ActPrintPage = lazy(() => import('./pages/dashboard/ActPrintPage'))
+const DocPrintPage = lazy(() => import('./pages/dashboard/DocPrintPage'))
 const ProfilePage = lazy(() => import('./pages/dashboard/ProfilePage'))
 const DocumentsPage = lazy(() => import('./pages/dashboard/DocumentsPage'))
 const ChatPage = lazy(() => import('./pages/dashboard/ChatPage'))
@@ -49,7 +50,7 @@ const AdminOrdersPage = lazy(() => import('./pages/admin/AdminOrdersPage'))
 const AdminReportsPage = lazy(() => import('./pages/admin/AdminReportsPage'))
 
 /** Печатные формы открываются без шапки, подвала и нижнего меню */
-const BARE_ROUTE = /^\/dashboard\/orders\/[^/]+\/act\/?$/
+const BARE_ROUTE = /^\/(dashboard\/orders\/[^/]+\/act|(dashboard|admin)\/documents\/[^/]+\/print)\/?$/
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -100,6 +101,8 @@ function App() {
                 <Route path="/checkout" element={<CheckoutPage />} />
 
                 <Route path="/dashboard/orders/:id/act" element={<ActPrintPage />} />
+                <Route path="/dashboard/documents/:id/print" element={<DocPrintPage />} />
+                <Route path="/admin/documents/:id/print" element={<DocPrintPage />} />
 
                 <Route path="/dashboard" element={<DashboardLayout />}>
                   <Route index element={<DashboardPage />} />

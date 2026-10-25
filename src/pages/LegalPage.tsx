@@ -1,6 +1,7 @@
 import { useParams, Link, useNavigate } from 'react-router-dom'
 import { X, Shield, ScrollText, BookOpen, FileCheck, CreditCard, ShoppingBag, ChevronRight } from 'lucide-react'
 import { mockDocuments } from '../data/documents'
+import { LegalText } from '../components/docs/DocSheet'
 
 const typeLabels: Record<string, string> = {
   OFFER: 'Для партнёров',
@@ -121,9 +122,15 @@ export default function LegalPage() {
               </button>
             </div>
             <div className="p-5 sm:p-6 pb-[max(20px,env(safe-area-inset-bottom))] overflow-y-auto overscroll-contain flex-1 min-h-0">
-              <pre className="whitespace-pre-wrap font-sans text-[15px] sm:text-sm text-text-secondary leading-relaxed break-words overflow-wrap-anywhere">
-                {activeDoc.content}
-              </pre>
+              <LegalText text={activeDoc.content} />
+              <a
+                href={`/dashboard/documents/${activeDoc.id}/print?print=1`}
+                target="_blank"
+                rel="noopener"
+                className="inline-block mt-4 text-primary text-sm font-semibold no-underline hover:underline"
+              >
+                Скачать PDF
+              </a>
             </div>
           </div>
         </div>

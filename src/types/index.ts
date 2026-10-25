@@ -150,6 +150,78 @@ export interface Document {
   deductedOrderIds?: string[]
   /** Сколько удержано по возвратам в этом отчёте: не больше начисленного за период, остаток переносится */
   deductedAmount?: number
+  /** Данные бланка отчёта агента и акта — по ним документ печатается в принятой форме */
+  agentForm?: AgentDocForm
+  /** Данные бланка подтверждения акцепта оферты */
+  acceptanceForm?: AcceptanceForm
+}
+
+/** Сторона в документе: наименование и реквизиты на дату формирования документа */
+export interface DocParty {
+  name: string
+  /** Строки реквизитов: ИНН и КПП, ОГРН, адрес, банковский счёт */
+  details: string[]
+  /** Должность и ФИО подписанта, если известны */
+  signerTitle?: string
+  signerName?: string
+}
+
+/** Строка отчёта агента: заказ, товар по которому выдан покупателю */
+export interface AgentDocRow {
+  orderNumber: string
+  product: string
+  paidAt?: string
+  issuedAt?: string
+  buyer: string
+  price: number
+  percent: number | null
+  reward: number | null
+}
+
+/** Удержание по заказу, возвращённому после выдачи (оферта, п. 7.3) */
+export interface AgentDocReturn {
+  orderNumber: string
+  returnedAt?: string
+  /** Период отчёта, в котором вознаграждение было начислено: 'ГГГГ-ММ' */
+  period: string | null
+  amount: number
+}
+
+/** Бланк отчёта агента и акта за месяц: один набор данных на оба документа */
+export interface AgentDocForm {
+  /** Номер акта, им же нумеруется отчёт: TA-ГГГГ/ММ-NNN */
+  number: string
+  /** Дата формирования, ISO */
+  date: string
+  /** Границы отчётного периода: ДД.ММ.ГГГГ */
+  periodFrom: string
+  periodTo: string
+  /** Дата акцепта агентского договора-оферты, ISO */
+  acceptedAt?: string
+  agent: DocParty
+  principal: DocParty
+  rows: AgentDocRow[]
+  returns: AgentDocReturn[]
+  /** Остаток удержания с прошлых периодов */
+  carried: number
+  /** Удержано в этом периоде */
+  deducted: number
+  /** Переносится на следующие периоды */
+  carryForward: number
+  goodsTotal: number
+  accruedTotal: number
+  payable: number
+}
+
+/** Бланк подтверждения акцепта агентского договора-оферты */
+export interface AcceptanceForm {
+  partner: DocParty
+  principal: DocParty
+  /** Доступ в кабинет открыт, ISO */
+  openedAt: string
+  /** Дата акцепта, ISO */
+  acceptedAt: string
+  percent?: number
 }
 
 /** Решение Партнёра по отчёту агента или акту (оферта, п. 7.5) */
