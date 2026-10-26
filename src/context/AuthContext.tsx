@@ -41,6 +41,8 @@ function fromServer(p: PartnerProfile): User {
     phone: p.phone,
     contactName: p.contactName,
     pointAddress: p.pointAddress,
+    mapPoint: p.point ?? null,
+    pointVisible: Boolean(p.pointVisible),
     bankName: p.bankName,
     bik: p.bik,
     account: p.account,

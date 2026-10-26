@@ -35,7 +35,8 @@ interface PayView {
   status: 'NEW' | 'AWAITING_PAYMENT' | 'PAID' | 'SHIPPED' | 'READY' | 'RECEIVED' | 'CANCELLED'
   items: { name: string; price: number; qty: number }[]
   total: number
-  point: { companyName: string; address: string; phone: string } | null
+  /** Пункт выдачи: точка на карте магазина (name, часы) или адрес из анкеты партнёра */
+  point: { companyName: string; name: string; address: string; workTime: string; phone: string } | null
   consentAt: string | null
   /** Ссылка банка: есть, когда ТехЭйджент подтвердил наличие и покупатель отметил согласия */
   paymentUrl: string
@@ -78,8 +79,9 @@ function ServerPaymentPage({ token }: { token: string }) {
   const name = order.items.map((i) => (i.qty > 1 ? `${i.name} × ${i.qty}` : i.name)).join(', ')
   const pointBlock = order.point && (
     <div className="flex flex-col gap-1">
-      <p className="font-medium text-sm text-text-primary">{order.point.companyName}</p>
+      <p className="font-medium text-sm text-text-primary">{order.point.name ? `${order.point.name} · ` : ''}{order.point.companyName}</p>
       <p className="text-text-muted text-sm flex items-start gap-1"><MapPin size={14} className="mt-0.5 flex-shrink-0" />{order.point.address}</p>
+      {order.point.workTime && <p className="text-text-muted text-sm m-0">{order.point.workTime}</p>}
       {order.point.phone && <p className="text-text-muted text-sm flex items-center gap-1"><Phone size={14} />{order.point.phone}</p>}
     </div>
   )

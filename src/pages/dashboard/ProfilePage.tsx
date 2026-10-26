@@ -5,6 +5,7 @@ import { PageBar } from '../../components/app/ui'
 import { useAuth } from '../../context/AuthContext'
 import { PARTNER_STATUS_LABELS, PARTNER_STATUS_BAR } from '../../utils/status'
 import StatusMark from '../../components/app/StatusMark'
+import PickupPointCard from '../../components/app/PickupPointCard'
 import { formatDate, formatPercent, rewardPercentAt, pendingRewardChange } from '../../utils/calculate'
 import { onlyDigits, formatPhone, partnerErrors, type PartnerErrors, type PartnerFields } from '../../utils/validate'
 
@@ -167,6 +168,8 @@ export default function ProfilePage() {
       </div>
 
       {/* Партнёр и пункт выдачи */}
+      {verified && <PickupPointCard user={user} className="mb-4 lg:mb-6" />}
+
       <div className="app-group p-4 lg:p-6 mb-4 lg:mb-6">
         <h2 className="font-bold mb-4 text-text-primary text-base flex items-center gap-2">
           <Building2 size={18} className="text-primary" />

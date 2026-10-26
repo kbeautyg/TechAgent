@@ -206,20 +206,42 @@ function loadCatalog() {
 }
 loadCatalog()
 
-/* Пункты партнёров. active=false — партнёра в этом месте ещё нет: покупатели точку не видят, демо-кабинет видит */
-let partnerPoints = []
+/* Пункты партнёров. active=false — партнёра в этом месте ещё нет: покупатели точку не видят, демо-кабинет видит.
+ * Две части: заготовленные точки (partner-points.json, приезжает с выкладкой) и точки, которые завёл сотрудник
+ * в /staff/partners (таблица map_points — файл при выкладке перезаписывается, поэтому в базе) */
+let filePoints = []
 try {
-  partnerPoints = JSON.parse(fs.readFileSync(PARTNER_POINTS_PATH, 'utf8'))
+  filePoints = JSON.parse(fs.readFileSync(PARTNER_POINTS_PATH, 'utf8'))
 } catch (e) {
   console.error('partner-points.json не прочитан:', e.message)
 }
+db.exec(`CREATE TABLE IF NOT EXISTS map_points (
+  code TEXT PRIMARY KEY,
+  name TEXT NOT NULL,
+  address TEXT NOT NULL,
+  city TEXT NOT NULL,
+  city_code INTEGER NOT NULL,
+  lat REAL NOT NULL,
+  lon REAL NOT NULL,
+  work_time TEXT NOT NULL DEFAULT '',
+  note TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL
+)`)
+const allPoints = () => [
+  ...filePoints,
+  ...db.prepare('SELECT * FROM map_points ORDER BY created_at').all().map((r) => ({
+    code: r.code, name: r.name, address: r.address, city: r.city, cityCode: r.city_code, lat: r.lat, lon: r.lon,
+    workTime: r.work_time, note: r.note, active: false, own: true,
+  })),
+]
+const findMapPoint = (code) => (code ? allPoints().find((x) => x.code === code) ?? null : null)
 /** Партнёр, привязанный к точке и уже принявший оферту */
 const linkedPartner = (code) =>
   code ? db.prepare("SELECT * FROM partners WHERE point_code = ? AND COALESCE(offer_accepted_at, '') <> ''").get(code) ?? null : null
 /** Точка открыта для покупателей: отмечена в списке (active) или к ней привязан партнёр */
 const pointOpen = (p) => Boolean(p.active || linkedPartner(p.code))
 const partnersOf = (cityCode, withPlanned) =>
-  partnerPoints
+  allPoints()
     .filter((p) => p.cityCode === Number(cityCode) && (withPlanned || pointOpen(p)))
     .map(({ code, name, address, lat, lon, workTime, note, active }) => ({ code, type: 'PARTNER', name, address, lat, lon, workTime, note, active: Boolean(active || linkedPartner(code)) }))
 
@@ -513,7 +535,7 @@ async function createOrder(req, res) {
   const partnerCode = clean(b.partnerPointCode, 40)
   let partner = null
   if (partnerCode) {
-    partner = partnerPoints.find((p) => p.code === partnerCode && pointOpen(p)) || null
+    partner = allPoints().find((p) => p.code === partnerCode && pointOpen(p)) || null
     if (!partner) errors.push('sdekPoint')
     else {
       d.city = partner.city
@@ -859,6 +881,17 @@ function viewApplication(a) {
   const v = Object.fromEntries(APP_FIELDS.map(([k, col]) => [k, a[col]]))
   return { id: a.id, ...v, status: a.status, declineReason: a.decline_reason, partnerId: a.partner_id, createdAt: a.created_at, updatedAt: a.updated_at }
 }
+const mapPointView = (x) =>
+  x ? { code: x.code, name: x.name, address: x.address, city: x.city, workTime: x.workTime || '', lat: x.lat, lon: x.lon } : null
+
+/** Где покупатель забирает заказ партнёра: точка на карте, если привязана, иначе адрес из анкеты */
+function pickupOf(p) {
+  const x = findMapPoint(p.point_code)
+  return x
+    ? { city: x.city, cityCode: x.cityCode, code: x.code, text: `${x.name}, ${x.address} — пункт партнёра ${p.company_name}`, address: `${x.city}, ${x.address}`, name: x.name, workTime: x.workTime || '' }
+    : { city: '', cityCode: null, code: '', text: `${p.company_name}, ${p.point_address}`, address: p.point_address, name: '', workTime: '' }
+}
+
 function viewPartner(p, forStaff = false) {
   const v = {
     id: p.id,
@@ -877,6 +910,9 @@ function viewPartner(p, forStaff = false) {
     offerAcceptedAt: p.offer_accepted_at || null,
     offerEdition: p.offer_edition,
     pointCode: p.point_code,
+    point: mapPointView(findMapPoint(p.point_code)),
+    // Точка видна покупателям на карте магазина: привязана и оферта принята
+    pointVisible: Boolean(p.point_code && findMapPoint(p.point_code) && p.offer_accepted_at),
     createdAt: p.created_at,
   }
   if (forStaff) Object.assign(v, { offerAcceptIp: p.offer_accept_ip, applicationId: p.application_id })
@@ -965,21 +1001,79 @@ function staffPartners(req, res) {
   needStaff(req)
   const applications = db.prepare('SELECT * FROM partner_applications ORDER BY id DESC LIMIT 500').all().map(viewApplication)
   const partners = db.prepare('SELECT * FROM partners ORDER BY id DESC').all().map((p) => viewPartner(p, true))
-  const points = partnerPoints.map(({ code, name, address, city, active }) => ({ code, name, address, city, active: Boolean(active) }))
+  const points = allPoints().map(({ code, name, address, city, active, own }) => ({ code, name, address, city, active: Boolean(active), own: Boolean(own) }))
   send(res, 200, { applications, partners, points })
 }
 
-/** Привязать партнёра к точке на карте магазина: точка открывается покупателям, заказы с сайта в неё видит партнёр.
- *  У точки один партнёр; пустой код — отвязать */
+/** Координаты по адресу — HTTP Геокодер Яндекса (ключ YGEOCODER_KEY, ставится api/set-geocoder.sh). null — не нашёл */
+const YGEOCODER_KEY = env('YGEOCODER_KEY', '')
+async function geocode(address) {
+  if (!YGEOCODER_KEY) return null
+  try {
+    const u = new URL('https://geocode-maps.yandex.ru/1.x/')
+    for (const [k, v] of Object.entries({ apikey: YGEOCODER_KEY, geocode: address, format: 'json', results: '1', lang: 'ru_RU' })) u.searchParams.set(k, v)
+    const r = await fetch(u, { headers: { Referer: `${PUBLIC_URL}/` }, signal: AbortSignal.timeout(8000) })
+    const pos = (await r.json())?.response?.GeoObjectCollection?.featureMember?.[0]?.GeoObject?.Point?.pos
+    const [lon, lat] = String(pos || '').split(' ').map(Number)
+    return Number.isFinite(lat) && Number.isFinite(lon) ? { lat, lon } : null
+  } catch (e) {
+    console.error('geocoder:', e.message)
+    return null
+  }
+}
+/** «55.742, 37.504» из Яндекс Карт → { lat, lon } */
+function parseCoords(v) {
+  const m = /^\s*(-?\d{1,2}(?:[.,]\d+)?)\s*[,; ]\s*(-?\d{1,3}(?:[.,]\d+)?)\s*$/.exec(String(v || ''))
+  if (!m) return null
+  const lat = Number(m[1].replace(',', '.'))
+  const lon = Number(m[2].replace(',', '.'))
+  return Math.abs(lat) <= 90 && Math.abs(lon) <= 180 ? { lat, lon } : null
+}
+
+/**
+ * Пункт выдачи партнёра — правит сотрудник: адрес из анкеты, точка на карте магазина (готовая из списка или новая).
+ * Привязанная точка открывается покупателям (когда партнёр принял оферту), заказы с сайта в неё видит партнёр,
+ * а в заказах партнёра и на странице оплаты покупатель видит её адрес. У точки один партнёр; пустой код — отвязать
+ */
 async function staffPartnerPoint(req, res, id) {
   needStaff(req)
   const b = await readJson(req)
   const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id))
   if (!p) fail(404, 'not_found')
-  const code = clean(b.pointCode, 40)
-  if (code && !partnerPoints.some((x) => x.code === code)) fail(422, 'fields', { fields: ['pointCode'] })
+  const t = now()
+  if (typeof b.pointAddress === 'string') {
+    const address = clean(b.pointAddress, 500)
+    if (address.length < 5) fail(422, 'fields', { fields: ['pointAddress'] })
+    db.prepare('UPDATE partners SET point_address = ?, updated_at = ? WHERE id = ?').run(address, t, p.id)
+  }
+  let code = typeof b.pointCode === 'string' ? clean(b.pointCode, 40) : p.point_code
+  if (b.newPoint && typeof b.newPoint === 'object') {
+    // Новая точка: город ищем в справочнике СДЭК (по его коду карта показывает точки города), координаты — с Яндекс Карт или геокодером
+    const n = { name: clean(b.newPoint.name, 120), city: clean(b.newPoint.city, 120), address: clean(b.newPoint.address, 300), workTime: clean(b.newPoint.workTime, 120) }
+    const errors = []
+    if (!n.name) errors.push('name')
+    if (n.address.length < 5) errors.push('address')
+    let city = null
+    if (n.city.length < 2) errors.push('city')
+    else {
+      try {
+        city = (await suggestCities(n.city))[0] ?? null
+      } catch (e) {
+        console.error('cdek:', e.message)
+      }
+      if (!city) errors.push('city')
+    }
+    const coords = parseCoords(b.newPoint.coords) ?? (b.newPoint.coords ? null : await geocode(`${n.city}, ${n.address}`))
+    if (!coords) errors.push('coords')
+    if (errors.length) fail(422, 'fields', { fields: errors })
+    code = 'TA-' + Array.from({ length: 5 }, () => 'ABCDEFGHJKLMNPQRSTUVWXYZ'[crypto.randomInt(24)]).join('')
+    db.prepare('INSERT INTO map_points (code, name, address, city, city_code, lat, lon, work_time, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)')
+      .run(code, n.name, n.address, city.name.split(',')[0], city.code, coords.lat, coords.lon, n.workTime, t)
+    console.log(`map point ${code} ${n.city}, ${n.address}`)
+  }
+  if (code && !findMapPoint(code)) fail(422, 'fields', { fields: ['pointCode'] })
   if (code && db.prepare('SELECT 1 FROM partners WHERE point_code = ? AND id <> ?').get(code, p.id)) fail(409, 'point_taken')
-  db.prepare('UPDATE partners SET point_code = ?, updated_at = ? WHERE id = ?').run(code, now(), p.id)
+  db.prepare('UPDATE partners SET point_code = ?, updated_at = ? WHERE id = ?').run(code, t, p.id)
   console.log(`partner ${p.id} point ${code || '—'}`)
   send(res, 200, { ok: true, partner: viewPartner(db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id), true) })
 }
@@ -1121,7 +1215,7 @@ async function partnerCreateOrder(req, res) {
     buyer = db.prepare('SELECT * FROM buyers WHERE email = ?').get(buyerEmail)
   }
 
-  const point = partnerPoints.find((x) => x.code === p.point_code)
+  const pickup = pickupOf(p)
   const number = newNumber()
   const token = crypto.randomBytes(18).toString('base64url')
   const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
@@ -1129,7 +1223,7 @@ async function partnerCreateOrder(req, res) {
       offer_accepted_at, pd_consent_at, created_at, updated_at)
       VALUES (?, ?, 'NEW', ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, 'PARTNER', 'PARTNER', ?, ?, ?, ?, '', '', ?, ?)`)
     .run(number, buyer.id, JSON.stringify(items), price, price, d.buyerName, d.phone, d.email,
-      '', `${p.company_name}, ${p.point_address}`, point?.cityCode ?? null, p.point_code,
+      pickup.city, pickup.text, pickup.cityCode, pickup.code,
       p.id, percent > 0 ? percent : null, reward, token, t, t)
   addEvent(Number(r.lastInsertRowid), 'NEW')
   const order = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
@@ -1226,7 +1320,8 @@ function staffFile(req, res, number, name) {
  * Покупатель отмечает согласие с офертой купли-продажи и на обработку персональных данных, затем переходит к оплате СБП.
  * Ссылку банка ставит сотрудник, когда подтвердит наличие (этап «Ждёт оплаты») — до этого страница так и говорит */
 function payView(o) {
-  const p = o.partner_id ? db.prepare('SELECT company_name, point_address, phone FROM partners WHERE id = ?').get(o.partner_id) : null
+  const p = o.partner_id ? db.prepare('SELECT * FROM partners WHERE id = ?').get(o.partner_id) : null
+  const pickup = p ? pickupOf(p) : null
   const consented = Boolean(o.offer_accepted_at)
   const paidAt = db.prepare("SELECT at FROM order_events WHERE order_id = ? AND status = 'PAID' ORDER BY id DESC LIMIT 1").get(o.id)?.at ?? null
   return {
@@ -1234,7 +1329,7 @@ function payView(o) {
     status: o.status,
     items: JSON.parse(o.items),
     total: o.total,
-    point: p ? { companyName: p.company_name, address: p.point_address, phone: p.phone } : null,
+    point: p ? { companyName: p.company_name, name: pickup.name, address: pickup.address, workTime: pickup.workTime, phone: p.phone } : null,
     consentAt: o.offer_accepted_at || null,
     paymentUrl: consented && o.status === 'AWAITING_PAYMENT' ? o.payment_url : '',
     paidAt,

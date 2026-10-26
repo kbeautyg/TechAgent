@@ -75,8 +75,11 @@ export interface PartnerProfile {
   /** Когда партнёр сам отметил согласие с агентским договором-офертой (п. 2.1); null — ещё не отметил */
   offerAcceptedAt: string | null
   offerEdition: string
-  /** Точка партнёра на карте магазина (код из api/partner-points.json); пусто — на карте его нет */
+  /** Точка партнёра на карте магазина (код из api/partner-points.json или заведённой сотрудником); пусто — на карте его нет */
   pointCode?: string
+  point?: { code: string; name: string; address: string; city: string; workTime: string; lat: number; lon: number } | null
+  /** Точка видна покупателям: привязана и оферта принята */
+  pointVisible?: boolean
   createdAt: string
   /** Только для сотрудников: адрес, с которого отмечено согласие */
   offerAcceptIp?: string

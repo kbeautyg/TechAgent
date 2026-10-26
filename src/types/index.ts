@@ -31,6 +31,17 @@ export type DocumentType =
   | 'TERMS'
   | 'PAYMENT'
 
+/** Пункт выдачи партнёра на карте магазина */
+export interface MapPoint {
+  code: string
+  name: string
+  address: string
+  city: string
+  workTime: string
+  lat: number
+  lon: number
+}
+
 export interface User {
   id: string
   email: string
@@ -45,6 +56,10 @@ export interface User {
   contactName?: string
   /** Адрес пункта выдачи */
   pointAddress?: string
+  /** Точка пункта на карте магазина (боевой кабинет; ставит ТехЭйджент) */
+  mapPoint?: MapPoint | null
+  /** Точка видна покупателям на карте магазина */
+  pointVisible?: boolean
   /** Реквизиты для выплаты вознаграждения */
   bankName?: string
   bik?: string

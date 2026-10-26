@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { Link, NavLink, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ChevronRight, ExternalLink, LogOut } from 'lucide-react'
-import { api, apiErrorText, type PartnerApplicationView, type PartnerOrderView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
+import { api, apiErrorText, ApiError, type PartnerApplicationView, type PartnerOrderView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
 import { logoutAccount, refreshAccount, useAccount } from '../../utils/account'
 import { formatPrice, formatDateTime } from '../../utils/calculate'
 import { PageBar } from '../../components/app/ui'
@@ -372,6 +372,8 @@ interface MapPoint {
   address: string
   city: string
   active: boolean
+  /** Заведена сотрудником (не из partner-points.json) */
+  own: boolean
 }
 
 interface PartnersData {
@@ -488,25 +490,61 @@ function ApplicationCard({ a, onDone }: { a: PartnerApplicationView; onDone: (is
   )
 }
 
-/** Точка партнёра на карте магазина: покупатели видят её при оформлении заказа, такие заказы приходят партнёру в кабинет */
+/** Пункт выдачи партнёра: адрес из анкеты, точка на карте магазина (из списка или новая), видна ли покупателям.
+ *  Привязанная точка видна покупателям при оформлении заказа; её адрес — в заказах партнёра и на странице оплаты */
 function PointPicker({ p, points, taken, onSaved }: { p: PartnerProfile; points: MapPoint[]; taken: Map<string, string>; onSaved: () => void }) {
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
-  const save = async (code: string) => {
+  const [address, setAddress] = useState(p.pointAddress)
+  const [adding, setAdding] = useState(false)
+  const [np, setNp] = useState({ name: '', city: 'Москва', address: '', coords: '', workTime: '' })
+  const save = async (body: Record<string, unknown>): Promise<boolean> => {
     setBusy(true)
     setError('')
     try {
-      await api(`/staff/partners/${p.id}/point`, { pointCode: code })
+      await api(`/staff/partners/${p.id}/point`, body)
       onSaved()
+      return true
     } catch (x) {
-      setError(apiErrorText(x))
+      const f = x instanceof ApiError ? x.fields ?? [] : []
+      setError(
+        f.includes('city') ? 'Город не найден в справочнике СДЭК — проверьте название.'
+          : f.includes('coords') ? 'Не нашли координаты: вставьте их из Яндекс Карт, например 55.742, 37.504.'
+            : f.includes('pointAddress') ? 'Укажите адрес полностью.'
+              : apiErrorText(x),
+      )
+      return false
+    } finally {
+      setBusy(false)
     }
-    setBusy(false)
   }
+  const npField = (k: keyof typeof np, label: string, placeholder = '') => (
+    <div>
+      <label htmlFor={`np-${k}-${p.id}`} className="block text-[13px] font-semibold mb-1 ml-1 text-text-secondary">{label}</label>
+      <input id={`np-${k}-${p.id}`} value={np[k]} placeholder={placeholder} onChange={(e) => setNp({ ...np, [k]: e.target.value })} className={fieldCls} />
+    </div>
+  )
   return (
-    <div className="mt-3">
-      <label htmlFor={`pt-${p.id}`} className="block text-sm font-semibold mb-1.5 ml-1 text-text-secondary">Точка на карте магазина</label>
-      <select id={`pt-${p.id}`} value={p.pointCode ?? ''} disabled={busy} onChange={(e) => void save(e.target.value)} className={fieldCls}>
+    <div className="mt-4 pt-4 border-t border-border">
+      <div className="flex items-center gap-3 mb-3">
+        <b className="flex-1 text-[15px] text-text-primary">Пункт выдачи</b>
+        {p.pointVisible
+          ? <StatusMark size="sm" color="#12B981">Виден покупателям</StatusMark>
+          : <StatusMark size="sm" color="#94A3B8">Скрыт от покупателей</StatusMark>}
+      </div>
+
+      <label htmlFor={`pa-${p.id}`} className="block text-sm font-semibold mb-1.5 ml-1 text-text-secondary">Адрес из анкеты</label>
+      <div className="flex gap-2">
+        <input id={`pa-${p.id}`} value={address} onChange={(e) => setAddress(e.target.value)} className={fieldCls} />
+        {address.trim() !== p.pointAddress && (
+          <button type="button" disabled={busy} className="app-btn app-btn-primary w-auto px-4 shrink-0" onClick={() => void save({ pointAddress: address.trim() })}>
+            Сохранить
+          </button>
+        )}
+      </div>
+
+      <label htmlFor={`pt-${p.id}`} className="block text-sm font-semibold mt-3 mb-1.5 ml-1 text-text-secondary">Точка на карте магазина</label>
+      <select id={`pt-${p.id}`} value={p.pointCode ?? ''} disabled={busy} onChange={(e) => void save({ pointCode: e.target.value })} className={fieldCls}>
         <option value="">Нет на карте</option>
         {points.map((x) => {
           const other = taken.get(x.code)
@@ -519,11 +557,34 @@ function PointPicker({ p, points, taken, onSaved }: { p: PartnerProfile; points:
       </select>
       <p className="text-[13px] text-text-muted mt-1.5 ml-1 mb-0">
         {p.pointCode
-          ? p.offerAcceptedAt
-            ? 'Покупатели видят точку на карте при оформлении заказа на сайте; такие заказы приходят партнёру в кабинет.'
-            : 'Точка появится на карте, когда партнёр примет оферту.'
-          : 'Нужной точки нет в списке — её добавляют в api/partner-points.json (адрес и координаты).'}
+          ? p.pointVisible
+            ? 'Покупатели видят точку на карте при оформлении заказа на сайте; такие заказы приходят партнёру в кабинет. В заказах партнёра и на странице оплаты — адрес этой точки.'
+            : 'Точка откроется покупателям, когда партнёр примет оферту.'
+          : 'Без точки покупатели сайта этот пункт не видят. Заказы самого партнёра идут на адрес из анкеты.'}
       </p>
+
+      {adding ? (
+        <div className="mt-3 p-3 rounded-xl bg-bg-light space-y-2.5">
+          {npField('name', 'Название на карте', 'Например: Горбушкин двор, павильон 2-145')}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            {npField('city', 'Город')}
+            {npField('workTime', 'Часы работы', 'Ежедневно 10:00–20:00')}
+          </div>
+          {npField('address', 'Адрес', 'Улица, дом, корпус')}
+          {npField('coords', 'Координаты из Яндекс Карт', 'Пусто — найдём по адресу')}
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" disabled={busy || !np.name.trim() || !np.address.trim()} className="app-btn app-btn-primary w-auto px-5"
+              onClick={async () => { if (await save({ newPoint: np })) setAdding(false) }}>
+              {busy ? 'Сохраняем…' : 'Добавить и привязать'}
+            </button>
+            <button type="button" className="acc-link-btn m-0" onClick={() => setAdding(false)}>Отмена</button>
+          </div>
+        </div>
+      ) : (
+        <button type="button" className="acc-link-btn" onClick={() => { setNp((v) => ({ ...v, address: v.address || p.pointAddress.replace(/^(г\.?\s*)?Москва,\s*/i, '') })); setAdding(true) }}>
+          Новая точка на карте…
+        </button>
+      )}
       {error && <p className="text-red-600 text-[13.5px] mt-2 mb-0">{error}</p>}
     </div>
   )

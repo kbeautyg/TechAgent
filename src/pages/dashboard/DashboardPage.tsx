@@ -16,6 +16,7 @@ import {
 import { isIssued } from '../../utils/status'
 import { useDataRevision } from '../../utils/store'
 import OrderRow from '../../components/app/OrderRow'
+import PickupPointCard from '../../components/app/PickupPointCard'
 
 const LEGAL_FORMS = new Set(['ООО', 'ООО', 'ИП', 'АО', 'ПАО', 'ОАО', 'ЗАО'])
 
@@ -77,8 +78,10 @@ export default function DashboardPage() {
         </span>
         <div className="min-w-0 flex-1">
           <h1 className="app-name text-[17px] lg:text-2xl font-bold text-text-primary leading-tight truncate">{name}</h1>
-          {user?.pointAddress && (
-            <p className="text-[13px] text-text-muted truncate mt-0.5">Пункт выдачи · {user.pointAddress}</p>
+          {(user?.mapPoint || user?.pointAddress) && (
+            <p className="text-[13px] text-text-muted truncate mt-0.5">
+              Пункт выдачи · {user.mapPoint ? `${user.mapPoint.city}, ${user.mapPoint.address}` : user.pointAddress}
+            </p>
           )}
         </div>
         {canOrder && (
@@ -143,6 +146,8 @@ export default function DashboardPage() {
       {!canOrder && user?.partnerStatus !== 'REJECTED' && (
         <p className="text-[13px] text-text-muted -mt-2 mb-5 text-center">Заказы можно оформлять после подтверждения анкеты</p>
       )}
+
+      {user && <PickupPointCard user={user} className="mb-5" />}
 
       {waiting > 0 && (
         <Link
