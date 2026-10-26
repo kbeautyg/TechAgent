@@ -117,7 +117,7 @@ function OrderScreen() {
             <div className="app-kv">
               <div className="app-kv-text">
                 <span className="app-kv-label">{order.pickupType === 'PARTNER' ? 'Пункт выдачи партнёра TechAgent' : 'Пункт СДЭК'}</span>
-                <span className="app-kv-value">{order.city}, {order.sdekPoint}</span>
+                <span className="app-kv-value">{[order.city, order.sdekPoint].filter(Boolean).join(', ')}</span>
               </div>
               <MapPin size={20} className="text-text-muted flex-none" />
             </div>
