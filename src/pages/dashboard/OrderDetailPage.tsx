@@ -3,7 +3,15 @@ import { ArrowLeft, Copy, Check, ExternalLink, PackageCheck, PackageOpen, Printe
 import { useCallback, useRef, useState } from 'react'
 import { QRCodeSVG } from 'qrcode.react'
 import { useAuth } from '../../context/AuthContext'
-import { mockOrders, updateOrder } from '../../data/mock'
+import { mockOrders, updateOrder, DEMO_MODE } from '../../data/mock'
+import {
+  useOrdersLoaded,
+  acceptPartnerOrder,
+  notifiedPartnerOrder,
+  issuePartnerOrder,
+  claimPartnerOrder,
+} from '../../data/partnerOrders'
+import { apiErrorText } from '../../lib/api'
 import { reportedIn, documentPeriod } from '../../data/partnerDocuments'
 import {
   formatPrice,
@@ -85,7 +93,9 @@ export default function OrderDetailPage() {
   const [packOk, setPackOk] = useState(false)
   const [issueMode, setIssueMode] = useState(false)
   const [issueText, setIssueText] = useState('')
-  const [issuePhotos, setIssuePhotos] = useState(0)
+  const [issuePhotos, setIssuePhotos] = useState<File[]>([])
+  // Боевой кабинет: действие ушло на сервер и ждёт ответа
+  const [busy, setBusy] = useState(false)
 
   // Выдача: распечатать акт → подписать → сфотографировать → подтвердить
   const [actFile, setActFile] = useState<File | null>(null)
@@ -101,7 +111,11 @@ export default function OrderDetailPage() {
   const [claimText, setClaimText] = useState('')
   const [claimPhoto, setClaimPhoto] = useState<File | null>(null)
 
+  const loaded = useOrdersLoaded()
   const order = mockOrders.find((o) => o.id === id && o.userId === user?.id)
+
+  // Боевой кабинет: заказы ещё грузятся с сервера
+  if (!order && !loaded) return <div className="min-h-[40vh]" aria-busy="true" />
 
   if (!order) {
     return (
@@ -117,7 +131,10 @@ export default function OrderDetailPage() {
   const currentStepIndex = ORDER_STEPS.indexOf(order.status)
   const isPaid = order.paymentStatus === 'PAID'
   const paymentUrl = `${window.location.origin}/pay/${order.paymentId}`
-  const canIssue = order.status === 'AT_POINT' && isPaid && actFile !== null
+  const canIssue = order.status === 'AT_POINT' && isPaid && actFile !== null && !busy
+  // Боевой кабинет: товар можно принять и до отметки «в пути» — если ТехЭйджент не успел её поставить
+  const canAccept = order.status === 'IN_TRANSIT' || (!DEMO_MODE && order.status === 'PAID')
+  const hasPayLink = Boolean(order.paymentId)
   const until = storageUntil(order)
   const expired = order.status === 'AT_POINT' && storageExpired(order)
   const returned = Boolean(order.returnedAt)
@@ -144,14 +161,31 @@ export default function OrderDetailPage() {
 
   const inTransit = (o: Order) => o.status === 'IN_TRANSIT'
 
+  /** Боевой кабинет: действие на сервере. Ошибку показываем словами; true — получилось */
+  const run = async (action: () => Promise<unknown>): Promise<boolean> => {
+    if (busy) return false
+    setBusy(true)
+    try {
+      await action()
+      return true
+    } catch (e) {
+      alert(apiErrorText(e))
+      return false
+    } finally {
+      setBusy(false)
+    }
+  }
+
   /* Приёмка в пункте выдачи (оферта, п. 5.1, 8.2) */
   const acceptGoods = () => {
-    if (order.status !== 'IN_TRANSIT' || !packOk) return
+    if (!canAccept || !packOk) return
+    if (!DEMO_MODE) return void run(() => acceptPartnerOrder(order.orderNumber, '', []))
     patch({ status: 'AT_POINT', receivedAt: new Date().toISOString() }, inTransit)
   }
 
   const acceptWithIssue = () => {
-    if (order.status !== 'IN_TRANSIT' || !issueText.trim() || issuePhotos === 0) return
+    if (!canAccept || !issueText.trim() || issuePhotos.length === 0) return
+    if (!DEMO_MODE) return void run(() => acceptPartnerOrder(order.orderNumber, issueText.trim(), issuePhotos))
     // Фото пока никуда не загружаются (бэкенда нет) — фиксируем описание и сколько фото приложено
     patch(
       {
@@ -159,7 +193,7 @@ export default function OrderDetailPage() {
         receivedAt: new Date().toISOString(),
         receivedIssue: issueText.trim(),
         receivedIssuePhoto: true,
-        receivedIssuePhotos: issuePhotos,
+        receivedIssuePhotos: issuePhotos.length,
       },
       inTransit,
     )
@@ -168,11 +202,13 @@ export default function OrderDetailPage() {
   /* Уведомление покупателя: с этой даты товар хранится 5 дней (оферта, п. 8.3) */
   const markNotified = () => {
     if (order.status !== 'AT_POINT' || order.notifiedAt) return
+    if (!DEMO_MODE) return void run(() => notifiedPartnerOrder(order.orderNumber))
     patch({ notifiedAt: new Date().toISOString() }, (o) => o.status === 'AT_POINT' && !o.notifiedAt)
   }
 
   const handleIssue = () => {
     if (!canIssue) return
+    if (!DEMO_MODE) return void run(() => issuePartnerOrder(order.orderNumber, actFile!))
     patch(
       {
         status: 'ISSUED',
@@ -187,8 +223,16 @@ export default function OrderDetailPage() {
   }
 
   /* Обращение покупателя об обмене или возврате (оферта, п. 5.1, 8.4) */
-  const sendClaim = () => {
+  const sendClaim = async () => {
     if (order.status !== 'ISSUED' || returned || !claimText.trim()) return
+    if (!DEMO_MODE) {
+      if (!(await run(() => claimPartnerOrder(order.orderNumber, claimType, claimText.trim(), claimPhoto)))) return
+      setClaimOpen(false)
+      setClaimText('')
+      setClaimPhoto(null)
+      setClaimType('EXCHANGE')
+      return
+    }
     const claim = {
       id: crypto.randomUUID(),
       type: claimType,
@@ -211,7 +255,9 @@ export default function OrderDetailPage() {
   const reported = order.status === 'ISSUED' ? reportedIn(order) : undefined
   const reportedPeriod = reported ? documentPeriod(reported) : null
   let rewardNote: string | null = REWARD_RULE
-  if (order.status === 'CANCELLED') rewardNote = null
+  const fromSite = order.source === 'SITE'
+  if (fromSite) rewardNote = 'Заказ оформил покупатель на сайте, выбрав ваш пункт выдачи. Вознаграждение начисляется за заказы, оформленные вами в кабинете (агентский договор-оферта, «Заказ»).'
+  else if (order.status === 'CANCELLED') rewardNote = null
   else if (returned) {
     rewardNote = reportedPeriod
       ? 'Товар возвращён покупателем — вознаграждение аннулировано и будет удержано из следующей выплаты (п. 7.3 агентского договора-оферты).'
@@ -226,7 +272,9 @@ export default function OrderDetailPage() {
   const note = storageNote(order)
   // Подробности про истёкший срок — в блоке «Товар в пункте выдачи», здесь коротко
   let statusSub: string | null = note?.expired ? 'Срок хранения истёк' : note?.text ?? null
-  if (!statusSub && order.status === 'CREATED') statusSub = paymentStatusLabel(order)
+  if (!statusSub && order.status === 'CREATED') {
+    statusSub = DEMO_MODE ? paymentStatusLabel(order) : order.paymentReady ? 'Покупатель может оплатить' : 'ТехЭйджент проверяет наличие'
+  }
   if (!statusSub && returned && order.returnedAt) statusSub = `Товар возвращён ${formatDate(order.returnedAt)}`
   else if (!statusSub && order.status === 'ISSUED' && order.issuedAt) statusSub = `Выдан ${formatDateTime(order.issuedAt)}`
   const nextStep = !returned ? NEXT_STEP[order.status] : undefined
@@ -236,7 +284,7 @@ export default function OrderDetailPage() {
 
   /* Главная кнопка внизу экрана на телефоне */
   let sticky: React.ReactNode = null
-  if (order.status === 'IN_TRANSIT') {
+  if (canAccept) {
     sticky = (
       <button type="button" onClick={() => setSheet('accept')} className="app-btn app-btn-primary">
         <PackageOpen size={22} /> Принять товар
@@ -250,7 +298,7 @@ export default function OrderDetailPage() {
     ) : (
       <button type="button" disabled className="app-btn">Оплата не получена — выдавать нельзя</button>
     )
-  } else if (!isPaid && order.status !== 'CANCELLED') {
+  } else if (!isPaid && order.status !== 'CANCELLED' && hasPayLink) {
     sticky = (
       <button type="button" onClick={handleCopy} className="app-btn app-btn-primary">
         {copied ? <Check size={22} /> : <Copy size={22} />}
@@ -339,7 +387,7 @@ export default function OrderDetailPage() {
           )}
 
           {/* Приёмка товара в пункте выдачи */}
-          {order.status === 'IN_TRANSIT' && (
+          {canAccept && (
             <ActionPanel
               title="Приёмка товара"
               icon={<PackageOpen size={18} className="text-primary" />}
@@ -360,7 +408,7 @@ export default function OrderDetailPage() {
                     Упаковка цела, количество мест совпадает
                   </label>
                   <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
-                    <button onClick={acceptGoods} disabled={!packOk} className={actBtn}>
+                    <button onClick={acceptGoods} disabled={!packOk || busy} className={actBtn}>
                       <Check size={18} /> Принять товар
                     </button>
                     <button type="button" onClick={() => setIssueMode(true)} className={linkBtn}>
@@ -385,21 +433,21 @@ export default function OrderDetailPage() {
                   </div>
                   <div>
                     <span className="block font-medium mb-1.5 text-text-secondary">Фото</span>
-                    <label htmlFor="issue-photo" className={`app-upload ${issuePhotos > 0 ? 'is-set' : ''}`}>
-                      {issuePhotos > 0 ? <Check size={22} /> : <Camera size={22} />}
-                      {issuePhotos > 0 ? `Выбрано фото: ${issuePhotos} · заменить` : 'Сфотографировать или выбрать фото'}
+                    <label htmlFor="issue-photo" className={`app-upload ${issuePhotos.length > 0 ? 'is-set' : ''}`}>
+                      {issuePhotos.length > 0 ? <Check size={22} /> : <Camera size={22} />}
+                      {issuePhotos.length > 0 ? `Выбрано фото: ${issuePhotos.length} · заменить` : 'Сфотографировать или выбрать фото'}
                     </label>
                     <input
                       id="issue-photo"
                       type="file"
                       accept="image/*"
                       multiple
-                      onChange={(e) => setIssuePhotos(e.target.files?.length ?? 0)}
+                      onChange={(e) => setIssuePhotos(Array.from(e.target.files ?? []).slice(0, 6))}
                       className="sr-only"
                     />
                   </div>
                   <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
-                    <button onClick={acceptWithIssue} disabled={!issueText.trim() || issuePhotos === 0} className={actBtn}>
+                    <button onClick={acceptWithIssue} disabled={!issueText.trim() || issuePhotos.length === 0 || busy} className={actBtn}>
                       <Check size={18} /> Принять с замечанием
                     </button>
                     <button type="button" onClick={() => setIssueMode(false)} className={linkBtn}>
@@ -424,6 +472,13 @@ export default function OrderDetailPage() {
                   <div className="rounded-xl bg-amber-50 border border-amber-200 px-3 py-2 text-amber-900 break-words leading-relaxed">
                     При приёмке отмечено: {order.receivedIssue}
                     {photoNote(order)}
+                    {(order.receivedIssuePhotoUrls ?? []).length > 0 && (
+                      <span className="flex flex-wrap gap-x-3 mt-1">
+                        {order.receivedIssuePhotoUrls!.map((u, i) => (
+                          <a key={u} href={u} target="_blank" rel="noopener" className="text-amber-900 underline">Фото {i + 1}</a>
+                        ))}
+                      </span>
+                    )}
                   </div>
                 )}
                 {!order.notifiedAt ? (
@@ -433,7 +488,7 @@ export default function OrderDetailPage() {
                       <span className="text-text-primary font-medium">{order.buyerName}</span>,{' '}
                       <a href={telHref} className="text-primary font-medium whitespace-nowrap no-underline">{order.buyerPhone}</a>.
                     </p>
-                    <button onClick={markNotified} className={actBtnSoft}>
+                    <button onClick={markNotified} disabled={busy} className={actBtnSoft}>
                       <Check size={18} /> Покупатель уведомлён о поступлении
                     </button>
                   </div>
@@ -537,7 +592,9 @@ export default function OrderDetailPage() {
                 <div className="flex justify-between gap-4">
                   <span className="text-text-secondary">Акт приёма-передачи</span>
                   <span className={order.issueActUploaded ? 'text-success' : 'text-red-500'}>
-                    {order.issueActUploaded ? 'загружен' : 'не загружен'}
+                    {order.actUrl ? (
+                      <a href={order.actUrl} target="_blank" rel="noopener" className="text-success underline">загружен · открыть</a>
+                    ) : order.issueActUploaded ? 'загружен' : 'не загружен'}
                   </span>
                 </div>
               </div>
@@ -565,7 +622,9 @@ export default function OrderDetailPage() {
                       {BUYER_CLAIM_LABELS[c.type]} · передано {formatDateTime(c.createdAt)}
                     </p>
                     <p className="text-text-secondary mt-1 whitespace-pre-wrap break-words">{c.text}</p>
-                    {c.photoAttached && <p className="text-xs text-text-muted mt-1">Фото приложено</p>}
+                    {c.photoUrl ? (
+                      <a href={c.photoUrl} target="_blank" rel="noopener" className="text-xs text-primary mt-1 inline-block">Фото</a>
+                    ) : c.photoAttached && <p className="text-xs text-text-muted mt-1">Фото приложено</p>}
                   </div>
                 ))}
                 {!returned && (
@@ -614,7 +673,7 @@ export default function OrderDetailPage() {
                           />
                         </div>
                         <div className="flex flex-col lg:flex-row lg:items-center gap-3 lg:gap-4">
-                          <button onClick={sendClaim} disabled={!claimText.trim()} className={actBtn}>
+                          <button onClick={sendClaim} disabled={!claimText.trim() || busy} className={actBtn}>
                             Передать в ТехЭйджент
                           </button>
                           <button type="button" onClick={() => setClaimOpen(false)} className={linkBtn}>
@@ -670,7 +729,7 @@ export default function OrderDetailPage() {
                     Ваше вознаграждение{order.rewardPercent && order.status !== 'CANCELLED' ? ` · ${formatPercent(order.rewardPercent)}` : ''}
                   </span>
                   <span className="app-kv-value">
-                    {order.status === 'CANCELLED' ? 'не начисляется' : returned ? 'аннулировано' : formatReward(order.partnerReward)}
+                    {order.status === 'CANCELLED' || fromSite ? 'не начисляется' : returned ? 'аннулировано' : formatReward(order.partnerReward)}
                   </span>
                   {rewardNote && <span className="text-[13px] leading-snug text-text-muted mt-1">{rewardNote}</span>}
                 </div>
@@ -731,9 +790,16 @@ export default function OrderDetailPage() {
 
         {/* Боковая колонка на компьютере; на телефоне — ниже */}
         <div className="space-y-3 lg:space-y-6 min-w-0">
-          {!isPaid && order.status !== 'CANCELLED' && (
+          {!isPaid && order.status !== 'CANCELLED' && hasPayLink && (
             <section className="app-group p-4 lg:p-5">
               <h2 className="font-bold mb-4 text-text-primary text-base">Ссылка на оплату</h2>
+              {!DEMO_MODE && (
+                <p className="text-[13px] leading-snug text-text-secondary mb-3">
+                  {order.paymentReady
+                    ? 'Товар в наличии — покупатель может оплатить по этой ссылке.'
+                    : 'Отправьте ссылку покупателю: он отметит согласие с офертой, а кнопка оплаты появится, когда ТехЭйджент подтвердит наличие.'}
+                </p>
+              )}
               <div className="flex justify-center mb-3">
                 <QRCodeSVG value={paymentUrl} size={160} />
               </div>

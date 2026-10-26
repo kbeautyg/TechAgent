@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { Link, Navigate, useLocation, useParams, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 import { mockOrders } from '../../data/mock'
+import { useOrdersLoaded, usePartnerOrdersSync } from '../../data/partnerOrders'
 import { formatDate, formatPrice } from '../../utils/calculate'
 import { useDataRevision } from '../../utils/store'
 import type { Order, User } from '../../types'
@@ -126,8 +127,11 @@ export default function ActPrintPage() {
   const { id } = useParams()
   const [params] = useSearchParams()
   const { pathname, search } = useLocation()
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
   useDataRevision()
+  // Страница открывается без кабинета: заказы с сервера загружаем сами (в демо — из браузера)
+  usePartnerOrdersSync(user?.offerAcceptedAt ? user.id : undefined)
+  const loaded = useOrdersLoaded()
 
   const order = user ? mockOrders.find((o) => o.id === id && o.userId === user.id) : undefined
   const printable =
@@ -145,6 +149,8 @@ export default function ActPrintPage() {
     const t = window.setTimeout(() => window.print(), 300)
     return () => window.clearTimeout(t)
   }, [printable, autoPrint])
+
+  if (loading || (user?.offerAcceptedAt && !order && !loaded)) return <div className="act-root" aria-busy="true" />
 
   // После входа вернём сюда же
   if (!user || user.role !== 'CLIENT') return <Navigate to="/login/partner" replace state={{ from: pathname + search }} />

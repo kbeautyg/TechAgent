@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { Link, NavLink, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ChevronRight, ExternalLink, LogOut } from 'lucide-react'
-import { api, apiErrorText, type PartnerApplicationView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
+import { api, apiErrorText, type PartnerApplicationView, type PartnerOrderView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
 import { logoutAccount, refreshAccount, useAccount } from '../../utils/account'
 import { formatPrice, formatDateTime } from '../../utils/calculate'
 import { PageBar } from '../../components/app/ui'
@@ -16,6 +16,11 @@ import { copyText } from '../../utils/clipboard'
  * Заявки партнёров: одобрение заводит учётку и отправляет партнёру письмо с временным паролем.
  * Договор партнёр заключает сам — отметкой о согласии с офертой при первом входе.
  */
+
+/** Заказ в разделе сотрудников: у заказа в пункте партнёра — ещё приёмка, выдача, акт и обращения */
+type StaffOrderView = SiteOrder & Partial<Omit<PartnerOrderView, keyof SiteOrder>>
+const staffFile = (number: string, name: string) => `/api/staff/orders/${number}/files/${encodeURIComponent(name)}`
+const CLAIM_LABEL = { EXCHANGE: 'Обмен', RETURN: 'Возврат', DEFECT: 'Недостаток товара' } as const
 
 const fieldCls =
   'w-full h-[50px] px-4 rounded-xl border border-border bg-white text-text-primary placeholder:text-text-muted focus:border-primary focus:ring-4 focus:ring-primary/15 outline-none text-base'
@@ -141,7 +146,7 @@ function StaffOrders() {
             <Link key={o.number} to={`/staff/orders/${o.number}`} className="app-row">
               <span className="app-row-mid">
                 <span className="app-row-title">{o.number} · {itemsTitle(o)}</span>
-                <span className="app-row-sub">{o.buyerName} · {o.city} · {formatDateTime(o.createdAt)}</span>
+                <span className="app-row-sub">{o.buyerName} · {o.partner ? `партнёр ${o.partner.companyName}` : o.city} · {formatDateTime(o.createdAt)}</span>
               </span>
               <span className="app-row-right">
                 <span className="app-row-sum">{formatPrice(o.total)}</span>
@@ -166,7 +171,7 @@ export function StaffOrderPage() {
 
 function StaffOrder() {
   const { number = '' } = useParams()
-  const [order, setOrder] = useState<SiteOrder | null>(null)
+  const [order, setOrder] = useState<StaffOrderView | null>(null)
   const [next, setNext] = useState<SiteOrderStatus[]>([])
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
@@ -179,7 +184,7 @@ function StaffOrder() {
   const [copied, setCopied] = useState(false)
 
   const load = useCallback(() => {
-    api<{ order: SiteOrder; next: SiteOrderStatus[] }>(`/staff/orders/${encodeURIComponent(number)}`)
+    api<{ order: StaffOrderView; next: SiteOrderStatus[] }>(`/staff/orders/${encodeURIComponent(number)}`)
       .then((r) => { setOrder(r.order); setNext(r.next); setNote(r.order.staffNote ?? '') })
       .catch((e) => setError(apiErrorText(e)))
   }, [number])
@@ -189,7 +194,7 @@ function StaffOrder() {
     setBusy(true)
     setError('')
     try {
-      const r = await api<{ order: SiteOrder; next: SiteOrderStatus[] }>(`/staff/orders/${number}/status`, { status, ...extra })
+      const r = await api<{ order: StaffOrderView; next: SiteOrderStatus[] }>(`/staff/orders/${number}/status`, { status, ...extra })
       setOrder(r.order)
       setNext(r.next)
       setCancelOpen(false)
@@ -208,7 +213,9 @@ function StaffOrder() {
     )
   }
 
-  const contacts = `${order.buyerName}\n${order.phone}\n${order.email}\nСДЭК: ${order.city}, ${order.sdekPoint}`
+  const toPartner = order.pickupType === 'PARTNER'
+  const where = [order.city, order.sdekPoint].filter(Boolean).join(', ')
+  const contacts = `${order.buyerName}\n${order.phone}${order.email ? `\n${order.email}` : ''}\n${toPartner ? 'Пункт партнёра' : 'СДЭК'}: ${where}`
 
   return (
     <div className="acc-wide acc-staff">
@@ -219,7 +226,7 @@ function StaffOrder() {
         <div className="flex flex-col gap-3 min-w-0">
           <div className="acc-card staff-action">
             <p className="acc-k m-0">Сейчас</p>
-            <b className="acc-v">{STAFF_TODO[order.status]}</b>
+            <b className="acc-v">{order.partner && order.status === 'SHIPPED' ? 'Едет — партнёр отметит приёмку в своём кабинете' : STAFF_TODO[order.status]}</b>
 
             {order.status === 'NEW' && (
               <div className="mt-4 space-y-3">
@@ -237,26 +244,35 @@ function StaffOrder() {
                 <a href={order.paymentUrl} target="_blank" rel="noopener noreferrer" className="acc-link">
                   Ссылка у покупателя <ExternalLink size={14} />
                 </a>
+                {order.payPage && (
+                  <p className="acc-note m-0">
+                    {order.consentAt
+                      ? `Покупатель отметил согласие с офертой и на обработку данных ${formatDateTime(order.consentAt)}.`
+                      : 'Покупатель ещё не отмечал согласия на странице оплаты заказа — ссылка банка откроется ему после этого.'}
+                  </p>
+                )}
                 <button type="button" disabled={busy} className="app-btn app-btn-success"
                   onClick={() => move('PAID')}>Оплата поступила — {formatPrice(order.total)}</button>
               </div>
             )}
             {order.status === 'PAID' && (
               <div className="mt-4 space-y-3">
-                <label htmlFor="st-track" className="block text-sm font-semibold ml-1 text-text-secondary">Трек-номер СДЭК</label>
+                <label htmlFor="st-track" className="block text-sm font-semibold ml-1 text-text-secondary">
+                  {toPartner ? 'Трек-номер, если есть' : 'Трек-номер СДЭК'}
+                </label>
                 <input id="st-track" type="text" value={track} onChange={(e) => setTrack(e.target.value)} className={fieldCls} />
-                <button type="button" disabled={busy || !track.trim()} className="app-btn app-btn-primary"
-                  onClick={() => move('SHIPPED', { trackNumber: track.trim() })}>Отправлено в СДЭК</button>
+                <button type="button" disabled={busy || (!toPartner && !track.trim())} className="app-btn app-btn-primary"
+                  onClick={() => move('SHIPPED', { trackNumber: track.trim() })}>{toPartner ? 'Отправлено в пункт партнёра' : 'Отправлено в СДЭК'}</button>
               </div>
             )}
             {order.status === 'SHIPPED' && (
-              <button type="button" disabled={busy} className="app-btn app-btn-primary mt-4" onClick={() => move('READY')}>
-                Прибыл в пункт СДЭК
+              <button type="button" disabled={busy} className={`app-btn mt-4 ${order.partner ? 'app-btn-soft' : 'app-btn-primary'}`} onClick={() => move('READY')}>
+                {order.partner ? 'Отметить приёмку за партнёра' : toPartner ? 'Прибыл в пункт партнёра' : 'Прибыл в пункт СДЭК'}
               </button>
             )}
             {order.status === 'READY' && (
-              <button type="button" disabled={busy} className="app-btn app-btn-success mt-4" onClick={() => move('RECEIVED')}>
-                Покупатель получил заказ
+              <button type="button" disabled={busy} className={`app-btn mt-4 ${order.partner ? 'app-btn-soft' : 'app-btn-success'}`} onClick={() => move('RECEIVED')}>
+                {order.partner ? 'Отметить выдачу за партнёра' : 'Покупатель получил заказ'}
               </button>
             )}
             {next.includes('CANCELLED') && (
@@ -272,7 +288,12 @@ function StaffOrder() {
                 <button type="button" className="acc-link-btn" onClick={() => setCancelOpen(true)}>Отменить заказ…</button>
               )
             )}
-            {next.length > 0 && <p className="acc-note">Покупателю уйдёт письмо, статус в его кабинете обновится.</p>}
+            {order.partner && ['SHIPPED', 'READY'].includes(order.status) && (
+              <p className="acc-note">Обычно это делает партнёр в своём кабинете: приёмку — с проверкой упаковки, выдачу — с фото подписанного акта.</p>
+            )}
+            {next.length > 0 && (
+              <p className="acc-note">{order.email ? 'Покупателю уйдёт письмо, статус в его кабинете обновится.' : 'Покупатель не оставлял email — писем ему нет.'}{order.partner ? ' Партнёру — письмо об оплате, отправке и отмене.' : ''}</p>
+            )}
             {error && <p className="text-red-600 text-[13.5px] mt-3 mb-0">{error}</p>}
           </div>
 
@@ -306,10 +327,15 @@ function StaffOrder() {
           <div className="app-group">
             <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Получатель</span><span className="app-kv-value">{order.buyerName}</span></div></div>
             <a href={`tel:${order.phone.replace(/[^\d+]/g, '')}`} className="app-kv no-underline text-inherit"><div className="app-kv-text"><span className="app-kv-label">Телефон</span><span className="app-kv-value">{order.phone}</span></div></a>
-            <a href={`mailto:${order.email}?subject=${encodeURIComponent('Заказ ' + order.number)}`} className="app-kv no-underline text-inherit"><div className="app-kv-text"><span className="app-kv-label">Email</span><span className="app-kv-value">{order.email}</span></div></a>
-            <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">{order.pickupType === 'PARTNER' ? 'Пункт выдачи партнёра' : 'Пункт СДЭК'}</span><span className="app-kv-value">{order.city}, {order.sdekPoint}</span></div></div>
+            {order.email ? (
+              <a href={`mailto:${order.email}?subject=${encodeURIComponent('Заказ ' + order.number)}`} className="app-kv no-underline text-inherit"><div className="app-kv-text"><span className="app-kv-label">Email</span><span className="app-kv-value">{order.email}</span></div></a>
+            ) : (
+              <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Email</span><span className="app-kv-value text-text-muted">не указан</span></div></div>
+            )}
+            <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">{toPartner ? 'Пункт выдачи партнёра' : 'Пункт СДЭК'}</span><span className="app-kv-value">{where}</span></div></div>
             {order.comment && <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">Комментарий покупателя</span><span className="app-kv-value">{order.comment}</span></div></div>}
           </div>
+          {order.partner && <PartnerPart order={order} />}
           <button type="button" className="app-btn app-btn-soft"
             onClick={async () => { if (await copyText(contacts)) { setCopied(true); setTimeout(() => setCopied(false), 1500) } }}>
             {copied ? 'Скопировано' : 'Скопировать данные получателя'}
@@ -339,9 +365,19 @@ export function StaffPartnersPage() {
   )
 }
 
+/** Точка на карте магазина (api/partner-points.json) */
+interface MapPoint {
+  code: string
+  name: string
+  address: string
+  city: string
+  active: boolean
+}
+
 interface PartnersData {
   applications: PartnerApplicationView[]
   partners: PartnerProfile[]
+  points: MapPoint[]
 }
 
 /** Выданный пароль показываем один раз: письмо могло не дойти — тогда его диктуют партнёру */
@@ -452,7 +488,48 @@ function ApplicationCard({ a, onDone }: { a: PartnerApplicationView; onDone: (is
   )
 }
 
-function PartnerRow({ p, onIssued }: { p: PartnerProfile; onIssued: (i: Issued) => void }) {
+/** Точка партнёра на карте магазина: покупатели видят её при оформлении заказа, такие заказы приходят партнёру в кабинет */
+function PointPicker({ p, points, taken, onSaved }: { p: PartnerProfile; points: MapPoint[]; taken: Map<string, string>; onSaved: () => void }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const save = async (code: string) => {
+    setBusy(true)
+    setError('')
+    try {
+      await api(`/staff/partners/${p.id}/point`, { pointCode: code })
+      onSaved()
+    } catch (x) {
+      setError(apiErrorText(x))
+    }
+    setBusy(false)
+  }
+  return (
+    <div className="mt-3">
+      <label htmlFor={`pt-${p.id}`} className="block text-sm font-semibold mb-1.5 ml-1 text-text-secondary">Точка на карте магазина</label>
+      <select id={`pt-${p.id}`} value={p.pointCode ?? ''} disabled={busy} onChange={(e) => void save(e.target.value)} className={fieldCls}>
+        <option value="">Нет на карте</option>
+        {points.map((x) => {
+          const other = taken.get(x.code)
+          return (
+            <option key={x.code} value={x.code} disabled={Boolean(other) && other !== p.companyName}>
+              {x.city}, {x.name} — {x.address}{other && other !== p.companyName ? ` (${other})` : ''}
+            </option>
+          )
+        })}
+      </select>
+      <p className="text-[13px] text-text-muted mt-1.5 ml-1 mb-0">
+        {p.pointCode
+          ? p.offerAcceptedAt
+            ? 'Покупатели видят точку на карте при оформлении заказа на сайте; такие заказы приходят партнёру в кабинет.'
+            : 'Точка появится на карте, когда партнёр примет оферту.'
+          : 'Нужной точки нет в списке — её добавляют в api/partner-points.json (адрес и координаты).'}
+      </p>
+      {error && <p className="text-red-600 text-[13.5px] mt-2 mb-0">{error}</p>}
+    </div>
+  )
+}
+
+function PartnerRow({ p, onIssued, picker }: { p: PartnerProfile; onIssued: (i: Issued) => void; picker: ReactNode }) {
   const [confirm, setConfirm] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -487,6 +564,7 @@ function PartnerRow({ p, onIssued }: { p: PartnerProfile; onIssued: (i: Issued) 
           ? <>Согласие с агентским договором-офертой (ред. {p.offerEdition}) отмечено партнёром {formatDateTime(p.offerAcceptedAt)}{p.offerAcceptIp ? `, адрес ${p.offerAcceptIp}` : ''}. Доступ открыт {formatDateTime(p.createdAt)}.</>
           : <>Доступ открыт {formatDateTime(p.createdAt)}. Договор будет заключён, когда партнёр войдёт и сам отметит согласие с офертой.</>}
       </p>
+      {picker}
       {confirm ? (
         <div className="flex flex-wrap items-center gap-3 mt-3">
           <button type="button" disabled={busy} className="app-btn app-btn-primary w-auto px-5" onClick={reset}>
@@ -516,6 +594,8 @@ function StaffPartners() {
 
   const fresh = data?.applications.filter((a) => a.status === 'NEW') ?? []
   const declined = data?.applications.filter((a) => a.status === 'DECLINED') ?? []
+  /** Какая точка за каким партнёром: у точки один партнёр */
+  const taken = new Map((data?.partners ?? []).filter((p) => p.pointCode).map((p) => [p.pointCode!, p.companyName]))
 
   return (
     <div className="acc-wide acc-staff">
@@ -540,7 +620,8 @@ function StaffPartners() {
               ? <p className="acc-note text-left">Пока никого — одобрите заявку, и партнёр появится здесь.</p>
               : <div className="flex flex-col gap-3">
                   {data.partners.map((p) => (
-                    <PartnerRow key={p.id} p={p} onIssued={(i) => { setIssued(i); window.scrollTo(0, 0) }} />
+                    <PartnerRow key={p.id} p={p} onIssued={(i) => { setIssued(i); window.scrollTo(0, 0) }}
+                      picker={<PointPicker p={p} points={data.points} taken={taken} onSaved={load} />} />
                   ))}
                 </div>}
           </section>
@@ -556,6 +637,38 @@ function StaffPartners() {
           )}
         </div>
       )}
+    </div>
+  )
+}
+
+/** Заказ в пункте партнёра: кто партнёр, вознаграждение и что сделано в пункте — приёмка, уведомление, выдача, обращения */
+function PartnerPart({ order }: { order: StaffOrderView }) {
+  const p = order.partner!
+  const kv = (label: string, value: ReactNode) => (
+    <div className="app-kv"><div className="app-kv-text"><span className="app-kv-label">{label}</span><span className="app-kv-value">{value}</span></div></div>
+  )
+  const photos = (order.files ?? []).filter((f) => f.startsWith('accept-'))
+  return (
+    <div className="app-group">
+      {kv(order.source === 'PARTNER' ? 'Оформил партнёр' : 'Пункт партнёра (заказ с сайта)', <>{p.companyName}<br /><span className="text-text-muted text-[13px]">{p.phone} · {p.email}</span></>)}
+      {kv('Вознаграждение партнёра', order.source === 'PARTNER' && order.reward != null
+        ? `${formatPrice(order.reward)} · ${String(order.rewardPercent).replace('.', ',')}%${order.status === 'RECEIVED' && order.actFile ? '' : ' — после выдачи с актом'}`
+        : 'не начисляется — заказ оформлен на сайте')}
+      {order.payPage && kv('Страница оплаты', <a href={order.payPage} target="_blank" rel="noopener noreferrer" className="acc-link">{order.payPage.replace(/^https?:\/\//, '')}</a>)}
+      {order.receivedAt && kv('Принят в пункте', formatDateTime(order.receivedAt))}
+      {order.receivedIssue && kv('Замечание при приёмке', <>
+        {order.receivedIssue}
+        {photos.length > 0 && <span className="flex flex-wrap gap-x-3">{photos.map((f, i) => <a key={f} href={staffFile(order.number, f)} target="_blank" rel="noopener" className="acc-link">Фото {i + 1}</a>)}</span>}
+      </>)}
+      {order.notifiedAt && kv('Покупатель уведомлён', formatDateTime(order.notifiedAt))}
+      {order.issuedAt && kv('Выдан', <>
+        {formatDateTime(order.issuedAt)}{order.issuedToName ? ` · ${order.issuedToName}` : ''}
+        {order.actFile ? <a href={staffFile(order.number, order.actFile)} target="_blank" rel="noopener" className="acc-link block">Подписанный акт</a> : <span className="block text-text-muted text-[13px]">акт не загружен</span>}
+      </>)}
+      {(order.claims ?? []).map((c) => <Fragment key={c.id}>{kv(`Обращение · ${CLAIM_LABEL[c.type]} · ${formatDateTime(c.createdAt)}`, <>
+        <span className="whitespace-pre-wrap">{c.text}</span>
+        {c.photo && <a href={staffFile(order.number, c.photo)} target="_blank" rel="noopener" className="acc-link block">Фото</a>}
+      </>)}</Fragment>)}
     </div>
   )
 }

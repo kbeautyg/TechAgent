@@ -6,6 +6,9 @@
 const rub = (n) => new Intl.NumberFormat('ru-RU').format(n) + ' ₽'
 const SIGN = '\n\n—\nTechAgent · продавец ООО «ТехЭйджент»\nВопросы по заказу: help@techagent.pro'
 
+/** Пункт выдачи одной строкой: у заказа партнёра без точки на карте города нет — только адрес пункта */
+const where = (o) => [o.city, o.sdekPoint].filter(Boolean).join(', ')
+
 function itemsBlock(o) {
   const lines = o.items.map((i) => `— ${i.name}${i.qty > 1 ? ` × ${i.qty}` : ''}: ${rub(i.price * i.qty)}`)
   const deliv = o.pickupType === 'PARTNER' ? '— Доставка в пункт выдачи партнёра: входит в цену' : `— Доставка в пункт СДЭК: ${rub(o.delivery)}`
@@ -21,7 +24,7 @@ export function orderCreated(o, site, cabinetLink) {
 
 ${itemsBlock(o)}
 
-Пункт выдачи: ${o.city}, ${o.sdekPoint}
+Пункт выдачи: ${where(o)}
 
 Что дальше: проверим наличие и пришлём ссылку на оплату через СБП. После оплаты отправим заказ в пункт выдачи — не позднее 14 дней с даты оплаты.
 
@@ -35,14 +38,14 @@ ${itemsBlock(o)}
 export function staffNewOrder(o, site) {
   return [
     `Новый заказ ${o.number} — ${rub(o.total)}`,
-    `Заказ с сайта ${o.number}
+    `${o.source === 'PARTNER' ? 'Заказ партнёра' : 'Заказ с сайта'} ${o.number}
 
 ${itemsBlock(o)}
 
-Получатель: ${o.buyerName}
+${o.partner ? `Оформил партнёр: ${o.partner.companyName} (${o.partner.email}, ${o.partner.phone})\n` : ''}Получатель: ${o.buyerName}
 Телефон: ${o.phone}
-Email: ${o.email}
-Пункт выдачи: ${o.city}, ${o.sdekPoint}${o.comment ? `\nКомментарий: ${o.comment}` : ''}
+Email: ${o.email || 'не указан'}
+Пункт выдачи: ${where(o)}${o.comment ? `\nКомментарий: ${o.comment}` : ''}
 
 Проверить наличие и отправить ссылку на оплату: ${site}/staff/orders/${o.number}`,
   ]
@@ -75,22 +78,20 @@ ${itemsBlock(o)}
     case 'PAID':
       return [
         `Заказ ${o.number}: оплата получена`,
-        `Оплата по заказу ${o.number} получена — ${rub(o.total)}. Готовим отправку в пункт выдачи: ${o.city}, ${o.sdekPoint}.${link}${SIGN}`,
+        `Оплата по заказу ${o.number} получена — ${rub(o.total)}. Готовим отправку в пункт выдачи: ${where(o)}.${link}${SIGN}`,
       ]
     case 'SHIPPED':
       return [
         `Заказ ${o.number} отправлен`,
         o.pickupType === 'PARTNER'
-          ? `Заказ ${o.number} отправлен в пункт выдачи партнёра TechAgent: ${o.city}, ${o.sdekPoint}.
-
-Трек-номер: ${o.trackNumber}
-
+          ? `Заказ ${o.number} отправлен в пункт выдачи партнёра TechAgent: ${where(o)}.
+${o.trackNumber ? `\nТрек-номер: ${o.trackNumber}\n` : ''}
 Когда заказ прибудет, мы напишем вам.${link}${SIGN}`
           : `Заказ ${o.number} передан в СДЭК.
 
 Трек-номер: ${o.trackNumber}
 Отследить: https://www.cdek.ru/ru/tracking?order_id=${encodeURIComponent(o.trackNumber)}
-Пункт СДЭК: ${o.city}, ${o.sdekPoint}
+Пункт СДЭК: ${where(o)}
 
 Когда заказ прибудет, СДЭК пришлёт уведомление.${link}${SIGN}`,
       ]
@@ -98,10 +99,10 @@ ${itemsBlock(o)}
       return [
         `Заказ ${o.number} можно забирать`,
         o.pickupType === 'PARTNER'
-          ? `Заказ ${o.number} ждёт вас в пункте выдачи партнёра TechAgent: ${o.city}, ${o.sdekPoint}.
+          ? `Заказ ${o.number} ждёт вас в пункте выдачи партнёра TechAgent: ${where(o)}.
 
 Назовите номер заказа и возьмите документ, удостоверяющий личность. При получении проверьте товар и подпишите акт приёма-передачи. Заказ хранится 5 дней.${link}${SIGN}`
-          : `Заказ ${o.number} ждёт вас в пункте СДЭК: ${o.city}, ${o.sdekPoint}.
+          : `Заказ ${o.number} ждёт вас в пункте СДЭК: ${where(o)}.
 
 Возьмите документ, удостоверяющий личность, или код из СМС от СДЭК. Срок хранения — по правилам СДЭК.${link}${SIGN}`,
       ]
@@ -191,5 +192,98 @@ export function applicationDeclined(a, reason) {
 Мы рассмотрели заявку «${a.companyName}» и пока не можем подключить пункт выдачи.${reason ? `\nПричина: ${reason}` : ''}
 
 Если данные изменились или есть вопросы, ответьте на это письмо.${PSIGN}`,
+  ]
+}
+
+/* ── Заказы в пунктах партнёров ── */
+
+/** Покупателю — заказ оформил партнёр. Ссылка ведёт на страницу оплаты: там согласия и переход к оплате СБП */
+export function partnerOrderCreated(o, site, payLink, cabinetLink) {
+  return [
+    `Заказ ${o.number} оформлен`,
+    `Здравствуйте, ${o.buyerName.split(/\s+/)[1] || o.buyerName}!
+
+По вашей просьбе партнёр TechAgent оформил заказ ${o.number}. Продавец — ООО «ТехЭйджент».
+
+${itemsBlock(o)}
+
+Пункт выдачи: ${where(o)}
+
+Оплата — только ТехЭйджент через СБП, по ссылке: ${payLink}
+На странице оплаты отметьте согласие с офертой купли-продажи (${site}/legal/sale-offer). Когда ТехЭйджент подтвердит наличие товара, там же появится кнопка оплаты. Не передавайте деньги за товар в пункте выдачи.
+
+После оплаты доставим заказ в пункт выдачи не позднее 14 дней. Когда он прибудет, мы напишем вам.
+
+Заказ в кабинете покупателя (вход без пароля): ${cabinetLink}${SIGN}`,
+  ]
+}
+
+/** Партнёру — покупатель выбрал его пункт, оформляя заказ на сайте. Принять и выдать — в кабинете */
+export function partnerSiteOrder(o, site) {
+  return [
+    `Заказ ${o.number} в ваш пункт выдачи`,
+    `Покупатель оформил на сайте заказ ${o.number} с получением в вашем пункте выдачи.
+
+${itemsBlock(o)}
+
+Покупатель: ${o.buyerName}, ${o.phone}
+
+Сейчас от вас ничего не нужно: ТехЭйджент подтвердит наличие, покупатель оплатит, и товар приедет к вам. Когда он прибудет, примите его в кабинете: ${site}/dashboard/orders/${o.number}
+Заказ оформлен покупателем на сайте, поэтому вознаграждение по нему не начисляется (агентский договор-оферта, «Заказ»).${PSIGN}`,
+  ]
+}
+
+/** Партнёру — этап заказа, который двигает ТехЭйджент. null — об этом этапе партнёру не пишем */
+export function partnerStatus(o, site) {
+  const link = `\n\nЗаказ в кабинете: ${site}/dashboard/orders/${o.number}`
+  switch (o.status) {
+    case 'AWAITING_PAYMENT':
+      return o.source === 'PARTNER' ? [
+        `Заказ ${o.number}: покупатель может оплатить`,
+        `Товар по заказу ${o.number} в наличии — покупатель ${o.buyerName} может оплатить его по ссылке: ${o.paymentUrl}
+Если покупатель не оставлял email, отправьте ему эту ссылку сами.${link}${PSIGN}`,
+      ] : null
+    case 'PAID':
+      return [
+        `Заказ ${o.number} оплачен`,
+        `Покупатель ${o.buyerName} оплатил заказ ${o.number}. ТехЭйджент доставит товар в ваш пункт выдачи — когда он прибудет, примите его в кабинете.${link}${PSIGN}`,
+      ]
+    case 'SHIPPED':
+      return [
+        `Заказ ${o.number} едет в ваш пункт`,
+        `Товар по заказу ${o.number} отправлен в ваш пункт выдачи${o.trackNumber ? `, трек-номер ${o.trackNumber}` : ''}. Когда он прибудет, проверьте упаковку и количество мест и примите товар в кабинете.${link}${PSIGN}`,
+      ]
+    case 'CANCELLED':
+      return [
+        `Заказ ${o.number} отменён`,
+        `ТехЭйджент отменил заказ ${o.number}.${o.cancelReason ? `\nПричина: ${o.cancelReason}` : ''}${o.receivedAt ? '\nЕсли товар уже у вас, храните его до указания ТехЭйджент (оферта, п. 8.3).' : ''}${link}${PSIGN}`,
+      ]
+    default:
+      return null
+  }
+}
+
+/** Сотрудникам — партнёр принял товар с замечанием */
+export function staffAcceptIssue(o, company, site) {
+  return [
+    `Заказ ${o.number}: замечание при приёмке`,
+    `Партнёр ${company} принял товар по заказу ${o.number} с замечанием:
+${o.receivedIssue}
+
+Фото — в заказе: ${site}/staff/orders/${o.number}`,
+  ]
+}
+
+/** Сотрудникам — обращение покупателя, принятое в пункте выдачи */
+export function staffClaim(o, company, typeLabel, text, site) {
+  return [
+    `Заказ ${o.number}: обращение покупателя (${typeLabel.toLowerCase()})`,
+    `Партнёр ${company} передал обращение покупателя по заказу ${o.number}.
+
+Тип: ${typeLabel}
+${text}
+
+Покупатель: ${o.buyerName}, ${o.phone}${o.email ? `, ${o.email}` : ''}
+Заказ: ${site}/staff/orders/${o.number}`,
   ]
 }

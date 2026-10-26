@@ -3,6 +3,7 @@ import { LayoutDashboard, Package, PlusCircle, User, FileText, MessageCircle, Cl
 import { useAuth } from '../../context/AuthContext'
 import FirstLogin from '../../pages/dashboard/FirstLogin'
 import { DEMO_MODE } from '../../data/mock'
+import { usePartnerOrdersSync } from '../../data/partnerOrders'
 
 const navItems = [
   { to: '/dashboard', icon: LayoutDashboard, label: 'Обзор', end: true },
@@ -26,20 +27,11 @@ export function PreviewNotice({ className = '' }: { className?: string }) {
   )
 }
 
-/** Боевой кабинет: вход, профиль и документы работают через сервер, а заказы из кабинета ещё не передаются в ТехЭйджент */
-export function OrdersNotice({ className = '' }: { className?: string }) {
-  if (DEMO_MODE) return null
-  return (
-    <p className={`rounded-lg border border-amber-300 bg-amber-50 px-3 py-2 text-xs leading-relaxed text-amber-900 ${className}`}>
-      Оформление заказов покупателей из кабинета подключаем. До этого заказ покупателя оформим вручную — напишите на{' '}
-      <a href="mailto:partners@techagent.pro" className="text-amber-900 underline">partners@techagent.pro</a>.
-    </p>
-  )
-}
-
 export default function DashboardLayout() {
   const { user, loading } = useAuth()
   const { pathname, search } = useLocation()
+  // Боевой кабинет: заказы — с сервера (в демо — из этого браузера)
+  usePartnerOrdersSync(user?.offerAcceptedAt ? user.id : undefined)
 
   // Сервер ещё не ответил, вошёл ли партнёр — не выкидываем на вход раньше времени
   if (loading) return <div className="min-h-[60vh]" aria-busy="true" />
@@ -54,10 +46,6 @@ export default function DashboardLayout() {
   return (
     <div className="min-h-screen bg-bg-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-[max(12px,env(safe-area-inset-top))] pb-6 lg:py-6">
-        {/* На «Новом заказе» то же сказано на самой странице */}
-        {user.offerAcceptedAt && !user.mustChangePassword && !pathname.startsWith('/dashboard/orders/new') && (
-          <OrdersNotice className="mb-4 lg:mb-6" />
-        )}
         {status === 'PENDING' && (
           <div className="mb-4 lg:mb-6 flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 px-4 py-3 text-amber-900">
             <Clock size={20} className="shrink-0 mt-0.5" />

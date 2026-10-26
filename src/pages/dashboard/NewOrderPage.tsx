@@ -7,6 +7,8 @@ import { QRCodeSVG } from 'qrcode.react'
 import { products, type Product } from '../../data/products'
 import { useAuth } from '../../context/AuthContext'
 import { createOrder, DEMO_MODE } from '../../data/mock'
+import { createPartnerOrder } from '../../data/partnerOrders'
+import { apiErrorText, ApiError } from '../../lib/api'
 import { formatPercent, formatPrice, formatReward, rewardFor, rewardPercentAt, priceFor, hasColorPrices } from '../../utils/calculate'
 import { formatPhone, isValidEmail, phoneError } from '../../utils/validate'
 import { copyText, selectText } from '../../utils/clipboard'
@@ -134,25 +136,10 @@ export default function NewOrderPage() {
   const [buyerInformed, setBuyerInformed] = useState(false)
 
   const [createdOrder, setCreatedOrder] = useState<Order | null>(null)
+  const [creating, setCreating] = useState(false)
+  const [createError, setCreateError] = useState('')
 
   if (!user) return null
-
-  // Боевой кабинет: заказ из браузера не дошёл бы до ТехЭйджент, а ссылка на оплату не открылась бы у покупателя
-  if (!DEMO_MODE) {
-    return (
-      <div className="max-w-2xl mx-auto">
-        <PageBar back="/dashboard" backLabel="На главную" title="Новый заказ" />
-        <div className="app-group p-5 lg:p-6 flex items-start gap-3">
-          <Lock size={20} className="text-text-muted shrink-0 mt-0.5" />
-          <p className="text-[15px] lg:text-sm leading-relaxed text-text-secondary">
-            Оформление заказов из кабинета подключаем. До этого заказ покупателя оформим вручную — напишите на{' '}
-            <a href="mailto:partners@techagent.pro" className="text-primary font-medium no-underline hover:underline">partners@techagent.pro</a>:
-            товар, данные покупателя и ваш пункт выдачи.
-          </p>
-        </div>
-      </div>
-    )
-  }
 
   if (user.partnerStatus !== 'VERIFIED') {
     return (
@@ -192,6 +179,7 @@ export default function NewOrderPage() {
   const toCheck = () => {
     const errs: BuyerErrors = {}
     if (!buyerName.trim()) errs.name = 'Укажите ФИО покупателя'
+    else if (buyerName.trim().split(/\s+/).length < 2) errs.name = 'Укажите фамилию и имя покупателя'
     const pe = phoneError(buyerPhone)
     if (pe) errs.phone = pe
     if (buyerEmail.trim() && !isValidEmail(buyerEmail)) errs.email = 'Введите корректный email'
@@ -201,8 +189,34 @@ export default function NewOrderPage() {
     goTo(3)
   }
 
-  const handleCreate = () => {
-    if (!product || !buyerInformed) return
+  const handleCreate = async () => {
+    if (!product || !buyerInformed || creating) return
+    // Боевой кабинет: заказ уходит на сервер ТехЭйджент, цену сервер берёт из своего каталога
+    if (!DEMO_MODE) {
+      setCreating(true)
+      setCreateError('')
+      try {
+        const order = await createPartnerOrder({
+          productId: product.id,
+          color,
+          buyerName: buyerName.trim(),
+          buyerPhone: formatPhone(buyerPhone),
+          buyerEmail: buyerEmail.trim(),
+        })
+        reachGoal('order_created', { price: order.price })
+        setCreatedOrder(order)
+        goTo(4)
+      } catch (e) {
+        setCreateError(
+          e instanceof ApiError && e.fields?.some((f) => f.startsWith('unavailable'))
+            ? 'Этот товар сейчас недоступен к заказу. Выберите другой или напишите менеджеру.'
+            : apiErrorText(e),
+        )
+      } finally {
+        setCreating(false)
+      }
+      return
+    }
     const now = new Date().toISOString()
     const paymentId = 'pay_' + crypto.randomUUID().replace(/-/g, '').slice(0, 12)
     // Номер выдаётся по свежим данным — две вкладки не получат одинаковый
@@ -479,21 +493,22 @@ export default function NewOrderPage() {
               <Link to="/legal/sale-offer" target="_blank" className="text-primary no-underline hover:underline">оферте купли-продажи</Link>
             </span>
           </label>
+          {createError && <p className={`${errCls} mt-3`} role="alert">{createError}</p>}
           <div className="hidden lg:flex justify-between mt-6">
             <button onClick={() => goTo(2)} className={backBtn}>
               <ArrowLeft size={16} /> Назад
             </button>
             <button
               onClick={handleCreate}
-              disabled={!buyerInformed}
+              disabled={!buyerInformed || creating}
               className="flex items-center gap-1 bg-success hover:bg-green-700 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors text-sm border-none cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <Check size={16} /> Создать заказ
+              <Check size={16} /> {creating ? 'Создаём…' : 'Создать заказ'}
             </button>
           </div>
           <StickyBar>
-            <button onClick={handleCreate} disabled={!buyerInformed} className="app-btn app-btn-success">
-              <Check size={20} /> Создать заказ
+            <button onClick={handleCreate} disabled={!buyerInformed || creating} className="app-btn app-btn-success">
+              <Check size={20} /> {creating ? 'Создаём…' : 'Создать заказ'}
             </button>
           </StickyBar>
         </div>
@@ -532,6 +547,13 @@ export default function NewOrderPage() {
             </button>
             {copyFailed && <p className="text-sm text-text-secondary mt-2" role="status">Скопируйте ссылку вручную</p>}
           </div>
+
+          {!DEMO_MODE && !createdOrder.paymentReady && (
+            <p className="text-left text-sm leading-relaxed text-text-secondary mb-4">
+              Ссылку можно отправить сразу. Покупатель отметит на ней согласие с офертой, а кнопка оплаты появится, когда
+              ТехЭйджент подтвердит наличие товара. Об этом придёт письмо вам{createdOrder.buyerEmail ? ' и покупателю' : ''}.
+            </p>
+          )}
 
           <div className="text-left rounded-2xl border border-amber-300 bg-amber-50 p-4 mb-5 text-sm leading-relaxed text-amber-900 space-y-1.5">
             <p>

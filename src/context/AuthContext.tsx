@@ -4,6 +4,7 @@ import { mockUsers, updateUser, findUserByEmail, isDemoUser, DEMO_MODE } from '.
 import { hashPassword } from '../utils/password'
 import { useDataRevision } from '../utils/store'
 import { api, type PartnerProfile } from '../lib/api'
+import { clearPartnerOrders } from '../data/partnerOrders'
 
 /*
  * Вход в кабинет партнёра.
@@ -168,6 +169,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     storeSession(null)
     if (!DEMO_MODE) {
       setServerUser(null)
+      clearPartnerOrders()
       void api('/auth/logout', {}).catch(() => undefined)
     }
   }

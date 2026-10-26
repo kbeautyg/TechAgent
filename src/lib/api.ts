@@ -41,6 +41,9 @@ export interface SiteOrder {
   events: SiteOrderEvent[]
   /** Только для сотрудников */
   staffNote?: string
+  /** Только для сотрудников: партнёр, в чей пункт едет заказ, и страница оплаты заказа партнёра */
+  partner?: { id: number; companyName: string; email: string; phone: string } | null
+  payPage?: string
 }
 
 export interface BuyerProfile {
@@ -72,9 +75,32 @@ export interface PartnerProfile {
   /** Когда партнёр сам отметил согласие с агентским договором-офертой (п. 2.1); null — ещё не отметил */
   offerAcceptedAt: string | null
   offerEdition: string
+  /** Точка партнёра на карте магазина (код из api/partner-points.json); пусто — на карте его нет */
+  pointCode?: string
   createdAt: string
   /** Только для сотрудников: адрес, с которого отмечено согласие */
   offerAcceptIp?: string
+}
+
+/** Заказ в кабинете партнёра (/api/partner/orders): заказ сайта плюс то, что сделано в пункте выдачи */
+export interface PartnerOrderView extends SiteOrder {
+  source: 'PARTNER' | 'SITE'
+  rewardPercent: number | null
+  reward: number | null
+  /** Страница оплаты /pay/<payToken>; у заказа с сайта её нет */
+  payToken: string
+  paymentReady: boolean
+  /** Покупатель отметил согласия на странице оплаты */
+  consentAt: string | null
+  receivedAt: string | null
+  receivedIssue: string
+  receivedPhotos: number
+  notifiedAt: string | null
+  issuedAt: string | null
+  issuedToName: string
+  actFile: string
+  claims: { id: string; type: 'EXCHANGE' | 'RETURN' | 'DEFECT'; text: string; photo: string; createdAt: string }[]
+  files: string[]
 }
 
 /** Заявка партнёра с /register — для сотрудников */
@@ -139,6 +165,10 @@ export function apiErrorText(e: unknown): string {
     case 'email_taken': return 'Партнёр с этим email уже есть.'
     case 'decided': return 'По заявке уже есть решение — обновите страницу.'
     case 'fields': return 'Проверьте заполненные поля.'
+    case 'offer': return 'Сначала отметьте согласие с агентским договором-офертой.'
+    case 'bad_transition': return 'Этап заказа уже изменился — обновите страницу.'
+    case 'too_large': return 'Файл слишком большой. Сделайте фото ещё раз или выберите файл меньше 10 МБ.'
+    case 'point_taken': return 'К этой точке уже привязан другой партнёр.'
     default: return 'Что-то пошло не так. Попробуйте ещё раз.'
   }
 }

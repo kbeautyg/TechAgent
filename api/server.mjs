@@ -163,9 +163,22 @@ db.exec(`
 if (!db.prepare('PRAGMA table_info(sessions)').all().some((c) => c.name === 'partner_id')) db.exec('ALTER TABLE sessions ADD COLUMN partner_id INTEGER')
 
 /* Колонки, добавленные позже: выбранный на карте пункт СДЭК */
-for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"], ['pickup_type', "TEXT NOT NULL DEFAULT 'SDEK'"]]) {
+for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TEXT NOT NULL DEFAULT ''"], ['pickup_type', "TEXT NOT NULL DEFAULT 'SDEK'"],
+  /* Заказы партнёров: source = PARTNER — оформил партнёр в кабинете, SITE — покупатель на сайте.
+   * partner_id — чей пункт выдачи (у заказа с сайта — если покупатель выбрал пункт партнёра на карте).
+   * reward — вознаграждение по проценту на дату заказа; только у заказов, оформленных партнёром (оферта партнёру, «Заказ»).
+   * pay_token — страница оплаты /pay/<token>: покупатель отмечает согласия и переходит к оплате */
+  ['source', "TEXT NOT NULL DEFAULT 'SITE'"], ['partner_id', 'INTEGER'], ['reward_percent', 'REAL'], ['reward', 'INTEGER'], ['pay_token', 'TEXT'],
+  /* Пункт выдачи: приёмка (с замечанием и фото), уведомление покупателя, выдача с фото подписанного акта, обращения */
+  ['received_at', 'TEXT'], ['received_issue', "TEXT NOT NULL DEFAULT ''"], ['received_photos', 'INTEGER NOT NULL DEFAULT 0'],
+  ['notified_at', 'TEXT'], ['issued_at', 'TEXT'], ['issued_to_name', "TEXT NOT NULL DEFAULT ''"], ['act_file', "TEXT NOT NULL DEFAULT ''"],
+  ['claims', "TEXT NOT NULL DEFAULT '[]'"]]) {
   if (!db.prepare('PRAGMA table_info(orders)').all().some((c) => c.name === col)) db.exec(`ALTER TABLE orders ADD COLUMN ${col} ${def}`)
 }
+db.exec('CREATE INDEX IF NOT EXISTS orders_partner ON orders(partner_id)')
+db.exec('CREATE UNIQUE INDEX IF NOT EXISTS orders_pay_token ON orders(pay_token)')
+/* Точка партнёра на карте магазина (код из partner-points.json): привязанная точка видна покупателям */
+if (!db.prepare('PRAGMA table_info(partners)').all().some((c) => c.name === 'point_code')) db.exec("ALTER TABLE partners ADD COLUMN point_code TEXT NOT NULL DEFAULT ''")
 
 /* ── Этапы заказа с сайта ── */
 export const STATUSES = ['NEW', 'AWAITING_PAYMENT', 'PAID', 'SHIPPED', 'READY', 'RECEIVED', 'CANCELLED']
@@ -200,16 +213,24 @@ try {
 } catch (e) {
   console.error('partner-points.json не прочитан:', e.message)
 }
+/** Партнёр, привязанный к точке и уже принявший оферту */
+const linkedPartner = (code) =>
+  code ? db.prepare("SELECT * FROM partners WHERE point_code = ? AND COALESCE(offer_accepted_at, '') <> ''").get(code) ?? null : null
+/** Точка открыта для покупателей: отмечена в списке (active) или к ней привязан партнёр */
+const pointOpen = (p) => Boolean(p.active || linkedPartner(p.code))
 const partnersOf = (cityCode, withPlanned) =>
   partnerPoints
-    .filter((p) => p.cityCode === Number(cityCode) && (p.active || withPlanned))
-    .map(({ code, name, address, lat, lon, workTime, note, active }) => ({ code, type: 'PARTNER', name, address, lat, lon, workTime, note, active }))
+    .filter((p) => p.cityCode === Number(cityCode) && (withPlanned || pointOpen(p)))
+    .map(({ code, name, address, lat, lon, workTime, note, active }) => ({ code, type: 'PARTNER', name, address, lat, lon, workTime, note, active: Boolean(active || linkedPartner(code)) }))
 
 /* ── Демо-кабинет покупателя: вход без кода, примеры заказов на разных этапах ──
  * Адрес demo@techagent.pro зарезервирован: на него нельзя оформить заказ и получить код, профиль не сохраняется.
  * Заказы демо-покупателя не попадают в раздел сотрудников. При каждом запуске сервера примеры пересоздаются
  * со свежими датами («вчера», «неделю назад»). */
 const DEMO_EMAIL = 'demo@techagent.pro'
+/** Покупатель без email (заказ оформил партнёр, email необязателен): одна служебная запись на всех таких.
+ *  Домен .invalid не существует — войти под этим адресом нельзя, писем на него нет */
+const NO_EMAIL = 'no-email@buyers.techagent.invalid'
 function seedDemo() {
   const t = now()
   db.prepare(`INSERT INTO buyers (email, name, phone, city, sdek_point, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)
@@ -379,22 +400,66 @@ function viewOrder(o, forStaff = false) {
     total: o.total,
     buyerName: o.buyer_name,
     phone: o.phone,
-    email: o.email,
+    email: o.email === NO_EMAIL ? '' : o.email,
     city: o.city,
     sdekPoint: o.sdek_point,
     sdekPointCode: o.sdek_point_code ?? '',
     /** SDEK — пункт или постамат СДЭК, PARTNER — пункт выдачи партнёра TechAgent */
     pickupType: o.pickup_type ?? 'SDEK',
     comment: o.comment,
-    paymentUrl: o.status === 'AWAITING_PAYMENT' || forStaff ? o.payment_url : '',
+    // Заказ партнёра покупатель оплачивает через страницу /pay: там он сначала отмечает согласия
+    paymentUrl: forStaff ? o.payment_url : o.status !== 'AWAITING_PAYMENT' ? '' : o.pay_token ? payPage(o) : o.payment_url,
     trackNumber: o.track_number,
     cancelReason: o.cancel_reason,
     createdAt: o.created_at,
     updatedAt: o.updated_at,
     events: events(o.id),
   }
-  if (forStaff) v.staffNote = o.staff_note
+  if (forStaff) {
+    v.staffNote = o.staff_note
+    Object.assign(v, pointPart(o))
+    if (o.partner_id) {
+      const p = db.prepare('SELECT company_name, email, phone FROM partners WHERE id = ?').get(o.partner_id)
+      v.partner = p ? { id: o.partner_id, companyName: p.company_name, email: p.email, phone: p.phone } : null
+    }
+    v.payPage = o.pay_token ? payPage(o) : ''
+    v.consentAt = o.offer_accepted_at || null
+  }
   return v
+}
+
+const payPage = (o) => `${PUBLIC_URL}/pay/${o.pay_token}`
+
+/** Что сделано в пункте выдачи — для кабинета партнёра и раздела сотрудников */
+function pointPart(o) {
+  return {
+    source: o.source,
+    rewardPercent: o.reward_percent ?? null,
+    reward: o.reward ?? null,
+    receivedAt: o.received_at || null,
+    receivedIssue: o.received_issue,
+    receivedPhotos: o.received_photos,
+    notifiedAt: o.notified_at || null,
+    issuedAt: o.issued_at || null,
+    issuedToName: o.issued_to_name,
+    actFile: o.act_file,
+    claims: JSON.parse(o.claims || '[]'),
+    files: orderFiles(o.number),
+  }
+}
+
+/** Заказ в кабинете партнёра: без адреса электронной почты сотрудникам и служебных заметок */
+function viewPartnerOrder(o) {
+  const v = viewOrder(o)
+  return {
+    ...v,
+    ...pointPart(o),
+    // Партнёр всегда отправляет покупателю свою ссылку на страницу оплаты — даже до того, как появится ссылка банка
+    paymentUrl: o.pay_token ? payPage(o) : '',
+    payToken: o.pay_token || '',
+    paymentReady: o.status === 'AWAITING_PAYMENT',
+    consentAt: o.offer_accepted_at || null,
+  }
 }
 
 function addEvent(orderId, status, note = '') {
@@ -433,7 +498,7 @@ async function createOrder(req, res) {
   const errors = []
   if (d.buyerName.split(/\s+/).filter(Boolean).length < 2) errors.push('buyerName')
   if (!d.phone) errors.push('buyerPhone')
-  if (!EMAIL_RE.test(d.email) || d.email === DEMO_EMAIL) errors.push('buyerEmail')
+  if (!EMAIL_RE.test(d.email) || d.email === DEMO_EMAIL || d.email.endsWith('.invalid')) errors.push('buyerEmail')
   // Пункт партнёра: город и адрес сервер берёт из своего списка (ниже), из браузера они не нужны
   const viaPartner = Boolean(clean(b.partnerPointCode, 40))
   if (!d.city && !viaPartner) errors.push('city')
@@ -448,7 +513,7 @@ async function createOrder(req, res) {
   const partnerCode = clean(b.partnerPointCode, 40)
   let partner = null
   if (partnerCode) {
-    partner = partnerPoints.find((p) => p.code === partnerCode && p.active) || null
+    partner = partnerPoints.find((p) => p.code === partnerCode && pointOpen(p)) || null
     if (!partner) errors.push('sdekPoint')
     else {
       d.city = partner.city
@@ -507,12 +572,15 @@ async function createOrder(req, res) {
   }
 
   const number = newNumber()
+  // Пункт партнёра: заказ виден партнёру в кабинете — он принимает и выдаёт товар. Вознаграждения нет:
+  // по агентской оферте оно положено за заказы, оформленные самим партнёром
+  const owner = partner ? linkedPartner(partner.code) : null
   const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
-      city, sdek_point, sdek_city_code, sdek_point_code, pickup_type, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
-      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
+      city, sdek_point, sdek_city_code, sdek_point_code, pickup_type, partner_id, comment, offer_accepted_at, pd_consent_at, created_at, updated_at)
+      VALUES (?, ?, 'NEW', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`)
     .run(number, buyer.id, JSON.stringify(items), goods, delivery, total, d.buyerName, d.phone, d.email,
       d.city, d.sdekPoint, point ? cityCode : partner ? partner.cityCode : null, point ? point.code : partner ? partner.code : '',
-      partner ? 'PARTNER' : 'SDEK', d.comment, t, t, t, t)
+      partner ? 'PARTNER' : 'SDEK', owner?.id ?? null, d.comment, t, t, t, t)
   addEvent(Number(r.lastInsertRowid), 'NEW')
   const order = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
 
@@ -520,6 +588,7 @@ async function createOrder(req, res) {
   queueMicrotask(() => {
     sendMail(order.email, ...letters.orderCreated(viewOrder(order), PUBLIC_URL, loginLink(buyer.id, `/account/orders/${number}`)))
     if (ORDERS_EMAIL_TO) sendMail(ORDERS_EMAIL_TO, ...letters.staffNewOrder(viewOrder(order, true), PUBLIC_URL), order.email)
+    if (owner) sendMail(owner.email, ...letters.partnerSiteOrder(viewOrder(order), PUBLIC_URL), PARTNERS_EMAIL_TO)
   })
   console.log(`order ${number} ${total}`)
   send(res, 200, { ok: true, orderNumber: number, total })
@@ -529,7 +598,7 @@ async function createOrder(req, res) {
 async function requestCode(req, res) {
   const b = await readJson(req)
   const email = clean(b.email, 200).toLowerCase()
-  if (!EMAIL_RE.test(email)) fail(422, 'fields', { fields: ['email'] })
+  if (!EMAIL_RE.test(email) || email.endsWith('.invalid')) fail(422, 'fields', { fields: ['email'] })
   if (limited('code:' + ip(req), 10, 3600_000) || limited('code:' + email, 5, 3600_000)) fail(429, 'rate')
   let devCode
   if (email !== DEMO_EMAIL) {
@@ -727,17 +796,29 @@ async function staffSetStatus(req, res, number) {
   const track = clean(b.trackNumber, 60)
   const reason = clean(b.reason, 500)
   if (to === 'AWAITING_PAYMENT' && !/^https:\/\/\S+$/.test(paymentUrl)) fail(422, 'fields', { fields: ['paymentUrl'] })
-  if (to === 'SHIPPED' && !track) fail(422, 'fields', { fields: ['trackNumber'] })
+  // Трек обязателен для СДЭК; в пункт партнёра товар может ехать и без трек-номера
+  if (to === 'SHIPPED' && !track && o.pickup_type !== 'PARTNER') fail(422, 'fields', { fields: ['trackNumber'] })
   if (to === 'CANCELLED' && !reason) fail(422, 'fields', { fields: ['reason'] })
   db.prepare(`UPDATE orders SET status = ?, payment_url = CASE WHEN ? <> '' THEN ? ELSE payment_url END,
       track_number = CASE WHEN ? <> '' THEN ? ELSE track_number END,
       cancel_reason = CASE WHEN ? <> '' THEN ? ELSE cancel_reason END, updated_at = ? WHERE id = ?`)
     .run(to, paymentUrl, paymentUrl, track, track, reason, reason, now(), o.id)
+  // Сотрудник отметил приёмку или выдачу за партнёра (например, партнёр позвонил) — даты те же, что от кнопок в кабинете
+  if (to === 'READY' && !o.received_at) db.prepare('UPDATE orders SET received_at = ? WHERE id = ?').run(now(), o.id)
+  if (to === 'RECEIVED' && !o.issued_at) db.prepare('UPDATE orders SET issued_at = ?, issued_to_name = buyer_name WHERE id = ?').run(now(), o.id)
   addEvent(o.id, to, to === 'SHIPPED' ? track : to === 'CANCELLED' ? reason : '')
   const fresh = db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)
-  const letter = letters.statusChanged(viewOrder(fresh), PUBLIC_URL, loginLink(fresh.buyer_id, `/account/orders/${fresh.number}`))
-  if (letter) queueMicrotask(() => sendMail(fresh.email, ...letter))
+  notifyStatus(fresh)
   send(res, 200, { order: viewOrder(fresh, true), next: NEXT[fresh.status] })
+}
+
+/** Письма о новом этапе: покупателю (если оставил email) и партнёру, в чей пункт едет товар */
+function notifyStatus(o) {
+  const letter = o.email ? letters.statusChanged(viewOrder(o), PUBLIC_URL, loginLink(o.buyer_id, `/account/orders/${o.number}`)) : null
+  if (letter) queueMicrotask(() => sendMail(o.email, ...letter))
+  const p = o.partner_id ? db.prepare('SELECT * FROM partners WHERE id = ?').get(o.partner_id) : null
+  const toPartner = p ? letters.partnerStatus(viewPartnerOrder(o), PUBLIC_URL) : null
+  if (toPartner) queueMicrotask(() => sendMail(p.email, ...toPartner, PARTNERS_EMAIL_TO))
 }
 
 async function staffNote(req, res, number) {
@@ -795,6 +876,7 @@ function viewPartner(p, forStaff = false) {
     mustChangePassword: Boolean(p.must_change_password),
     offerAcceptedAt: p.offer_accepted_at || null,
     offerEdition: p.offer_edition,
+    pointCode: p.point_code,
     createdAt: p.created_at,
   }
   if (forStaff) Object.assign(v, { offerAcceptIp: p.offer_accept_ip, applicationId: p.application_id })
@@ -883,7 +965,23 @@ function staffPartners(req, res) {
   needStaff(req)
   const applications = db.prepare('SELECT * FROM partner_applications ORDER BY id DESC LIMIT 500').all().map(viewApplication)
   const partners = db.prepare('SELECT * FROM partners ORDER BY id DESC').all().map((p) => viewPartner(p, true))
-  send(res, 200, { applications, partners })
+  const points = partnerPoints.map(({ code, name, address, city, active }) => ({ code, name, address, city, active: Boolean(active) }))
+  send(res, 200, { applications, partners, points })
+}
+
+/** Привязать партнёра к точке на карте магазина: точка открывается покупателям, заказы с сайта в неё видит партнёр.
+ *  У точки один партнёр; пустой код — отвязать */
+async function staffPartnerPoint(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id))
+  if (!p) fail(404, 'not_found')
+  const code = clean(b.pointCode, 40)
+  if (code && !partnerPoints.some((x) => x.code === code)) fail(422, 'fields', { fields: ['pointCode'] })
+  if (code && db.prepare('SELECT 1 FROM partners WHERE point_code = ? AND id <> ?').get(code, p.id)) fail(409, 'point_taken')
+  db.prepare('UPDATE partners SET point_code = ?, updated_at = ? WHERE id = ?').run(code, now(), p.id)
+  console.log(`partner ${p.id} point ${code || '—'}`)
+  send(res, 200, { ok: true, partner: viewPartner(db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id), true) })
 }
 
 /** Одобрить заявку: заводим учётку с временным паролем и пишем партнёру. Договор он заключит сам при первом входе */
@@ -936,6 +1034,236 @@ async function staffResetPartner(req, res, id) {
   send(res, 200, { ok: true, password, mail: mailReady() })
 }
 
+/* ── Заказы партнёра: оформление в кабинете → страница оплаты для покупателя → приёмка и выдача в пункте ── */
+
+/** Фото и сканы из пункта выдачи (замечание при приёмке, подписанный акт, обращение покупателя): FILES_DIR/<номер заказа>/ */
+const FILES_DIR = env('FILES_DIR', path.join(path.dirname(DB_PATH), 'files'))
+const FILE_TYPES = [
+  ['jpg', 'image/jpeg', (b) => b[0] === 0xff && b[1] === 0xd8],
+  ['png', 'image/png', (b) => b.subarray(0, 4).toString('hex') === '89504e47'],
+  ['webp', 'image/webp', (b) => b.subarray(0, 4).toString() === 'RIFF' && b.subarray(8, 12).toString() === 'WEBP'],
+  ['pdf', 'application/pdf', (b) => b.subarray(0, 4).toString() === '%PDF'],
+]
+const MAX_FILE = 10 * 1024 * 1024
+/** Файл из браузера (data:...;base64,...) → на диск. Тип определяем по содержимому, а не по тому, что прислал браузер */
+function saveFile(number, kind, dataUrl, allowPdf = false) {
+  const m = /^data:[\w/+.-]*;base64,([A-Za-z0-9+/=]+)$/.exec(typeof dataUrl === 'string' ? dataUrl : '')
+  if (!m) fail(422, 'fields', { fields: ['file'] })
+  const buf = Buffer.from(m[1], 'base64')
+  if (!buf.length || buf.length > MAX_FILE) fail(413, 'too_large')
+  const type = FILE_TYPES.find(([ext, , test]) => test(buf) && (allowPdf || ext !== 'pdf'))
+  if (!type) fail(422, 'fields', { fields: ['file'] })
+  const dir = path.join(FILES_DIR, number)
+  fs.mkdirSync(dir, { recursive: true })
+  const name = `${kind}-${Date.now().toString(36)}${crypto.randomInt(100, 1000)}.${type[0]}`
+  fs.writeFileSync(path.join(dir, name), buf)
+  return name
+}
+function orderFiles(number) {
+  try {
+    return fs.readdirSync(path.join(FILES_DIR, number)).filter((f) => /^[\w-]+\.(jpg|png|webp|pdf)$/.test(f)).sort()
+  } catch {
+    return []
+  }
+}
+function sendFile(res, number, name) {
+  if (!/^[\w-]+\.(jpg|png|webp|pdf)$/.test(name) || !orderFiles(number).includes(name)) fail(404, 'not_found')
+  const type = FILE_TYPES.find(([ext]) => name.endsWith('.' + ext))[1]
+  res.writeHead(200, { 'Content-Type': type, 'Cache-Control': 'private, max-age=3600', 'X-Content-Type-Options': 'nosniff',
+    'Content-Disposition': `inline; filename="${number}-${name}"` })
+  res.end(fs.readFileSync(path.join(FILES_DIR, number, name)))
+}
+
+function partnerOrderRow(p, number) {
+  const o = db.prepare('SELECT * FROM orders WHERE number = ? AND partner_id = ?').get(number, p.id)
+  if (!o) fail(404, 'not_found')
+  return o
+}
+
+/** Партнёр оформляет заказ по просьбе покупателя (оферта партнёру, п. 5.1). Цена — из каталога сервера, доставка в пункт входит в цену */
+async function partnerCreateOrder(req, res) {
+  const p = needPartner(req)
+  if (!p.offer_accepted_at) fail(403, 'offer')
+  if (limited('porder:' + p.id, 30, 3600_000)) fail(429, 'rate')
+  const b = await readJson(req)
+  const d = {
+    buyerName: clean(b.buyerName, 200).replace(/\s+/g, ' '),
+    phone: normPhone(clean(b.buyerPhone, 40)),
+    email: clean(b.buyerEmail, 200).toLowerCase(),
+  }
+  const errors = []
+  if (d.buyerName.split(' ').filter(Boolean).length < 2) errors.push('buyerName')
+  if (!d.phone) errors.push('buyerPhone')
+  if (d.email && (!EMAIL_RE.test(d.email) || d.email === DEMO_EMAIL || d.email.endsWith('.invalid'))) errors.push('buyerEmail')
+  if (b.buyerInformed !== true) errors.push('informed')
+  const id = clean(b.productId, 80)
+  const prod = catalog[id]
+  if (!prod) errors.push('product')
+  else if (!prod.inStock) errors.push('unavailable:' + id)
+  if (errors.length) fail(422, 'fields', { fields: errors })
+
+  const colors = Array.isArray(prod.colors) ? prod.colors : []
+  const asked = clean(b.color, 200)
+  const color = colors.includes(asked) ? asked : (colors[0] || '')
+  const price = (color && prod.prices?.[color]) || prod.price
+  const items = [{ productId: id, ...(color ? { color } : {}), name: color && colors.length > 1 ? `${prod.name}, ${color}` : prod.name, price, qty: 1 }]
+  const percent = p.reward_percent
+  const reward = percent > 0 ? Math.round((price * percent) / 100) : null
+  const t = now()
+
+  const buyerEmail = d.email || NO_EMAIL
+  let buyer = db.prepare('SELECT * FROM buyers WHERE email = ?').get(buyerEmail)
+  if (!buyer) {
+    // У служебной записи «без email» имя и телефон пустые: данные покупателя хранятся только в заказе
+    const own = buyerEmail !== NO_EMAIL
+    db.prepare('INSERT INTO buyers (email, name, phone, created_at, updated_at) VALUES (?, ?, ?, ?, ?)')
+      .run(buyerEmail, own ? d.buyerName : '', own ? d.phone : '', t, t)
+    buyer = db.prepare('SELECT * FROM buyers WHERE email = ?').get(buyerEmail)
+  }
+
+  const point = partnerPoints.find((x) => x.code === p.point_code)
+  const number = newNumber()
+  const token = crypto.randomBytes(18).toString('base64url')
+  const r = db.prepare(`INSERT INTO orders (number, buyer_id, status, items, goods_total, delivery, total, buyer_name, phone, email,
+      city, sdek_point, sdek_city_code, sdek_point_code, pickup_type, source, partner_id, reward_percent, reward, pay_token,
+      offer_accepted_at, pd_consent_at, created_at, updated_at)
+      VALUES (?, ?, 'NEW', ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, 'PARTNER', 'PARTNER', ?, ?, ?, ?, '', '', ?, ?)`)
+    .run(number, buyer.id, JSON.stringify(items), price, price, d.buyerName, d.phone, d.email,
+      '', `${p.company_name}, ${p.point_address}`, point?.cityCode ?? null, p.point_code,
+      p.id, percent > 0 ? percent : null, reward, token, t, t)
+  addEvent(Number(r.lastInsertRowid), 'NEW')
+  const order = db.prepare('SELECT * FROM orders WHERE number = ?').get(number)
+  queueMicrotask(() => {
+    if (d.email) sendMail(d.email, ...letters.partnerOrderCreated(viewOrder(order), PUBLIC_URL, payPage(order), loginLink(buyer.id, `/account/orders/${number}`)))
+    if (ORDERS_EMAIL_TO) sendMail(ORDERS_EMAIL_TO, ...letters.staffNewOrder(viewOrder(order, true), PUBLIC_URL), d.email || undefined)
+  })
+  console.log(`partner ${p.id} order ${number} ${price}`)
+  send(res, 200, { ok: true, order: viewPartnerOrder(order) })
+}
+
+function partnerOrders(req, res) {
+  const p = needPartner(req)
+  const rows = db.prepare('SELECT * FROM orders WHERE partner_id = ? ORDER BY created_at DESC, id DESC LIMIT 1000').all(p.id)
+  send(res, 200, { orders: rows.map(viewPartnerOrder) })
+}
+
+/** Приёмка в пункте (оферта партнёру, п. 5.1, 8.2): упаковка цела — или замечание с фото. Покупателю — письмо «можно забирать» */
+async function partnerAccept(req, res, number) {
+  const p = needPartner(req)
+  const o = partnerOrderRow(p, number)
+  const b = await readJson(req, 40 * 1024 * 1024)
+  if (!['PAID', 'SHIPPED'].includes(o.status)) fail(409, 'bad_transition')
+  const issue = clean(b.issue, 1000)
+  const photos = Array.isArray(b.photos) ? b.photos.slice(0, 6) : []
+  if (issue && !photos.length) fail(422, 'fields', { fields: ['photos'] })
+  for (const ph of photos) saveFile(o.number, 'accept', ph)
+  const t = now()
+  db.prepare("UPDATE orders SET status = 'READY', received_at = ?, received_issue = ?, received_photos = ?, updated_at = ? WHERE id = ?")
+    .run(t, issue, issue ? photos.length : 0, t, o.id)
+  addEvent(o.id, 'READY', issue ? `При приёмке: ${issue}` : '')
+  const fresh = db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)
+  notifyStatus(fresh)
+  if (issue) queueMicrotask(() => sendMail(PARTNERS_EMAIL_TO, ...letters.staffAcceptIssue(viewOrder(fresh, true), p.company_name, PUBLIC_URL)))
+  send(res, 200, { ok: true, order: viewPartnerOrder(fresh) })
+}
+
+/** Покупатель уведомлён о поступлении: с этой даты товар хранится 5 дней (оферта партнёру, п. 8.3) */
+function partnerNotified(req, res, number) {
+  const p = needPartner(req)
+  const o = partnerOrderRow(p, number)
+  if (o.status !== 'READY') fail(409, 'bad_transition')
+  if (!o.notified_at) db.prepare('UPDATE orders SET notified_at = ?, updated_at = ? WHERE id = ?').run(now(), now(), o.id)
+  send(res, 200, { ok: true, order: viewPartnerOrder(db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)) })
+}
+
+/** Выдача покупателю из заказа: только оплаченный заказ, с фото или сканом подписанного акта приёма-передачи */
+async function partnerIssue(req, res, number) {
+  const p = needPartner(req)
+  const o = partnerOrderRow(p, number)
+  const b = await readJson(req, 25 * 1024 * 1024)
+  if (o.status !== 'READY') fail(409, 'bad_transition')
+  const act = saveFile(o.number, 'act', b.act, true)
+  const t = now()
+  db.prepare("UPDATE orders SET status = 'RECEIVED', issued_at = ?, issued_to_name = buyer_name, act_file = ?, updated_at = ? WHERE id = ?")
+    .run(t, act, t, o.id)
+  addEvent(o.id, 'RECEIVED', 'Выдан в пункте партнёра, акт загружен')
+  const fresh = db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)
+  notifyStatus(fresh)
+  send(res, 200, { ok: true, order: viewPartnerOrder(fresh) })
+}
+
+const CLAIM_TYPES = { EXCHANGE: 'Обмен', RETURN: 'Возврат', DEFECT: 'Недостаток товара' }
+/** Обращение покупателя об обмене или возврате, принятое в пункте (оферта партнёру, п. 5.1, 8.4) — уходит сотрудникам */
+async function partnerClaim(req, res, number) {
+  const p = needPartner(req)
+  const o = partnerOrderRow(p, number)
+  const b = await readJson(req, 25 * 1024 * 1024)
+  if (o.status !== 'RECEIVED') fail(409, 'bad_transition')
+  const type = CLAIM_TYPES[b.type] ? b.type : null
+  const text = clean(b.text, 2000)
+  if (!type || !text) fail(422, 'fields', { fields: [...(type ? [] : ['type']), ...(text ? [] : ['text'])] })
+  const photo = b.photo ? saveFile(o.number, 'claim', b.photo) : ''
+  const claims = JSON.parse(o.claims || '[]')
+  const claim = { id: crypto.randomUUID(), type, text, photo, createdAt: now() }
+  claims.push(claim)
+  db.prepare('UPDATE orders SET claims = ?, updated_at = ? WHERE id = ?').run(JSON.stringify(claims), now(), o.id)
+  const fresh = db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)
+  queueMicrotask(() => sendMail(ORDERS_EMAIL_TO || PARTNERS_EMAIL_TO, ...letters.staffClaim(viewOrder(fresh, true), p.company_name, CLAIM_TYPES[type], text, PUBLIC_URL)))
+  send(res, 200, { ok: true, order: viewPartnerOrder(fresh) })
+}
+
+function partnerFile(req, res, number, name) {
+  const p = needPartner(req)
+  partnerOrderRow(p, number)
+  sendFile(res, number, name)
+}
+function staffFile(req, res, number, name) {
+  needStaff(req)
+  sendFile(res, number, name)
+}
+
+/* Страница оплаты заказа партнёра (/pay/<token>): ссылку партнёр отправляет покупателю сразу после оформления.
+ * Покупатель отмечает согласие с офертой купли-продажи и на обработку персональных данных, затем переходит к оплате СБП.
+ * Ссылку банка ставит сотрудник, когда подтвердит наличие (этап «Ждёт оплаты») — до этого страница так и говорит */
+function payView(o) {
+  const p = o.partner_id ? db.prepare('SELECT company_name, point_address, phone FROM partners WHERE id = ?').get(o.partner_id) : null
+  const consented = Boolean(o.offer_accepted_at)
+  const paidAt = db.prepare("SELECT at FROM order_events WHERE order_id = ? AND status = 'PAID' ORDER BY id DESC LIMIT 1").get(o.id)?.at ?? null
+  return {
+    number: o.number,
+    status: o.status,
+    items: JSON.parse(o.items),
+    total: o.total,
+    point: p ? { companyName: p.company_name, address: p.point_address, phone: p.phone } : null,
+    consentAt: o.offer_accepted_at || null,
+    paymentUrl: consented && o.status === 'AWAITING_PAYMENT' ? o.payment_url : '',
+    paidAt,
+    issuedAt: o.issued_at || null,
+    cancelReason: o.status === 'CANCELLED' ? o.cancel_reason : '',
+  }
+}
+function payOrder(req, token) {
+  if (limited('pay:' + ip(req), 120, 600_000)) fail(429, 'rate')
+  const o = db.prepare('SELECT * FROM orders WHERE pay_token = ?').get(token)
+  if (!o) fail(404, 'not_found')
+  return o
+}
+function payGet(req, res, token) {
+  send(res, 200, { order: payView(payOrder(req, token)) })
+}
+async function payConsent(req, res, token) {
+  const o = payOrder(req, token)
+  const b = await readJson(req)
+  if (b.offer !== true || b.pd !== true) fail(422, 'fields', { fields: [...(b.offer === true ? [] : ['offer']), ...(b.pd === true ? [] : ['pd'])] })
+  if (o.status === 'CANCELLED') fail(409, 'cancelled')
+  if (!o.offer_accepted_at) {
+    const t = now()
+    db.prepare('UPDATE orders SET offer_accepted_at = ?, pd_consent_at = ?, updated_at = ? WHERE id = ?').run(t, t, t, o.id)
+    console.log(`order ${o.number} buyer consent`)
+  }
+  send(res, 200, { order: payView(db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)) })
+}
+
 /* ── Маршрутизация ── */
 const ORDER_NO = '(S-\\d{6}-\\d{4})'
 const routes = [
@@ -966,6 +1294,17 @@ const routes = [
   ['POST', /^\/api\/staff\/applications\/(\d+)\/approve$/, staffApprove],
   ['POST', /^\/api\/staff\/applications\/(\d+)\/decline$/, staffDecline],
   ['POST', /^\/api\/staff\/partners\/(\d+)\/reset$/, staffResetPartner],
+  ['POST', /^\/api\/staff\/partners\/(\d+)\/point$/, staffPartnerPoint],
+  ['GET', new RegExp(`^/api/staff/orders/${ORDER_NO}/files/([\\w.-]+)$`), staffFile],
+  ['GET', /^\/api\/partner\/orders$/, partnerOrders],
+  ['POST', /^\/api\/partner\/orders$/, partnerCreateOrder],
+  ['POST', new RegExp(`^/api/partner/orders/${ORDER_NO}/accept$`), partnerAccept],
+  ['POST', new RegExp(`^/api/partner/orders/${ORDER_NO}/notified$`), partnerNotified],
+  ['POST', new RegExp(`^/api/partner/orders/${ORDER_NO}/issue$`), partnerIssue],
+  ['POST', new RegExp(`^/api/partner/orders/${ORDER_NO}/claim$`), partnerClaim],
+  ['GET', new RegExp(`^/api/partner/orders/${ORDER_NO}/files/([\\w.-]+)$`), partnerFile],
+  ['GET', /^\/api\/pay\/([\w-]{20,40})$/, payGet],
+  ['POST', /^\/api\/pay\/([\w-]{20,40})\/consent$/, payConsent],
 ]
 
 /** Запросы, меняющие данные, принимаем только со своего сайта (защита от подделки запросов) */
@@ -988,7 +1327,7 @@ const server = http.createServer(async (req, res) => {
       const m = url.pathname.match(re)
       if (!m) continue
       if (req.method !== method) continue
-      await handler(req, res, m[1] ?? url.searchParams, url.searchParams)
+      await handler(req, res, m[1] ?? url.searchParams, m[2] ?? url.searchParams)
       return
     }
     fail(404, 'not_found')

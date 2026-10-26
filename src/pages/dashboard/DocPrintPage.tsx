@@ -4,6 +4,7 @@ import { useAuth } from '../../context/AuthContext'
 import { findDocument } from '../../data/partnerDocuments'
 import { DocSheet } from '../../components/docs/DocSheet'
 import { useDataRevision } from '../../utils/store'
+import { useOrdersLoaded, usePartnerOrdersSync } from '../../data/partnerOrders'
 
 /*
  * Документ на листе A4 — для печати и сохранения в PDF («Скачать» в документах кабинета и в админке).
@@ -17,6 +18,9 @@ export default function DocPrintPage() {
   const { pathname, search } = useLocation()
   const { user, loading } = useAuth()
   useDataRevision()
+  // Отчёт агента и акт считаются по заказам — на боевом сайте они с сервера
+  usePartnerOrdersSync(user?.offerAcceptedAt ? user.id : undefined)
+  const ordersLoaded = useOrdersLoaded()
 
   const admin = pathname.startsWith('/admin/')
   const doc = findDocument(id, user)
@@ -35,7 +39,7 @@ export default function DocPrintPage() {
   }, [title, autoPrint])
 
   // Сервер ещё не ответил, кто вошёл
-  if (loading) return <div className="paper-root" aria-busy="true" />
+  if (loading || (user?.offerAcceptedAt && !ordersLoaded)) return <div className="paper-root" aria-busy="true" />
 
   // Документ Партнёра без входа не открываем: после входа вернём сюда же
   if (!doc && !user) {
