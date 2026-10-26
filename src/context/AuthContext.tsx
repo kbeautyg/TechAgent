@@ -42,6 +42,8 @@ function fromServer(p: PartnerProfile): User {
     contactName: p.contactName,
     pointAddress: p.pointAddress,
     mapPoint: p.point ?? null,
+    rewardPercentNext: p.rewardPercentNext ?? undefined,
+    rewardPercentNextFrom: p.rewardPercentNextFrom ?? undefined,
     pointVisible: Boolean(p.pointVisible),
     bankName: p.bankName,
     bik: p.bik,

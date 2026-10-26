@@ -14,9 +14,12 @@ import {
   pairTitle,
   acceptPair,
   objectPair,
+  reviewServerPair,
   type AgentPair,
 } from '../../data/partnerDocuments'
-import { formatDate } from '../../utils/calculate'
+import { formatDate, formatPrice } from '../../utils/calculate'
+import { DEMO_MODE } from '../../data/mock'
+import { ApiError, apiErrorText } from '../../lib/api'
 import { DocSheet } from '../../components/docs/DocSheet'
 import { useDataRevision } from '../../utils/store'
 import type { Document, DocumentType } from '../../types'
@@ -129,14 +132,28 @@ function PairReview({ pair }: { pair: AgentPair }) {
     )
   }
 
-  const accept = () => {
+  /** Боевой кабинет: решение уходит на сервер ТехЭйджент */
+  const server = async (status: 'ACCEPTED' | 'OBJECTED', t = ''): Promise<boolean> => {
+    try {
+      await reviewServerPair(pair, status, t)
+      return true
+    } catch (e) {
+      alert(e instanceof ApiError && e.message === 'decided' ? STALE : apiErrorText(e))
+      return false
+    }
+  }
+
+  const accept = async () => {
     if (!confirm(`Принять ${what.charAt(0).toLowerCase()}${what.slice(1)}?`)) return
+    if (!DEMO_MODE) return void (await server('ACCEPTED'))
     if (!acceptPair(pair)) alert(STALE)
   }
 
-  const sendObjection = () => {
+  const sendObjection = async () => {
     if (!text.trim()) return
-    if (!objectPair(pair, text)) alert(STALE)
+    if (!DEMO_MODE) {
+      if (!(await server('OBJECTED', text))) return
+    } else if (!objectPair(pair, text)) alert(STALE)
     setObjecting(false)
     setText('')
   }
@@ -211,6 +228,11 @@ function PairCard({ pair, onOpen }: { pair: AgentPair; onOpen: (id: string) => v
       </div>
       <div className="mt-2 pt-3 border-t border-border lg:pl-14">
         <PairReview key={pair.key} pair={pair} />
+        {pair.paid && (
+          <p className="text-[13px] lg:text-xs text-emerald-700 mt-2 mb-0">
+            Вознаграждение выплачено {formatDate(pair.paid.at)}: {formatPrice(pair.paid.amount)}
+          </p>
+        )}
       </div>
     </div>
   )

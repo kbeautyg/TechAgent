@@ -2,13 +2,16 @@ import { Fragment, useCallback, useEffect, useState } from 'react'
 import type { FormEvent, ReactNode } from 'react'
 import { Link, NavLink, Navigate, useNavigate, useParams, useSearchParams } from 'react-router-dom'
 import { ChevronRight, ExternalLink, LogOut } from 'lucide-react'
-import { api, apiErrorText, ApiError, type PartnerApplicationView, type PartnerOrderView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
+import { api, apiErrorText, ApiError, type AgentReportView, type PartnerApplicationView, type PartnerOrderView, type PartnerProfile, type SiteOrder, type SiteOrderStatus } from '../../lib/api'
 import { logoutAccount, refreshAccount, useAccount } from '../../utils/account'
 import { formatPrice, formatDateTime } from '../../utils/calculate'
 import { PageBar } from '../../components/app/ui'
 import StatusMark from '../../components/app/StatusMark'
 import { SITE_STATUS_COLOR, SITE_STATUS_LABEL, STAFF_TODO, itemsTitle } from '../../utils/siteOrderStatus'
 import { copyText } from '../../utils/clipboard'
+import { objectionDeadline, serverReportDocs } from '../../data/partnerDocuments'
+import { DocSheet } from '../../components/docs/DocSheet'
+import type { Document } from '../../types'
 
 /*
  * Раздел сотрудников ТехЭйджент: заказы покупателей с сайта и партнёры.
@@ -84,6 +87,7 @@ function StaffHead({ title, onLogout }: { title: string; onLogout: () => void })
       <nav className="staff-filters staff-sections mb-4" aria-label="Разделы">
         <NavLink to="/staff" end className={({ isActive }) => (isActive ? 'on' : '')}>Заказы</NavLink>
         <NavLink to="/staff/partners" className={({ isActive }) => (isActive ? 'on' : '')}>Партнёры</NavLink>
+        <NavLink to="/staff/reports" className={({ isActive }) => (isActive ? 'on' : '')}>Расчёты</NavLink>
       </nav>
     </>
   )
@@ -590,7 +594,93 @@ function PointPicker({ p, points, taken, onSaved }: { p: PartnerProfile; points:
   )
 }
 
-function PartnerRow({ p, onIssued, picker }: { p: PartnerProfile; onIssued: (i: Issued) => void; picker: ReactNode }) {
+/** Сводка по партнёру в цифрах: заказы, выдачи, начислено, в отчётах, выплачено */
+function PartnerStatsGrid({ s }: { s: NonNullable<PartnerProfile['stats']> }) {
+  const cell = (label: string, value: string, sub?: string) => (
+    <div className="rounded-xl bg-bg-light px-3 py-2">
+      <span className="block text-[12px] text-text-muted">{label}</span>
+      <b className="block text-[15px] text-text-primary">{value}</b>
+      {sub && <span className="block text-[12px] text-text-muted">{sub}</span>}
+    </div>
+  )
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+      {cell('Оформил заказов', String(s.orders), `на ${formatPrice(s.ordersSum)}${s.siteOrders ? ` · с сайта ещё ${s.siteOrders}` : ''}`)}
+      {cell('Выдал с актом', String(s.issued), `на ${formatPrice(s.issuedSum)} · в работе ${s.active}`)}
+      {cell('Начислено', formatPrice(s.accrued), s.notReported ? `ещё не в отчёте ${formatPrice(s.notReported)}` : 'всё в отчётах')}
+      {cell('Выплачено', formatPrice(s.paid), `не выплачено ${formatPrice(Math.max(0, s.reported - s.paid))}`)}
+    </div>
+  )
+}
+
+/** Процент вознаграждения и доступ партнёра */
+function PartnerTerms({ p, onSaved }: { p: PartnerProfile; onSaved: () => void }) {
+  const [mode, setMode] = useState<'' | 'percent' | 'block'>('')
+  const [percent, setPercent] = useState('')
+  const [reason, setReason] = useState('')
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const run = async (path: string, body: unknown) => {
+    setBusy(true)
+    setError('')
+    try {
+      await api(path, body)
+      setMode('')
+      onSaved()
+    } catch (x) {
+      setError(apiErrorText(x))
+    }
+    setBusy(false)
+  }
+  const pct = Number(percent.replace(',', '.'))
+  return (
+    <div className="mt-3">
+      {p.rewardPercentNext != null && p.rewardPercentNextFrom && (
+        <p className="text-[13.5px] text-amber-800 bg-amber-50 rounded-lg px-3 py-2 m-0 mb-2">
+          С {formatDateTime(p.rewardPercentNextFrom).slice(0, 10)} — {String(p.rewardPercentNext).replace('.', ',')}% для новых заказов (партнёр уведомлён).
+        </p>
+      )}
+      {p.blockedAt && (
+        <p className="text-[13.5px] text-red-800 bg-red-50 rounded-lg px-3 py-2 m-0 mb-2">
+          Доступ отключён {formatDateTime(p.blockedAt)}{p.blockReason ? `: ${p.blockReason}` : ''}. Войти в кабинет партнёр не может, его точка скрыта с карты.
+        </p>
+      )}
+      {mode === 'percent' && (
+        <div className="p-3 rounded-xl bg-bg-light space-y-2.5">
+          <label htmlFor={`np-${p.id}`} className="block text-[13px] font-semibold ml-1 text-text-secondary">Новый процент вознаграждения</label>
+          <input id={`np-${p.id}`} inputMode="decimal" value={percent} placeholder={String(p.rewardPercent)} onChange={(e) => setPercent(e.target.value)} className={fieldCls} />
+          <p className="text-[13px] text-text-muted m-0">Применится к заказам, оформленным через 14 дней; партнёру уйдёт письмо (оферта, п. 7.1).</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" disabled={busy || !(pct > 0 && pct <= 50)} className="app-btn app-btn-primary w-auto px-5" onClick={() => void run(`/staff/partners/${p.id}/percent`, { percent: pct })}>Сохранить</button>
+            <button type="button" className="acc-link-btn m-0" onClick={() => setMode('')}>Отмена</button>
+          </div>
+        </div>
+      )}
+      {mode === 'block' && (
+        <div className="p-3 rounded-xl bg-red-50 space-y-2.5">
+          <label htmlFor={`bl-${p.id}`} className="block text-[13px] font-semibold ml-1 text-red-900">Причина отключения — для сотрудников</label>
+          <input id={`bl-${p.id}`} value={reason} onChange={(e) => setReason(e.target.value)} className={fieldCls} />
+          <p className="text-[13px] text-red-900 m-0">Партнёр не сможет войти, точка пропадёт с карты. Заказы в работе доведите сами: приёмку и выдачу можно отметить за партнёра.</p>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" disabled={busy || !reason.trim()} className="app-btn bg-red-600 text-white hover:bg-red-700 w-auto px-5" onClick={() => void run(`/staff/partners/${p.id}/block`, { blocked: true, reason: reason.trim() })}>Отключить доступ</button>
+            <button type="button" className="acc-link-btn m-0" onClick={() => setMode('')}>Отмена</button>
+          </div>
+        </div>
+      )}
+      {!mode && (
+        <div className="flex flex-wrap gap-x-5">
+          <button type="button" className="acc-link-btn m-0" onClick={() => setMode('percent')}>Изменить процент…</button>
+          {p.blockedAt
+            ? <button type="button" disabled={busy} className="acc-link-btn m-0" onClick={() => void run(`/staff/partners/${p.id}/block`, { blocked: false })}>Вернуть доступ</button>
+            : <button type="button" className="acc-link-btn m-0 text-red-600" onClick={() => setMode('block')}>Отключить доступ…</button>}
+        </div>
+      )}
+      {error && <p className="text-red-600 text-[13.5px] mt-2 mb-0">{error}</p>}
+    </div>
+  )
+}
+
+function PartnerRow({ p, onIssued, picker, onSaved }: { p: PartnerProfile; onIssued: (i: Issued) => void; picker: ReactNode; onSaved: () => void }) {
   const [confirm, setConfirm] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
@@ -615,7 +705,9 @@ function PartnerRow({ p, onIssued, picker }: { p: PartnerProfile; onIssued: (i: 
           <p className="text-[14px] text-text-secondary m-0 mt-1">{p.pointAddress} · вознаграждение {String(p.rewardPercent).replace('.', ',')}%</p>
         </div>
         <span className="shrink-0">
-          {p.offerAcceptedAt
+          {p.blockedAt
+            ? <StatusMark size="sm" color="#EF4444">Доступ отключён</StatusMark>
+            : p.offerAcceptedAt
             ? <StatusMark size="sm" color="#12B981">Оферту принял</StatusMark>
             : <StatusMark size="sm" color="#F59E0B">Ждём первого входа</StatusMark>}
         </span>
@@ -625,6 +717,8 @@ function PartnerRow({ p, onIssued, picker }: { p: PartnerProfile; onIssued: (i: 
           ? <>Согласие с агентским договором-офертой (ред. {p.offerEdition}) отмечено партнёром {formatDateTime(p.offerAcceptedAt)}{p.offerAcceptIp ? `, адрес ${p.offerAcceptIp}` : ''}. Доступ открыт {formatDateTime(p.createdAt)}.</>
           : <>Доступ открыт {formatDateTime(p.createdAt)}. Договор будет заключён, когда партнёр войдёт и сам отметит согласие с офертой.</>}
       </p>
+      {p.stats && <PartnerStatsGrid s={p.stats} />}
+      <PartnerTerms p={p} onSaved={onSaved} />
       {picker}
       {confirm ? (
         <div className="flex flex-wrap items-center gap-3 mt-3">
@@ -681,7 +775,7 @@ function StaffPartners() {
               ? <p className="acc-note text-left">Пока никого — одобрите заявку, и партнёр появится здесь.</p>
               : <div className="flex flex-col gap-3">
                   {data.partners.map((p) => (
-                    <PartnerRow key={p.id} p={p} onIssued={(i) => { setIssued(i); window.scrollTo(0, 0) }}
+                    <PartnerRow key={p.id} p={p} onIssued={(i) => { setIssued(i); window.scrollTo(0, 0) }} onSaved={load}
                       picker={<PointPicker p={p} points={data.points} taken={taken} onSaved={load} />} />
                   ))}
                 </div>}
@@ -730,6 +824,245 @@ function PartnerPart({ order }: { order: StaffOrderView }) {
         <span className="whitespace-pre-wrap">{c.text}</span>
         {c.photo && <a href={staffFile(order.number, c.photo)} target="_blank" rel="noopener" className="acc-link block">Фото</a>}
       </>)}</Fragment>)}
+    </div>
+  )
+}
+
+/* ── Расчёты с партнёрами: отчёт агента и акт за месяц, решение партнёра, выплата ── */
+
+export function StaffReportsPage() {
+  return (
+    <RequireStaff>
+      <StaffReports />
+    </RequireStaff>
+  )
+}
+
+const MONTH_NAMES = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+const monthLabel = (period: string) => `${MONTH_NAMES[Number(period.slice(5, 7)) - 1]} ${period.slice(0, 4)}`
+/** Последние 12 месяцев, новые сверху: 'ГГГГ-ММ' */
+function lastPeriods(): string[] {
+  const d = new Date()
+  return Array.from({ length: 12 }, (_, i) => {
+    const x = new Date(d.getFullYear(), d.getMonth() - i, 1)
+    return `${x.getFullYear()}-${String(x.getMonth() + 1).padStart(2, '0')}`
+  })
+}
+const todayIso = () => new Date().toISOString().slice(0, 10)
+
+/** Где отчёт сейчас: ждёт решения партнёра, принят (явно или по сроку), возражения */
+function reportState(r: AgentReportView): { label: string; color: string; payable: boolean } {
+  if (r.paid) return { label: `Выплачено ${formatDateTime(r.paid.at).slice(0, 10)}`, color: '#14B8A6', payable: false }
+  if (r.review?.status === 'OBJECTED') return { label: 'Возражения партнёра', color: '#EF4444', payable: false }
+  if (r.review?.status === 'ACCEPTED') return { label: 'Принят партнёром — к выплате', color: '#12B981', payable: true }
+  const deadline = objectionDeadline({ createdAt: r.createdAt })
+  const after = new Date(deadline.getFullYear(), deadline.getMonth(), deadline.getDate() + 1)
+  return new Date() >= after
+    ? { label: 'Принят по сроку — к выплате', color: '#12B981', payable: true }
+    : { label: `Ждёт решения партнёра до ${formatDateTime(deadline.toISOString()).slice(0, 10)}`, color: '#F59E0B', payable: false }
+}
+
+function ReportCard({ r, onChanged }: { r: AgentReportView; onChanged: () => void }) {
+  const [busy, setBusy] = useState(false)
+  const [error, setError] = useState('')
+  const [payOpen, setPayOpen] = useState(false)
+  const [amount, setAmount] = useState(String(r.payable))
+  const [date, setDate] = useState(todayIso())
+  const [note, setNote] = useState('')
+  const st = reportState(r)
+  const run = async (path: string, body: unknown) => {
+    setBusy(true)
+    setError('')
+    try {
+      await api(path, body)
+      setPayOpen(false)
+      onChanged()
+    } catch (x) {
+      setError(apiErrorText(x))
+    }
+    setBusy(false)
+  }
+  return (
+    <div className="rounded-xl border border-border p-3 mt-3">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <b className="text-[15px] text-text-primary flex-1">№ {r.number}</b>
+        <StatusMark size="sm" color={st.color}>{st.label}</StatusMark>
+      </div>
+      <p className="text-[14px] text-text-secondary m-0 mt-1">
+        Выдано заказов: {r.form.rows.length} на {formatPrice(r.form.goodsTotal)} · вознаграждение к выплате <b className="text-text-primary">{formatPrice(r.payable)}</b>
+      </p>
+      <p className="text-[13px] text-text-muted m-0 mt-1">Сформирован {formatDateTime(r.createdAt)} · заказы {r.orderNumbers.join(', ')}</p>
+      {r.review?.status === 'OBJECTED' && (
+        <p className="text-[14px] text-red-800 bg-red-50 rounded-lg px-3 py-2 mt-2 mb-0 whitespace-pre-wrap">Возражения {formatDateTime(r.review.at)}: {r.review.text}</p>
+      )}
+      {r.paid?.note && <p className="text-[13px] text-text-muted m-0 mt-1">{r.paid.note}</p>}
+      <div className="flex flex-wrap items-center gap-x-4 gap-y-2 mt-2">
+        <a href={`/staff/documents/rep-s${r.id}/print`} target="_blank" rel="noopener" className="acc-link">Отчёт агента</a>
+        <a href={`/staff/documents/act-s${r.id}/print`} target="_blank" rel="noopener" className="acc-link">Акт</a>
+        {st.payable && !payOpen && (
+          <button type="button" className="app-btn app-btn-success w-auto px-4" onClick={() => setPayOpen(true)}>Отметить выплату</button>
+        )}
+        {!r.paid && r.review?.status !== 'ACCEPTED' && (
+          <button type="button" disabled={busy} className="acc-link-btn m-0"
+            onClick={() => { if (confirm('Отозвать отчёт и акт? Заказы вернутся в расчёт, отчёт можно будет сформировать заново.')) void run(`/staff/reports/${r.id}/revoke`, {}) }}>
+            Отозвать…
+          </button>
+        )}
+      </div>
+      {payOpen && (
+        <div className="mt-3 p-3 rounded-xl bg-bg-light space-y-2.5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div>
+              <label htmlFor={`pa-${r.id}`} className="block text-[13px] font-semibold mb-1 ml-1 text-text-secondary">Сумма, ₽</label>
+              <input id={`pa-${r.id}`} inputMode="numeric" value={amount} onChange={(e) => setAmount(e.target.value.replace(/[^\d]/g, ''))} className={fieldCls} />
+            </div>
+            <div>
+              <label htmlFor={`pd-${r.id}`} className="block text-[13px] font-semibold mb-1 ml-1 text-text-secondary">Дата платежа</label>
+              <input id={`pd-${r.id}`} type="date" value={date} onChange={(e) => setDate(e.target.value)} className={fieldCls} />
+            </div>
+          </div>
+          <div>
+            <label htmlFor={`pn-${r.id}`} className="block text-[13px] font-semibold mb-1 ml-1 text-text-secondary">Комментарий — партнёр увидит его в письме</label>
+            <input id={`pn-${r.id}`} value={note} placeholder="Например: платёжное поручение № 15" onChange={(e) => setNote(e.target.value)} className={fieldCls} />
+          </div>
+          <div className="flex flex-wrap items-center gap-3">
+            <button type="button" disabled={busy || !amount} className="app-btn app-btn-success w-auto px-5"
+              onClick={() => void run(`/staff/reports/${r.id}/paid`, { amount: Number(amount), date, note })}>
+              {busy ? 'Сохраняем…' : `Выплачено ${formatPrice(Number(amount) || 0)}`}
+            </button>
+            <button type="button" className="acc-link-btn m-0" onClick={() => setPayOpen(false)}>Отмена</button>
+          </div>
+          {Number(amount) !== r.payable && <p className="text-[13px] text-amber-800 m-0">Сумма отличается от «к выплате» по отчёту ({formatPrice(r.payable)}).</p>}
+        </div>
+      )}
+      {error && <p className="text-red-600 text-[13.5px] mt-2 mb-0">{error}</p>}
+    </div>
+  )
+}
+
+function StaffReports() {
+  const navigate = useNavigate()
+  const periods = lastPeriods()
+  // По умолчанию — прошлый месяц: отчёт формируют после его окончания
+  const [period, setPeriod] = useState(periods[1])
+  const [data, setData] = useState<{ partners: PartnerProfile[]; reports: AgentReportView[] } | null>(null)
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState<number | null>(null)
+  const [notice, setNotice] = useState<Record<number, string>>({})
+  const load = useCallback(() => {
+    Promise.all([api<PartnersData>('/staff/partners'), api<{ reports: AgentReportView[] }>('/staff/reports')])
+      .then(([p, r]) => setData({ partners: p.partners, reports: r.reports }))
+      .catch((e) => setError(apiErrorText(e)))
+  }, [])
+  useEffect(load, [load])
+
+  const create = async (p: PartnerProfile) => {
+    setBusy(p.id)
+    setNotice((n) => ({ ...n, [p.id]: '' }))
+    try {
+      await api(`/staff/partners/${p.id}/reports`, { period })
+      load()
+    } catch (x) {
+      setNotice((n) => ({ ...n, [p.id]: apiErrorText(x) }))
+    }
+    setBusy(null)
+  }
+
+  const live = (data?.reports ?? []).filter((r) => !r.revokedAt)
+  const toPay = live.filter((r) => reportState(r).payable).reduce((s, r) => s + r.payable, 0)
+
+  return (
+    <div className="acc-wide acc-staff">
+      <StaffHead title="Расчёты с партнёрами" onLogout={async () => { await logoutAccount(); navigate('/', { replace: true }) }} />
+      {error && <p className="acc-warn">{error}</p>}
+      {data && (
+        <>
+          <div className="acc-card mb-4">
+            <p className="m-0 text-[15px] text-text-primary">
+              К выплате по принятым отчётам: <b>{formatPrice(toPay)}</b>
+            </p>
+            <p className="acc-note text-left mb-0">
+              Отчёт агента и акт формируются за месяц по заказам, которые партнёр оформил сам, выдал покупателю в этом месяце и
+              загрузил подписанный акт. Партнёр принимает их в кабинете или направляет возражения; без возражений за 10 рабочих
+              дней они считаются принятыми. Выплата — в течение 7 дней после принятия (оферта партнёру, п. 7.5–7.6).
+            </p>
+          </div>
+          <label htmlFor="rep-period" className="block text-sm font-semibold mb-1.5 ml-1 text-text-secondary">Месяц</label>
+          <select id="rep-period" value={period} onChange={(e) => setPeriod(e.target.value)} className={`${fieldCls} mb-4 sm:max-w-xs`}>
+            {periods.map((x) => <option key={x} value={x}>{monthLabel(x)}</option>)}
+          </select>
+          {data.partners.length === 0 && <p className="acc-note text-left">Партнёров пока нет.</p>}
+          <div className="flex flex-col gap-3">
+            {data.partners.map((p) => {
+              const reps = live.filter((r) => r.partnerId === p.id && r.period === period)
+              return (
+                <div key={p.id} className="acc-card">
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                    <b className="acc-v flex-1">{p.companyName}</b>
+                    {p.stats && (
+                      <span className="text-[13px] text-text-muted">
+                        начислено {formatPrice(p.stats.accrued)} · в отчётах {formatPrice(p.stats.reported)} · выплачено {formatPrice(p.stats.paid)}
+                      </span>
+                    )}
+                  </div>
+                  {reps.map((r) => <ReportCard key={r.id} r={r} onChanged={load} />)}
+                  {reps.length === 0 && (
+                    <div className="mt-2">
+                      <button type="button" disabled={busy === p.id} className="app-btn app-btn-primary w-auto px-5" onClick={() => void create(p)}>
+                        {busy === p.id ? 'Формируем…' : `Сформировать отчёт и акт за ${monthLabel(period)}`}
+                      </button>
+                      {notice[p.id] && <p className="text-[13.5px] text-text-secondary mt-2 mb-0">{notice[p.id]}</p>}
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </>
+      )}
+    </div>
+  )
+}
+
+/** Отчёт агента или акт на листе A4 — для сотрудника (печать и PDF). id: rep-s<номер> или act-s<номер> */
+export function StaffDocPrintPage() {
+  return (
+    <RequireStaff>
+      <StaffDocPrint />
+    </RequireStaff>
+  )
+}
+
+function StaffDocPrint() {
+  const { id = '' } = useParams()
+  const [doc, setDoc] = useState<Document | null>(null)
+  const [error, setError] = useState('')
+  const m = /^(rep|act)-s(\d+)$/.exec(id)
+  useEffect(() => {
+    if (!m) return
+    api<{ report: AgentReportView }>(`/staff/reports/${m[2]}`)
+      .then((r) => {
+        const d = serverReportDocs(r.report, String(r.report.partnerId)).find((x) => x.id === id) ?? null
+        setDoc(d)
+        if (d) document.title = d.title.replace(/\//g, '-')
+      })
+      .catch((e) => setError(apiErrorText(e)))
+  }, [id]) // eslint-disable-line react-hooks/exhaustive-deps
+  return (
+    <div className="paper-root">
+      <div className="paper-toolbar">
+        {doc && (
+          <button type="button" onClick={() => window.print()} className="btn-primary px-5 py-2.5 rounded-lg text-sm font-semibold">
+            Сохранить PDF или распечатать
+          </button>
+        )}
+        <Link to="/staff/reports" className="text-sm text-text-secondary no-underline hover:text-primary">Вернуться к расчётам</Link>
+      </div>
+      {doc ? (
+        <div className="paper-page"><DocSheet doc={doc} /></div>
+      ) : (
+        <div className="paper-page paper-missing">{!m ? 'Документ не найден.' : error || 'Загружаем…'}</div>
+      )}
     </div>
   )
 }

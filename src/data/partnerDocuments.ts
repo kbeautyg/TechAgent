@@ -1,6 +1,7 @@
 import type { AgentDocForm, Document, DocumentReview, Order, User } from '../types'
 import { mockDocuments } from './documents'
 import { PRINCIPAL_PARTY, partnerParty } from './parties'
+import { api, type AgentReportView } from '../lib/api'
 import { addBusinessDays, formatDate, formatPercent, formatPrice, periodLabel, periodOf } from '../utils/calculate'
 import {
   readJson,
@@ -19,7 +20,9 @@ import {
  * покупателям в этом месяце, по которым загружен подписанный акт приёма-передачи, и удержания
  * по заказам, возвращённым после выдачи. Отчёт и акт за месяц — пара: Партнёр принимает их
  * или направляет возражения одним решением (п. 7.5). Образец — демо-документы d2 и d3 из documents.ts.
- * Бэкенда нет: документы, решения и отзывы хранятся в localStorage (см. utils/store.ts).
+ * Демо: документы, решения и отзывы хранятся в localStorage (см. utils/store.ts).
+ * Боевой сайт: отчёты формирует сервер (/api/staff/partners/:id/reports), кабинет получает их с /api/partner/reports
+ * и показывает в том же виде (setServerReports); решение Партнёра уходит на сервер (reviewServerPair).
  */
 
 const DOCS_KEY = 'techagent_partner_docs_v1'
@@ -44,6 +47,45 @@ const reviews: Record<string, DocumentReview> = readJson<Record<string, Document
 
 /** Отозванные ТехЭйджент отчёты и акты: id документа → когда отозван */
 const revoked: Record<string, string> = readJson<Record<string, string>>(REVOKED_KEY) ?? {}
+
+/** Отчёт с сервера → отчёт агента и акт в формате кабинета. Реквизиты ТехЭйджент — с сайта (parties.ts) */
+export function serverReportDocs(r: AgentReportView, userId: string): Document[] {
+  const agentForm: AgentDocForm = { ...r.form, principal: PRINCIPAL_PARTY }
+  const base = { userId, fileUrl: '#', createdAt: r.createdAt, period: r.period, orderIds: r.orderNumbers, agentForm }
+  return [
+    { ...base, id: `rep-s${r.id}`, type: 'REPORT', title: `Отчёт агента за ${periodLabel(r.period)}` },
+    { ...base, id: `act-s${r.id}`, type: 'ACT', title: `Акт об оказании услуг № ${r.number}` },
+  ]
+}
+
+/** Выплата и номер на сервере — по id документа */
+const serverInfo: Record<string, { id: number; paid: AgentReportView['paid'] }> = {}
+
+/** Боевой кабинет: отчёты Партнёра с сервера — только в память */
+export function setServerReports(reports: AgentReportView[], userId: string): void {
+  const docs = reports.flatMap((r) => serverReportDocs(r, userId))
+  replaceArray(partnerDocuments, docs)
+  const rv: Record<string, DocumentReview> = {}
+  replaceRecord(serverInfo, {})
+  for (const r of reports) {
+    for (const d of serverReportDocs(r, userId)) {
+      serverInfo[d.id] = { id: r.id, paid: r.paid }
+      if (r.review) rv[d.id] = { status: r.review.status, at: r.review.at, text: r.review.text || undefined }
+    }
+  }
+  replaceRecord(reviews, rv)
+  replaceRecord(revoked, {})
+  notifyDataChanged()
+}
+
+/** Боевой кабинет: решение Партнёра по отчёту и акту — на сервер. Возвращает отчёт после решения */
+export async function reviewServerPair(pair: AgentPair, status: 'ACCEPTED' | 'OBJECTED', text = ''): Promise<void> {
+  const info = pair.report ? serverInfo[pair.report.id] : undefined
+  if (!info) throw new Error('not_found')
+  const r = await api<{ report: AgentReportView }>(`/partner/reports/${info.id}/review`, { status, text: text.trim() })
+  for (const d of pair.docs) reviews[d.id] = { status, at: r.report.review?.at ?? new Date().toISOString(), text: text.trim() || undefined }
+  notifyDataChanged()
+}
 
 /* ── Хранение: перед записью данные перечитываются и сливаются (другая вкладка могла их изменить) ── */
 
@@ -182,6 +224,8 @@ export interface AgentPair {
   docs: Document[]
   /** Дата формирования — от неё считается срок на возражения */
   createdAt: string
+  /** Боевой сайт: выплата по отчёту */
+  paid?: AgentReportView['paid']
 }
 
 /** Отчёты и акты, сгруппированные по Партнёру и периоду, новые сверху */
@@ -201,7 +245,10 @@ export function agentPairs(userId?: string): AgentPair[] {
     if (d.createdAt < pair.createdAt) pair.createdAt = d.createdAt
   }
   const pairs = [...map.values()]
-  for (const p of pairs) p.docs = [p.report, p.act].filter((d): d is Document => d !== undefined)
+  for (const p of pairs) {
+    p.docs = [p.report, p.act].filter((d): d is Document => d !== undefined)
+    p.paid = p.report ? serverInfo[p.report.id]?.paid : undefined
+  }
   return pairs.sort((a, b) => b.createdAt.localeCompare(a.createdAt))
 }
 

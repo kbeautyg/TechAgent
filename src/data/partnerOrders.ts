@@ -1,6 +1,7 @@
 import { useEffect, useSyncExternalStore } from 'react'
 import type { BuyerClaim, BuyerClaimType, Order, OrderStatus } from '../types'
-import { api, type PartnerOrderView, type SiteOrderStatus } from '../lib/api'
+import { api, type AgentReportView, type PartnerOrderView, type SiteOrderStatus } from '../lib/api'
+import { setServerReports } from './partnerDocuments'
 import { mockOrders, DEMO_MODE } from './mock'
 import { replaceArray, notifyDataChanged } from '../utils/store'
 
@@ -86,12 +87,16 @@ export function useOrdersLoaded(): boolean {
   return useSyncExternalStore((l) => (listeners.add(l), () => listeners.delete(l)), () => loaded, () => loaded)
 }
 
-/** Перечитать заказы партнёра с сервера */
+/** Перечитать заказы партнёра с сервера — и его отчёты агента: они считаются по этим заказам */
 export async function loadPartnerOrders(userId: string): Promise<void> {
   if (DEMO_MODE) return
-  const r = await api<{ orders: PartnerOrderView[] }>('/partner/orders')
+  const [r, rep] = await Promise.all([
+    api<{ orders: PartnerOrderView[] }>('/partner/orders'),
+    api<{ reports: AgentReportView[] }>('/partner/reports'),
+  ])
   owner = userId
   replaceArray(mockOrders, r.orders.map((o) => fromServer(o, userId)))
+  setServerReports(rep.reports, userId)
   notifyDataChanged()
   setLoaded(true)
 }
@@ -101,6 +106,7 @@ export function clearPartnerOrders(): void {
   if (DEMO_MODE) return
   owner = ''
   replaceArray(mockOrders, [])
+  setServerReports([], '')
   notifyDataChanged()
   setLoaded(false)
 }

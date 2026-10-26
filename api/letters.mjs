@@ -287,3 +287,56 @@ ${text}
 Заказ: ${site}/staff/orders/${o.number}`,
   ]
 }
+
+/* ── Расчёты с партнёром ── */
+
+const MONTHS = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+const periodLabel = (p) => `${MONTHS[Number(p.slice(5, 7)) - 1]} ${p.slice(0, 4)}`
+const ruDate = (iso) => new Date(iso).toLocaleDateString('ru-RU', { timeZone: 'Europe/Moscow' })
+
+/** Партнёру — сформированы отчёт агента и акт за месяц: принять или возразить в кабинете (п. 7.5) */
+export function partnerReport(r, site) {
+  return [
+    `Отчёт агента и акт за ${periodLabel(r.period)}`,
+    `ТехЭйджент сформировал отчёт агента и акт № ${r.number} за ${periodLabel(r.period)}.
+
+Выдано заказов: ${r.form.rows.length}
+Сумма товаров: ${rub(r.form.goodsTotal)}
+Вознаграждение к выплате: ${rub(r.payable)}
+
+Проверьте документы и примите их или направьте возражения в кабинете: ${site}/dashboard/documents
+Возражения принимаются 10 рабочих дней с даты формирования; без возражений документы считаются принятыми (оферта, п. 7.5). Вознаграждение выплачивается на счёт из анкеты в течение 7 дней после принятия (п. 7.6).${PSIGN}`,
+  ]
+}
+
+/** Партнёру — вознаграждение выплачено */
+export function partnerPaid(r, site) {
+  return [
+    `Вознаграждение за ${periodLabel(r.period)} выплачено`,
+    `ТехЭйджент выплатил вознаграждение по отчёту агента и акту № ${r.number} за ${periodLabel(r.period)}: ${rub(r.paid.amount)}, ${ruDate(r.paid.at)}.${r.paid.note ? `\n${r.paid.note}` : ''}
+
+Документы — в кабинете: ${site}/dashboard/documents${PSIGN}`,
+  ]
+}
+
+/** Сотрудникам — возражения партнёра по отчёту */
+export function staffObjection(r, company, text, site) {
+  return [
+    `Возражения по отчёту ${r.number}: ${company}`,
+    `Партнёр ${company} направил возражения по отчёту агента и акту № ${r.number} за ${periodLabel(r.period)}:
+
+${text}
+
+Разобраться и при необходимости отозвать отчёт и сформировать заново: ${site}/staff/reports`,
+  ]
+}
+
+/** Партнёру — новый процент вознаграждения: с даты, не раньше чем через 14 дней (оферта, п. 7.1) */
+export function partnerPercent(p, site) {
+  return [
+    'Новый размер вознаграждения TechAgent',
+    `ТехЭйджент изменил размер вознаграждения: ${String(p.rewardPercentNext).replace('.', ',')} % от цены товара для заказов, оформленных с ${ruDate(p.rewardPercentNextFrom)}. До этой даты действует прежний размер — ${String(p.rewardPercent).replace('.', ',')} % (оферта, п. 7.1).
+
+Кабинет: ${site}/dashboard${PSIGN}`,
+  ]
+}

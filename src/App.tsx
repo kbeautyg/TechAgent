@@ -33,6 +33,8 @@ const StaffLoginPage = lazy(() => import('./pages/staff/StaffPages').then((m) =>
 const StaffOrdersPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrdersPage })))
 const StaffOrderPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffOrderPage })))
 const StaffPartnersPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffPartnersPage })))
+const StaffReportsPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffReportsPage })))
+const StaffDocPrintPage = lazy(() => import('./pages/staff/StaffPages').then((m) => ({ default: m.StaffDocPrintPage })))
 const CheckoutPage = lazy(() => import('./pages/CheckoutPage'))
 const DashboardLayout = lazy(() => import('./components/layout/DashboardLayout'))
 const AdminLayout = lazy(() => import('./components/layout/AdminLayout'))
@@ -51,7 +53,7 @@ const AdminOrdersPage = lazy(() => import('./pages/admin/AdminOrdersPage'))
 const AdminReportsPage = lazy(() => import('./pages/admin/AdminReportsPage'))
 
 /** Печатные формы открываются без шапки, подвала и нижнего меню */
-const BARE_ROUTE = /^\/(dashboard\/orders\/[^/]+\/act|(dashboard|admin)\/documents\/[^/]+\/print)\/?$/
+const BARE_ROUTE = /^\/(dashboard\/orders\/[^/]+\/act|(dashboard|admin|staff)\/documents\/[^/]+\/print)\/?$/
 
 function ScrollToTop() {
   const { pathname } = useLocation()
@@ -92,6 +94,8 @@ function App() {
                 <Route path="/staff/login" element={<StaffLoginPage />} />
                 <Route path="/staff" element={<StaffOrdersPage />} />
                 <Route path="/staff/partners" element={<StaffPartnersPage />} />
+                <Route path="/staff/reports" element={<StaffReportsPage />} />
+                <Route path="/staff/documents/:id/print" element={<StaffDocPrintPage />} />
                 <Route path="/staff/orders/:number" element={<StaffOrderPage />} />
                 <Route path="/register" element={<RegisterPage />} />
                 <Route path="/demo" element={<DemoPage />} />

@@ -1,3 +1,5 @@
+import type { AgentDocForm } from '../types'
+
 /*
  * Обращения к серверу заказов (api/server.mjs на российском сервере; при разработке vite проксирует /api на localhost:8787).
  * Вход держится в cookie, которую ставит сервер, — в браузере ничего секретного не храним.
@@ -56,6 +58,20 @@ export interface BuyerProfile {
   demo?: boolean
 }
 
+/** Сводка по партнёру: заказы, выдачи, начисленное, вошедшее в отчёты и выплаченное */
+export interface PartnerStats {
+  orders: number
+  ordersSum: number
+  active: number
+  siteOrders: number
+  issued: number
+  issuedSum: number
+  accrued: number
+  reported: number
+  paid: number
+  notReported: number
+}
+
 /** Учётка партнёра на сервере: заведена сотрудником по одобренной заявке */
 export interface PartnerProfile {
   id: number
@@ -80,6 +96,14 @@ export interface PartnerProfile {
   point?: { code: string; name: string; address: string; city: string; workTime: string; lat: number; lon: number } | null
   /** Точка видна покупателям: привязана и оферта принята */
   pointVisible?: boolean
+  /** Новый процент вознаграждения и дата, с которой он применяется (уведомление за 14 дней) */
+  rewardPercentNext?: number | null
+  rewardPercentNextFrom?: string | null
+  /** Только для сотрудников: доступ отключён */
+  blockedAt?: string | null
+  blockReason?: string
+  /** Только для сотрудников: сводка по заказам и расчётам */
+  stats?: PartnerStats
   createdAt: string
   /** Только для сотрудников: адрес, с которого отмечено согласие */
   offerAcceptIp?: string
@@ -104,6 +128,23 @@ export interface PartnerOrderView extends SiteOrder {
   actFile: string
   claims: { id: string; type: 'EXCHANGE' | 'RETURN' | 'DEFECT'; text: string; photo: string; createdAt: string }[]
   files: string[]
+}
+
+/** Отчёт агента и акт за месяц (/api/partner/reports, /api/staff/reports): бланк без реквизитов ТехЭйджент — их добавляет сайт */
+export interface AgentReportView {
+  id: number
+  partnerId: number
+  period: string
+  number: string
+  form: Omit<AgentDocForm, 'principal'>
+  orderNumbers: string[]
+  payable: number
+  review: { status: 'ACCEPTED' | 'OBJECTED'; at: string; text: string } | null
+  revokedAt: string | null
+  paid: { at: string; amount: number; note: string } | null
+  createdAt: string
+  /** Только для сотрудников */
+  companyName?: string
 }
 
 /** Заявка партнёра с /register — для сотрудников */
@@ -172,6 +213,9 @@ export function apiErrorText(e: unknown): string {
     case 'bad_transition': return 'Этап заказа уже изменился — обновите страницу.'
     case 'too_large': return 'Файл слишком большой. Сделайте фото ещё раз или выберите файл меньше 10 МБ.'
     case 'point_taken': return 'К этой точке уже привязан другой партнёр.'
+    case 'blocked': return 'Доступ в кабинет отключён. Напишите на partners@techagent.pro.'
+    case 'exists': return 'За этот месяц отчёт уже сформирован.'
+    case 'empty': return 'За этот месяц нет выданных заказов с загруженным актом — формировать нечего.'
     default: return 'Что-то пошло не так. Попробуйте ещё раз.'
   }
 }

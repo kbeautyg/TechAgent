@@ -177,8 +177,33 @@ for (const [col, def] of [['sdek_city_code', 'INTEGER'], ['sdek_point_code', "TE
 }
 db.exec('CREATE INDEX IF NOT EXISTS orders_partner ON orders(partner_id)')
 db.exec('CREATE UNIQUE INDEX IF NOT EXISTS orders_pay_token ON orders(pay_token)')
-/* Точка партнёра на карте магазина (код из partner-points.json): привязанная точка видна покупателям */
-if (!db.prepare('PRAGMA table_info(partners)').all().some((c) => c.name === 'point_code')) db.exec("ALTER TABLE partners ADD COLUMN point_code TEXT NOT NULL DEFAULT ''")
+/* Партнёр: точка на карте магазина (код из partner-points.json или map_points); новый процент вознаграждения с даты
+ * (уведомление за 14 дней, оферта партнёру, п. 7.1); отключение доступа */
+for (const [col, def] of [['point_code', "TEXT NOT NULL DEFAULT ''"], ['reward_percent_next', 'REAL'], ['reward_percent_next_from', 'TEXT'],
+  ['blocked_at', 'TEXT'], ['block_reason', "TEXT NOT NULL DEFAULT ''"]]) {
+  if (!db.prepare('PRAGMA table_info(partners)').all().some((c) => c.name === col)) db.exec(`ALTER TABLE partners ADD COLUMN ${col} ${def}`)
+}
+/* Отчёт агента и акт за месяц (оферта партнёру, п. 7.2–7.6): form — бланк на дату формирования (строки, итоги,
+ * реквизиты партнёра), order_numbers — заказы в отчёте. Решение партнёра: ACCEPTED или OBJECTED; без решения
+ * за 10 рабочих дней отчёт считается принятым. Выплату отмечает сотрудник */
+db.exec(`CREATE TABLE IF NOT EXISTS agent_reports (
+  id INTEGER PRIMARY KEY,
+  partner_id INTEGER NOT NULL REFERENCES partners(id),
+  period TEXT NOT NULL,
+  number TEXT NOT NULL UNIQUE,
+  form TEXT NOT NULL,
+  order_numbers TEXT NOT NULL,
+  payable INTEGER NOT NULL,
+  review_status TEXT NOT NULL DEFAULT '',
+  review_at TEXT,
+  review_text TEXT NOT NULL DEFAULT '',
+  revoked_at TEXT,
+  paid_at TEXT,
+  paid_amount INTEGER,
+  paid_note TEXT NOT NULL DEFAULT '',
+  created_at TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS reports_partner ON agent_reports(partner_id);`)
 
 /* ── Этапы заказа с сайта ── */
 export const STATUSES = ['NEW', 'AWAITING_PAYMENT', 'PAID', 'SHIPPED', 'READY', 'RECEIVED', 'CANCELLED']
@@ -237,7 +262,7 @@ const allPoints = () => [
 const findMapPoint = (code) => (code ? allPoints().find((x) => x.code === code) ?? null : null)
 /** Партнёр, привязанный к точке и уже принявший оферту */
 const linkedPartner = (code) =>
-  code ? db.prepare("SELECT * FROM partners WHERE point_code = ? AND COALESCE(offer_accepted_at, '') <> ''").get(code) ?? null : null
+  code ? db.prepare("SELECT * FROM partners WHERE point_code = ? AND COALESCE(offer_accepted_at, '') <> '' AND blocked_at IS NULL").get(code) ?? null : null
 /** Точка открыта для покупателей: отмечена в списке (active) или к ней привязан партнёр */
 const pointOpen = (p) => Boolean(p.active || linkedPartner(p.code))
 const partnersOf = (cityCode, withPlanned) =>
@@ -743,8 +768,8 @@ function me(req, res) {
   if (!s) return send(res, 200, { role: null })
   if (s.role === 'staff') return send(res, 200, { role: 'staff' })
   if (s.role === 'partner') {
-    const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id)
-    return send(res, 200, p ? { role: 'partner', partner: viewPartner(p) } : { role: null })
+    const p = settlePercent(db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id))
+    return send(res, 200, p && !p.blocked_at ? { role: 'partner', partner: viewPartner(p) } : { role: null })
   }
   const b = db.prepare('SELECT * FROM buyers WHERE id = ?').get(s.buyer_id)
   if (!b) return send(res, 200, { role: null })
@@ -912,10 +937,12 @@ function viewPartner(p, forStaff = false) {
     pointCode: p.point_code,
     point: mapPointView(findMapPoint(p.point_code)),
     // Точка видна покупателям на карте магазина: привязана и оферта принята
-    pointVisible: Boolean(p.point_code && findMapPoint(p.point_code) && p.offer_accepted_at),
+    pointVisible: Boolean(p.point_code && findMapPoint(p.point_code) && p.offer_accepted_at && !p.blocked_at),
+    rewardPercentNext: p.reward_percent_next ?? null,
+    rewardPercentNextFrom: p.reward_percent_next_from ?? null,
     createdAt: p.created_at,
   }
-  if (forStaff) Object.assign(v, { offerAcceptIp: p.offer_accept_ip, applicationId: p.application_id })
+  if (forStaff) Object.assign(v, { offerAcceptIp: p.offer_accept_ip, applicationId: p.application_id, blockedAt: p.blocked_at ?? null, blockReason: p.block_reason, stats: partnerStats(p.id) })
   return v
 }
 
@@ -955,6 +982,7 @@ async function partnerLogin(req, res) {
   const p = db.prepare('SELECT * FROM partners WHERE email = ?').get(email)
   // Неизвестный email и неверный пароль — одна и та же ошибка: по ней нельзя узнать, кто партнёр
   if (!p || !checkPassword(clean(b.password, 200), p.password_hash)) fail(400, 'password_wrong')
+  if (p.blocked_at) fail(403, 'blocked')
   openSession(res, 'partner', null, p.id)
   send(res, 200, { ok: true })
 }
@@ -962,9 +990,16 @@ async function partnerLogin(req, res) {
 function needPartner(req) {
   const s = session(req)
   if (!s || s.role !== 'partner') fail(401, 'auth')
-  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id)
-  if (!p) fail(401, 'auth')
+  const p = settlePercent(db.prepare('SELECT * FROM partners WHERE id = ?').get(s.partner_id))
+  if (!p || p.blocked_at) fail(401, 'auth')
   return p
+}
+
+/** Новый процент наступил — он становится текущим (запись обновляется при первом обращении) */
+function settlePercent(p) {
+  if (!p || p.reward_percent_next == null || !p.reward_percent_next_from || new Date(p.reward_percent_next_from) > new Date()) return p
+  db.prepare('UPDATE partners SET reward_percent = reward_percent_next, reward_percent_next = NULL, reward_percent_next_from = NULL WHERE id = ?').run(p.id)
+  return db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id)
 }
 
 /** Первый вход: свой пароль вместо временного и согласие с офертой — его ставит только сам партнёр (п. 2.1).
@@ -1000,7 +1035,7 @@ async function partnerProfile(req, res) {
 function staffPartners(req, res) {
   needStaff(req)
   const applications = db.prepare('SELECT * FROM partner_applications ORDER BY id DESC LIMIT 500').all().map(viewApplication)
-  const partners = db.prepare('SELECT * FROM partners ORDER BY id DESC').all().map((p) => viewPartner(p, true))
+  const partners = db.prepare('SELECT * FROM partners ORDER BY id DESC').all().map((p) => viewPartner(settlePercent(p), true))
   const points = allPoints().map(({ code, name, address, city, active, own }) => ({ code, name, address, city, active: Boolean(active), own: Boolean(own) }))
   send(res, 200, { applications, partners, points })
 }
@@ -1359,6 +1394,199 @@ async function payConsent(req, res, token) {
   send(res, 200, { order: payView(db.prepare('SELECT * FROM orders WHERE id = ?').get(o.id)) })
 }
 
+/* ── Расчёты с партнёром: сводка, отчёт агента и акт за месяц, выплата, процент, отключение ── */
+
+/** Сводка по партнёру для сотрудников: сколько оформил и выдал, сколько начислено, в отчётах и выплачено */
+function partnerStats(partnerId) {
+  const q = (sql, ...a) => db.prepare(sql).get(partnerId, ...a)
+  const orders = q("SELECT COUNT(*) n, COALESCE(SUM(total), 0) sum FROM orders WHERE partner_id = ? AND source = 'PARTNER'")
+  const active = q("SELECT COUNT(*) n FROM orders WHERE partner_id = ? AND status NOT IN ('RECEIVED', 'CANCELLED')")
+  const issued = q("SELECT COUNT(*) n, COALESCE(SUM(total), 0) sum, COALESCE(SUM(reward), 0) reward FROM orders WHERE partner_id = ? AND source = 'PARTNER' AND status = 'RECEIVED' AND act_file <> ''")
+  const reports = q('SELECT COALESCE(SUM(payable), 0) reported, COALESCE(SUM(paid_amount), 0) paid FROM agent_reports WHERE partner_id = ? AND revoked_at IS NULL')
+  const siteOrders = q("SELECT COUNT(*) n FROM orders WHERE partner_id = ? AND source = 'SITE'")
+  return {
+    orders: orders.n, ordersSum: orders.sum, active: active.n, siteOrders: siteOrders.n,
+    issued: issued.n, issuedSum: issued.sum, accrued: issued.reward,
+    reported: reports.reported, paid: reports.paid,
+    // Начислено, но ещё не вошло в отчёт — войдёт в отчёт за свой месяц
+    notReported: Math.max(0, issued.reward - reports.reported),
+  }
+}
+
+/** Отчётный месяц по московскому времени: 'ГГГГ-ММ' */
+const mskPeriod = (iso) => new Date(Date.parse(iso) + 3 * 3600_000).toISOString().slice(0, 7)
+const ddmmyyyy = (d) => `${String(d.getUTCDate()).padStart(2, '0')}.${String(d.getUTCMonth() + 1).padStart(2, '0')}.${d.getUTCFullYear()}`
+
+/** Реквизиты партнёра на дату документа — как partnerParty в src/data/parties.ts */
+function agentParty(p) {
+  return {
+    name: p.company_name || p.email,
+    details: [
+      p.inn ? `ИНН ${p.inn}` : '',
+      p.ogrn ? `${p.ogrn.length === 15 ? 'ОГРНИП' : 'ОГРН'} ${p.ogrn}` : '',
+      p.point_address ? `Пункт выдачи: ${p.point_address}` : '',
+      p.account ? `Р/с ${p.account}${p.bank_name ? ` в ${p.bank_name}` : ''}` : '',
+      p.bik ? `БИК ${p.bik}` : '',
+    ].filter(Boolean),
+  }
+}
+
+function viewReport(r) {
+  return {
+    id: r.id, partnerId: r.partner_id, period: r.period, number: r.number, form: JSON.parse(r.form),
+    orderNumbers: JSON.parse(r.order_numbers), payable: r.payable,
+    review: r.review_status ? { status: r.review_status, at: r.review_at, text: r.review_text } : null,
+    revokedAt: r.revoked_at ?? null,
+    paid: r.paid_at ? { at: r.paid_at, amount: r.paid_amount, note: r.paid_note } : null,
+    createdAt: r.created_at,
+  }
+}
+
+/** Сформировать отчёт агента и акт за месяц: заказы, оформленные партнёром, выданные покупателю в этом месяце
+ *  с загруженным подписанным актом и ещё не вошедшие в отчёт. Возвратов после выдачи сервер пока не ведёт —
+ *  удержаний (п. 7.3) в отчёте нет */
+async function staffReportCreate(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id))
+  if (!p) fail(404, 'not_found')
+  const period = clean(b.period, 7)
+  if (!/^\d{4}-(0[1-9]|1[0-2])$/.test(period)) fail(422, 'fields', { fields: ['period'] })
+  if (db.prepare('SELECT 1 FROM agent_reports WHERE partner_id = ? AND period = ? AND revoked_at IS NULL').get(p.id, period)) fail(409, 'exists')
+  const inReports = new Set(db.prepare('SELECT order_numbers FROM agent_reports WHERE partner_id = ? AND revoked_at IS NULL').all(p.id).flatMap((r) => JSON.parse(r.order_numbers)))
+  const list = db.prepare("SELECT * FROM orders WHERE partner_id = ? AND source = 'PARTNER' AND status = 'RECEIVED' AND act_file <> '' AND issued_at IS NOT NULL ORDER BY issued_at")
+    .all(p.id).filter((o) => mskPeriod(o.issued_at) === period && !inReports.has(o.number))
+  if (!list.length) fail(422, 'empty')
+
+  const [y, m] = period.split('-').map(Number)
+  const used = db.prepare('SELECT number FROM agent_reports WHERE number LIKE ?').all(`TA-${y}/${String(m).padStart(2, '0')}-%`)
+    .map((r) => Number(r.number.split('-').pop()) || 0)
+  const number = `TA-${y}/${String(m).padStart(2, '0')}-${String(Math.max(0, ...used) + 1).padStart(3, '0')}`
+  const t = now()
+  const rows = list.map((o) => ({
+    orderNumber: o.number,
+    product: JSON.parse(o.items).map((i) => (i.qty > 1 ? `${i.name} × ${i.qty}` : i.name)).join(', '),
+    paidAt: db.prepare("SELECT at FROM order_events WHERE order_id = ? AND status = 'PAID' ORDER BY id DESC LIMIT 1").get(o.id)?.at,
+    issuedAt: o.issued_at,
+    buyer: o.issued_to_name || o.buyer_name,
+    price: o.total,
+    percent: o.reward_percent ?? null,
+    reward: o.reward ?? null,
+  }))
+  const goodsTotal = rows.reduce((a, r) => a + r.price, 0)
+  const accruedTotal = rows.reduce((a, r) => a + (r.reward ?? 0), 0)
+  const form = {
+    number, date: t,
+    periodFrom: ddmmyyyy(new Date(Date.UTC(y, m - 1, 1))), periodTo: ddmmyyyy(new Date(Date.UTC(y, m, 0))),
+    acceptedAt: p.offer_accepted_at || undefined,
+    agent: agentParty(p),
+    rows, returns: [], carried: 0, deducted: 0, carryForward: 0,
+    goodsTotal, accruedTotal, payable: accruedTotal,
+  }
+  const r = db.prepare('INSERT INTO agent_reports (partner_id, period, number, form, order_numbers, payable, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)')
+    .run(p.id, period, number, JSON.stringify(form), JSON.stringify(list.map((o) => o.number)), accruedTotal, t)
+  const report = db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(Number(r.lastInsertRowid))
+  queueMicrotask(() => sendMail(p.email, ...letters.partnerReport(viewReport(report), PUBLIC_URL), PARTNERS_EMAIL_TO))
+  console.log(`report ${number} partner ${p.id} ${accruedTotal}`)
+  send(res, 200, { ok: true, report: viewReport(report) })
+}
+
+function staffReports(req, res) {
+  needStaff(req)
+  const rows = db.prepare('SELECT r.*, p.company_name FROM agent_reports r JOIN partners p ON p.id = r.partner_id ORDER BY r.id DESC LIMIT 1000').all()
+  send(res, 200, { reports: rows.map((r) => ({ ...viewReport(r), companyName: r.company_name })) })
+}
+function staffReport(req, res, id) {
+  needStaff(req)
+  const r = db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(Number(id))
+  if (!r) fail(404, 'not_found')
+  send(res, 200, { report: viewReport(r) })
+}
+
+/** Отозвать отчёт, пока партнёр его не принял и выплаты не было: заказы вернутся в расчёт, отчёт можно сформировать заново */
+function staffReportRevoke(req, res, id) {
+  needStaff(req)
+  const r = db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(Number(id))
+  if (!r) fail(404, 'not_found')
+  if (r.revoked_at || r.paid_at || r.review_status === 'ACCEPTED') fail(409, 'decided')
+  db.prepare('UPDATE agent_reports SET revoked_at = ? WHERE id = ?').run(now(), r.id)
+  send(res, 200, { ok: true })
+}
+
+/** Выплата вознаграждения по отчёту (п. 7.6). Сумму вводит сотрудник — обычно «к выплате» по отчёту */
+async function staffReportPaid(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const r = db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(Number(id))
+  if (!r) fail(404, 'not_found')
+  if (r.revoked_at || r.review_status === 'OBJECTED') fail(409, 'decided')
+  const amount = Math.round(Number(b.amount))
+  const date = clean(b.date, 10)
+  if (!Number.isFinite(amount) || amount < 0 || amount > 100_000_000) fail(422, 'fields', { fields: ['amount'] })
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) fail(422, 'fields', { fields: ['date'] })
+  db.prepare('UPDATE agent_reports SET paid_at = ?, paid_amount = ?, paid_note = ? WHERE id = ?').run(`${date}T12:00:00.000Z`, amount, clean(b.note, 300), r.id)
+  const fresh = db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(r.id)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(r.partner_id)
+  queueMicrotask(() => sendMail(p.email, ...letters.partnerPaid(viewReport(fresh), PUBLIC_URL), PARTNERS_EMAIL_TO))
+  send(res, 200, { ok: true, report: viewReport(fresh) })
+}
+
+function partnerReports(req, res) {
+  const p = needPartner(req)
+  const rows = db.prepare('SELECT * FROM agent_reports WHERE partner_id = ? AND revoked_at IS NULL ORDER BY id DESC').all(p.id)
+  send(res, 200, { reports: rows.map(viewReport) })
+}
+
+/** Решение партнёра по отчёту и акту: принять или направить возражения (п. 7.5). Возражения — письмом сотрудникам */
+async function partnerReportReview(req, res, id) {
+  const p = needPartner(req)
+  const b = await readJson(req)
+  const r = db.prepare('SELECT * FROM agent_reports WHERE id = ? AND partner_id = ?').get(Number(id), p.id)
+  if (!r || r.revoked_at) fail(404, 'not_found')
+  if (r.review_status || r.paid_at) fail(409, 'decided')
+  const status = b.status === 'ACCEPTED' || b.status === 'OBJECTED' ? b.status : null
+  const text = clean(b.text, 3000)
+  if (!status || (status === 'OBJECTED' && !text)) fail(422, 'fields', { fields: ['text'] })
+  db.prepare('UPDATE agent_reports SET review_status = ?, review_at = ?, review_text = ? WHERE id = ?').run(status, now(), status === 'OBJECTED' ? text : '', r.id)
+  if (status === 'OBJECTED') queueMicrotask(() => sendMail(PARTNERS_EMAIL_TO, ...letters.staffObjection(viewReport(r), p.company_name, text, PUBLIC_URL), p.email))
+  send(res, 200, { ok: true, report: viewReport(db.prepare('SELECT * FROM agent_reports WHERE id = ?').get(r.id)) })
+}
+
+/** Новый процент вознаграждения: применяется к заказам, оформленным через 14 дней (оферта партнёру, п. 7.1).
+ *  Партнёр видит его в кабинете и получает письмо */
+async function staffPartnerPercent(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const p = settlePercent(db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id)))
+  if (!p) fail(404, 'not_found')
+  const percent = Math.round(Number(String(b.percent).replace(',', '.')) * 100) / 100
+  if (!Number.isFinite(percent) || percent <= 0 || percent > 50) fail(422, 'fields', { fields: ['percent'] })
+  const from = new Date()
+  from.setUTCDate(from.getUTCDate() + 14)
+  db.prepare('UPDATE partners SET reward_percent_next = ?, reward_percent_next_from = ?, updated_at = ? WHERE id = ?').run(percent, from.toISOString(), now(), p.id)
+  const fresh = db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id)
+  queueMicrotask(() => sendMail(p.email, ...letters.partnerPercent(viewPartner(fresh), PUBLIC_URL), PARTNERS_EMAIL_TO))
+  send(res, 200, { ok: true, partner: viewPartner(fresh, true) })
+}
+
+/** Отключить доступ партнёра (или вернуть): входы закрываются, его точка пропадает с карты. Заказы остаются у сотрудников */
+async function staffPartnerBlock(req, res, id) {
+  needStaff(req)
+  const b = await readJson(req)
+  const p = db.prepare('SELECT * FROM partners WHERE id = ?').get(Number(id))
+  if (!p) fail(404, 'not_found')
+  if (b.blocked === true) {
+    const reason = clean(b.reason, 300)
+    if (!reason) fail(422, 'fields', { fields: ['reason'] })
+    db.prepare('UPDATE partners SET blocked_at = ?, block_reason = ?, updated_at = ? WHERE id = ?').run(now(), reason, now(), p.id)
+    db.prepare("DELETE FROM sessions WHERE role = 'partner' AND partner_id = ?").run(p.id)
+  } else {
+    db.prepare("UPDATE partners SET blocked_at = NULL, block_reason = '', updated_at = ? WHERE id = ?").run(now(), p.id)
+  }
+  console.log(`partner ${p.id} ${b.blocked === true ? 'blocked' : 'unblocked'}`)
+  send(res, 200, { ok: true, partner: viewPartner(db.prepare('SELECT * FROM partners WHERE id = ?').get(p.id), true) })
+}
+
 /* ── Маршрутизация ── */
 const ORDER_NO = '(S-\\d{6}-\\d{4})'
 const routes = [
@@ -1390,6 +1618,15 @@ const routes = [
   ['POST', /^\/api\/staff\/applications\/(\d+)\/decline$/, staffDecline],
   ['POST', /^\/api\/staff\/partners\/(\d+)\/reset$/, staffResetPartner],
   ['POST', /^\/api\/staff\/partners\/(\d+)\/point$/, staffPartnerPoint],
+  ['POST', /^\/api\/staff\/partners\/(\d+)\/percent$/, staffPartnerPercent],
+  ['POST', /^\/api\/staff\/partners\/(\d+)\/block$/, staffPartnerBlock],
+  ['POST', /^\/api\/staff\/partners\/(\d+)\/reports$/, staffReportCreate],
+  ['GET', /^\/api\/staff\/reports$/, staffReports],
+  ['GET', /^\/api\/staff\/reports\/(\d+)$/, staffReport],
+  ['POST', /^\/api\/staff\/reports\/(\d+)\/revoke$/, staffReportRevoke],
+  ['POST', /^\/api\/staff\/reports\/(\d+)\/paid$/, staffReportPaid],
+  ['GET', /^\/api\/partner\/reports$/, partnerReports],
+  ['POST', /^\/api\/partner\/reports\/(\d+)\/review$/, partnerReportReview],
   ['GET', new RegExp(`^/api/staff/orders/${ORDER_NO}/files/([\\w.-]+)$`), staffFile],
   ['GET', /^\/api\/partner\/orders$/, partnerOrders],
   ['POST', /^\/api\/partner\/orders$/, partnerCreateOrder],
